@@ -209,7 +209,7 @@ API to let Glean know the app is inactive and that will trigger submission of th
 <p><code>&quot;name&quot;</code>: The name of the event, as defined in the <code>metrics.yaml</code> file.</p>
 </li>
 <li>
-<p><code>&quot;extra&quot;</code> (optional): A mapping of strings to strings providing additional data about the event. The keys are restricted to 40 characters and values in this map will never exceed 100 characters.</p>
+<p><code>&quot;extra&quot;</code> (optional): A mapping of strings to strings providing additional data about the event. Keys are restricted to 40 UTF-8 bytes while values in the <code>extra</code> object are limited a maximum length of 500 UTF-8 bytes.</p>
 </li>
 </ul>
 <h3 id="example-event-json"><a class="header" href="#example-event-json">Example event JSON</a></h3>

@@ -2755,7 +2755,7 @@ API to let Glean know the app is inactive and that will trigger submission of th
 <p><code>&quot;name&quot;</code>: The name of the event, as defined in the <code>metrics.yaml</code> file.</p>
 </li>
 <li>
-<p><code>&quot;extra&quot;</code> (optional): A mapping of strings to strings providing additional data about the event. The keys are restricted to 40 characters and values in this map will never exceed 100 characters.</p>
+<p><code>&quot;extra&quot;</code> (optional): A mapping of strings to strings providing additional data about the event. Keys are restricted to 40 UTF-8 bytes while values in the <code>extra</code> object are limited a maximum length of 500 UTF-8 bytes.</p>
 </li>
 </ul>
 <h3 id="example-event-json"><a class="header" href="#example-event-json">Example event JSON</a></h3>
@@ -9542,7 +9542,7 @@ The <code>glean_parser</code> will reject any other lifetime.</p>
 <h3 id="extra-metric-parameters-13"><a class="header" href="#extra-metric-parameters-13">Extra metric parameters</a></h3>
 <h4 id="extra_keys"><a class="header" href="#extra_keys"><code>extra_keys</code></a></h4>
 <p>The acceptable keys on the &quot;extra&quot; object sent with events.
-A maximum of 15 extra keys is allowed.</p>
+A maximum of 50 extra keys is allowed.</p>
 <p>Each extra key contains additional metadata:</p>
 <ul>
 <li><code>description</code>: <strong>Required.</strong> A description of the key.</li>
@@ -9559,7 +9559,7 @@ A maximum of 15 extra keys is allowed.</p>
 <ul>
 <li>In Glean.js the default value for <code>maxEvents</code> is 1. In all other SDKs it is 500.</li>
 <li>Once the <code>maxEvents</code> threshold is reached on the client an &quot;events&quot; ping is immediately sent.</li>
-<li>The <code>extra_keys</code> allows for a maximum of 15 keys.</li>
+<li>The <code>extra_keys</code> allows for a maximum of 50 keys.</li>
 <li>The keys in the <code>extra_keys</code> list must be in dotted snake case, with a maximum length of 40 bytes, when encoded as UTF-8.</li>
 <li>The values in the <code>extras</code> object have a maximum length of 500 bytes when serialized and encoded as UTF-8.
 Longer values are truncated, and an <code>invalid_overflow</code> error is recorded.</li>
@@ -11531,6 +11531,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <ul>
 <li>Errors are now recorded in cases where we had to create a new data store for Glean due to a failure (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1815253">bug 1815253</a>)</li>
 <li>Update <code>glean_parser</code> to v11.0.0 (<a href="https://github.com/mozilla/glean_parser/releases/tag/v11.0.0">release notes</a>)</li>
+<li>Event metrics can now record a maximum of 50 keys in the event extra object (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1869429">Bug 1869429</a>)</li>
 </ul>
 </li>
 <li>iOS
