@@ -1184,6 +1184,18 @@
 <a href="#1184" id="1184">1184</a>
 <a href="#1185" id="1185">1185</a>
 <a href="#1186" id="1186">1186</a>
+<a href="#1187" id="1187">1187</a>
+<a href="#1188" id="1188">1188</a>
+<a href="#1189" id="1189">1189</a>
+<a href="#1190" id="1190">1190</a>
+<a href="#1191" id="1191">1191</a>
+<a href="#1192" id="1192">1192</a>
+<a href="#1193" id="1193">1193</a>
+<a href="#1194" id="1194">1194</a>
+<a href="#1195" id="1195">1195</a>
+<a href="#1196" id="1196">1196</a>
+<a href="#1197" id="1197">1197</a>
+<a href="#1198" id="1198">1198</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -2053,6 +2065,18 @@
 </span><span class="kw">pub fn </span>glean_test_get_experiment_data(experiment_id: String) -&gt; <span class="prelude-ty">Option</span>&lt;RecordedExperiment&gt; {
     block_on_dispatcher();
     core::with_glean(|glean| glean.test_get_experiment_data(experiment_id.to_owned()))
+}
+
+<span class="doccomment">/// Set an experimentation identifier dynamically.
+///
+/// Note: it&#39;s probably a good idea to unenroll from any experiments when identifiers change.
+</span><span class="kw">pub fn </span>glean_set_experimentation_id(experimentation_id: String) {
+    launch_with_glean(<span class="kw">move </span>|glean| {
+        glean
+            .additional_metrics
+            .experimentation_id
+            .set(experimentation_id);
+    });
 }
 
 <span class="doccomment">/// TEST ONLY FUNCTION.

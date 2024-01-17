@@ -291,6 +291,12 @@
 <a href="#291" id="291">291</a>
 <a href="#292" id="292">292</a>
 <a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -463,6 +469,12 @@
 /// See [`glean_core::Glean::set_experiment_inactive`].
 </span><span class="kw">pub fn </span>set_experiment_inactive(experiment_id: String) {
     glean_core::glean_set_experiment_inactive(experiment_id)
+}
+
+<span class="doccomment">/// Dynamically set the experimentation identifier, as opposed to setting it through the configuration
+/// during initialization.
+</span><span class="kw">pub fn </span>set_experimentation_id(experimentation_id: String) {
+    glean_core::glean_set_experimentation_id(experimentation_id);
 }
 
 <span class="doccomment">/// TEST ONLY FUNCTION.
