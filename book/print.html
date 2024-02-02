@@ -11529,6 +11529,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <ul>
 <li>Android
 <ul>
+<li>BREAKING CHANGE: Update JNA to version 5.14.0. Projects using older JNA releases may encounter errors until they update. (<a href="https://github.com/mozilla/glean/pull/2727">#2727</a>)</li>
 <li>Set the target Android SDK to version 34 (<a href="https://github.com/mozilla/glean/pull/2709">#2709</a>)</li>
 <li>Fixed an incorrectly named method. The method is now correctly named <code>setExperimentationId</code>.</li>
 <li>Update to Gradle v8.5 (<a href="https://github.com/mozilla/glean/pull/2721">#2721</a>)</li>
@@ -14161,6 +14162,9 @@ This is a major milestone in using a cross-platform implementation of Glean on t
 <p>First testing release.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/sdk.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes-1"><a class="header" href="#unreleased-changes-1">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0...main">Full changelog</a></p>
+<ul>
+<li><a href="https://github.com/mozilla/glean.js/pull/1866">#1866</a>: Added a new uploader that falls back to <code>fetch</code> if <code>navigator.sendBeacon</code> fails. This is not used by default and needs to be enabled manually.</li>
+</ul>
 <h1 id="v400-2024-01-24"><a class="header" href="#v400-2024-01-24">v4.0.0 (2024-01-24)</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0-pre.3...v4.0.0">Full changelog</a></p>
 <ul>
