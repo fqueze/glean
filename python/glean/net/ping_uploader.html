@@ -44,9 +44,7 @@ else:
 
 
 class PingUploader(Protocol):
-    def upload(
-        self, url: str, data: bytes, headers: Dict[str, str]
-    ) -&gt; Union[
+    def upload(self, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
         UploadResult,
         UploadResult.UNRECOVERABLE_FAILURE,
         UploadResult.RECOVERABLE_FAILURE,
@@ -116,9 +114,7 @@ Protocol classes can be generic, they are defined as::</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PingUploader(Protocol):
-    def upload(
-        self, url: str, data: bytes, headers: Dict[str, str]
-    ) -&gt; Union[
+    def upload(self, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
         UploadResult,
         UploadResult.UNRECOVERABLE_FAILURE,
         UploadResult.RECOVERABLE_FAILURE,
@@ -167,9 +163,7 @@ Protocol classes can be generic, they are defined as::</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def upload(
-    self, url: str, data: bytes, headers: Dict[str, str]
-) -&gt; Union[
+<pre><code class="python">def upload(self, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
     UploadResult,
     UploadResult.UNRECOVERABLE_FAILURE,
     UploadResult.RECOVERABLE_FAILURE,
