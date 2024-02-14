@@ -230,12 +230,13 @@ This defines which operations are valid for the metric,
 how it is stored and how data analysis tooling displays it.
 See the list of <a href="../metrics/index.html">supported metric types</a>.</p>
 <div class="special-quote special-quote-warning fa fa-exclamation-triangle"></div>
-<h5 id="types-must-not-be-changed-after-release"><a class="header" href="#types-must-not-be-changed-after-release">Types must not be changed after release</a></h5>
+<h5 id="types-should-not-be-changed-after-release"><a class="header" href="#types-should-not-be-changed-after-release">Types should not be changed after release</a></h5>
 <blockquote>
-<p>Once a metric is defined in a product, its <code>type</code> must not be changed.
-The ingestion pipeline will not be able to handle such a change.
-If a type change is required a new metric must be added with a new name and the new type.
-This will require an additional data review, in which you can also reference the old data review.</p>
+<p>Once a metric is defined in a product, its <code>type</code> should only be changed in rare circumstances.
+It's better to rename the metric with the new type instead.
+The ingestion pipeline will create a new column for a metric with a changed type.
+Any new analysis will need to use the new column going forward.
+The old column will still be populated with data from old clients.</p>
 </blockquote>
 <h4 id="description"><a class="header" href="#description"><code>description</code></a></h4>
 <p>A textual description of the metric for humans.
