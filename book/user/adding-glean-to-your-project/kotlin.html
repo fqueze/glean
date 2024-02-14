@@ -238,10 +238,13 @@ Set any <a href="../../language-bindings/android/android-build-configuration-opt
 ext.gleanGenerateMarkdownDocs = true
 apply plugin: &quot;org.mozilla.telemetry.glean-gradle-plugin&quot;
 </code></pre>
-<div class="special-quote special-quote-warning fa fa-exclamation-triangle"></div>
-<h5 id="earlier-versions"><a class="header" href="#earlier-versions">Earlier versions</a></h5>
+<div class="special-quote special-quote-info fa fa-info-circle"></div>
+<h5 id="rosetta-2-required-on-apple-silicon"><a class="header" href="#rosetta-2-required-on-apple-silicon">Rosetta 2 required on Apple Silicon</a></h5>
 <blockquote>
-<p><strong>Note:</strong> Earlier versions of Glean used a Gradle script (<code>sdk_generator.gradle</code>) rather than a Gradle plugin. Its use is deprecated and projects should be updated to use the Gradle plugin as described above.</p>
+<p>On Apple Silicon machines (M1/M2/M3 MacBooks and iMacs) Rosetta 2 is required for the bundled Python.
+See the <a href="https://support.apple.com/en-us/HT211861">Apple documentation about Rosetta 2</a>
+and <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1775420">Bug 1775420</a> for details.<br />
+You can install it with <code>softwareupdate --install-rosetta</code></p>
 </blockquote>
 <div class="special-quote special-quote-info fa fa-info-circle"></div>
 <h5 id="offline-builds"><a class="header" href="#offline-builds">Offline builds</a></h5>
