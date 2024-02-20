@@ -138,6 +138,13 @@
 <a href="#138" id="138">138</a>
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -231,6 +238,15 @@
     /// Gets the currently stored value as an integer.
     ///
     /// This doesn&#39;t clear the stored value.
+    ///
+    /// # Arguments
+    ///
+    /// * `ping_name` - the optional name of the ping to retrieve the metric
+    ///                 for. Defaults to the first value in `send_in_pings`.
+    ///
+    /// # Returns
+    ///
+    /// The stored value or `None` if nothing stored.
     </span><span class="kw">pub fn </span>test_get_value(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
         <span class="kw">crate</span>::block_on_dispatcher();
         <span class="kw">crate</span>::core::with_glean(|glean| <span class="self">self</span>.get_value(glean, ping_name.as_deref()))
@@ -264,8 +280,6 @@
     /// # Arguments
     ///
     /// * `error` - The type of error
-    /// * `ping_name` - the optional name of the ping to retrieve the metric
-    ///                 for. inner to the first value in `send_in_pings`.
     ///
     /// # Returns
     ///

@@ -211,6 +211,9 @@
 <a href="#211" id="211">211</a>
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -398,6 +401,11 @@
     /// Get the vector of currently stored events for this event metric.
     ///
     /// This doesn&#39;t clear the stored value.
+    ///
+    /// # Arguments
+    ///
+    /// * `ping_name` - the optional name of the ping to retrieve the metric
+    ///                 for. Defaults to the first value in `send_in_pings`.
     </span><span class="kw">pub fn </span>test_get_value(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;RecordedEvent&gt;&gt; {
         <span class="kw">crate</span>::block_on_dispatcher();
         <span class="kw">crate</span>::core::with_glean(|glean| <span class="self">self</span>.get_value(glean, ping_name.as_deref()))
@@ -410,8 +418,6 @@
     /// # Arguments
     ///
     /// * `error` - The type of error
-    /// * `ping_name` - represents the optional name of the ping to retrieve the
-    ///   metric for. inner to the first value in `send_in_pings`.
     ///
     /// # Returns
     ///
