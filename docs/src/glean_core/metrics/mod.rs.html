@@ -283,6 +283,14 @@
 <a href="#283" id="283">283</a>
 <a href="#284" id="284">284</a>
 <a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -308,6 +316,7 @@
 <span class="kw">mod </span>memory_unit;
 <span class="kw">mod </span>metrics_enabled_config;
 <span class="kw">mod </span>numerator;
+<span class="kw">mod </span>object;
 <span class="kw">mod </span>ping;
 <span class="kw">mod </span>quantity;
 <span class="kw">mod </span>rate;
@@ -339,6 +348,7 @@
 <span class="kw">pub use </span><span class="self">self</span>::memory_distribution::MemoryDistributionMetric;
 <span class="kw">pub use </span><span class="self">self</span>::memory_unit::MemoryUnit;
 <span class="kw">pub use </span><span class="self">self</span>::numerator::NumeratorMetric;
+<span class="kw">pub use </span><span class="self">self</span>::object::ObjectMetric;
 <span class="kw">pub use </span><span class="self">self</span>::ping::PingType;
 <span class="kw">pub use </span><span class="self">self</span>::quantity::QuantityMetric;
 <span class="kw">pub use </span><span class="self">self</span>::rate::{Rate, RateMetric};
@@ -426,6 +436,8 @@
     </span>Url(String),
     <span class="doccomment">/// A Text metric. See [`TextMetric`] for more information.
     </span>Text(String),
+    <span class="doccomment">/// An Object metric. See [`ObjectMetric`] for more information.
+    </span>Object(String),
 }
 
 <span class="doccomment">/// A [`MetricType`] describes common behavior across all metrics.
@@ -536,6 +548,7 @@
             Metric::MemoryDistribution(<span class="kw">_</span>) =&gt; <span class="string">&quot;memory_distribution&quot;</span>,
             Metric::Jwe(<span class="kw">_</span>) =&gt; <span class="string">&quot;jwe&quot;</span>,
             Metric::Text(<span class="kw">_</span>) =&gt; <span class="string">&quot;text&quot;</span>,
+            Metric::Object(<span class="kw">_</span>) =&gt; <span class="string">&quot;object&quot;</span>,
         }
     }
 
@@ -565,6 +578,9 @@
             Metric::MemoryDistribution(hist) =&gt; <span class="macro">json!</span>(memory_distribution::snapshot(hist)),
             Metric::Jwe(s) =&gt; <span class="macro">json!</span>(s),
             Metric::Text(s) =&gt; <span class="macro">json!</span>(s),
+            Metric::Object(s) =&gt; {
+                serde_json::from_str(s).expect(<span class="string">&quot;object storage should have been json&quot;</span>)
+            }
         }
     }
 }

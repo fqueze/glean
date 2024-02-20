@@ -33,6 +33,8 @@
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -40,6 +42,7 @@
 </span><span class="doccomment">//! The different metric types supported by the Glean SDK to handle data.
 
 </span><span class="kw">mod </span>event;
+<span class="kw">mod </span>object;
 <span class="kw">mod </span>ping;
 
 <span class="kw">pub use </span>event::EventMetric;
@@ -61,6 +64,7 @@
 <span class="kw">pub use </span>glean_core::UuidMetric;
 <span class="kw">pub use </span>glean_core::{AllowLabeled, LabeledMetric};
 <span class="kw">pub use </span>glean_core::{Datetime, DatetimeMetric};
+<span class="kw">pub use </span>object::ObjectMetric;
 <span class="kw">pub use </span>ping::PingType;
 
 <span class="comment">// Re-export types that are used by the glean_parser-generated code.
