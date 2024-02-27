@@ -153,6 +153,7 @@
 <a href="#153" id="153">153</a>
 <a href="#154" id="154">154</a>
 <a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -161,13 +162,12 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::common_metric_data::CommonMetricDataInternal;
 <span class="kw">use </span><span class="kw">crate</span>::error_recording::{record_error, test_get_num_recorded_errors, ErrorType};
+<span class="kw">use </span><span class="kw">crate</span>::metrics::JsonValue;
 <span class="kw">use </span><span class="kw">crate</span>::metrics::Metric;
 <span class="kw">use </span><span class="kw">crate</span>::metrics::MetricType;
 <span class="kw">use </span><span class="kw">crate</span>::storage::StorageManager;
 <span class="kw">use </span><span class="kw">crate</span>::CommonMetricData;
 <span class="kw">use </span><span class="kw">crate</span>::Glean;
-
-<span class="kw">use </span>serde_json::Value <span class="kw">as </span>JsonValue;
 
 <span class="doccomment">/// An object metric.
 ///
@@ -279,12 +279,14 @@
 
     <span class="doccomment">/// **Test-only API (exported for FFI purposes).**
     ///
-    /// Gets the currently stored value as JSON-encoded string.
+    /// Gets the currently stored value as JSON.
     ///
     /// This doesn&#39;t clear the stored value.
-    </span><span class="kw">pub fn </span>test_get_value(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+    </span><span class="kw">pub fn </span>test_get_value(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;JsonValue&gt; {
         <span class="kw">crate</span>::block_on_dispatcher();
-        <span class="kw">crate</span>::core::with_glean(|glean| <span class="self">self</span>.get_value(glean, ping_name.as_deref()))
+        <span class="kw">let </span>value = <span class="kw">crate</span>::core::with_glean(|glean| <span class="self">self</span>.get_value(glean, ping_name.as_deref()));
+        <span class="comment">// We only store valid JSON
+        </span>value.map(|val| serde_json::from_str(<span class="kw-2">&amp;</span>val).unwrap())
     }
 
     <span class="doccomment">/// **Exported for test purposes.**
