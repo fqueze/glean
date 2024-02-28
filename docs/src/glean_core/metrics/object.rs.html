@@ -133,27 +133,6 @@
 <a href="#133" id="133">133</a>
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -232,27 +211,6 @@
             <span class="kw">let </span>msg = <span class="string">&quot;Value did not match predefined schema&quot;</span>;
             record_error(glean, <span class="kw-2">&amp;</span>metric.meta, ErrorType::InvalidValue, msg, <span class="prelude-val">None</span>);
         });
-    }
-
-    <span class="doccomment">/// Sets to the specified structure from a string in JSON encoding
-    ///
-    /// # Arguments
-    ///
-    /// * `glean` - the Glean instance this metric belongs to.
-    /// * `value` - the value to set.
-    </span><span class="kw">pub fn </span>set_str(<span class="kw-2">&amp;</span><span class="self">self</span>, value: String) {
-        <span class="kw">let </span>metric = <span class="self">self</span>.clone();
-        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| {
-            <span class="kw">let </span>value = <span class="kw">match </span>serde_json::from_str(<span class="kw-2">&amp;</span>value) {
-                <span class="prelude-val">Ok</span>(s) =&gt; s,
-                <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
-                    <span class="kw">let </span>msg = <span class="string">&quot;Cannot set invalid json&quot;</span>;
-                    record_error(glean, <span class="kw-2">&amp;</span>metric.meta, ErrorType::InvalidValue, msg, <span class="prelude-val">None</span>);
-                    <span class="kw">return</span>;
-                }
-            };
-            metric.set_sync(glean, value)
-        })
     }
 
     <span class="doccomment">/// Get current value
