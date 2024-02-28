@@ -208,6 +208,20 @@
 <a href="#208" id="208">208</a>
 <a href="#209" id="209">209</a>
 <a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -216,6 +230,7 @@
 <span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span><span class="kw">crate</span>::ping::PingMaker;
+<span class="kw">use </span><span class="kw">crate</span>::upload::PingPayload;
 <span class="kw">use </span><span class="kw">crate</span>::Glean;
 
 <span class="kw">use </span>uuid::Uuid;
@@ -236,6 +251,8 @@
     </span><span class="kw">pub </span>send_if_empty: bool,
     <span class="doccomment">/// Whether to use millisecond-precise start/end times.
     </span><span class="kw">pub </span>precise_timestamps: bool,
+    <span class="doccomment">/// Whether to include the {client|ping}_info sections on assembly.
+    </span><span class="kw">pub </span>include_info_sections: bool,
     <span class="doccomment">/// The &quot;reason&quot; codes that this ping can send
     </span><span class="kw">pub </span>reason_codes: Vec&lt;String&gt;,
 }
@@ -247,6 +264,7 @@
             .field(<span class="string">&quot;include_client_id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_client_id)
             .field(<span class="string">&quot;send_if_empty&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.send_if_empty)
             .field(<span class="string">&quot;precise_timestamps&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.precise_timestamps)
+            .field(<span class="string">&quot;include_info_sections&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_info_sections)
             .field(<span class="string">&quot;reason_codes&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.reason_codes)
             .finish()
     }
@@ -271,6 +289,7 @@
         include_client_id: bool,
         send_if_empty: bool,
         precise_timestamps: bool,
+        include_info_sections: bool,
         reason_codes: Vec&lt;String&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>this = <span class="self">Self</span>(Arc::new(InnerPing {
@@ -278,6 +297,7 @@
             include_client_id,
             send_if_empty,
             precise_timestamps,
+            include_info_sections,
             reason_codes,
         }));
 
@@ -302,6 +322,10 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>precise_timestamps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.<span class="number">0</span>.precise_timestamps
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>include_info_sections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.<span class="number">0</span>.include_info_sections
     }
 
     <span class="doccomment">/// Submits the ping for eventual uploading.
@@ -396,13 +420,17 @@
                     // so both scenarios should be impossible.
                     </span><span class="kw">let </span>content =
                         ::serde_json::to_string(<span class="kw-2">&amp;</span>ping.content).expect(<span class="string">&quot;ping serialization failed&quot;</span>);
-                    glean.upload_manager.enqueue_ping(
-                        glean,
-                        ping.doc_id,
-                        ping.url_path,
-                        <span class="kw-2">&amp;</span>content,
-                        <span class="prelude-val">Some</span>(ping.headers),
-                    );
+                    <span class="comment">// TODO: Shouldn&#39;t we consolidate on a single collected Ping representation?
+                    </span><span class="kw">let </span>ping = PingPayload {
+                        document_id: ping.doc_id.to_string(),
+                        upload_path: ping.url_path.to_string(),
+                        json_body: content,
+                        headers: <span class="prelude-val">Some</span>(ping.headers),
+                        body_has_info_sections: <span class="self">self</span>.<span class="number">0</span>.include_info_sections,
+                        ping_name: <span class="self">self</span>.<span class="number">0</span>.name.to_string(),
+                    };
+
+                    glean.upload_manager.enqueue_ping(glean, ping);
                     <span class="kw">return </span><span class="bool-val">true</span>;
                 }
 

@@ -287,6 +287,31 @@
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
 <a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -351,6 +376,8 @@
     body: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
     headers: HeaderMap,
     body_max_size: usize,
+    body_has_info_sections: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
 <span class="kw">impl </span>Builder {
@@ -376,6 +403,8 @@
             body: <span class="prelude-val">None</span>,
             headers,
             body_max_size,
+            body_has_info_sections: <span class="prelude-val">None</span>,
+            ping_name: <span class="prelude-val">None</span>,
         }
     }
 
@@ -427,6 +456,18 @@
         <span class="self">self
     </span>}
 
+    <span class="doccomment">/// Sets whether the request body has {client|ping}_info sections.
+    </span><span class="kw">pub fn </span>body_has_info_sections(<span class="kw-2">mut </span><span class="self">self</span>, body_has_info_sections: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.body_has_info_sections = <span class="prelude-val">Some</span>(body_has_info_sections);
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Sets the ping&#39;s name aka doctype.
+    </span><span class="kw">pub fn </span>ping_name&lt;S: Into&lt;String&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, ping_name: S) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.ping_name = <span class="prelude-val">Some</span>(ping_name.into());
+        <span class="self">self
+    </span>}
+
     <span class="doccomment">/// Sets a header for this request.
     </span><span class="kw">pub fn </span>header&lt;S: Into&lt;String&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, key: S, value: S) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.headers.insert(key.into(), value.into());
@@ -463,6 +504,12 @@
                 .expect(<span class="string">&quot;path must be set before attempting to build PingRequest&quot;</span>),
             body,
             headers: <span class="self">self</span>.headers,
+            body_has_info_sections: <span class="self">self</span>.body_has_info_sections.expect(
+                <span class="string">&quot;body_has_info_sections must be set before attempting to build PingRequest&quot;</span>,
+            ),
+            ping_name: <span class="self">self
+                </span>.ping_name
+                .expect(<span class="string">&quot;ping_name must be set before attempting to build PingRequest&quot;</span>),
         })
     }
 }
@@ -481,6 +528,10 @@
     </span><span class="kw">pub </span>body: Vec&lt;u8&gt;,
     <span class="doccomment">/// A map with all the headers to be sent with the request.
     </span><span class="kw">pub </span>headers: HeaderMap,
+    <span class="doccomment">/// Whether the body has {client|ping}_info sections.
+    </span><span class="kw">pub </span>body_has_info_sections: bool,
+    <span class="doccomment">/// The ping&#39;s name. Likely also somewhere in `path`.
+    </span><span class="kw">pub </span>ping_name: String,
 }
 
 <span class="kw">impl </span>PingRequest {
@@ -497,13 +548,8 @@
 
     <span class="doccomment">/// Verifies if current request is for a deletion-request ping.
     </span><span class="kw">pub fn </span>is_deletion_request(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="comment">// The path format should be `/submit/&lt;app_id&gt;/&lt;ping_name&gt;/&lt;schema_version/&lt;doc_id&gt;`
-        </span><span class="self">self</span>.path
-            .split(<span class="string">&#39;/&#39;</span>)
-            .nth(<span class="number">3</span>)
-            .map(|url| url == <span class="string">&quot;deletion-request&quot;</span>)
-            .unwrap_or(<span class="bool-val">false</span>)
-    }
+        <span class="self">self</span>.ping_name == <span class="string">&quot;deletion-request&quot;
+    </span>}
 
     <span class="doccomment">/// Decompresses and pretty-format the ping payload
     ///
@@ -546,11 +592,15 @@
             .document_id(<span class="string">&quot;woop&quot;</span>)
             .path(<span class="string">&quot;/random/path/doesnt/matter&quot;</span>)
             .body(<span class="string">&quot;{}&quot;</span>)
+            .body_has_info_sections(<span class="bool-val">false</span>)
+            .ping_name(<span class="string">&quot;whatevs&quot;</span>)
             .build()
             .unwrap();
 
         <span class="macro">assert_eq!</span>(request.document_id, <span class="string">&quot;woop&quot;</span>);
         <span class="macro">assert_eq!</span>(request.path, <span class="string">&quot;/random/path/doesnt/matter&quot;</span>);
+        <span class="macro">assert!</span>(!request.body_has_info_sections);
+        <span class="macro">assert_eq!</span>(request.ping_name, <span class="string">&quot;whatevs&quot;</span>);
 
         <span class="comment">// Make sure all the expected headers were added.
         </span><span class="macro">assert!</span>(request.headers.contains_key(<span class="string">&quot;X-Telemetry-Agent&quot;</span>));

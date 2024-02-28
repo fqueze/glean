@@ -418,6 +418,46 @@
 <a href="#418" id="418">418</a>
 <a href="#419" id="419">419</a>
 <a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -429,15 +469,28 @@
 <span class="kw">use </span>std::io::{BufRead, BufReader};
 <span class="kw">use </span>std::path::{Path, PathBuf};
 
-<span class="kw">use </span>serde::Deserialize;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>uuid::Uuid;
 
 <span class="kw">use </span><span class="kw">super</span>::request::HeaderMap;
 <span class="kw">use crate</span>::{DELETION_REQUEST_PINGS_DIRECTORY, PENDING_PINGS_DIRECTORY};
 
 <span class="doccomment">/// A representation of the data extracted from a ping file,
-/// this will contain the document_id, path, JSON encoded body of a ping and the persisted headers.
-</span><span class="kw">pub type </span>PingPayload = (String, String, String, <span class="prelude-ty">Option</span>&lt;HeaderMap&gt;);
+</span><span class="attr">#[derive(Clone, Debug, Default)]
+</span><span class="kw">pub struct </span>PingPayload {
+    <span class="doccomment">/// The ping&#39;s doc_id.
+    </span><span class="kw">pub </span>document_id: String,
+    <span class="doccomment">/// The path to upload the ping to.
+    </span><span class="kw">pub </span>upload_path: String,
+    <span class="doccomment">/// The ping body as JSON-encoded string.
+    </span><span class="kw">pub </span>json_body: String,
+    <span class="doccomment">/// HTTP headers to include in the upload request.
+    </span><span class="kw">pub </span>headers: <span class="prelude-ty">Option</span>&lt;HeaderMap&gt;,
+    <span class="doccomment">/// Whether the ping body contains {client|ping}_info
+    </span><span class="kw">pub </span>body_has_info_sections: bool,
+    <span class="doccomment">/// The ping&#39;s name. (Also likely in the upload_path.)
+    </span><span class="kw">pub </span>ping_name: String,
+}
 
 <span class="doccomment">/// A struct to hold the result of scanning all pings directories.
 </span><span class="attr">#[derive(Clone, Debug, Default)]
@@ -482,20 +535,28 @@
     }
 }
 
+<span class="doccomment">/// A ping&#39;s metadata, as (optionally) represented on disk.
+///
+/// Anything that isn&#39;t the upload path or the ping body.
+</span><span class="attr">#[derive(Default, Deserialize, Serialize)]
+</span><span class="kw">pub struct </span>PingMetadata {
+    <span class="doccomment">/// HTTP headers to include when uploading the ping.
+    </span><span class="kw">pub </span>headers: <span class="prelude-ty">Option</span>&lt;HeaderMap&gt;,
+    <span class="doccomment">/// Whether the body has {client|ping}_info sections.
+    </span><span class="kw">pub </span>body_has_info_sections: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// The name of the ping.
+    </span><span class="kw">pub </span>ping_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+}
+
 <span class="doccomment">/// Processes a ping&#39;s metadata.
 ///
 /// The metadata is an optional third line in the ping file,
 /// currently it contains only additonal headers to be added to each ping request.
 /// Therefore, we will process the contents of this line
 /// and return a HeaderMap of the persisted headers.
-</span><span class="kw">fn </span>process_metadata(path: <span class="kw-2">&amp;</span>str, metadata: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;HeaderMap&gt; {
-    <span class="attr">#[derive(Deserialize)]
-    </span><span class="kw">struct </span>PingMetadata {
-        <span class="kw">pub </span>headers: HeaderMap,
-    }
-
+</span><span class="kw">fn </span>process_metadata(path: <span class="kw-2">&amp;</span>str, metadata: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;PingMetadata&gt; {
     <span class="kw">if let </span><span class="prelude-val">Ok</span>(metadata) = serde_json::from_str::&lt;PingMetadata&gt;(metadata) {
-        <span class="kw">return </span><span class="prelude-val">Some</span>(metadata.headers);
+        <span class="kw">return </span><span class="prelude-val">Some</span>(metadata);
     } <span class="kw">else </span>{
         <span class="macro">log::warn!</span>(<span class="string">&quot;Error while parsing ping metadata: {}&quot;</span>, path);
     }
@@ -591,8 +652,23 @@
         <span class="kw">if let </span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(path)), <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(body)), <span class="prelude-val">Ok</span>(metadata)) =
             (lines.next(), lines.next(), lines.next().transpose())
         {
-            <span class="kw">let </span>headers = metadata.and_then(|m| process_metadata(<span class="kw-2">&amp;</span>path, <span class="kw-2">&amp;</span>m));
-            <span class="kw">return </span><span class="prelude-val">Some</span>((document_id.into(), path, body, headers));
+            <span class="kw">let </span>PingMetadata {
+                headers,
+                body_has_info_sections,
+                ping_name,
+            } = metadata
+                .and_then(|m| process_metadata(<span class="kw-2">&amp;</span>path, <span class="kw-2">&amp;</span>m))
+                .unwrap_or_default();
+            <span class="kw">let </span>ping_name =
+                ping_name.unwrap_or_else(|| path.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap_or(<span class="string">&quot;&quot;</span>).into());
+            <span class="kw">return </span><span class="prelude-val">Some</span>(PingPayload {
+                document_id: document_id.into(),
+                upload_path: path,
+                json_body: body,
+                headers,
+                body_has_info_sections: body_has_info_sections.unwrap_or(<span class="bool-val">true</span>),
+                ping_name,
+            });
         } <span class="kw">else </span>{
             <span class="macro">log::warn!</span>(
                 <span class="string">&quot;Error processing ping file: {}. Ping file is not formatted as expected.&quot;</span>,
@@ -723,7 +799,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory
@@ -740,7 +816,8 @@
 
         <span class="comment">// Verify request was returned for the &quot;test&quot; ping
         </span><span class="kw">let </span>ping = <span class="kw-2">&amp;</span>data.pending_pings[<span class="number">0</span>].<span class="number">1</span>;
-        <span class="kw">let </span>request_ping_type = ping.<span class="number">1</span>.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="kw">let </span>request_ping_type = ping.upload_path.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="macro">assert_eq!</span>(request_ping_type, ping.ping_name);
         <span class="macro">assert_eq!</span>(request_ping_type, <span class="string">&quot;test&quot;</span>);
     }
 
@@ -749,7 +826,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory
@@ -772,7 +849,8 @@
 
         <span class="comment">// Verify request was returned for the &quot;test&quot; ping
         </span><span class="kw">let </span>ping = <span class="kw-2">&amp;</span>data.pending_pings[<span class="number">0</span>].<span class="number">1</span>;
-        <span class="kw">let </span>request_ping_type = ping.<span class="number">1</span>.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="kw">let </span>request_ping_type = ping.upload_path.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="macro">assert_eq!</span>(request_ping_type, ping.ping_name);
         <span class="macro">assert_eq!</span>(request_ping_type, <span class="string">&quot;test&quot;</span>);
 
         <span class="comment">// Verify that file was indeed deleted
@@ -784,7 +862,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">&quot;test&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[]);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory
@@ -807,7 +885,8 @@
 
         <span class="comment">// Verify request was returned for the &quot;test&quot; ping
         </span><span class="kw">let </span>ping = <span class="kw-2">&amp;</span>data.pending_pings[<span class="number">0</span>].<span class="number">1</span>;
-        <span class="kw">let </span>request_ping_type = ping.<span class="number">1</span>.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="kw">let </span>request_ping_type = ping.upload_path.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="macro">assert_eq!</span>(request_ping_type, ping.ping_name);
         <span class="macro">assert_eq!</span>(request_ping_type, <span class="string">&quot;test&quot;</span>);
 
         <span class="comment">// Verify that file was indeed deleted
@@ -834,7 +913,8 @@
 
         <span class="comment">// Verify request was returned for the &quot;deletion-request&quot; ping
         </span><span class="kw">let </span>ping = <span class="kw-2">&amp;</span>data.deletion_request_pings[<span class="number">0</span>].<span class="number">1</span>;
-        <span class="kw">let </span>request_ping_type = ping.<span class="number">1</span>.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="kw">let </span>request_ping_type = ping.upload_path.split(<span class="string">&#39;/&#39;</span>).nth(<span class="number">3</span>).unwrap();
+        <span class="macro">assert_eq!</span>(request_ping_type, ping.ping_name);
         <span class="macro">assert_eq!</span>(request_ping_type, <span class="string">&quot;deletion-request&quot;</span>);
     }
 }

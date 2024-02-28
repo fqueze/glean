@@ -409,6 +409,20 @@
 <a href="#409" id="409">409</a>
 <a href="#410" id="410">410</a>
 <a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -425,7 +439,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::common_metric_data::{CommonMetricData, Lifetime};
 <span class="kw">use </span><span class="kw">crate</span>::metrics::{CounterMetric, DatetimeMetric, Metric, MetricType, PingType, TimeUnit};
 <span class="kw">use </span><span class="kw">crate</span>::storage::{StorageManager, INTERNAL_STORAGE};
-<span class="kw">use </span><span class="kw">crate</span>::upload::HeaderMap;
+<span class="kw">use </span><span class="kw">crate</span>::upload::{HeaderMap, PingMetadata};
 <span class="kw">use </span><span class="kw">crate</span>::util::{get_iso_time_string, local_now_with_offset};
 <span class="kw">use crate</span>::{Glean, <span class="prelude-ty">Result</span>, DELETION_REQUEST_PINGS_DIRECTORY, PENDING_PINGS_DIRECTORY};
 
@@ -441,6 +455,8 @@
     </span><span class="kw">pub </span>content: JsonValue,
     <span class="doccomment">/// The headers to upload with the payload.
     </span><span class="kw">pub </span>headers: HeaderMap,
+    <span class="doccomment">/// Whether the content contains {client|ping}_info sections.
+    </span><span class="kw">pub </span>includes_info_sections: bool,
 }
 
 <span class="doccomment">/// Collect a ping&#39;s data, assemble it into its full payload and store it on disk.
@@ -648,9 +664,9 @@
             .snapshot_as_json(glean, ping.name(), <span class="bool-val">true</span>);
 
         <span class="comment">// Due to the way the experimentation identifier could link datasets that are intentionally unlinked,
-        // it will not be included in pings that specifically exclude the Glean client-id and those pings that
-        // should not be sent if empty.
-        </span><span class="kw">if </span>(!ping.include_client_id() || !ping.send_if_empty())
+        // it will not be included in pings that specifically exclude the Glean client-id, those pings that
+        // should not be sent if empty, or pings that exclude the {client|ping}_info sections wholesale.
+        </span><span class="kw">if </span>(!ping.include_client_id() || !ping.send_if_empty() || !ping.include_info_sections())
             &amp;&amp; glean.test_get_experimentation_id().is_some()
             &amp;&amp; metrics_data.is_some()
         {
@@ -696,13 +712,18 @@
             TimeUnit::Minute
         };
 
-        <span class="kw">let </span>ping_info = <span class="self">self</span>.get_ping_info(glean, ping.name(), reason, precision);
-        <span class="kw">let </span>client_info = <span class="self">self</span>.get_client_info(glean, ping.include_client_id());
+        <span class="kw">let </span><span class="kw-2">mut </span>json = <span class="kw">if </span>ping.include_info_sections() {
+            <span class="kw">let </span>ping_info = <span class="self">self</span>.get_ping_info(glean, ping.name(), reason, precision);
+            <span class="kw">let </span>client_info = <span class="self">self</span>.get_client_info(glean, ping.include_client_id());
 
-        <span class="kw">let </span><span class="kw-2">mut </span>json = <span class="macro">json!</span>({
-            <span class="string">&quot;ping_info&quot;</span>: ping_info,
-            <span class="string">&quot;client_info&quot;</span>: client_info
-        });
+            <span class="macro">json!</span>({
+                <span class="string">&quot;ping_info&quot;</span>: ping_info,
+                <span class="string">&quot;client_info&quot;</span>: client_info
+            })
+        } <span class="kw">else </span>{
+            <span class="macro">json!</span>({})
+        };
+
         <span class="kw">let </span>json_obj = json.as_object_mut()<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(metrics_data) = metrics_data {
             json_obj.insert(<span class="string">&quot;metrics&quot;</span>.to_string(), metrics_data);
@@ -717,6 +738,7 @@
             doc_id,
             url_path,
             headers: <span class="self">self</span>.get_headers(glean),
+            includes_info_sections: ping.include_info_sections(),
         })
     }
 
@@ -766,11 +788,17 @@
             file.write_all(ping.url_path.as_bytes())<span class="question-mark">?</span>;
             file.write_all(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
             file.write_all(::serde_json::to_string(<span class="kw-2">&amp;</span>ping.content)<span class="question-mark">?</span>.as_bytes())<span class="question-mark">?</span>;
-            <span class="kw">if </span>!ping.headers.is_empty() {
-                file.write_all(<span class="string">b&quot;\n{\&quot;headers\&quot;:&quot;</span>)<span class="question-mark">?</span>;
-                file.write_all(::serde_json::to_string(<span class="kw-2">&amp;</span>ping.headers)<span class="question-mark">?</span>.as_bytes())<span class="question-mark">?</span>;
-                file.write_all(<span class="string">b&quot;}&quot;</span>)<span class="question-mark">?</span>;
-            }
+            file.write_all(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
+            <span class="kw">let </span>metadata = PingMetadata {
+                <span class="comment">// We don&#39;t actually need to clone the headers except to match PingMetadata&#39;s ownership.
+                // But since we&#39;re going to write a file to disk in a sec,
+                // and HeaderMaps tend to have only like two things in them, tops,
+                // the cost is bearable.
+                </span>headers: <span class="prelude-val">Some</span>(ping.headers.clone()),
+                body_has_info_sections: <span class="prelude-val">Some</span>(ping.includes_info_sections),
+                ping_name: <span class="prelude-val">Some</span>(ping.name.to_string()),
+            };
+            file.write_all(::serde_json::to_string(<span class="kw-2">&amp;</span>metadata)<span class="question-mark">?</span>.as_bytes())<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = std::fs::rename(<span class="kw-2">&amp;</span>temp_ping_path, <span class="kw-2">&amp;</span>ping_path) {

@@ -2171,12 +2171,15 @@ that are assembled out of the box without any developer intervention.</p>
 <ul>
 <li>
 <p>The <a href="user/pings/index.html#the-ping_info-section"><code>ping_info</code> section</a> contains core metadata
-that is included in <strong>every</strong> ping.</p>
+that is included in every ping that doesn't set the
+<code>metadata.include_info_sections</code> property to <code>false</code>.</p>
 </li>
 <li>
 <p>The <a href="user/pings/index.html#the-client_info-section"><code>client_info</code> section</a> contains information that identifies the client.
-It is included in most pings (including all built-in pings), but may be excluded from pings
-where we don't want to connect client information with the other metrics in the ping.</p>
+It is included in every ping that doesn't set the
+<code>metadata.include_info_sections</code> property to <code>false</code>.
+When included, it contains a persistent client identifier <code>client_id</code>,
+except when the <code>include_client_id</code> property is set to <code>false</code>.</p>
 </li>
 </ul>
 <p>The following keys are only present if any metrics or events were recorded for the given ping:</p>
@@ -2194,7 +2197,8 @@ under which is data for each metric.</p>
 for more details for each metric type in the <code>metrics</code> and <code>events</code> section.</p>
 <h3 id="the-ping_info-section"><a class="header" href="#the-ping_info-section">The <code>ping_info</code> section</a></h3>
 <p>Metadata about the ping itself.
-This section is included in <strong>every</strong> ping.</p>
+This section is included in every ping that doesn't set the
+<code>metadata.include_info_sections</code> property to <code>false</code>.</p>
 <p>The following fields are included in the <code>ping_info</code> section.
 Optional fields are marked accordingly.</p>
 <h4 id="seq"><a class="header" href="#seq"><code>seq</code></a></h4>
@@ -2240,6 +2244,8 @@ on how to record experiments data.</p>
 The data is provided by the embedding application or automatically fetched by the Glean SDK.
 It is collected at initialization time and sent in every ping afterwards.
 For historical reasons it contains metrics that are only useful on a certain platform.</p>
+<p>This section is included in every ping that doesn't set the
+<code>metadata.include_info_sections</code> property to <code>false</code>.</p>
 <div class="special-quote special-quote-info fa fa-info-circle"></div>
 <h5 id="additional-metrics-require-a-proposal"><a class="header" href="#additional-metrics-require-a-proposal">Additional metrics require a proposal</a></h5>
 <blockquote>
@@ -11696,12 +11702,13 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <ul>
 <li>General
 <ul>
-<li>Update <code>glean_parser</code> to v12.0.1 (<a href="https://github.com/mozilla/glean_parser/releases/tag/v12.0.0">release notes</a>)</li>
+<li>Update <code>glean_parser</code> to v13.0.0 (<a href="https://github.com/mozilla/glean_parser/releases/tag/v13.0.0">release notes</a>)</li>
 </ul>
 </li>
 <li>Rust
 <ul>
 <li>New metric type: Object (<a href="https://github.com/mozilla/glean/pull/2489">#2489</a>)</li>
+<li>BREAKING CHANGE: Support pings without <code>{client|ping}_info</code> sections (<a href="https://github.com/mozilla/glean/pull/2756">#2756</a>)</li>
 </ul>
 </li>
 <li>Android
