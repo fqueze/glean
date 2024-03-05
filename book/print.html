@@ -14361,10 +14361,13 @@ This is a major milestone in using a cross-platform implementation of Glean on t
 <h3 id="general"><a class="header" href="#general">General</a></h3>
 <p>First testing release.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/sdk.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes-1"><a class="header" href="#unreleased-changes-1">Unreleased changes</a></h1>
-<p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0...main">Full changelog</a></p>
+<p><a href="https://github.com/mozilla/glean.js/compare/v4.1.0-pre.0...main">Full changelog</a></p>
+<h1 id="v410-pre0-2024-03-05"><a class="header" href="#v410-pre0-2024-03-05">v4.1.0-pre.0 (2024-03-05)</a></h1>
+<p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0...v4.1.0-pre.0">Full changelog</a></p>
 <ul>
 <li><a href="https://github.com/mozilla/glean.js/pull/1866">#1866</a>: Added a new uploader that falls back to <code>fetch</code> if <code>navigator.sendBeacon</code> fails. </li>
 <li><a href="https://github.com/mozilla/glean.js/pull/1876">#1876</a>: <strong>BREAKING CHANGE</strong>: <code>navigator.sendBeacon</code> with fallback to <code>fetch</code> (see #1866) is now the default uploader. This can be changed manually.</li>
+<li><a href="https://github.com/mozilla/glean.js/pull/1850">#1850</a>: Automatically record basic session information (<code>session_id</code> &amp; <code>session_count</code>) for web properties.</li>
 </ul>
 <h1 id="v400-2024-01-24"><a class="header" href="#v400-2024-01-24">v4.0.0 (2024-01-24)</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0-pre.3...v4.0.0">Full changelog</a></p>
@@ -14374,15 +14377,8 @@ This is a major milestone in using a cross-platform implementation of Glean on t
 <h1 id="v400-pre3-2023-12-22"><a class="header" href="#v400-pre3-2023-12-22">v4.0.0-pre.3 (2023-12-22)</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0-pre.2...v4.0.0-pre.3">Full changelog</a></p>
 <ul>
-<li>
-<p><a href="https://github.com/mozilla/glean.js/pull/1848">#1848</a>: Support for automatically collecting element click events (first version)</p>
-</li>
-<li>
-<p><a href="https://github.com/mozilla/glean.js/pull/1849">#1849</a>: Truncate event extra strings to 500 bytes. This also updates other string-based metrics to truncate based on max bytes rather than a set number of characters.</p>
-</li>
-<li>
-<p><a href="https://github.com/mozilla/glean.js/pull/1850">#1850</a>: Automatically record basic session information (<code>session_id</code> &amp; <code>session_count</code>) for web properties.</p>
-</li>
+<li><a href="https://github.com/mozilla/glean.js/pull/1848">#1848</a>: Support for automatically collecting element click events (first version)</li>
+<li><a href="https://github.com/mozilla/glean.js/pull/1849">#1849</a>: Truncate event extra strings to 500 bytes. This also updates other string-based metrics to truncate based on max bytes rather than a set number of characters.</li>
 </ul>
 <h1 id="v400-pre2-2023-12-06"><a class="header" href="#v400-pre2-2023-12-06">v4.0.0-pre.2 (2023-12-06)</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v4.0.0-pre.1...v4.0.0-pre.2">Full changelog</a></p>

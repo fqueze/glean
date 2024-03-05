@@ -38,7 +38,6 @@ This module contains a ping uploader based on the Python stdlib&#39;s http.clien
 module.
 &#34;&#34;&#34;
 
-
 import http.client
 import logging
 import socket
@@ -58,7 +57,9 @@ class HttpClientUploader(base_uploader.BaseUploader):
     _DEFAULT_TIMEOUT = 10
 
     @classmethod
-    def upload(cls, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
+    def upload(
+        cls, url: str, data: bytes, headers: Dict[str, str]
+    ) -&gt; Union[
         UploadResult,
         UploadResult.UNRECOVERABLE_FAILURE,
         UploadResult.RECOVERABLE_FAILURE,
@@ -150,7 +151,9 @@ to the user-provided delegate.</p></div>
     _DEFAULT_TIMEOUT = 10
 
     @classmethod
-    def upload(cls, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
+    def upload(
+        cls, url: str, data: bytes, headers: Dict[str, str]
+    ) -&gt; Union[
         UploadResult,
         UploadResult.UNRECOVERABLE_FAILURE,
         UploadResult.RECOVERABLE_FAILURE,
@@ -240,7 +243,9 @@ to the user-provided delegate.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def upload(cls, url: str, data: bytes, headers: Dict[str, str]) -&gt; Union[
+def upload(
+    cls, url: str, data: bytes, headers: Dict[str, str]
+) -&gt; Union[
     UploadResult,
     UploadResult.UNRECOVERABLE_FAILURE,
     UploadResult.RECOVERABLE_FAILURE,

@@ -228,14 +228,13 @@ logging.basicConfig(level=logging.DEBUG)
 <h2 id="linting-formatting-and-type-checking"><a class="header" href="#linting-formatting-and-type-checking">Linting, formatting and type checking</a></h2>
 <p>The Glean Python bindings use the following tools:</p>
 <ul>
-<li>Linting: <a href="http://flake8.pycqa.org/en/latest/">flake8</a></li>
-<li>Formatting: <a href="https://black.readthedocs.io/en/stable/">black</a></li>
+<li>Linting/Formatting: <a href="https://docs.astral.sh/ruff/">ruff</a></li>
 <li>Type-checking: <a href="http://mypy-lang.org/">mypy</a></li>
 </ul>
 <h3 id="manual-method-3"><a class="header" href="#manual-method-3">Manual method</a></h3>
 <pre><code class="language-bash">$ cd glean-core/python
-$ flake8 glean tests
-$ black glean tests
+$ ruff check glean tests
+$ ruff format glean tests
 $ mypy glean
 </code></pre>
 <h3 id="makefile-method-3"><a class="header" href="#makefile-method-3">Makefile method</a></h3>
