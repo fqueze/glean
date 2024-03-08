@@ -7639,14 +7639,7 @@ void onPageLoaded(Event e) {
 }
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">import Glean
-
-func onPageLoaded() {
-    Pages.pageLoad.accumulateSamples(samples)
-}
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
 <div data-lang="Python" class="tab">
 <pre><code class="language-Python">from glean import load_metrics
 metrics = load_metrics(&quot;metrics.yaml&quot;)
@@ -7657,7 +7650,12 @@ class PageHandler:
 </code></pre>
 </div>
 <div data-lang="Rust" class="tab">
-<p>This API is not currently exposed in Rust, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1829745">Bug 1829745</a>.</p>
+<pre><code class="language-Rust">use glean_metrics::pages;
+
+fn on_page_loaded() {
+    pages::page_load.accumulate_samples(samples);
+}
+</code></pre>
 </div>
 <div data-lang="JavaScript" class="tab">
 <pre><code class="language-Javascript">import * as pages from &quot;./path/to/generated/files/pages.js&quot;;
@@ -7668,7 +7666,75 @@ function onPageLoaded() {
 </code></pre>
 </div>
 <div data-lang="Firefox Desktop" class="tab">
-<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1829745">Bug 1829745</a>.</p>
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::pages::page_load.AccumulateRawSamples(sample);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
+</div>
+</div>
+</div>
+<h3 id="accumulatesinglesample"><a class="header" href="#accumulatesinglesample"><code>accumulateSingleSample</code></a></h3>
+<p>Accumulates a single signed sample and appends it to the metric. Prefer this
+for the common use case of having a single value to avoid having to pass
+a collection over a foreign language interface.</p>
+<p>A signed value is required so that the platform-specific code can provide 
+us with a 64 bit signed integer if no <code>u64</code> comparable type is available. 
+This will take care of filtering and reporting errors for a negative
+sample.</p>
+<p>Please note that this assumes that the provided sample is already in
+the &quot;unit&quot; declared by the instance of the metric type (e.g. if the
+instance this method was called on is using <code>TimeUnit::Second</code>, then
+<code>sample</code> is assumed to be in that unit).</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Pages
+
+fun onPageLoaded(e: Event) {
+    Pages.pageLoad.accumulateSingleSample(sample)
+}
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Pages;
+
+void onPageLoaded(Event e) {
+    Pages.INSTANCE.pageLoad().accumulateSingleSample(sample);
+}
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+class PageHandler:
+    def on_page_loaded(self, event):
+        metrics.pages.page_load.accumulate_single_sample(sample)
+</code></pre>
+</div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">use glean_metrics::pages;
+
+fn on_page_loaded() {
+    pages::page_load.accumulate_single_sample(sample);
+}
+</code></pre>
+</div>
+<div data-lang="JavaScript" class="tab">
+<pre><code class="language-Javascript">import * as pages from &quot;./path/to/generated/files/pages.js&quot;;
+
+function onPageLoaded() {
+    pages.pageLoad.accumulateSingleSample(sample);
+}
+</code></pre>
+</div>
+<div data-lang="Firefox Desktop" class="tab">
+<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1884183">Bug 1884183</a>.</p>
 </div>
 </div>
 </div>
@@ -7676,15 +7742,10 @@ function onPageLoaded() {
 <ul>
 <li>Samples are limited to the maximum value for the given time unit.</li>
 <li>Only non-negative values may be recorded (<code>&gt;= 0</code>).</li>
-</ul>
-<h4 id="recorded-errors-13"><a class="header" href="#recorded-errors-13">Recorded Errors</a></h4>
-<ul>
 <li>Negative values are discarded and an <code>ErrorType::InvalidValue</code> is generated for each instance.</li>
 <li>Samples that are longer than maximum sample time for the given unit generate an <code>ErrorType::InvalidOverflow</code> error for each instance.</li>
 </ul>
-</div>
-</div>
-<h4 id="recorded-errors-14"><a class="header" href="#recorded-errors-14">Recorded errors</a></h4>
+<h4 id="recorded-errors-13"><a class="header" href="#recorded-errors-13">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: If recording a negative timespan.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_state</code></a>: If a non-existing/stopped timer is stopped again.</li>
@@ -8174,7 +8235,7 @@ mozilla::glean::memory::heap_allocated.Accumulate(bytes / 1024);
 </div>
 </div>
 </div>
-<h4 id="recorded-errors-15"><a class="header" href="#recorded-errors-15">Recorded errors</a></h4>
+<h4 id="recorded-errors-14"><a class="header" href="#recorded-errors-14">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: If recording a negative memory size.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: If recording a size larger than 1 TB.</li>
@@ -8587,7 +8648,7 @@ Glean.user.clientId.set(uuid);
 </div>
 </div>
 </div>
-<h4 id="recorded-errors-16"><a class="header" href="#recorded-errors-16">Recorded errors</a></h4>
+<h4 id="recorded-errors-15"><a class="header" href="#recorded-errors-15">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: if the value is set to a string that is not a UUID (only applies for dynamically-typed languages, such as Python).</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_type</code></a>: if a non-string or non-UUID value is given.</li>
@@ -8846,7 +8907,7 @@ search.template.setUrl(new URL(&quot;https://mysearchengine.com/&quot;));
 <div data-lang="Firefox Desktop" class="tab"></div>
 </div>
 </div>
-<h4 id="recorded-errors-17"><a class="header" href="#recorded-errors-17">Recorded errors</a></h4>
+<h4 id="recorded-errors-16"><a class="header" href="#recorded-errors-16">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>:
 <ul>
@@ -9101,7 +9162,7 @@ Glean.install.firstRun.set(value.getTime() * 1000);
 </div>
 </div>
 </div>
-<h4 id="recorded-errors-18"><a class="header" href="#recorded-errors-18">Recorded errors</a></h4>
+<h4 id="recorded-errors-17"><a class="header" href="#recorded-errors-17">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: setting the date time to an invalid value.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_type</code></a>: if a non-Date object is given.</li>
@@ -9404,7 +9465,7 @@ Glean.views.loginOpened.record(extra);
 </div>
 </div>
 </div>
-<h4 id="recorded-errors-19"><a class="header" href="#recorded-errors-19">Recorded errors</a></h4>
+<h4 id="recorded-errors-18"><a class="header" href="#recorded-errors-18">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_overflow</code></a>:
 if any of the values in the <code>extras</code> object are greater than 500 bytes in length.
@@ -9665,17 +9726,8 @@ Graphics.checkerboardPeak.accumulateSamples([23])
 Graphics.INSTANCE.checkerboardPeak().accumulateSamples(listOf(23));
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">Graphics.checkerboardPeak.accumulateSamples([23])
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-metrics.graphics.checkerboard_peak.accumulate_samples([23])
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean_metrics::graphics;
 
@@ -9700,12 +9752,48 @@ mozilla::glean::graphics::checkerboard_peak.AccumulateSamples({ 23 });
 </div>
 </div>
 </div>
+<h3 id="accumulatesinglesample-1"><a class="header" href="#accumulatesinglesample-1"><code>accumulateSingleSample</code></a></h3>
+<p>Accumulates one sample and appends it to the metric.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Graphics
+
+Graphics.checkerboardPeak.accumulateSingleSample(23)
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Graphics;
+
+Graphics.INSTANCE.checkerboardPeak().accumulateSingleSample(23);
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">use glean_metrics::graphics;
+
+graphics::checkerboard_peak.accumulate_single_sample(23);
+</code></pre>
+</div>
+<div data-lang="JavaScript" class="tab">
+<pre><code class="language-js">import * as graphics from &quot;./path/to/generated/files/graphics.js&quot;;
+
+graphics.checkerboardPeak.accumulateSingleSample(23);
+</code></pre>
+</div>
+<div data-lang="Firefox Desktop" class="tab">
+<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1884183">Bug 1884183</a>.</p>
+</div>
+</div>
+</div>
 <h4 id="limits-18"><a class="header" href="#limits-18">Limits</a></h4>
 <ul>
 <li>The maximum value of <code>bucket_count</code> is 100.</li>
 <li>Only non-negative values may be recorded (<code>&gt;= 0</code>).</li>
 </ul>
-<h4 id="recorded-errors-20"><a class="header" href="#recorded-errors-20">Recorded errors</a></h4>
+<h4 id="recorded-errors-19"><a class="header" href="#recorded-errors-19">Recorded errors</a></h4>
 <ul>
 <li><code>invalid_value</code>: If recording a negative value.</li>
 </ul>
@@ -9748,37 +9836,8 @@ assertEquals(23, snapshot.sum);
 assertEquals(1L, snapshot.count);
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">// Get snapshot.
-let snapshot = graphics.checkerboardPeak.testGetValue()
-
-// Does the sum have the expected value?
-XCTAssertEqual(23, snapshot.sum)
-
-// Does the count have the expected value?
-XCTAssertEqual(1, snapshot.count)
-
-// Buckets are indexed by their lower bound.
-XCTAssertEqual(1L, snapshot.values[19])
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-# Get snapshot.
-snapshot = metrics.graphics.checkerboard_peak.test_get_value()
-
-# Does the sum have the expected value?
-assert 23 == snapshot.sum
-
-# Does the count have the expected value?
-assert 1 == snapshot.count
-
-# Buckets are indexed by their lower bound.
-assert 1 == snapshot.values[19]
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean_metrics::graphics;
 
@@ -9846,21 +9905,8 @@ assertEquals(
 )
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">// Assert that no errors were recorded.
-XCTAssertEqual(0, Graphics.checkerboardPeak.testGetNumRecordedErrors(.invalidValue))
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-# Assert that no errors were recorded.
-assert 0 == metrics.graphics.checkerboard_peak.test_get_num_recorded_errors(
-    ErrorType.INVALID_VALUE
-)
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean::ErrorType;
 use glean_metrics::graphics;
@@ -10057,7 +10103,7 @@ mozilla::glean::display::width.Set(innerWidth);
 <ul>
 <li>Quantities must be non-negative integers or 0.</li>
 </ul>
-<h4 id="recorded-errors-21"><a class="header" href="#recorded-errors-21">Recorded errors</a></h4>
+<h4 id="recorded-errors-20"><a class="header" href="#recorded-errors-20">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: if a negative value is passed in.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_type</code></a>: if a floating point or non-number value is given.</li>
@@ -10378,7 +10424,7 @@ Glean.network.httpConnectionError.addToDenominator(1);
 </div>
 </div>
 </div>
-<h4 id="recorded-errors-22"><a class="header" href="#recorded-errors-22">Recorded errors</a></h4>
+<h4 id="recorded-errors-21"><a class="header" href="#recorded-errors-21">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: If either numerator or denominator is incremented by a negative value.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_type</code></a>: If a floating point or non-number value is given.</li>
@@ -10644,7 +10690,7 @@ article.content.set(extractedText);
 <li>Fixed maximum text length: 200 kilobytes.
 Longer text is truncated. This is measured in the number of bytes when the string is encoded in UTF-8.</li>
 </ul>
-<h4 id="recorded-errors-23"><a class="header" href="#recorded-errors-23">Recorded errors</a></h4>
+<h4 id="recorded-errors-22"><a class="header" href="#recorded-errors-22">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_overflow</code></a>: if the text is too long.</li>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_type</code></a>: if a non-string value is given.</li>
@@ -10822,7 +10868,7 @@ Glean.testOnly.balloons.set(balloons);
 <ul>
 <li>Only objects matching the specified structure will be recorded</li>
 </ul>
-<h4 id="recorded-errors-24"><a class="header" href="#recorded-errors-24">Recorded errors</a></h4>
+<h4 id="recorded-errors-23"><a class="header" href="#recorded-errors-23">Recorded errors</a></h4>
 <ul>
 <li><a href="reference/metrics/../../user/metrics/error-reporting.html"><code>invalid_value</code></a>: if the passed value doesn't match the predefined structure</li>
 </ul>
@@ -11699,6 +11745,23 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes"><a class="header" href="#unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v58.0.0...main">Full changelog</a></p>
+<ul>
+<li>Rust
+<ul>
+<li>Timing distribution and Custom distributions now expose <code>accumulate_single_sample</code>. This includes their traits and consumers that make use of them will need to implement the new functions (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1881297">Bug 1881297</a>)</li>
+</ul>
+</li>
+<li>Android
+<ul>
+<li>Timing and Custom Distributions now have a <code>accumulate_single_sample</code> API that don't require use of a collection (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1881297">Bug 1881297</a>)</li>
+</ul>
+</li>
+<li>Python
+<ul>
+<li>Timing Distributions now have both a <code>accumulate_samples</code> and <code>accumulate_single_sample</code> (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1881297">Bug 1881297</a>)</li>
+</ul>
+</li>
+</ul>
 <h1 id="v5800-2024-02-29"><a class="header" href="#v5800-2024-02-29">v58.0.0 (2024-02-29)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v57.0.0...v58.0.0">Full changelog</a></p>
 <ul>

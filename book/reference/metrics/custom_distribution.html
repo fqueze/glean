@@ -181,17 +181,8 @@ Graphics.checkerboardPeak.accumulateSamples([23])
 Graphics.INSTANCE.checkerboardPeak().accumulateSamples(listOf(23));
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">Graphics.checkerboardPeak.accumulateSamples([23])
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-metrics.graphics.checkerboard_peak.accumulate_samples([23])
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean_metrics::graphics;
 
@@ -213,6 +204,42 @@ mozilla::glean::graphics::checkerboard_peak.AccumulateSamples({ 23 });
 <p><strong>JavaScript</strong></p>
 <pre><code class="language-js">Glean.graphics.checkerboardPeak.accumulateSamples([23])
 </code></pre>
+</div>
+</div>
+</div>
+<h3 id="accumulatesinglesample"><a class="header" href="#accumulatesinglesample"><code>accumulateSingleSample</code></a></h3>
+<p>Accumulates one sample and appends it to the metric.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Graphics
+
+Graphics.checkerboardPeak.accumulateSingleSample(23)
+</code></pre>
+</div>
+<div data-lang="Java" class="tab">
+<pre><code class="language-Java">import org.mozilla.yourApplication.GleanMetrics.Graphics;
+
+Graphics.INSTANCE.checkerboardPeak().accumulateSingleSample(23);
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">use glean_metrics::graphics;
+
+graphics::checkerboard_peak.accumulate_single_sample(23);
+</code></pre>
+</div>
+<div data-lang="JavaScript" class="tab">
+<pre><code class="language-js">import * as graphics from &quot;./path/to/generated/files/graphics.js&quot;;
+
+graphics.checkerboardPeak.accumulateSingleSample(23);
+</code></pre>
+</div>
+<div data-lang="Firefox Desktop" class="tab">
+<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1884183">Bug 1884183</a>.</p>
 </div>
 </div>
 </div>
@@ -264,37 +291,8 @@ assertEquals(23, snapshot.sum);
 assertEquals(1L, snapshot.count);
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">// Get snapshot.
-let snapshot = graphics.checkerboardPeak.testGetValue()
-
-// Does the sum have the expected value?
-XCTAssertEqual(23, snapshot.sum)
-
-// Does the count have the expected value?
-XCTAssertEqual(1, snapshot.count)
-
-// Buckets are indexed by their lower bound.
-XCTAssertEqual(1L, snapshot.values[19])
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-# Get snapshot.
-snapshot = metrics.graphics.checkerboard_peak.test_get_value()
-
-# Does the sum have the expected value?
-assert 23 == snapshot.sum
-
-# Does the count have the expected value?
-assert 1 == snapshot.count
-
-# Buckets are indexed by their lower bound.
-assert 1 == snapshot.values[19]
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean_metrics::graphics;
 
@@ -362,21 +360,8 @@ assertEquals(
 )
 </code></pre>
 </div>
-<div data-lang="Swift" class="tab">
-<pre><code class="language-Swift">// Assert that no errors were recorded.
-XCTAssertEqual(0, Graphics.checkerboardPeak.testGetNumRecordedErrors(.invalidValue))
-</code></pre>
-</div>
-<div data-lang="Python" class="tab">
-<pre><code class="language-Python">from glean import load_metrics
-metrics = load_metrics(&quot;metrics.yaml&quot;)
-
-# Assert that no errors were recorded.
-assert 0 == metrics.graphics.checkerboard_peak.test_get_num_recorded_errors(
-    ErrorType.INVALID_VALUE
-)
-</code></pre>
-</div>
+<div data-lang="Swift" class="tab"></div>
+<div data-lang="Python" class="tab"></div>
 <div data-lang="Rust" class="tab">
 <pre><code class="language-Rust">use glean::ErrorType;
 use glean_metrics::graphics;

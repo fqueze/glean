@@ -106,6 +106,31 @@
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -173,6 +198,31 @@
     /// for each of them. Reports an [`ErrorType::InvalidOverflow`] error for samples that
     /// are longer than `MAX_SAMPLE_TIME`.
     </span><span class="kw">fn </span>accumulate_samples(<span class="kw-2">&amp;</span><span class="self">self</span>, samples: Vec&lt;i64&gt;);
+
+    <span class="doccomment">/// Accumulates precisely one signed sample in the metric.
+    ///
+    /// Precludes the need for a collection in the most common use case.
+    ///
+    /// Sign is required so that the platform-specific code can provide us with
+    /// a 64 bit signed integer if no `u64` comparable type is available. This
+    /// will take care of filtering and reporting errors for any provided negative
+    /// sample.
+    ///
+    /// Please note that this assumes that the provided sample is already in
+    /// the &quot;unit&quot; declared by the instance of the metric type (e.g. if the
+    /// instance this method was called on is using [`crate::TimeUnit::Second`], then
+    /// `sample` is assumed to be in that unit).
+    ///
+    /// # Arguments
+    ///
+    /// * `sample` - The singular sample to be recorded by the metric.
+    ///
+    /// ## Notes
+    ///
+    /// Discards any negative value and reports an [`ErrorType::InvalidValue`].
+    /// Reports an [`ErrorType::InvalidOverflow`] error if the sample is longer than
+    /// `MAX_SAMPLE_TIME`.
+    </span><span class="kw">fn </span>accumulate_single_sample(<span class="kw-2">&amp;</span><span class="self">self</span>, sample: i64);
 
     <span class="doccomment">/// Accumulates the provided samples in the metric.
     ///

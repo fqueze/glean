@@ -227,6 +227,25 @@
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
 <a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -313,14 +332,33 @@
     /// for each of them.
     </span><span class="kw">pub fn </span>accumulate_samples(<span class="kw-2">&amp;</span><span class="self">self</span>, samples: Vec&lt;i64&gt;) {
         <span class="kw">let </span>metric = <span class="self">self</span>.clone();
-        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| metric.accumulate_samples_sync(glean, samples))
+        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| metric.accumulate_samples_sync(glean, <span class="kw-2">&amp;</span>samples))
+    }
+
+    <span class="doccomment">/// Accumulates precisely one signed sample and appends it to the metric.
+    ///
+    /// Signed is required so that the platform-specific code can provide us with a
+    /// 64 bit signed integer if no `u64` comparable type is available. This
+    /// will take care of filtering and reporting errors.
+    ///
+    /// # Arguments
+    ///
+    /// - `sample` - The singular sample to be recorded by the metric.
+    ///
+    /// ## Notes
+    ///
+    /// Discards any negative value of `sample` and reports an
+    /// [`ErrorType::InvalidValue`](crate::ErrorType::InvalidValue).
+    </span><span class="kw">pub fn </span>accumulate_single_sample(<span class="kw-2">&amp;</span><span class="self">self</span>, sample: i64) {
+        <span class="kw">let </span>metric = <span class="self">self</span>.clone();
+        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| metric.accumulate_samples_sync(glean, <span class="kw-2">&amp;</span>[sample]))
     }
 
     <span class="doccomment">/// Accumulates the provided sample in the metric synchronously.
     ///
     /// See [`accumulate_samples`](Self::accumulate_samples) for details.
     </span><span class="attr">#[doc(hidden)]
-    </span><span class="kw">pub fn </span>accumulate_samples_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, samples: Vec&lt;i64&gt;) {
+    </span><span class="kw">pub fn </span>accumulate_samples_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, samples: <span class="kw-2">&amp;</span>[i64]) {
         <span class="kw">if </span>!<span class="self">self</span>.should_record(glean) {
             <span class="kw">return</span>;
         }
@@ -361,7 +399,7 @@
                             <span class="self">self</span>.bucket_count <span class="kw">as </span>usize,
                         )
                     };
-                    accumulate(<span class="kw-2">&amp;</span>samples, hist, Metric::CustomDistributionLinear)
+                    accumulate(samples, hist, Metric::CustomDistributionLinear)
                 }
                 HistogramType::Exponential =&gt; {
                     <span class="kw">let </span>hist = <span class="kw">if let </span><span class="prelude-val">Some</span>(Metric::CustomDistributionExponential(hist)) = old_value
@@ -374,7 +412,7 @@
                             <span class="self">self</span>.bucket_count <span class="kw">as </span>usize,
                         )
                     };
-                    accumulate(<span class="kw-2">&amp;</span>samples, hist, Metric::CustomDistributionExponential)
+                    accumulate(samples, hist, Metric::CustomDistributionExponential)
                 }
             };
 
