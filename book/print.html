@@ -11746,6 +11746,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes"><a class="header" href="#unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v58.0.0...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Enable wall clock timestamp on all events by default (<a href="https://github.com/mozilla/glean/issues/2767">#2767</a>)</li>
+</ul>
+</li>
 <li>Rust
 <ul>
 <li>Timing distribution and Custom distributions now expose <code>accumulate_single_sample</code>. This includes their traits and consumers that make use of them will need to implement the new functions (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1881297">Bug 1881297</a>)</li>

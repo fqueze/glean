@@ -253,7 +253,7 @@ the <code>pings.yaml</code> file.</p>
 <dl>
 <dt id="glean.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint: Optional[str] = None, channel: Optional[str] = None, max_events: int = 500, ping_uploader: Optional[<a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a>] = None, allow_multiprocessing: bool = True, enable_event_timestamps: bool = False, experimentation_id: Optional[str] = None)</span>
+<span>(</span><span>server_endpoint: Optional[str] = None, channel: Optional[str] = None, max_events: int = 500, ping_uploader: Optional[<a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a>] = None, allow_multiprocessing: bool = True, enable_event_timestamps: bool = True, experimentation_id: Optional[str] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Configuration values for Glean.</p>
@@ -276,7 +276,7 @@ implementation. Defaults to <code><a title="glean.net.HttpClientUploader" href="
 to offload some work (such as ping uploading).</dd>
 <dt><strong><code>enable_event_timestamps</code></strong> :&ensp;<code>bool</code></dt>
 <dd>(Experimental) Whether to add a
-wallclock timestamp to all events. Default: <code>false</code>.</dd>
+wallclock timestamp to all events. Default: <code>True</code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -294,7 +294,7 @@ wallclock timestamp to all events. Default: <code>false</code>.</dd>
         max_events: int = DEFAULT_MAX_EVENTS,
         ping_uploader: Optional[net.BaseUploader] = None,
         allow_multiprocessing: bool = True,
-        enable_event_timestamps: bool = False,
+        enable_event_timestamps: bool = True,
         experimentation_id: Optional[str] = None,
     ):
         &#34;&#34;&#34;
@@ -310,7 +310,7 @@ wallclock timestamp to all events. Default: <code>false</code>.</dd>
             allow_multiprocessing (bool): When True (default), use a subprocess
                 to offload some work (such as ping uploading).
             enable_event_timestamps (bool): (Experimental) Whether to add a
-                wallclock timestamp to all events. Default: `false`.
+                wallclock timestamp to all events. Default: `True`.
         &#34;&#34;&#34;
         if server_endpoint is None:
             server_endpoint = DEFAULT_TELEMETRY_ENDPOINT
