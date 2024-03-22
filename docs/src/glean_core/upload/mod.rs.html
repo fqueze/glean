@@ -1909,10 +1909,6 @@
 <a href="#1909" id="1909">1909</a>
 <a href="#1910" id="1910">1910</a>
 <a href="#1911" id="1911">1911</a>
-<a href="#1912" id="1912">1912</a>
-<a href="#1913" id="1913">1913</a>
-<a href="#1914" id="1914">1914</a>
-<a href="#1915" id="1915">1915</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1929,7 +1925,6 @@
 
 </span><span class="kw">use </span>std::collections::HashMap;
 <span class="kw">use </span>std::collections::VecDeque;
-<span class="kw">use </span>std::convert::TryInto;
 <span class="kw">use </span>std::path::PathBuf;
 <span class="kw">use </span>std::sync::atomic::{AtomicBool, AtomicU32, Ordering};
 <span class="kw">use </span>std::sync::{Arc, RwLock, RwLockWriteGuard};
@@ -2771,9 +2766,6 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
-    <span class="kw">use </span>std::thread;
-    <span class="kw">use </span>std::time::Duration;
-
     <span class="kw">use </span>uuid::Uuid;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;

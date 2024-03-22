@@ -1302,14 +1302,12 @@
 <a href="#1302" id="1302">1302</a>
 <a href="#1303" id="1303">1303</a>
 <a href="#1304" id="1304">1304</a>
-<a href="#1305" id="1305">1305</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 </span><span class="kw">use </span>std::cmp::Ordering;
 <span class="kw">use </span>std::collections::HashMap;
-<span class="kw">use </span>std::convert::TryFrom;
 <span class="kw">use </span>std::fs;
 <span class="kw">use </span>std::fs::{create_dir_all, File, OpenOptions};
 <span class="kw">use </span>std::io::BufRead;
@@ -1943,8 +1941,8 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::test_get_num_recorded_errors;
     <span class="kw">use </span><span class="kw">crate</span>::tests::new_glean;
-    <span class="kw">use crate</span>::{test_get_num_recorded_errors, CommonMetricData};
     <span class="kw">use </span>chrono::{TimeZone, Timelike};
 
     <span class="attr">#[test]

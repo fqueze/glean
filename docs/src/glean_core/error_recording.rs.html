@@ -236,7 +236,6 @@
 <a href="#236" id="236">236</a>
 <a href="#237" id="237">237</a>
 <a href="#238" id="238">238</a>
-<a href="#239" id="239">239</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -251,8 +250,7 @@
 //! but are not actually used directly, since the `send_in_pings` value needs to match the pings of the metric that is erroring (plus the &quot;metrics&quot; ping),
 //! not some constant value that we could define in `metrics.yaml`.
 
-</span><span class="kw">use </span>std::convert::TryFrom;
-<span class="kw">use </span>std::fmt::Display;
+</span><span class="kw">use </span>std::fmt::Display;
 
 <span class="kw">use </span><span class="kw">crate</span>::common_metric_data::CommonMetricDataInternal;
 <span class="kw">use </span><span class="kw">crate</span>::error::{Error, ErrorKind};
