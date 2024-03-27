@@ -185,6 +185,18 @@
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
 <a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -233,6 +245,8 @@
     /// be noted that this has an underlying StringMetric and so should conform to the limitations that
     /// StringMetric places on length, etc.
     </span><span class="kw">pub </span>experimentation_id: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Whether to enable internal pings. Default: true
+    </span><span class="kw">pub </span>enable_internal_pings: bool,
 }
 
 <span class="doccomment">/// Configuration builder.
@@ -279,6 +293,8 @@
     /// be noted that this has an underlying StringMetric and so should conform to the limitations that
     /// StringMetric places on length, etc.
     </span><span class="kw">pub </span>experimentation_id: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Whether to enable internal pings. Default: true
+    </span><span class="kw">pub </span>enable_internal_pings: bool,
 }
 
 <span class="kw">impl </span>Builder {
@@ -302,6 +318,7 @@
             rate_limit: <span class="prelude-val">None</span>,
             enable_event_timestamps: <span class="bool-val">true</span>,
             experimentation_id: <span class="prelude-val">None</span>,
+            enable_internal_pings: <span class="bool-val">true</span>,
         }
     }
 
@@ -321,6 +338,7 @@
             rate_limit: <span class="self">self</span>.rate_limit,
             enable_event_timestamps: <span class="self">self</span>.enable_event_timestamps,
             experimentation_id: <span class="self">self</span>.experimentation_id,
+            enable_internal_pings: <span class="self">self</span>.enable_internal_pings,
         }
     }
 
@@ -369,6 +387,12 @@
     <span class="doccomment">/// Set whether to add a wallclock timestamp to all events (experimental).
     </span><span class="kw">pub fn </span>with_experimentation_id(<span class="kw-2">mut </span><span class="self">self</span>, value: String) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.experimentation_id = <span class="prelude-val">Some</span>(value);
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Set whether to enable internal pings.
+    </span><span class="kw">pub fn </span>with_internal_pings(<span class="kw-2">mut </span><span class="self">self</span>, value: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.enable_internal_pings = value;
         <span class="self">self
     </span>}
 }

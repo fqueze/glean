@@ -521,7 +521,7 @@
     </span><span class="kw">fn </span>test_experiments_json_serialization() {
         <span class="kw">let </span>t = tempfile::tempdir().unwrap();
         <span class="kw">let </span>name = t.path().display().to_string();
-        <span class="kw">let </span>glean = Glean::with_options(<span class="kw-2">&amp;</span>name, <span class="string">&quot;org.mozilla.glean&quot;</span>, <span class="bool-val">true</span>);
+        <span class="kw">let </span>glean = Glean::with_options(<span class="kw-2">&amp;</span>name, <span class="string">&quot;org.mozilla.glean&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>);
 
         <span class="kw">let </span>extra: HashMap&lt;String, String&gt; = [(<span class="string">&quot;test-key&quot;</span>.into(), <span class="string">&quot;test-value&quot;</span>.into())]
             .iter()
@@ -550,7 +550,7 @@
     </span><span class="kw">fn </span>test_experiments_json_serialization_empty() {
         <span class="kw">let </span>t = tempfile::tempdir().unwrap();
         <span class="kw">let </span>name = t.path().display().to_string();
-        <span class="kw">let </span>glean = Glean::with_options(<span class="kw-2">&amp;</span>name, <span class="string">&quot;org.mozilla.glean&quot;</span>, <span class="bool-val">true</span>);
+        <span class="kw">let </span>glean = Glean::with_options(<span class="kw-2">&amp;</span>name, <span class="string">&quot;org.mozilla.glean&quot;</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>);
 
         <span class="kw">let </span>metric = ExperimentMetric::new(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;some-experiment&quot;</span>.to_string());
 

@@ -63,6 +63,7 @@ class Configuration:
         allow_multiprocessing: bool = True,
         enable_event_timestamps: bool = True,
         experimentation_id: Optional[str] = None,
+        enable_internal_pings: bool = True,
     ):
         &#34;&#34;&#34;
         Args:
@@ -78,6 +79,9 @@ class Configuration:
                 to offload some work (such as ping uploading).
             enable_event_timestamps (bool): (Experimental) Whether to add a
                 wallclock timestamp to all events. Default: `True`.
+            experimentation_id (string): An experimentation identifier derived
+                by the application to be sent with all pings. Default: None.
+            enable_internal_pings (bool): Whether to enable internal pings. Default: `True`.
         &#34;&#34;&#34;
         if server_endpoint is None:
             server_endpoint = DEFAULT_TELEMETRY_ENDPOINT
@@ -90,6 +94,7 @@ class Configuration:
         self._allow_multiprocessing = allow_multiprocessing
         self._enable_event_timestamps = enable_event_timestamps
         self._experimentation_id = experimentation_id
+        self._enable_internal_pings = enable_internal_pings
 
     @property
     def server_endpoint(self) -&gt; str:
@@ -129,6 +134,11 @@ class Configuration:
     def experimentation_id(self) -&gt; Optional[str]:
         &#34;&#34;&#34;An experimentation id that will be sent in all pings&#34;&#34;&#34;
         return self._experimentation_id
+
+    @property
+    def enable_internal_pings(self) -&gt; bool:
+        &#34;&#34;&#34;Whether to enable internal pings.&#34;&#34;&#34;
+        return self._enable_internal_pings
 
     @property
     def ping_uploader(self) -&gt; net.BaseUploader:
@@ -154,7 +164,7 @@ __all__ = [&#34;Configuration&#34;]</code></pre>
 <dl>
 <dt id="glean.config.Configuration"><code class="flex name class">
 <span>class <span class="ident">Configuration</span></span>
-<span>(</span><span>server_endpoint: Optional[str] = None, channel: Optional[str] = None, max_events: int = 500, ping_uploader: Optional[<a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a>] = None, allow_multiprocessing: bool = True, enable_event_timestamps: bool = True, experimentation_id: Optional[str] = None)</span>
+<span>(</span><span>server_endpoint: Optional[str] = None, channel: Optional[str] = None, max_events: int = 500, ping_uploader: Optional[<a title="glean.net.base_uploader.BaseUploader" href="net/base_uploader.html#glean.net.base_uploader.BaseUploader">BaseUploader</a>] = None, allow_multiprocessing: bool = True, enable_event_timestamps: bool = True, experimentation_id: Optional[str] = None, enable_internal_pings: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Configuration values for Glean.</p>
@@ -178,6 +188,11 @@ to offload some work (such as ping uploading).</dd>
 <dt><strong><code>enable_event_timestamps</code></strong> :&ensp;<code>bool</code></dt>
 <dd>(Experimental) Whether to add a
 wallclock timestamp to all events. Default: <code>True</code>.</dd>
+<dt><strong><code>experimentation_id</code></strong> :&ensp;<code>string</code></dt>
+<dd>An experimentation identifier derived
+by the application to be sent with all pings. Default: None.</dd>
+<dt><strong><code>enable_internal_pings</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to enable internal pings. Default: <code>True</code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -197,6 +212,7 @@ wallclock timestamp to all events. Default: <code>True</code>.</dd>
         allow_multiprocessing: bool = True,
         enable_event_timestamps: bool = True,
         experimentation_id: Optional[str] = None,
+        enable_internal_pings: bool = True,
     ):
         &#34;&#34;&#34;
         Args:
@@ -212,6 +228,9 @@ wallclock timestamp to all events. Default: <code>True</code>.</dd>
                 to offload some work (such as ping uploading).
             enable_event_timestamps (bool): (Experimental) Whether to add a
                 wallclock timestamp to all events. Default: `True`.
+            experimentation_id (string): An experimentation identifier derived
+                by the application to be sent with all pings. Default: None.
+            enable_internal_pings (bool): Whether to enable internal pings. Default: `True`.
         &#34;&#34;&#34;
         if server_endpoint is None:
             server_endpoint = DEFAULT_TELEMETRY_ENDPOINT
@@ -224,6 +243,7 @@ wallclock timestamp to all events. Default: <code>True</code>.</dd>
         self._allow_multiprocessing = allow_multiprocessing
         self._enable_event_timestamps = enable_event_timestamps
         self._experimentation_id = experimentation_id
+        self._enable_internal_pings = enable_internal_pings
 
     @property
     def server_endpoint(self) -&gt; str:
@@ -263,6 +283,11 @@ wallclock timestamp to all events. Default: <code>True</code>.</dd>
     def experimentation_id(self) -&gt; Optional[str]:
         &#34;&#34;&#34;An experimentation id that will be sent in all pings&#34;&#34;&#34;
         return self._experimentation_id
+
+    @property
+    def enable_internal_pings(self) -&gt; bool:
+        &#34;&#34;&#34;Whether to enable internal pings.&#34;&#34;&#34;
+        return self._enable_internal_pings
 
     @property
     def ping_uploader(self) -&gt; net.BaseUploader:
@@ -299,6 +324,19 @@ def channel(self) -&gt; Optional[str]:
 def enable_event_timestamps(self) -&gt; bool:
     &#34;&#34;&#34;(Experimental) Whether to add a wallclock timestamp to all events.&#34;&#34;&#34;
     return self._enable_event_timestamps</code></pre>
+</details>
+</dd>
+<dt id="glean.config.Configuration.enable_internal_pings"><code class="name">var <span class="ident">enable_internal_pings</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>Whether to enable internal pings.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def enable_internal_pings(self) -&gt; bool:
+    &#34;&#34;&#34;Whether to enable internal pings.&#34;&#34;&#34;
+    return self._enable_internal_pings</code></pre>
 </details>
 </dd>
 <dt id="glean.config.Configuration.experimentation_id"><code class="name">var <span class="ident">experimentation_id</span> : Optional[str]</code></dt>
@@ -376,6 +414,7 @@ def server_endpoint(self) -&gt; str:
 <ul class="">
 <li><code><a title="glean.config.Configuration.channel" href="#glean.config.Configuration.channel">channel</a></code></li>
 <li><code><a title="glean.config.Configuration.enable_event_timestamps" href="#glean.config.Configuration.enable_event_timestamps">enable_event_timestamps</a></code></li>
+<li><code><a title="glean.config.Configuration.enable_internal_pings" href="#glean.config.Configuration.enable_internal_pings">enable_internal_pings</a></code></li>
 <li><code><a title="glean.config.Configuration.experimentation_id" href="#glean.config.Configuration.experimentation_id">experimentation_id</a></code></li>
 <li><code><a title="glean.config.Configuration.max_events" href="#glean.config.Configuration.max_events">max_events</a></code></li>
 <li><code><a title="glean.config.Configuration.ping_uploader" href="#glean.config.Configuration.ping_uploader">ping_uploader</a></code></li>
