@@ -385,7 +385,7 @@ of the ping to retrieve the metric for.</dd>
 </dd>
 <dt id="glean.metrics.event.RecordedEvent"><code class="flex name class">
 <span>class <span class="ident">RecordedEvent</span></span>
-<span>(</span><span>timestamp: int, category: str, name: str, extra: typing.Optional[dict])</span>
+<span>(</span><span>*, timestamp: "'int'", category: "'str'", name: "'str'", extra: "'typing.Optional[dict[str, str]]'")</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -394,10 +394,12 @@ of the ping to retrieve the metric for.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class RecordedEvent:
-    timestamp: &#34;int&#34;;category: &#34;str&#34;;name: &#34;str&#34;;extra: &#34;typing.Optional[dict]&#34;;
-
+    timestamp: &#34;int&#34;
+    category: &#34;str&#34;
+    name: &#34;str&#34;
+    extra: &#34;typing.Optional[dict[str, str]]&#34;
     @typing.no_type_check
-    def __init__(self, timestamp: &#34;int&#34;, category: &#34;str&#34;, name: &#34;str&#34;, extra: &#34;typing.Optional[dict]&#34;):
+    def __init__(self, *, timestamp: &#34;int&#34;, category: &#34;str&#34;, name: &#34;str&#34;, extra: &#34;typing.Optional[dict[str, str]]&#34;):
         self.timestamp = timestamp
         self.category = category
         self.name = name
@@ -423,7 +425,7 @@ of the ping to retrieve the metric for.</dd>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="glean.metrics.event.RecordedEvent.extra"><code class="name">var <span class="ident">extra</span> : Optional[dict]</code></dt>
+<dt id="glean.metrics.event.RecordedEvent.extra"><code class="name">var <span class="ident">extra</span> : Optional[dict[str, str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>

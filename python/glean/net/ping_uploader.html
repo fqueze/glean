@@ -206,13 +206,11 @@ Protocol classes can be generic, they are defined as::</p>
 
     # Each enum variant is a nested class of the enum itself.
     class RECOVERABLE_FAILURE:
-        unused: &#34;int&#34;;
+        unused: &#34;int&#34;
 
         @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
-            
             self.unused = unused
-            
 
         def __str__(self):
             return &#34;UploadResult.RECOVERABLE_FAILURE(unused={})&#34;.format(self.unused)
@@ -223,14 +221,13 @@ Protocol classes can be generic, they are defined as::</p>
             if self.unused != other.unused:
                 return False
             return True
+    
     class UNRECOVERABLE_FAILURE:
-        unused: &#34;int&#34;;
+        unused: &#34;int&#34;
 
         @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
-            
             self.unused = unused
-            
 
         def __str__(self):
             return &#34;UploadResult.UNRECOVERABLE_FAILURE(unused={})&#34;.format(self.unused)
@@ -241,14 +238,13 @@ Protocol classes can be generic, they are defined as::</p>
             if self.unused != other.unused:
                 return False
             return True
+    
     class HTTP_STATUS:
-        code: &#34;int&#34;;
+        code: &#34;int&#34;
 
         @typing.no_type_check
         def __init__(self,code: &#34;int&#34;):
-            
             self.code = code
-            
 
         def __str__(self):
             return &#34;UploadResult.HTTP_STATUS(code={})&#34;.format(self.code)
@@ -259,14 +255,13 @@ Protocol classes can be generic, they are defined as::</p>
             if self.code != other.code:
                 return False
             return True
+    
     class DONE:
-        unused: &#34;int&#34;;
+        unused: &#34;int&#34;
 
         @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
-            
             self.unused = unused
-            
 
         def __str__(self):
             return &#34;UploadResult.DONE(unused={})&#34;.format(self.unused)
@@ -277,6 +272,7 @@ Protocol classes can be generic, they are defined as::</p>
             if self.unused != other.unused:
                 return False
             return True
+    
     
 
     # For each variant, we have an `is_NAME` method for easily checking

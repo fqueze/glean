@@ -80,6 +80,12 @@
 <a href="#80" id="80">80</a>
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
 </pre><pre class="rust"><code><span class="comment">/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -89,6 +95,7 @@
 <span class="kw">use </span>anyhow::{bail, Context};
 <span class="kw">use </span>camino::Utf8PathBuf;
 <span class="kw">use </span>uniffi::{generate_bindings, TargetLanguage};
+<span class="kw">use </span>uniffi_bindgen::BindingGeneratorDefault;
 
 <span class="kw">fn </span>parse_language(lang: <span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;uniffi::TargetLanguage&gt; {
     <span class="kw">match </span>lang {
@@ -150,10 +157,15 @@
         <span class="macro">bail!</span>(<span class="string">&quot;Need output directory.&quot;</span>)
     }
 
+    <span class="kw">let </span>generator = BindingGeneratorDefault {
+        target_languages,
+        try_format_code: <span class="bool-val">false</span>,
+    };
+
     generate_bindings(
         <span class="kw-2">&amp;</span>udl_file.unwrap(),
         config.as_deref(),
-        target_languages,
+        generator,
         out_dir.as_deref(),
         <span class="prelude-val">None</span>,
         <span class="prelude-val">Some</span>(<span class="string">&quot;glean_core&quot;</span>),
