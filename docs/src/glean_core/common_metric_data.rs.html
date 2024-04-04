@@ -146,6 +146,7 @@
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
 <a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -238,9 +239,10 @@
 
 <span class="kw">impl </span>From&lt;CommonMetricData&gt; <span class="kw">for </span>CommonMetricDataInternal {
     <span class="kw">fn </span>from(input_data: CommonMetricData) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>disabled = input_data.disabled;
         <span class="self">Self </span>{
-            inner: input_data.clone(),
-            disabled: AtomicU8::new(u8::from(input_data.disabled)),
+            inner: input_data,
+            disabled: AtomicU8::new(u8::from(disabled)),
         }
     }
 }
