@@ -1266,7 +1266,7 @@
 <span class="kw">use </span>once_cell::sync::{Lazy, OnceCell};
 <span class="kw">use </span>uuid::Uuid;
 
-<span class="kw">use </span>metrics::MetricsEnabledConfig;
+<span class="kw">use </span>metrics::RemoteSettingsConfig;
 
 <span class="kw">mod </span>common_metric_data;
 <span class="kw">mod </span>core;
@@ -2148,17 +2148,17 @@
 <span class="doccomment">/// Sets a remote configuration to override metrics&#39; default enabled/disabled
 /// state
 ///
-/// See [`core::Glean::set_metrics_enabled_config`].
-</span><span class="kw">pub fn </span>glean_set_metrics_enabled_config(json: String) {
+/// See [`core::Glean::apply_server_knobs_config`].
+</span><span class="kw">pub fn </span>glean_apply_server_knobs_config(json: String) {
     <span class="comment">// An empty config means it is not set,
     // so we avoid logging an error about it.
     </span><span class="kw">if </span>json.is_empty() {
         <span class="kw">return</span>;
     }
 
-    <span class="kw">match </span>MetricsEnabledConfig::try_from(json) {
+    <span class="kw">match </span>RemoteSettingsConfig::try_from(json) {
         <span class="prelude-val">Ok</span>(cfg) =&gt; launch_with_glean(|glean| {
-            glean.set_metrics_enabled_config(cfg);
+            glean.apply_server_knobs_config(cfg);
         }),
         <span class="prelude-val">Err</span>(e) =&gt; {
             <span class="macro">log::error!</span>(<span class="string">&quot;Error setting metrics feature config: {:?}&quot;</span>, e);

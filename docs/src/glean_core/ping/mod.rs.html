@@ -423,6 +423,9 @@
 <a href="#423" id="423">423</a>
 <a href="#424" id="424">424</a>
 <a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -457,6 +460,8 @@
     </span><span class="kw">pub </span>headers: HeaderMap,
     <span class="doccomment">/// Whether the content contains {client|ping}_info sections.
     </span><span class="kw">pub </span>includes_info_sections: bool,
+    <span class="doccomment">/// Other pings that should be scheduled when this ping is sent.
+    </span><span class="kw">pub </span>schedules_pings: Vec&lt;String&gt;,
 }
 
 <span class="doccomment">/// Collect a ping&#39;s data, assemble it into its full payload and store it on disk.
@@ -739,6 +744,7 @@
             url_path,
             headers: <span class="self">self</span>.get_headers(glean),
             includes_info_sections: ping.include_info_sections(),
+            schedules_pings: ping.schedules_pings().to_vec(),
         })
     }
 

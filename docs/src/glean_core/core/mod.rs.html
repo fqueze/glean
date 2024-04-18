@@ -995,6 +995,13 @@
 <a href="#995" id="995">995</a>
 <a href="#996" id="996">996</a>
 <a href="#997" id="997">997</a>
+<a href="#998" id="998">998</a>
+<a href="#999" id="999">999</a>
+<a href="#1000" id="1000">1000</a>
+<a href="#1001" id="1001">1001</a>
+<a href="#1002" id="1002">1002</a>
+<a href="#1003" id="1003">1003</a>
+<a href="#1004" id="1004">1004</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1013,7 +1020,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::internal_metrics::{AdditionalMetrics, CoreMetrics, DatabaseMetrics};
 <span class="kw">use </span><span class="kw">crate</span>::internal_pings::InternalPings;
 <span class="kw">use </span><span class="kw">crate</span>::metrics::{
-    <span class="self">self</span>, ExperimentMetric, Metric, MetricType, MetricsEnabledConfig, PingType, RecordedExperiment,
+    <span class="self">self</span>, ExperimentMetric, Metric, MetricType, PingType, RecordedExperiment, RemoteSettingsConfig,
 };
 <span class="kw">use </span><span class="kw">crate</span>::ping::PingMaker;
 <span class="kw">use </span><span class="kw">crate</span>::storage::{StorageManager, INTERNAL_STORAGE};
@@ -1120,7 +1127,7 @@
 ///     enable_internal_pings: true,
 /// };
 /// let mut glean = Glean::new(cfg).unwrap();
-/// let ping = PingType::new(&quot;sample&quot;, true, false, true, true, vec![]);
+/// let ping = PingType::new(&quot;sample&quot;, true, false, true, true, true, vec![], vec![]);
 /// glean.register_ping_type(&amp;ping);
 ///
 /// let call_counter: CounterMetric = CounterMetric::new(CommonMetricData {
@@ -1159,7 +1166,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) app_build: String,
     <span class="kw">pub</span>(<span class="kw">crate</span>) schedule_metrics_pings: bool,
     <span class="kw">pub</span>(<span class="kw">crate</span>) remote_settings_epoch: AtomicU8,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) remote_settings_metrics_config: Arc&lt;Mutex&lt;MetricsEnabledConfig&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) remote_settings_config: Arc&lt;Mutex&lt;RemoteSettingsConfig&gt;&gt;,
     <span class="kw">pub</span>(<span class="kw">crate</span>) with_timestamps: bool,
 }
 
@@ -1219,7 +1226,7 @@
             <span class="comment">// Subprocess doesn&#39;t use &quot;metrics&quot; pings so has no need for a scheduler.
             </span>schedule_metrics_pings: <span class="bool-val">false</span>,
             remote_settings_epoch: AtomicU8::new(<span class="number">0</span>),
-            remote_settings_metrics_config: Arc::new(Mutex::new(MetricsEnabledConfig::new())),
+            remote_settings_config: Arc::new(Mutex::new(RemoteSettingsConfig::new())),
             with_timestamps: cfg.enable_event_timestamps,
         };
 
@@ -1755,19 +1762,26 @@
             .get_value(<span class="self">self</span>, <span class="prelude-val">None</span>)
     }
 
-    <span class="doccomment">/// Set configuration to override the default metric enabled/disabled state, typically from a
+    <span class="doccomment">/// Set configuration to override the default state, typically initiated from a
     /// remote_settings experiment or rollout
     ///
     /// # Arguments
     ///
-    /// * `json` - The stringified JSON representation of a `MetricsEnabledConfig` object
-    </span><span class="kw">pub fn </span>set_metrics_enabled_config(<span class="kw-2">&amp;</span><span class="self">self</span>, cfg: MetricsEnabledConfig) {
-        <span class="comment">// Set the current MetricsEnabledConfig, keeping the lock until the epoch is
+    /// * `cfg` - The stringified JSON representation of a `RemoteSettingsConfig` object
+    </span><span class="kw">pub fn </span>apply_server_knobs_config(<span class="kw-2">&amp;</span><span class="self">self</span>, cfg: RemoteSettingsConfig) {
+        <span class="comment">// Set the current RemoteSettingsConfig, keeping the lock until the epoch is
         // updated to prevent against reading a &quot;new&quot; config but an &quot;old&quot; epoch
-        </span><span class="kw">let </span><span class="kw-2">mut </span>metric_config = <span class="self">self</span>.remote_settings_metrics_config.lock().unwrap();
+        </span><span class="kw">let </span><span class="kw-2">mut </span>remote_settings_config = <span class="self">self</span>.remote_settings_config.lock().unwrap();
 
-        <span class="comment">// Merge the exising configuration with the supplied one
-        </span>metric_config.metrics_enabled.extend(cfg.metrics_enabled);
+        <span class="comment">// Merge the exising metrics configuration with the supplied one
+        </span>remote_settings_config
+            .metrics_enabled
+            .extend(cfg.metrics_enabled);
+
+        <span class="comment">// Merge the exising ping configuration with the supplied one
+        </span>remote_settings_config
+            .pings_enabled
+            .extend(cfg.pings_enabled);
 
         <span class="comment">// Update remote_settings epoch
         </span><span class="self">self</span>.remote_settings_epoch.fetch_add(<span class="number">1</span>, Ordering::SeqCst);

@@ -505,6 +505,9 @@
                 <a href="../Functions.html#/s:5Glean32FfiConverterTypeUuidMetric_lowerySvAA0eF0CF">FfiConverterTypeUuidMetric_lower(_:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/s:5Glean27gleanApplyServerKnobsConfigyySSF">gleanApplyServerKnobsConfig(_:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/s:5Glean18gleanEnableLoggingyyF">gleanEnableLogging()</a>
               </li>
               <li class="nav-group-task">
@@ -548,9 +551,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/s:5Glean16gleanSetLogPingsyySbF">gleanSetLogPings(_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/s:5Glean28gleanSetMetricsEnabledConfigyySSF">gleanSetMetricsEnabledConfig(_:)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/s:5Glean18gleanSetSourceTagsySbSaySSGF">gleanSetSourceTags(_:)</a>
@@ -911,9 +911,9 @@ schedules a ping for eventual upload.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Glean4PingC4name15includeClientId11sendIfEmpty17preciseTimestamps0D12InfoSections11reasonCodesACyxGSS_S4bSaySSGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(name:includeClientId:sendIfEmpty:preciseTimestamps:includeInfoSections:reasonCodes:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Glean4PingC4name15includeClientId11sendIfEmpty17preciseTimestamps0D12InfoSections11reasonCodesACyxGSS_S4bSaySSGtcfc">init(name:<wbr>includeClientId:<wbr>sendIfEmpty:<wbr>preciseTimestamps:<wbr>includeInfoSections:<wbr>reasonCodes:<wbr>)</a>
+                    <a name="/s:5Glean4PingC4name15includeClientId11sendIfEmpty17preciseTimestamps0D12InfoSections7enabled14schedulesPings11reasonCodesACyxGSS_S5bSaySSGAMtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:includeClientId:sendIfEmpty:preciseTimestamps:includeInfoSections:enabled:schedulesPings:reasonCodes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Glean4PingC4name15includeClientId11sendIfEmpty17preciseTimestamps0D12InfoSections7enabled14schedulesPings11reasonCodesACyxGSS_S5bSaySSGAMtcfc">init(name:<wbr>includeClientId:<wbr>sendIfEmpty:<wbr>preciseTimestamps:<wbr>includeInfoSections:<wbr>enabled:<wbr>schedulesPings:<wbr>reasonCodes:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -934,6 +934,8 @@ schedules a ping for eventual upload.</p>
     <span class="nv">sendIfEmpty</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
     <span class="nv">preciseTimestamps</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
     <span class="nv">includeInfoSections</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="nv">enabled</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="nv">schedulesPings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">],</span>
     <span class="nv">reasonCodes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
 <span class="p">)</span></code></pre>
 

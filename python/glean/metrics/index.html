@@ -1303,7 +1303,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 </dd>
 <dt id="glean.metrics.PingType"><code class="flex name class">
 <span>class <span class="ident">PingType</span></span>
-<span>(</span><span>name: str, include_client_id: bool, send_if_empty: bool, precise_timestamps: bool, include_info_sections: bool, reason_codes: List[str])</span>
+<span>(</span><span>name: str, include_client_id: bool, send_if_empty: bool, precise_timestamps: bool, include_info_sections: bool, schedules_pings: List[str], reason_codes: List[str])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer facing API for custom pings.</p>
@@ -1321,6 +1321,8 @@ ping for eventual uploading.</p></div>
         send_if_empty: bool,
         precise_timestamps: bool,
         include_info_sections: bool,
+        # enabled: bool,  -- Not currently enabled for python bindings
+        schedules_pings: List[str],
         reason_codes: List[str],
     ):
         &#34;&#34;&#34;
@@ -1336,6 +1338,8 @@ ping for eventual uploading.</p></div>
             send_if_empty,
             precise_timestamps,
             include_info_sections,
+            True,
+            schedules_pings,
             reason_codes,
         )
         self._test_callback = None  # type: Optional[Callable[[Optional[str]], None]]

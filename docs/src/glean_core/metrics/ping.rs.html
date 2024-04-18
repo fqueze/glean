@@ -253,6 +253,52 @@
 <a href="#253" id="253">253</a>
 <a href="#254" id="254">254</a>
 <a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -284,13 +330,12 @@
     </span><span class="kw">pub </span>precise_timestamps: bool,
     <span class="doccomment">/// Whether to include the {client|ping}_info sections on assembly.
     </span><span class="kw">pub </span>include_info_sections: bool,
+    <span class="doccomment">/// Whether this ping is enabled.
+    </span><span class="kw">pub </span>enabled: bool,
+    <span class="doccomment">/// Other pings that should be scheduled when this ping is sent.
+    </span><span class="kw">pub </span>schedules_pings: Vec&lt;String&gt;,
     <span class="doccomment">/// The &quot;reason&quot; codes that this ping can send
     </span><span class="kw">pub </span>reason_codes: Vec&lt;String&gt;,
-
-    <span class="doccomment">/// Whether this ping is enabled.
-    /// Note: Data for disabled pings is still recorded.
-    /// It will not be cleared out on submit.
-    </span>enabled: bool,
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>PingType {
@@ -301,6 +346,8 @@
             .field(<span class="string">&quot;send_if_empty&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.send_if_empty)
             .field(<span class="string">&quot;precise_timestamps&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.precise_timestamps)
             .field(<span class="string">&quot;include_info_sections&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_info_sections)
+            .field(<span class="string">&quot;enabled&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.enabled)
+            .field(<span class="string">&quot;schedules_pings&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.schedules_pings)
             .field(<span class="string">&quot;reason_codes&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.reason_codes)
             .finish()
     }
@@ -319,13 +366,20 @@
     /// * `name` - The name of the ping.
     /// * `include_client_id` - Whether to include the client ID in the assembled ping when submitting.
     /// * `send_if_empty` - Whether the ping should be sent empty or not.
+    /// * `precise_timestamps` - Whether the ping should use precise timestamps for the start and end time.
+    /// * `include_info_sections` - Whether the ping should include the client/ping_info sections.
+    /// * `enabled` - Whether or not this ping is enabled. Note: Data that would be sent on a disabled
+    ///   ping will still be collected but is discarded rather than being submitted.
     /// * `reason_codes` - The valid reason codes for this ping.
+    </span><span class="attr">#[allow(clippy::too_many_arguments)]
     </span><span class="kw">pub fn </span>new&lt;A: Into&lt;String&gt;&gt;(
         name: A,
         include_client_id: bool,
         send_if_empty: bool,
         precise_timestamps: bool,
         include_info_sections: bool,
+        enabled: bool,
+        schedules_pings: Vec&lt;String&gt;,
         reason_codes: Vec&lt;String&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::new_internal(
@@ -334,19 +388,22 @@
             send_if_empty,
             precise_timestamps,
             include_info_sections,
+            enabled,
+            schedules_pings,
             reason_codes,
-            <span class="bool-val">true</span>,
         )
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_internal&lt;A: Into&lt;String&gt;&gt;(
+    <span class="attr">#[allow(clippy::too_many_arguments)]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_internal&lt;A: Into&lt;String&gt;&gt;(
         name: A,
         include_client_id: bool,
         send_if_empty: bool,
         precise_timestamps: bool,
         include_info_sections: bool,
-        reason_codes: Vec&lt;String&gt;,
         enabled: bool,
+        schedules_pings: Vec&lt;String&gt;,
+        reason_codes: Vec&lt;String&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>this = <span class="self">Self</span>(Arc::new(InnerPing {
             name: name.into(),
@@ -354,8 +411,9 @@
             send_if_empty,
             precise_timestamps,
             include_info_sections,
-            reason_codes,
             enabled,
+            schedules_pings,
+            reason_codes,
         }));
 
         <span class="comment">// Register this ping.
@@ -383,6 +441,22 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>include_info_sections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.<span class="number">0</span>.include_info_sections
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean) -&gt; bool {
+        <span class="kw">let </span>remote_settings_config = <span class="kw-2">&amp;</span>glean.remote_settings_config.lock().unwrap();
+
+        <span class="kw">if </span>!remote_settings_config.pings_enabled.is_empty() {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(remote_enabled) = remote_settings_config.pings_enabled.get(<span class="self">self</span>.name()) {
+                <span class="kw">return </span><span class="kw-2">*</span>remote_enabled;
+            }
+        }
+
+        <span class="self">self</span>.<span class="number">0</span>.enabled
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>schedules_pings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[String] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.schedules_pings
     }
 
     <span class="doccomment">/// Submits the ping for eventual uploading.
@@ -421,11 +495,6 @@
     /// Whether the ping was succesfully assembled and queued.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>submit_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; bool {
-        <span class="kw">if </span>!<span class="self">self</span>.<span class="number">0</span>.enabled {
-            <span class="macro">log::info!</span>(<span class="string">&quot;Ping disabled: not submitting &#39;{}&#39; ping.&quot;</span>, <span class="self">self</span>.<span class="number">0</span>.name);
-            <span class="kw">return </span><span class="bool-val">false</span>;
-        }
-
         <span class="kw">if </span>!glean.is_upload_enabled() {
             <span class="macro">log::info!</span>(<span class="string">&quot;Glean disabled: not submitting any pings.&quot;</span>);
             <span class="kw">return </span><span class="bool-val">false</span>;
@@ -463,6 +532,15 @@
                 <span class="bool-val">false
             </span>}
             <span class="prelude-val">Some</span>(ping) =&gt; {
+                <span class="kw">if </span>!<span class="self">self</span>.enabled(glean) {
+                    <span class="macro">log::info!</span>(
+                        <span class="string">&quot;The ping &#39;{}&#39; is disabled and will be discarded and not submitted&quot;</span>,
+                        ping.name
+                    );
+
+                    <span class="kw">return </span><span class="bool-val">false</span>;
+                }
+
                 <span class="comment">// This metric is recorded *after* the ping is collected (since
                 // that is the only way to know *if* it will be submitted). The
                 // implication of this is that the count for a metrics ping will
@@ -474,7 +552,10 @@
                     .add_sync(glean, <span class="number">1</span>);
 
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = ping_maker.store_ping(glean.get_data_path(), <span class="kw-2">&amp;</span>ping) {
-                    <span class="macro">log::warn!</span>(<span class="string">&quot;IO error while writing ping to file: {}. Enqueuing upload of what we have in memory.&quot;</span>, e);
+                    <span class="macro">log::warn!</span>(
+                        <span class="string">&quot;IO error while writing ping to file: {}. Enqueuing upload of what we have in memory.&quot;</span>,
+                        e
+                    );
                     glean.additional_metrics.io_errors.add_sync(glean, <span class="number">1</span>);
                     <span class="comment">// `serde_json::to_string` only fails if serialization of the content
                     // fails or it contains maps with non-string keys.
@@ -502,6 +583,17 @@
                     <span class="string">&quot;The ping &#39;{}&#39; was submitted and will be sent as soon as possible&quot;</span>,
                     ping.name
                 );
+
+                <span class="kw">if </span>!ping.schedules_pings.is_empty() {
+                    <span class="macro">log::info!</span>(
+                        <span class="string">&quot;The ping &#39;{}&#39; is being used to schedule other pings: {:?}&quot;</span>,
+                        ping.name,
+                        ping.schedules_pings
+                    );
+                    <span class="kw">for </span>scheduled_ping_name <span class="kw">in </span><span class="kw-2">&amp;</span>ping.schedules_pings {
+                        glean.submit_ping_by_name(scheduled_ping_name, reason);
+                    }
+                }
 
                 <span class="bool-val">true
             </span>}
