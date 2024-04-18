@@ -133,6 +133,35 @@
 <a href="#133" id="133">133</a>
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -183,6 +212,10 @@
     /// * `value` - the value to set.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>set_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, value: JsonValue) {
+        <span class="kw">if </span>!<span class="self">self</span>.should_record(glean) {
+            <span class="kw">return</span>;
+        }
+
         <span class="kw">let </span>value = Metric::Object(serde_json::to_string(<span class="kw-2">&amp;</span>value).unwrap());
         glean.storage().record(glean, <span class="kw-2">&amp;</span><span class="self">self</span>.meta, <span class="kw-2">&amp;</span>value)
     }
@@ -198,6 +231,31 @@
     </span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;</span><span class="self">self</span>, value: JsonValue) {
         <span class="kw">let </span>metric = <span class="self">self</span>.clone();
         <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| metric.set_sync(glean, value))
+    }
+
+    <span class="doccomment">/// Sets to the specified structure.
+    ///
+    /// Parses the passed JSON string.
+    /// If it can&#39;t be parsed into a valid object it records an invalid value error.
+    ///
+    /// Note: This does not check the structure. This needs to be done by the wrapper.
+    ///
+    /// # Arguments
+    ///
+    /// * `object` - JSON representation of the object to set.
+    </span><span class="kw">pub fn </span>set_string(<span class="kw-2">&amp;</span><span class="self">self</span>, object: String) {
+        <span class="kw">let </span>metric = <span class="self">self</span>.clone();
+        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| {
+            <span class="kw">let </span>object = <span class="kw">match </span>serde_json::from_str(<span class="kw-2">&amp;</span>object) {
+                <span class="prelude-val">Ok</span>(object) =&gt; object,
+                <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">let </span>msg = <span class="string">&quot;Value did not match predefined schema&quot;</span>;
+                    record_error(glean, <span class="kw-2">&amp;</span>metric.meta, ErrorType::InvalidValue, msg, <span class="prelude-val">None</span>);
+                    <span class="kw">return</span>;
+                }
+            };
+            metric.set_sync(glean, object)
+        })
     }
 
     <span class="doccomment">/// Record an `InvalidValue` error for this metric.

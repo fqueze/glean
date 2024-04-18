@@ -191,10 +191,33 @@
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
-<div data-lang="Kotlin" class="tab"></div>
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Party
+
+var balloons = Party.BalloonsObject()
+balloons.add(Party.BalloonsObjectItem(colour = &quot;red&quot;, diameter = 5))
+balloons.add(Party.BalloonsObjectItem(colour = &quot;green&quot;))
+Party.balloons.set(balloons)
+</code></pre>
+</div>
 <div data-lang="Java" class="tab"></div>
-<div data-lang="Swift" class="tab"></div>
-<div data-lang="Python" class="tab"></div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">var balloons: Party.BalloonsObject = []
+balloons.append(Party.BalloonsObjectItem(colour: &quot;red&quot;, diameter: 5))
+balloons.append(Party.BalloonsObjectItem(colour: &quot;green&quot;))
+Party.balloons.set(balloons)
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+balloons = metrics.BalloonsObject()
+balloons.append(BalloonsObjectItem(colour=&quot;red&quot;, diameter=5))
+balloons.append(BalloonsObjectItem(colour=&quot;green&quot;))
+metrics.party.balloons.set(balloons)
+</code></pre>
+</div>
 <div data-lang="Rust" class="tab"></div>
 <div data-lang="JavaScript" class="tab"></div>
 <div data-lang="Firefox Desktop" class="tab">
@@ -205,7 +228,7 @@
   { colour: &quot;red&quot;, diameter: 5 },
   { colour: &quot;blue&quot;, diameter: 7 },
 ];
-Glean.testOnly.balloons.set(balloons);
+Glean.party.balloons.set(balloons);
 </code></pre>
 </div>
 </div>
@@ -228,10 +251,27 @@ in Rust where it's required. <code>None</code> or no argument will default to th
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
-<div data-lang="Kotlin" class="tab"></div>
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Party
+
+val snapshot = metric.testGetValue()!!
+assertEquals(1, snapshot.jsonArray.size)
+</code></pre>
+</div>
 <div data-lang="Java" class="tab"></div>
-<div data-lang="Swift" class="tab"></div>
-<div data-lang="Python" class="tab"></div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">let snapshot = (try! Party.balloons.testGetValue()) as! [Any]
+XCTAssertEqual(1, snapshot.size)
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+snapshot = metrics.party.balloons.test_get_value()
+assert 2 == len(snapshot)
+</code></pre>
+</div>
 <div data-lang="Rust" class="tab"></div>
 <div data-lang="JavaScript" class="tab"></div>
 <div data-lang="Firefox Desktop" class="tab">
@@ -244,7 +284,7 @@ Assert.equal(
     { colour: &quot;red&quot;, diameter: 5 },
     { colour: &quot;blue&quot;, diameter: 7 },
   ],
-  Glean.testOnly.balloons.testGetValue()
+  Glean.party.balloons.testGetValue()
 );
 </code></pre>
 </div>
@@ -255,10 +295,30 @@ Assert.equal(
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
-<div data-lang="Kotlin" class="tab"></div>
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-Kotlin">import org.mozilla.yourApplication.GleanMetrics.Party
+
+assertEquals(
+    0,
+    Party.balloons.testGetNumRecordedErrors(ErrorType.INVALID_VALUE)
+)
+</code></pre>
+</div>
 <div data-lang="Java" class="tab"></div>
-<div data-lang="Swift" class="tab"></div>
-<div data-lang="Python" class="tab"></div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">XCTAssertEqual(0, Party.balloons.testGetNumRecordedErrors(.invalidValue))
+</code></pre>
+</div>
+<div data-lang="Python" class="tab">
+<pre><code class="language-Python">from glean import load_metrics
+from glean.testing import ErrorType
+metrics = load_metrics(&quot;metrics.yaml&quot;)
+
+assert 0 == metrics.party.balloons.test_get_num_recorded_errors(
+    ErrorType.INVALID_VALUE
+)
+</code></pre>
+</div>
 <div data-lang="Rust" class="tab"></div>
 <div data-lang="JavaScript" class="tab"></div>
 <div data-lang="Firefox Desktop" class="tab"></div>
@@ -290,6 +350,9 @@ Assert.equal(
 <p>For a full reference on metrics parameters common to all metric types,
 refer to the <a href="../yaml/metrics.html">metrics YAML registry format</a> reference page.</p>
 <h2 id="data-questions"><a class="header" href="#data-questions">Data questions</a></h2>
+<ul>
+<li>What is the crash stack after a Firefox main process crash?</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/object.md">Edit this page on GitHub.</a></footer>
                     </main>
 
