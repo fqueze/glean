@@ -249,6 +249,7 @@ class CustomPingTest {
             sendIfEmpty = true,
             preciseTimestamps = true,
             includeInfoSections = true,
+            schedulesPings = emptyList()
             reasonCodes = emptyList(),
             enabled = true,
         )
