@@ -590,6 +590,36 @@
 <a href="#590" id="590">590</a>
 <a href="#591" id="591">591</a>
 <a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -597,6 +627,7 @@
 </span><span class="kw">use </span>std::collections::HashMap;
 <span class="kw">use </span>std::sync::atomic::{AtomicUsize, Ordering};
 <span class="kw">use </span>std::sync::{Arc, Mutex};
+<span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span><span class="kw">crate</span>::common_metric_data::CommonMetricDataInternal;
 <span class="kw">use </span><span class="kw">crate</span>::error_recording::{record_error, test_get_num_recorded_errors, ErrorType};
@@ -1001,6 +1032,35 @@
         <span class="kw">let </span>metric = <span class="self">self</span>.clone();
         <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| {
             metric.accumulate_raw_samples_nanos_sync(glean, <span class="kw-2">&amp;</span>samples)
+        })
+    }
+
+    <span class="doccomment">/// Accumulates precisely one duration to the metric.
+    ///
+    /// Like `TimingDistribution::accumulate_single_sample`, but for use when the
+    /// duration is:
+    ///
+    ///  * measured externally, or
+    ///  * is in a unit different from the timing_distribution&#39;s internal TimeUnit.
+    ///
+    /// # Arguments
+    ///
+    /// * `duration` - The single duration to be recorded in the metric.
+    ///
+    /// ## Notes
+    ///
+    /// Reports an [`ErrorType::InvalidOverflow`] error if `duration` is longer than
+    /// `MAX_SAMPLE_TIME`.
+    ///
+    /// The API client is responsible for ensuring that `duration` is derived from a
+    /// monotonic clock source that behaves consistently over computer sleep across
+    /// the application&#39;s platforms. Otherwise the resulting data may not share the same
+    /// guarantees that other `timing_distribution` metrics&#39; data do.
+    </span><span class="kw">pub fn </span>accumulate_raw_duration(<span class="kw-2">&amp;</span><span class="self">self</span>, duration: Duration) {
+        <span class="kw">let </span>duration_ns = duration.as_nanos().try_into().unwrap_or(u64::MAX);
+        <span class="kw">let </span>metric = <span class="self">self</span>.clone();
+        <span class="kw">crate</span>::launch_with_glean(<span class="kw">move </span>|glean| {
+            metric.accumulate_raw_samples_nanos_sync(glean, <span class="kw-2">&amp;</span>[duration_ns])
         })
     }
 
