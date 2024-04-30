@@ -195,6 +195,9 @@
 <p>Glean will execute the registered callbacks on a background thread independent of the thread in which the event is being recorded in order to not interfere with the collection of the event.</p>
 <p>Glean will ensure that event recordings are reported to listeners in the same order that they are recorded by using the same dispatching mechanisms used to ensure events are recorded in the order they are received.</p>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">class TestEventListener : GleanEventListener {
     val listenerTag: String = &quot;TestEventListener&quot;

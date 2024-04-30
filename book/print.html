@@ -4716,6 +4716,9 @@ is explicitly using the <code>webext</code> target.</p>
 <p>Glean will execute the registered callbacks on a background thread independent of the thread in which the event is being recorded in order to not interfere with the collection of the event.</p>
 <p>Glean will ensure that event recordings are reported to listeners in the same order that they are recorded by using the same dispatching mechanisms used to ensure events are recorded in the order they are received.</p>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
 <div data-lang="Kotlin" class="tab">
 <pre><code class="language-kotlin">class TestEventListener : GleanEventListener {
     val listenerTag: String = &quot;TestEventListener&quot;
@@ -14630,6 +14633,11 @@ This is a major milestone in using a cross-platform implementation of Glean on t
 <p>First testing release.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/sdk.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes-1"><a class="header" href="#unreleased-changes-1">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v5.0.0...main">Full changelog</a></p>
+<ul>
+<li><a href="https://github.com/mozilla/glean.js/pull/1923">#1923</a>: Bumped <code>glean_parser</code> version to <code>14.0.1</code>.</li>
+<li><a href="https://github.com/mozilla/glean.js/pull/1921">#1921</a>: BUGFIX: Fix issue causing <code>glean.client.annotation.experimentation_id</code> metric to not get added in certain pings.</li>
+<li><a href="https://github.com/mozilla/glean.js/pull/1919">#1919</a>: Add <code>glean.page_id</code> to Glean automatic events.</li>
+</ul>
 <h1 id="v500-2024-03-25"><a class="header" href="#v500-2024-03-25">v5.0.0 (2024-03-25)</a></h1>
 <p><a href="https://github.com/mozilla/glean.js/compare/v5.0.0-pre.0...v5.0.0">Full changelog</a></p>
 <p>This is the official release based on the v5.0.0-pre.0 release.</p>
