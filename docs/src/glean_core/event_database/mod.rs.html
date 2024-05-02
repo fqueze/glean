@@ -1314,7 +1314,7 @@
 <span class="kw">use </span>std::io::BufReader;
 <span class="kw">use </span>std::io::Write;
 <span class="kw">use </span>std::path::{Path, PathBuf};
-<span class="kw">use </span>std::sync::RwLock;
+<span class="kw">use </span>std::sync::{Mutex, RwLock};
 
 <span class="kw">use </span>chrono::{DateTime, FixedOffset, Utc};
 
@@ -1400,7 +1400,7 @@
     <span class="doccomment">/// The in-memory list of events
     </span>event_stores: RwLock&lt;HashMap&lt;String, Vec&lt;StoredEvent&gt;&gt;&gt;,
     <span class="doccomment">/// A lock to be held when doing operations on the filesystem
-    </span>file_lock: RwLock&lt;()&gt;,
+    </span>file_lock: Mutex&lt;()&gt;,
 }
 
 <span class="kw">impl </span>EventDatabase {
@@ -1417,7 +1417,7 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             path,
             event_stores: RwLock::new(HashMap::new()),
-            file_lock: RwLock::new(()),
+            file_lock: Mutex::new(()),
         })
     }
 
@@ -1524,7 +1524,7 @@
         // a lock on `event_stores`.
         // This is a potential lock-order-inversion.
         </span><span class="kw">let </span><span class="kw-2">mut </span>db = <span class="self">self</span>.event_stores.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
-        </span><span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
+        </span><span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.lock().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
 
         </span><span class="kw">for </span>entry <span class="kw">in </span>fs::read_dir(<span class="kw-2">&amp;</span><span class="self">self</span>.path)<span class="question-mark">? </span>{
             <span class="kw">let </span>entry = entry<span class="question-mark">?</span>;
@@ -1630,7 +1630,7 @@
     /// * `store_name` - The name of the store.
     /// * `event_json` - The event content, as a single-line JSON-encoded string.
     </span><span class="kw">fn </span>write_event_to_disk(<span class="kw-2">&amp;</span><span class="self">self</span>, store_name: <span class="kw-2">&amp;</span>str, event_json: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
+        <span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.lock().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
         </span><span class="kw">if let </span><span class="prelude-val">Err</span>(err) = OpenOptions::new()
             .create(<span class="bool-val">true</span>)
             .append(<span class="bool-val">true</span>)
@@ -1880,7 +1880,7 @@
                 .unwrap() <span class="comment">// safe unwrap, only error case is poisoning
                 </span>.remove(<span class="kw-2">&amp;</span>store_name.to_string());
 
-            <span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
+            <span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.lock().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
             </span><span class="kw">if let </span><span class="prelude-val">Err</span>(err) = fs::remove_file(<span class="self">self</span>.path.join(store_name)) {
                 <span class="kw">match </span>err.kind() {
                     std::io::ErrorKind::NotFound =&gt; {
@@ -1900,7 +1900,7 @@
         </span><span class="self">self</span>.event_stores.write().unwrap().clear();
 
         <span class="comment">// safe unwrap, only error case is poisoning
-        </span><span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.write().unwrap();
+        </span><span class="kw">let </span>_lock = <span class="self">self</span>.file_lock.lock().unwrap();
         std::fs::remove_dir_all(<span class="kw-2">&amp;</span><span class="self">self</span>.path)<span class="question-mark">?</span>;
         create_dir_all(<span class="kw-2">&amp;</span><span class="self">self</span>.path)<span class="question-mark">?</span>;
 

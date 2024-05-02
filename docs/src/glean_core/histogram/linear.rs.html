@@ -345,12 +345,12 @@
     </span><span class="kw">fn </span>accumulate_large_numbers() {
         <span class="kw">let </span><span class="kw-2">mut </span>hist = Histogram::linear(<span class="number">1</span>, <span class="number">500</span>, <span class="number">10</span>);
 
-        hist.accumulate(u64::max_value());
-        hist.accumulate(u64::max_value());
+        hist.accumulate(u64::MAX);
+        hist.accumulate(u64::MAX);
 
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, hist.count());
         <span class="comment">// Saturate before overflowing
-        </span><span class="macro">assert_eq!</span>(u64::max_value(), hist.sum());
+        </span><span class="macro">assert_eq!</span>(u64::MAX, hist.sum());
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, hist.values[<span class="kw-2">&amp;</span><span class="number">500</span>]);
     }
 }
