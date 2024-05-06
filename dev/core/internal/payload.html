@@ -394,6 +394,28 @@ See the individual metric types for details on the value payload:</p>
 <h4 id="example-14"><a class="header" href="#example-14">Example</a></h4>
 <pre><code class="language-json">&quot;sample string&quot;
 </code></pre>
+<h3 id="object"><a class="header" href="#object">Object</a></h3>
+<p>An <a href="../../../book/reference/metrics/object.html">Object</a> is represented as either a JSON array or JSON object,
+depending on the allowed structure.
+Missing values (<code>null</code>) and empty arrays will not be serialized in the payload.</p>
+<h4 id="example-15"><a class="header" href="#example-15">Example</a></h4>
+<p>Object:</p>
+<pre><code class="language-json">{
+  &quot;colour&quot;: &quot;red&quot;,
+  &quot;diameter&quot;: 5
+}
+</code></pre>
+<p>Array with objects:</p>
+<pre><code class="language-json">[
+  {
+    &quot;type&quot;: &quot;ERROR&quot;,
+    &quot;address&quot;: &quot;0x000000&quot;
+  },
+  {
+    &quot;type&quot;: &quot;ERROR&quot;
+  }
+]
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/core/internal/payload.md">Edit this page on GitHub.</a></footer>
                     </main>
 

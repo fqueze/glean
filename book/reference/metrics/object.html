@@ -325,7 +325,24 @@ assert 0 == metrics.party.balloons.test_get_num_recorded_errors(
 </div>
 </div>
 <h2 id="metric-parameters"><a class="header" href="#metric-parameters">Metric parameters</a></h2>
-<p>Example text metric definition:</p>
+<p>The definition for an object metric type accepts a <code>structure</code> parameter.
+This defines the accepted structure of the object using a subset of <a href="https://json-schema.org/draft/2020-12/json-schema-core">JSON schema</a>.</p>
+<p>The allowed types are:</p>
+<ul>
+<li><code>string</code></li>
+<li><code>number</code></li>
+<li><code>boolean</code></li>
+<li><code>array</code></li>
+<li><code>object</code></li>
+</ul>
+<p>The <code>array</code> type takes an <code>items</code> parameter, that does define the element types it can hold.<br />
+The <code>object</code> type takes a <code>properties</code> parameter, that defines the nested object structure.</p>
+<p><code>array</code> and <code>object</code> metrics can be nested.<br />
+No other schema parameters are allowed.<br />
+All fields are optional.</p>
+<p>Data is validated against this schema at recording time.<br />
+Missing values will not be serialized into the payload.</p>
+<h3 id="example-object-metric-definition"><a class="header" href="#example-object-metric-definition">Example object metric definition:</a></h3>
 <pre><code class="language-yaml">party:
   balloons:
     type: object
