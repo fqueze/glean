@@ -299,6 +299,24 @@
 <a href="#299" id="299">299</a>
 <a href="#300" id="300">300</a>
 <a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -584,7 +602,25 @@
                     ping.name
                 );
 
-                <span class="kw">if </span>!ping.schedules_pings.is_empty() {
+                <span class="kw">if </span>ping.schedules_pings.is_empty() {
+                    <span class="kw">let </span>ping_schedule = glean
+                        .ping_schedule
+                        .get(ping.name)
+                        .map(|v| <span class="kw-2">&amp;</span>v[..])
+                        .unwrap_or(<span class="kw-2">&amp;</span>[]);
+
+                    <span class="kw">if </span>!ping_schedule.is_empty() {
+                        <span class="macro">log::info!</span>(
+                            <span class="string">&quot;The ping &#39;{}&#39; is being used to schedule other pings: {:?}&quot;</span>,
+                            ping.name,
+                            ping_schedule
+                        );
+
+                        <span class="kw">for </span>scheduled_ping_name <span class="kw">in </span>ping_schedule {
+                            glean.submit_ping_by_name(scheduled_ping_name, reason);
+                        }
+                    }
+                } <span class="kw">else </span>{
                     <span class="macro">log::info!</span>(
                         <span class="string">&quot;The ping &#39;{}&#39; is being used to schedule other pings: {:?}&quot;</span>,
                         ping.name,

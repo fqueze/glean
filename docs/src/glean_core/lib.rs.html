@@ -1250,6 +1250,10 @@
 <a href="#1250" id="1250">1250</a>
 <a href="#1251" id="1251">1251</a>
 <a href="#1252" id="1252">1252</a>
+<a href="#1253" id="1253">1253</a>
+<a href="#1254" id="1254">1254</a>
+<a href="#1255" id="1255">1255</a>
+<a href="#1256" id="1256">1256</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1389,6 +1393,10 @@
     </span><span class="kw">pub </span>experimentation_id: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="doccomment">/// Whether to enable internal pings. Default: true
     </span><span class="kw">pub </span>enable_internal_pings: bool,
+    <span class="doccomment">/// A ping schedule map.
+    /// Maps a ping name to a list of pings to schedule along with it.
+    /// Only used if the ping&#39;s own ping schedule list is empty.
+    </span><span class="kw">pub </span>ping_schedule: HashMap&lt;String, Vec&lt;String&gt;&gt;,
 }
 
 <span class="doccomment">/// How to specify the rate at which pings may be uploaded before they are throttled.

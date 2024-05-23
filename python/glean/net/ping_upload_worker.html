@@ -147,6 +147,7 @@ def _process(data_dir: Path, application_id: str, configuration) -&gt; bool:
             enable_event_timestamps=False,
             experimentation_id=None,
             enable_internal_pings=False,
+            ping_schedule={},
         )
         if not glean_initialize_for_subprocess(cfg):
             log.error(&#34;Couldn&#39;t initialize Glean in subprocess&#34;)
