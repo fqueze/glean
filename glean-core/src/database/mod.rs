@@ -523,13 +523,17 @@ impl Database {
         // Lifetime::Ping data is not immediately persisted to disk if
         // Glean has `delay_ping_lifetime_io` set to true
         if lifetime == Lifetime::Ping {
+            log::debug!("writing ping lifetime (in memory)");
             if let Some(ping_lifetime_data) = &self.ping_lifetime_data {
                 let mut data = ping_lifetime_data
                     .write()
                     .expect("Can't read ping lifetime data");
                 data.insert(final_key, metric.clone());
-                return Ok(());
             }
+
+            // flush ping lifetime
+            self.persist_ping_lifetime_data()?;
+            return Ok(());
         }
 
         let encoded = bincode::serialize(&metric).expect("IMPOSSIBLE: Serializing metric failed");
@@ -538,6 +542,7 @@ impl Database {
         let mut writer = self.rkv.write()?;
         self.get_store(lifetime)
             .put(&mut writer, final_key, &value)?;
+        log::debug!("record_per_lifetime");
         writer.commit()?;
         Ok(())
     }
@@ -595,6 +600,7 @@ impl Database {
         // Lifetime::Ping data is not persisted to disk if
         // Glean has `delay_ping_lifetime_io` set to true
         if lifetime == Lifetime::Ping {
+            log::debug!("writing ping lifetime (in memory)");
             if let Some(ping_lifetime_data) = &self.ping_lifetime_data {
                 let mut data = ping_lifetime_data
                     .write()
@@ -609,8 +615,10 @@ impl Database {
                         entry.insert(transform(Some(old_value)));
                     }
                 }
-                return Ok(());
             }
+            // flush ping lifetime
+            self.persist_ping_lifetime_data()?;
+            return Ok(());
         }
 
         let mut writer = self.rkv.write()?;
@@ -631,6 +639,7 @@ impl Database {
             bincode::serialize(&new_value).expect("IMPOSSIBLE: Serializing metric failed");
         let value = rkv::Value::Blob(&encoded);
         store.put(&mut writer, final_key, &value)?;
+        log::debug!("record_per_lifetime_with");
         writer.commit()?;
         Ok(())
     }
@@ -680,6 +689,7 @@ impl Database {
                 }
             }
 
+            log::debug!("clear_ping_lifetime_storage");
             writer.commit()?;
             Ok(res?)
         })
@@ -731,6 +741,7 @@ impl Database {
                 }
                 return Err(e.into());
             }
+            log::debug!("remove_single_metric");
             writer.commit()?;
             Ok(())
         })
@@ -746,6 +757,7 @@ impl Database {
     pub fn clear_lifetime(&self, lifetime: Lifetime) {
         let res = self.write_with_store(lifetime, |mut writer, store| {
             store.clear(&mut writer)?;
+            log::debug!("clear lifetime {lifetime:?}");
             writer.commit()?;
             Ok(())
         });
@@ -811,6 +823,7 @@ impl Database {
                     // to ping_lifetime_data.
                     store.put(&mut writer, key, &rkv::Value::Blob(&encoded))?;
                 }
+                log::debug!("persist_ping_lifetime_data");
                 writer.commit()?;
                 Ok(())
             })?;
