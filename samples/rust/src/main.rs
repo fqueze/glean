@@ -74,6 +74,7 @@ fn main() {
         .with_server_endpoint("invalid-test-host")
         .with_use_core_mps(true)
         .with_uploader(uploader)
+        .with_delay_ping_lifetime_io(true)
         .build();
 
     let client_info = ClientInfoMetrics {
