@@ -729,8 +729,6 @@ checksum = "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
 [[package]]
 name = "rkv"
 version = "0.19.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c6d906922d99c677624d2042a93f89b2b7df0f6411032237d5d99a602c2487c"
 dependencies = [
  "arrayref",
  "bincode",
