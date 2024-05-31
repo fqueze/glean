@@ -1254,6 +1254,12 @@
 <a href="#1254" id="1254">1254</a>
 <a href="#1255" id="1255">1255</a>
 <a href="#1256" id="1256">1256</a>
+<a href="#1257" id="1257">1257</a>
+<a href="#1258" id="1258">1258</a>
+<a href="#1259" id="1259">1259</a>
+<a href="#1260" id="1260">1260</a>
+<a href="#1261" id="1261">1261</a>
+<a href="#1262" id="1262">1262</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1953,7 +1959,7 @@
 /// Only has effect when Glean is configured with `delay_ping_lifetime_io: true`.
 /// If Glean hasn&#39;t been initialized this will dispatch and return Ok(()),
 /// otherwise it will block until the persist is done and return its Result.
-</span><span class="kw">pub fn </span>persist_ping_lifetime_data() {
+</span><span class="kw">pub fn </span>glean_persist_ping_lifetime_data() {
     <span class="comment">// This is async, we can&#39;t get the Error back to the caller.
     </span><span class="kw">crate</span>::launch_with_glean(|glean| {
         <span class="kw">let _ </span>= glean.persist_ping_lifetime_data();
@@ -2385,8 +2391,14 @@
 
         <span class="comment">// Only useful if Glean initialization finished successfully
         // and set up the storage.
-        </span><span class="kw">let </span>has_storage =
-            core::with_opt_glean(|glean| glean.storage_opt().is_some()).unwrap_or(<span class="bool-val">false</span>);
+        </span><span class="kw">let </span>has_storage = core::with_opt_glean(|glean| {
+            <span class="comment">// We need to flush the ping lifetime data before a full shutdown.
+            </span>glean
+                .storage_opt()
+                .map(|storage| storage.persist_ping_lifetime_data())
+                .is_some()
+        })
+        .unwrap_or(<span class="bool-val">false</span>);
         <span class="kw">if </span>has_storage {
             uploader_shutdown();
         }
