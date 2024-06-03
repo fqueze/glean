@@ -275,8 +275,8 @@ implementation. Defaults to <code><a title="glean.net.HttpClientUploader" href="
 <dd>When True (default), use a subprocess
 to offload some work (such as ping uploading).</dd>
 <dt><strong><code>enable_event_timestamps</code></strong> :&ensp;<code>bool</code></dt>
-<dd>(Experimental) Whether to add a
-wallclock timestamp to all events. Default: <code>True</code>.</dd>
+<dd>Whether to add a wallclock timestamp
+to all events. Default: <code>True</code>.</dd>
 <dt><strong><code>experimentation_id</code></strong> :&ensp;<code>string</code></dt>
 <dd>An experimentation identifier derived
 by the application to be sent with all pings. Default: None.</dd>
@@ -315,8 +315,8 @@ by the application to be sent with all pings. Default: None.</dd>
                 implementation. Defaults to `glean.net.HttpClientUploader`.
             allow_multiprocessing (bool): When True (default), use a subprocess
                 to offload some work (such as ping uploading).
-            enable_event_timestamps (bool): (Experimental) Whether to add a
-                wallclock timestamp to all events. Default: `True`.
+            enable_event_timestamps (bool): Whether to add a wallclock timestamp
+                to all events. Default: `True`.
             experimentation_id (string): An experimentation identifier derived
                 by the application to be sent with all pings. Default: None.
             enable_internal_pings (bool): Whether to enable internal pings. Default: `True`.
@@ -365,7 +365,7 @@ by the application to be sent with all pings. Default: None.</dd>
 
     @property
     def enable_event_timestamps(self) -&gt; bool:
-        &#34;&#34;&#34;(Experimental) Whether to add a wallclock timestamp to all events.&#34;&#34;&#34;
+        &#34;&#34;&#34;Whether to add a wallclock timestamp to all events.&#34;&#34;&#34;
         return self._enable_event_timestamps
 
     @property
@@ -404,14 +404,14 @@ def channel(self) -&gt; Optional[str]:
 </dd>
 <dt id="glean.Configuration.enable_event_timestamps"><code class="name">var <span class="ident">enable_event_timestamps</span> : bool</code></dt>
 <dd>
-<div class="desc"><p>(Experimental) Whether to add a wallclock timestamp to all events.</p></div>
+<div class="desc"><p>Whether to add a wallclock timestamp to all events.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
 def enable_event_timestamps(self) -&gt; bool:
-    &#34;&#34;&#34;(Experimental) Whether to add a wallclock timestamp to all events.&#34;&#34;&#34;
+    &#34;&#34;&#34;Whether to add a wallclock timestamp to all events.&#34;&#34;&#34;
     return self._enable_event_timestamps</code></pre>
 </details>
 </dd>
