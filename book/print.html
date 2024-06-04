@@ -6312,7 +6312,11 @@ mozilla::glean::search_default::name.Set(&quot;wikipedia&quot;_ns);
 </ul>
 <h4 id="limits-8"><a class="header" href="#limits-8">Limits</a></h4>
 <ul>
-<li>Fixed maximum string length: 100. Longer strings are truncated. This is measured in the number of bytes when the string is encoded in UTF-8.</li>
+<li>Fixed maximum string length: 255. Longer strings are truncated. This is measured in the number of bytes when the string is encoded in UTF-8.
+<ul>
+<li>Prior to Glean v60.4.0 the limit was 100 bytes.</li>
+</ul>
+</li>
 </ul>
 <h2 id="testing-api-6"><a class="header" href="#testing-api-6">Testing API</a></h2>
 <h3 id="testgetvalue-4"><a class="header" href="#testgetvalue-4"><code>testGetValue</code></a></h3>
@@ -12008,9 +12012,19 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes"><a class="header" href="#unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v60.3.0...main">Full changelog</a></p>
-<p>Android</p>
 <ul>
+<li>General
+<ul>
+<li>Bump the string length limit to 255 characters (<a href="https://github.com/mozilla/glean/pull/2857">#2857</a>)</li>
+</ul>
+</li>
+<li>Android
+<ul>
+<li>Delay log init until Glean is getting initialized (<a href="https://github.com/mozilla/glean/pull/2858">#2858</a>)</li>
 <li>Update to Gradle v8.8 (<a href="https://github.com/mozilla/glean/pull/2860">#2860</a>)</li>
+<li>Updated Kotlin to version 1.9.24 (<a href="https://github.com/mozilla/glean/pull/2861">#2861</a>)</li>
+</ul>
+</li>
 </ul>
 <h1 id="v6030-2024-05-31"><a class="header" href="#v6030-2024-05-31">v60.3.0 (2024-05-31)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v60.2.0...v60.3.0">Full changelog</a></p>

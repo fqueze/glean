@@ -194,7 +194,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::CommonMetricData;
 <span class="kw">use </span><span class="kw">crate</span>::Glean;
 
-<span class="kw">const </span>MAX_LENGTH_VALUE: usize = <span class="number">100</span>;
+<span class="kw">const </span>MAX_LENGTH_VALUE: usize = <span class="number">255</span>;
 
 <span class="doccomment">/// A string metric.
 ///
@@ -347,7 +347,7 @@
             dynamic_label: <span class="prelude-val">None</span>,
         });
 
-        <span class="kw">let </span>sample_string = <span class="string">&quot;0123456789&quot;</span>.repeat(<span class="number">11</span>);
+        <span class="kw">let </span>sample_string = <span class="string">&quot;0123456789&quot;</span>.repeat(<span class="number">26</span>);
         metric.set_sync(<span class="kw-2">&amp;</span>glean, sample_string.clone());
 
         <span class="kw">let </span>truncated = truncate_string_at_boundary(sample_string, MAX_LENGTH_VALUE);
