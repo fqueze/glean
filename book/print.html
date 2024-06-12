@@ -4278,7 +4278,7 @@ describe(&quot;myTestSuite&quot;, () =&gt; {
 <li><a href="reference/general/../../../swift/Classes/Glean.html#/s:5GleanAAC10initialize13uploadEnabled13configuration9buildInfoySb_AA13ConfigurationVAA05BuildG0VtF">Swift API docs</a></li>
 <li><a href="reference/general/../../../python/glean/index.html#glean.Glean.initialize">Python API docs</a></li>
 <li><a href="reference/general/../../../docs/glean/fn.initialize.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/functions/core_glean.default.initialize.html">JavaScript API docs</a></li>
+<li><a href="https://mozilla.github.io/glean.js/getting_started/setup/#initializing-gleanjs">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/general/initializing.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="toggling-upload-status"><a class="header" href="#toggling-upload-status">Toggling upload status</a></h1>
 <p>The Glean SDKs provide an API for toggling Glean's upload status after initialization.</p>
@@ -4379,7 +4379,7 @@ uploadSwitch.addEventListener(&quot;change&quot;, event =&gt; {
 <li><a href="reference/general/../../../swift/Classes/Glean.html#/s:5GleanAAC16setUploadEnabledyySbF">Swift API docs</a></li>
 <li><a href="reference/general/../../../python/glean/index.html#glean.Glean.set_upload_enabled">Python API docs</a></li>
 <li><a href="reference/general/../../../docs/glean/fn.set_upload_enabled.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_glean.default.html#setUploadEnabled">JavaScript API docs</a></li>
+<li><a href="https://mozilla.github.io/glean.js/reference/uploaders/#uploadenabled">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/general/toggling-upload-status.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="using-the-experiments-api"><a class="header" href="#using-the-experiments-api">Using the experiments API</a></h1>
 <p>The Glean SDKs support tagging all their pings with experiments annotations. The annotations are useful to report that experiments were active at the time the measurement were collected. The annotations are reported in the optional <code>experiments</code> entry in the <a href="reference/general/../../user/pings/index.html"><code>ping_info</code> section</a> of all pings.</p>
@@ -4790,7 +4790,6 @@ is explicitly using the <code>webext</code> target.</p>
 <h2 id="reference-3"><a class="header" href="#reference-3">Reference</a></h2>
 <ul>
 <li><a href="reference/general/../../../docs/glean/fn.shutdown.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_glean.default.html#shutdown">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/general/shutdown.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="glean-event-listener"><a class="header" href="#glean-event-listener">Glean Event Listener</a></h1>
 <blockquote>
@@ -5406,7 +5405,6 @@ refer to the <a href="reference/metrics/../yaml/metrics.html">metrics YAML regis
 <li><a href="reference/metrics/../../../swift/Classes/BooleanMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.BooleanMetric">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/boolean/struct.BooleanMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_boolean.default.html">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/boolean.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="labeled-booleans"><a class="header" href="#labeled-booleans">Labeled Booleans</a></h1>
 <p>Labeled booleans are used to record different related boolean flags.</p>
@@ -5686,7 +5684,6 @@ index of the labels is used to report Gecko data through the Glean SDK.</p>
 <li>Swift API docs: <a href="reference/metrics/../../../swift/Classes/LabeledMetricType.html"><code>LabeledMetricType</code></a>, <a href="reference/metrics/../../../swift/Classes/BooleanMetricType.html"><code>BooleanMetricType</code></a></li>
 <li>Python API docs: <a href="reference/metrics/../../../python/glean/metrics/labeled.html#glean.metrics.labeled.LabeledBooleanMetricType"><code>LabeledBooleanMetricType</code></a>, <a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.BooleanMetric"><code>BooleanMetricType</code></a></li>
 <li>Rust API docs: <a href="reference/metrics/../../../docs/glean/private/struct.LabeledMetric.html"><code>LabeledMetric</code></a>, <a href="reference/metrics/../../../docs/glean/private/struct.BooleanMetric.html"><code>BooleanMetricType</code></a></li>
-<li>JavaScript API docs: <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_labeled.default.html"><code>LabeledMetricType</code></a>, <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_boolean.default.html"><code>BooleanMetricType</code></a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/labeled_booleans.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="counter"><a class="header" href="#counter">Counter</a></h1>
 <p>Used to count how often something happens, say how often a certain button was pressed.
@@ -5925,7 +5922,6 @@ refer to the <a href="reference/metrics/../yaml/metrics.html">metrics YAML regis
 <li><a href="reference/metrics/../../../swift/Classes/CounterMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.CounterMetric">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/counter/struct.CounterMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_counter.default.html">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/counter.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="labeled-counters"><a class="header" href="#labeled-counters">Labeled Counters</a></h1>
 <p>Labeled counters are used to record different related counts that should sum up to a total.
@@ -6221,7 +6217,6 @@ index of the labels is used to report Gecko data through the Glean SDK.</p>
 <li>Swift API docs: <a href="reference/metrics/../../../swift/Classes/LabeledMetricType.html"><code>LabeledMetricType</code></a>, <a href="reference/metrics/../../../swift/Classes/CounterMetricType.html"><code>CounterMetricType</code></a></li>
 <li>Python API docs: <a href="reference/metrics/../../../python/glean/metrics/labeled.html#glean.metrics.labeled.LabeledCounterMetricType"><code>LabeledCounterMetricType</code></a>, <a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.CounterMetric"><code>CounterMetricType</code></a></li>
 <li>Rust API docs: <a href="reference/metrics/../../../docs/glean/private/struct.LabeledMetric.html"><code>LabeledMetric</code></a>, <a href="reference/metrics/../../../docs/glean/private/struct.CounterMetric.html"><code>CounterMetricType</code></a></li>
-<li>JavaScript API docs: <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_labeled.default.html"><code>LabeledMetricType</code></a>, <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_counter.default.html"><code>CounterMetricType</code></a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/labeled_counters.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
 <p>String metrics allow recording a Unicode string value with arbitrary content.</p>
@@ -6489,7 +6484,6 @@ refer to the <a href="reference/metrics/../yaml/metrics.html">metrics YAML regis
 <li><a href="reference/metrics/../../../swift/Classes/StringMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/string.html">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/struct.StringMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_string.default.html#set">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/string.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="labeled-strings"><a class="header" href="#labeled-strings">Labeled Strings</a></h1>
 <p>Labeled strings record multiple Unicode string values, each under a different label.</p>
@@ -6757,7 +6751,6 @@ index of the labels is used to report Gecko data through the Glean SDK.</p>
 <li>Swift API docs: <a href="reference/metrics/../../../swift/Classes/LabeledMetricType.html"><code>LabeledMetricType</code></a>, <a href="reference/metrics/../../../swift/Classes/StringMetricType.html"><code>StringMetricType</code></a></li>
 <li>Python API docs: <a href="reference/metrics/../../../python/glean/metrics/labeled.html#glean.metrics.labeled.LabeledStringMetricType"><code>LabeledStringMetricType</code></a>, <a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.StringMetricType"><code>StringMetricType</code></a></li>
 <li>Rust API docs: <a href="reference/metrics/../../../docs/glean/private/struct.LabeledMetric.html"><code>LabeledMetric</code></a>, <a href="reference/metrics/../../../docs/glean/private/struct.StringMetric.html"><code>StringMetricType</code></a></li>
-<li>JavaScript API docs: <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_labeled.default.html"><code>LabeledMetricType</code></a>, <a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_string.default.html"><code>StringMetricType</code></a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/labeled_strings.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="string-list"><a class="header" href="#string-list">String List</a></h1>
 <p>Strings lists are used for recording a list of Unicode string values, such as the names of the enabled search engines.</p>
@@ -7620,7 +7613,6 @@ Therefore, a measurement of 500 nanoseconds will be truncated to 0 microseconds.
 <li><a href="reference/metrics/../../../swift/Classes/TimespanMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.TimespanMetricType">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/struct.TimespanMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_timespan.default.html">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/timespan.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="timing-distribution"><a class="header" href="#timing-distribution">Timing Distribution</a></h1>
 <p>Timing distributions are used to accumulate and store time measurement, for analyzing distributions of the timing data.</p>
@@ -9003,7 +8995,6 @@ refer to the <a href="reference/metrics/../yaml/metrics.html">metrics YAML regis
 <li><a href="reference/metrics/../../../swift/Classes/UuidMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.UuidMetricType">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/uuid/struct.UuidMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_uuid.default.html#set">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/uuid.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="url-1"><a class="header" href="#url-1">URL</a></h1>
 <p>URL metrics allow recording URL-like<sup class="footnote-reference"><a href="#1">1</a></sup> strings.</p>
@@ -9269,10 +9260,6 @@ refer to the metrics <a href="reference/metrics/../yaml/index.html">YAML format<
 <h2 id="data-questions-11"><a class="header" href="#data-questions-11">Data questions</a></h2>
 <ul>
 <li>What is the base URL used to build the search query for the search engine?</li>
-</ul>
-<h2 id="reference-15"><a class="header" href="#reference-15">Reference</a></h2>
-<ul>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_url.default.html">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/url.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="datetime"><a class="header" href="#datetime">Datetime</a></h1>
 <p>Datetimes are used to record an absolute date and time,
@@ -9570,12 +9557,11 @@ The allowed values for <code>time_unit</code> are:</p>
 <ul>
 <li>When did the user first run the application?</li>
 </ul>
-<h2 id="reference-16"><a class="header" href="#reference-16">Reference</a></h2>
+<h2 id="reference-15"><a class="header" href="#reference-15">Reference</a></h2>
 <ul>
 <li><a href="reference/metrics/../../../swift/Classes/DatetimeMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.DatetimeMetricType">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/struct.DatetimeMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_datetime.default.html">Datetime API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/datetime.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="events"><a class="header" href="#events">Events</a></h1>
 <p>Events allow recording of e.g. individual occurrences of user actions,
@@ -9878,12 +9864,11 @@ A maximum of 50 extra keys is allowed.</p>
 <li>The values in the <code>extras</code> object have a maximum length of 500 bytes when serialized and encoded as UTF-8.
 Longer values are truncated, and an <code>invalid_overflow</code> error is recorded.</li>
 </ul>
-<h2 id="reference-17"><a class="header" href="#reference-17">Reference</a></h2>
+<h2 id="reference-16"><a class="header" href="#reference-16">Reference</a></h2>
 <ul>
 <li><a href="reference/metrics/../../../swift/Classes/EventMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.EventMetricType">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/event/struct.EventMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_event.default.html">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/event.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="custom-distribution"><a class="header" href="#custom-distribution">Custom Distribution</a></h1>
 <p>Custom distributions are used to record the distribution of arbitrary values.</p>
@@ -10167,7 +10152,7 @@ assert.equal(
 It is the name of the Gecko metric to accumulate the data from,
 when using a Glean SDK in a product using GeckoView.</li>
 </ul>
-<h2 id="reference-18"><a class="header" href="#reference-18">Reference</a></h2>
+<h2 id="reference-17"><a class="header" href="#reference-17">Reference</a></h2>
 <ul>
 <li><a href="reference/metrics/../../../docs/glean/private/struct.CustomDistributionMetric.html">Rust API docs</a></li>
 </ul>
@@ -10449,12 +10434,11 @@ refer to the <a href="reference/metrics/../yaml/metrics.html">metrics YAML regis
 <ul>
 <li>What is the width of the display, in pixels?</li>
 </ul>
-<h2 id="reference-19"><a class="header" href="#reference-19">Reference</a></h2>
+<h2 id="reference-18"><a class="header" href="#reference-18">Reference</a></h2>
 <ul>
 <li><a href="reference/metrics/../../../swift/Classes/QuantityMetricType.html">Swift API docs</a></li>
 <li><a href="reference/metrics/../../../python/glean/metrics/index.html#glean.metrics.QuantityMetric">Python API docs</a></li>
 <li><a href="reference/metrics/../../../docs/glean/private/quantity/struct.QuantityMetric.html">Rust API docs</a></li>
-<li><a href="https://mozilla.github.io/glean.js/classes/core_metrics_types_quantity.default.html#set">JavaScript API docs</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/reference/metrics/quantity.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="rate"><a class="header" href="#rate">Rate</a></h1>
 <p>Used to count how often something happens relative to how often something else happens.
@@ -10813,7 +10797,7 @@ on that features development.</p>
 <li>How often did an HTTP connection error?</li>
 <li>How many documents used a given CSS Property?</li>
 </ul>
-<h2 id="reference-20"><a class="header" href="#reference-20">Reference</a></h2>
+<h2 id="reference-19"><a class="header" href="#reference-19">Reference</a></h2>
 <ul>
 <li><a href="reference/metrics/../../../docs/glean/private/rate/struct.RateMetric.html">Rust API docs</a></li>
 </ul>
