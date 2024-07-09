@@ -11574,11 +11574,20 @@ To override this, <code>ext.gleanYamlFiles</code> may be set to a list of explic
 <p>Different products have different ways to compute the product version at build-time.
 For this reason the Glean Gradle plugin cannot provide an automated way to detect the product major version at build time.
 When using the expiration by version feature in Android, products must provide the major version by themselves.</p>
+<h2 id="gleanpythonenvdir"><a class="header" href="#gleanpythonenvdir"><code>gleanPythonEnvDir</code></a></h2>
+<p>By default, the Glean Gradle plugin will manage its own Python virtualenv in <code>$gradleUserHomeDir/glean</code> to install <code>glean_parser</code>. By specifying a path in <code>ext.gleanPythonEnvDir</code> you can reuse an existing Python virtualenv.</p>
+<pre><code class="language-groovy">ext.gleanExpireByVersion = &quot;$buildDir/externallyManagedVenv&quot;
+</code></pre>
+<p><code>glean_parser</code> must be available in that virtualenv, the Gradle plugin will make no attempt at installing it.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/language-bindings/android/android-build-configuration-options.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h2 id="offline-builds-of-android-applications-that-use-glean"><a class="header" href="#offline-builds-of-android-applications-that-use-glean">Offline builds of Android applications that use Glean</a></h2>
 <p>The Glean Kotlin SDK has basic support for building Android applications that use Glean in offline mode.</p>
 <p>The Glean Kotlin SDK uses a Python script, <a href="https://github.com/mozilla/glean_parser/"><code>glean_parser</code></a> to generate code for metrics from the <code>metrics.yaml</code> and <code>pings.yaml</code> files when Glean-using applications are built. When online, the pieces necessary to run this script are installed automatically.</p>
 <p>For offline builds, the Python environment, and packages of <code>glean_parser</code> and its dependencies must be provided prior to building the Glean-using application.</p>
-<p>To build a Glean-using application in offline mode, do the following:</p>
+<p>To build a Glean-using application in offline mode, you can either:</p>
+<h3 id="provide-an-externally-managed-virtualenv"><a class="header" href="#provide-an-externally-managed-virtualenv">Provide an externally-managed virtualenv</a></h3>
+<p>Set <code>ext.gleanPythonEnvDir</code> to your existing virtualenv before applying the plugin, see <a href="language-bindings/android/./android-build-configuration-options.html#gleanpythonenvdir"><code>gleanPythonEnvDir</code></a>.</p>
+<h3 id="provide-a-python-interpreter-and-the-required-wheels"><a class="header" href="#provide-a-python-interpreter-and-the-required-wheels">Provide a Python interpreter and the required wheels</a></h3>
+<p>In this mode Glean will setup its own virtualenv in <code>$gradleUserHomeDir/glean</code>, controlled by the <code>GLEAN_PYTHON</code> and <code>GLEAN_PYTHON_WHEELS_DIR</code> environment variables.</p>
 <ul>
 <li>
 <p>Install Python 3.8 or later and ensure it's on the <code>PATH</code>.</p>
