@@ -1860,11 +1860,35 @@
 <a href="#1860" id="1860">1860</a>
 <a href="#1861" id="1861">1861</a>
 <a href="#1862" id="1862">1862</a>
+<a href="#1863" id="1863">1863</a>
+<a href="#1864" id="1864">1864</a>
+<a href="#1865" id="1865">1865</a>
+<a href="#1866" id="1866">1866</a>
+<a href="#1867" id="1867">1867</a>
+<a href="#1868" id="1868">1868</a>
+<a href="#1869" id="1869">1869</a>
+<a href="#1870" id="1870">1870</a>
+<a href="#1871" id="1871">1871</a>
+<a href="#1872" id="1872">1872</a>
+<a href="#1873" id="1873">1873</a>
+<a href="#1874" id="1874">1874</a>
+<a href="#1875" id="1875">1875</a>
+<a href="#1876" id="1876">1876</a>
+<a href="#1877" id="1877">1877</a>
+<a href="#1878" id="1878">1878</a>
+<a href="#1879" id="1879">1879</a>
+<a href="#1880" id="1880">1880</a>
+<a href="#1881" id="1881">1881</a>
+<a href="#1882" id="1882">1882</a>
+<a href="#1883" id="1883">1883</a>
+<a href="#1884" id="1884">1884</a>
+<a href="#1885" id="1885">1885</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-</span><span class="kw">use </span>std::collections::btree_map::Entry;
+</span><span class="kw">use </span>std::cell::RefCell;
+<span class="kw">use </span>std::collections::btree_map::Entry;
 <span class="kw">use </span>std::collections::BTreeMap;
 <span class="kw">use </span>std::fs;
 <span class="kw">use </span>std::io;
@@ -1893,6 +1917,19 @@
             }
         }
     };
+}
+
+<span class="macro">macro_rules! </span>measure_commit {
+    (<span class="macro-nonterminal">$this</span>:ident, <span class="macro-nonterminal">$expr</span>:expr) =&gt; {{
+        <span class="kw">let </span>now = ::std::time::Instant::now();
+        <span class="kw">let </span>res = <span class="macro-nonterminal">$expr</span>;
+        <span class="kw">let </span>elapsed = now.elapsed();
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(elapsed) = elapsed.as_micros().try_into() {
+            <span class="kw">let </span><span class="kw-2">mut </span>samples = <span class="macro-nonterminal">$this</span>.write_timings.borrow_mut();
+            samples.push(elapsed);
+        }
+        res
+    }};
 }
 
 <span class="doccomment">/// cbindgen:ignore
@@ -2068,6 +2105,10 @@
 
     <span class="doccomment">/// RKV load state
     </span>rkv_load_state: RkvLoadState,
+
+    <span class="doccomment">/// Times an Rkv write-commit took.
+    /// Re-applied as samples in a timing distribution later.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) write_timings: RefCell&lt;Vec&lt;i64&gt;&gt;,
 }
 
 <span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>Database {
@@ -2136,6 +2177,10 @@
             <span class="prelude-val">None
         </span>};
 
+        <span class="comment">// We are gonna write, so we allocate some capacity upfront.
+        // The value was chosen at random.
+        </span><span class="kw">let </span>write_timings = RefCell::new(Vec::with_capacity(<span class="number">64</span>));
+
         <span class="kw">let </span>db = <span class="self">Self </span>{
             rkv,
             user_store,
@@ -2146,6 +2191,7 @@
             </span>ping_lifetime_count: AtomicUsize::new(<span class="number">0</span>),
             file_size,
             rkv_load_state,
+            write_timings,
         };
 
         db.load_ping_lifetime_data();
@@ -2422,7 +2468,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>writer = <span class="self">self</span>.rkv.write()<span class="question-mark">?</span>;
         <span class="self">self</span>.get_store(lifetime)
             .put(<span class="kw-2">&amp;mut </span>writer, final_key, <span class="kw-2">&amp;</span>value)<span class="question-mark">?</span>;
-        writer.commit()<span class="question-mark">?</span>;
+        <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
@@ -2518,7 +2564,7 @@
             bincode::serialize(<span class="kw-2">&amp;</span>new_value).expect(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
         <span class="kw">let </span>value = rkv::Value::Blob(<span class="kw-2">&amp;</span>encoded);
         store.put(<span class="kw-2">&amp;mut </span>writer, final_key, <span class="kw-2">&amp;</span>value)<span class="question-mark">?</span>;
-        writer.commit()<span class="question-mark">?</span>;
+        <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
@@ -2567,7 +2613,7 @@
                 }
             }
 
-            writer.commit()<span class="question-mark">?</span>;
+            <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(res<span class="question-mark">?</span>)
         })
     }
@@ -2618,7 +2664,7 @@
                 }
                 <span class="kw">return </span><span class="prelude-val">Err</span>(e.into());
             }
-            writer.commit()<span class="question-mark">?</span>;
+            <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         })
     }
@@ -2633,7 +2679,7 @@
     </span><span class="kw">pub fn </span>clear_lifetime(<span class="kw-2">&amp;</span><span class="self">self</span>, lifetime: Lifetime) {
         <span class="kw">let </span>res = <span class="self">self</span>.write_with_store(lifetime, |<span class="kw-2">mut </span>writer, store| {
             store.clear(<span class="kw-2">&amp;mut </span>writer)<span class="question-mark">?</span>;
-            writer.commit()<span class="question-mark">?</span>;
+            <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         });
 
@@ -2702,7 +2748,7 @@
                     // to ping_lifetime_data.
                     </span>store.put(<span class="kw-2">&amp;mut </span>writer, key, <span class="kw-2">&amp;</span>rkv::Value::Blob(<span class="kw-2">&amp;</span>encoded))<span class="question-mark">?</span>;
                 }
-                writer.commit()<span class="question-mark">?</span>;
+                <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
             })<span class="question-mark">?</span>;
         }

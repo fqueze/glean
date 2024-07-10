@@ -426,6 +426,18 @@
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
 <a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -662,8 +674,20 @@
         url_path: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;Ping&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
         <span class="macro">info!</span>(<span class="string">&quot;Collecting {}&quot;</span>, ping.name());
+        <span class="kw">let </span>database = glean.storage();
 
-        <span class="kw">let </span><span class="kw-2">mut </span>metrics_data = StorageManager.snapshot_as_json(glean.storage(), ping.name(), <span class="bool-val">true</span>);
+        <span class="comment">// HACK: Only for metrics pings we add the ping timings.
+        // But we want that to persist until the next metrics ping is actually sent.
+        </span><span class="kw">let </span>write_samples = database.write_timings.replace(Vec::with_capacity(<span class="number">64</span>));
+        <span class="kw">if </span>!write_samples.is_empty() {
+            glean
+                .database_metrics
+                .write_time
+                .accumulate_samples_sync(glean, <span class="kw-2">&amp;</span>write_samples);
+        }
+
+        <span class="kw">let </span><span class="kw-2">mut </span>metrics_data = StorageManager.snapshot_as_json(database, ping.name(), <span class="bool-val">true</span>);
+
         <span class="kw">let </span>events_data = glean
             .event_storage()
             .snapshot_as_json(glean, ping.name(), <span class="bool-val">true</span>);

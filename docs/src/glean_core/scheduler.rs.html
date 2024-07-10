@@ -762,7 +762,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>now = now;
             <span class="kw">loop </span>{
                 <span class="kw">let </span>dur = when.until(now);
-                <span class="macro">log::info!</span>(<span class="string">&quot;Scheduling for {:?} after {}, reason {:?}&quot;</span>, dur, now, when);
+                <span class="macro">log::info!</span>(<span class="string">&quot;Scheduling for {} after {:?}, reason {:?}&quot;</span>, now, dur, when);
                 <span class="kw">let </span><span class="kw-2">mut </span>timed_out = <span class="bool-val">false</span>;
                 {
                     <span class="kw">match </span>condvar.wait_timeout_while(cancelled_lock.lock().unwrap(), dur, |cancelled| !<span class="kw-2">*</span>cancelled) {
