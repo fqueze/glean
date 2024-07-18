@@ -38,6 +38,7 @@ This module contains all of the metric types.
 
 # Re-export utilities
 from .._uniffi import CommonMetricData
+from .._uniffi import LabeledMetricData
 from .._uniffi import Lifetime
 from .._uniffi import MemoryUnit
 from .._uniffi import TimerId
@@ -77,6 +78,7 @@ __all__ = [
     &#34;EventMetricType&#34;,
     &#34;LabeledBooleanMetricType&#34;,
     &#34;LabeledCounterMetricType&#34;,
+    &#34;LabeledMetricData&#34;,
     &#34;LabeledStringMetricType&#34;,
     &#34;Lifetime&#34;,
     &#34;MemoryDistributionMetricType&#34;,
@@ -991,7 +993,7 @@ of the ping to retrieve the metric for.</dd>
 </dd>
 <dt id="glean.metrics.LabeledBooleanMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledBooleanMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>
@@ -1018,7 +1020,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 </dd>
 <dt id="glean.metrics.LabeledCounterMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledCounterMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>
@@ -1043,9 +1045,210 @@ metric storage and rearrange them correctly in the ping.</p></div>
 <li>glean.metrics.labeled.LabeledMetricBase</li>
 </ul>
 </dd>
+<dt id="glean.metrics.LabeledMetricData"><code class="flex name class">
+<span>class <span class="ident">LabeledMetricData</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LabeledMetricData:
+    def __init__(self):
+        raise RuntimeError(&#34;LabeledMetricData cannot be instantiated directly&#34;)
+
+    # Each enum variant is a nested class of the enum itself.
+    class COMMON:
+        cmd: &#34;CommonMetricData&#34;
+
+        @typing.no_type_check
+        def __init__(self,cmd: &#34;CommonMetricData&#34;):
+            self.cmd = cmd
+
+        def __str__(self):
+            return &#34;LabeledMetricData.COMMON(cmd={})&#34;.format(self.cmd)
+
+        def __eq__(self, other):
+            if not other.is_common():
+                return False
+            if self.cmd != other.cmd:
+                return False
+            return True
+    
+    class CUSTOM_DISTRIBUTION:
+        cmd: &#34;CommonMetricData&#34;
+        range_min: &#34;int&#34;
+        range_max: &#34;int&#34;
+        bucket_count: &#34;int&#34;
+        histogram_type: &#34;HistogramType&#34;
+
+        @typing.no_type_check
+        def __init__(self,cmd: &#34;CommonMetricData&#34;, range_min: &#34;int&#34;, range_max: &#34;int&#34;, bucket_count: &#34;int&#34;, histogram_type: &#34;HistogramType&#34;):
+            self.cmd = cmd
+            self.range_min = range_min
+            self.range_max = range_max
+            self.bucket_count = bucket_count
+            self.histogram_type = histogram_type
+
+        def __str__(self):
+            return &#34;LabeledMetricData.CUSTOM_DISTRIBUTION(cmd={}, range_min={}, range_max={}, bucket_count={}, histogram_type={})&#34;.format(self.cmd, self.range_min, self.range_max, self.bucket_count, self.histogram_type)
+
+        def __eq__(self, other):
+            if not other.is_custom_distribution():
+                return False
+            if self.cmd != other.cmd:
+                return False
+            if self.range_min != other.range_min:
+                return False
+            if self.range_max != other.range_max:
+                return False
+            if self.bucket_count != other.bucket_count:
+                return False
+            if self.histogram_type != other.histogram_type:
+                return False
+            return True
+    
+    class MEMORY_DISTRIBUTION:
+        cmd: &#34;CommonMetricData&#34;
+        unit: &#34;MemoryUnit&#34;
+
+        @typing.no_type_check
+        def __init__(self,cmd: &#34;CommonMetricData&#34;, unit: &#34;MemoryUnit&#34;):
+            self.cmd = cmd
+            self.unit = unit
+
+        def __str__(self):
+            return &#34;LabeledMetricData.MEMORY_DISTRIBUTION(cmd={}, unit={})&#34;.format(self.cmd, self.unit)
+
+        def __eq__(self, other):
+            if not other.is_memory_distribution():
+                return False
+            if self.cmd != other.cmd:
+                return False
+            if self.unit != other.unit:
+                return False
+            return True
+    
+    class TIMING_DISTRIBUTION:
+        cmd: &#34;CommonMetricData&#34;
+        unit: &#34;TimeUnit&#34;
+
+        @typing.no_type_check
+        def __init__(self,cmd: &#34;CommonMetricData&#34;, unit: &#34;TimeUnit&#34;):
+            self.cmd = cmd
+            self.unit = unit
+
+        def __str__(self):
+            return &#34;LabeledMetricData.TIMING_DISTRIBUTION(cmd={}, unit={})&#34;.format(self.cmd, self.unit)
+
+        def __eq__(self, other):
+            if not other.is_timing_distribution():
+                return False
+            if self.cmd != other.cmd:
+                return False
+            if self.unit != other.unit:
+                return False
+            return True
+    
+    
+
+    # For each variant, we have an `is_NAME` method for easily checking
+    # whether an instance is that variant.
+    def is_common(self) -&gt; bool:
+        return isinstance(self, LabeledMetricData.COMMON)
+    def is_custom_distribution(self) -&gt; bool:
+        return isinstance(self, LabeledMetricData.CUSTOM_DISTRIBUTION)
+    def is_memory_distribution(self) -&gt; bool:
+        return isinstance(self, LabeledMetricData.MEMORY_DISTRIBUTION)
+    def is_timing_distribution(self) -&gt; bool:
+        return isinstance(self, LabeledMetricData.TIMING_DISTRIBUTION)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>glean._uniffi.glean.LabeledMetricData.COMMON</li>
+<li>glean._uniffi.glean.LabeledMetricData.CUSTOM_DISTRIBUTION</li>
+<li>glean._uniffi.glean.LabeledMetricData.MEMORY_DISTRIBUTION</li>
+<li>glean._uniffi.glean.LabeledMetricData.TIMING_DISTRIBUTION</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="glean.metrics.LabeledMetricData.COMMON"><code class="name">var <span class="ident">COMMON</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.CUSTOM_DISTRIBUTION"><code class="name">var <span class="ident">CUSTOM_DISTRIBUTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.MEMORY_DISTRIBUTION"><code class="name">var <span class="ident">MEMORY_DISTRIBUTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.TIMING_DISTRIBUTION"><code class="name">var <span class="ident">TIMING_DISTRIBUTION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="glean.metrics.LabeledMetricData.is_common"><code class="name flex">
+<span>def <span class="ident">is_common</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_common(self) -&gt; bool:
+    return isinstance(self, LabeledMetricData.COMMON)</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.is_custom_distribution"><code class="name flex">
+<span>def <span class="ident">is_custom_distribution</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_custom_distribution(self) -&gt; bool:
+    return isinstance(self, LabeledMetricData.CUSTOM_DISTRIBUTION)</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.is_memory_distribution"><code class="name flex">
+<span>def <span class="ident">is_memory_distribution</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_memory_distribution(self) -&gt; bool:
+    return isinstance(self, LabeledMetricData.MEMORY_DISTRIBUTION)</code></pre>
+</details>
+</dd>
+<dt id="glean.metrics.LabeledMetricData.is_timing_distribution"><code class="name flex">
+<span>def <span class="ident">is_timing_distribution</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_timing_distribution(self) -&gt; bool:
+    return isinstance(self, LabeledMetricData.TIMING_DISTRIBUTION)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
 <dt id="glean.metrics.LabeledStringMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledStringMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>
@@ -3306,6 +3509,19 @@ previously registered in the metrics.yaml file.</p>
 </li>
 <li>
 <h4><code><a title="glean.metrics.LabeledCounterMetricType" href="#glean.metrics.LabeledCounterMetricType">LabeledCounterMetricType</a></code></h4>
+</li>
+<li>
+<h4><code><a title="glean.metrics.LabeledMetricData" href="#glean.metrics.LabeledMetricData">LabeledMetricData</a></code></h4>
+<ul class="">
+<li><code><a title="glean.metrics.LabeledMetricData.COMMON" href="#glean.metrics.LabeledMetricData.COMMON">COMMON</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.CUSTOM_DISTRIBUTION" href="#glean.metrics.LabeledMetricData.CUSTOM_DISTRIBUTION">CUSTOM_DISTRIBUTION</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.MEMORY_DISTRIBUTION" href="#glean.metrics.LabeledMetricData.MEMORY_DISTRIBUTION">MEMORY_DISTRIBUTION</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.TIMING_DISTRIBUTION" href="#glean.metrics.LabeledMetricData.TIMING_DISTRIBUTION">TIMING_DISTRIBUTION</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.is_common" href="#glean.metrics.LabeledMetricData.is_common">is_common</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.is_custom_distribution" href="#glean.metrics.LabeledMetricData.is_custom_distribution">is_custom_distribution</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.is_memory_distribution" href="#glean.metrics.LabeledMetricData.is_memory_distribution">is_memory_distribution</a></code></li>
+<li><code><a title="glean.metrics.LabeledMetricData.is_timing_distribution" href="#glean.metrics.LabeledMetricData.is_timing_distribution">is_timing_distribution</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="glean.metrics.LabeledStringMetricType" href="#glean.metrics.LabeledStringMetricType">LabeledStringMetricType</a></code></h4>

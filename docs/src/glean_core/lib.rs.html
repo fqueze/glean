@@ -1260,6 +1260,8 @@
 <a href="#1260" id="1260">1260</a>
 <a href="#1261" id="1261">1261</a>
 <a href="#1262" id="1262">1262</a>
+<a href="#1263" id="1263">1263</a>
+<a href="#1264" id="1264">1264</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1325,7 +1327,9 @@
 <span class="kw">pub use </span><span class="kw">crate</span>::error_recording::{test_get_num_recorded_errors, ErrorType};
 <span class="kw">pub use </span><span class="kw">crate</span>::histogram::HistogramType;
 <span class="kw">pub use </span><span class="kw">crate</span>::metrics::labeled::{
-    AllowLabeled, LabeledBoolean, LabeledCounter, LabeledMetric, LabeledString,
+    AllowLabeled, LabeledBoolean, LabeledCounter, LabeledCustomDistribution,
+    LabeledMemoryDistribution, LabeledMetric, LabeledMetricData, LabeledString,
+    LabeledTimingDistribution,
 };
 <span class="kw">pub use </span><span class="kw">crate</span>::metrics::{
     BooleanMetric, CounterMetric, CustomDistributionMetric, Datetime, DatetimeMetric,

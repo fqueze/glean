@@ -34,9 +34,9 @@
 from typing import Any, Optional, Set, Type
 
 
-from .._uniffi import CommonMetricData
 from .._uniffi import LabeledBoolean
 from .._uniffi import LabeledCounter
+from .._uniffi import LabeledMetricData
 from .._uniffi import LabeledString
 from ..testing import ErrorType
 
@@ -65,10 +65,10 @@ class LabeledMetricBase:
 
     def __init__(
         self,
-        common_metric_data: CommonMetricData,
+        labeled_metric_data: LabeledMetricData,
         labels: Optional[Set[str]] = None,
     ):
-        self._inner = self._ctor(common_metric_data, labels)
+        self._inner = self._ctor(labeled_metric_data, labels)
 
     def __getitem__(self, item: str) -&gt; Any:
         &#34;&#34;&#34;
@@ -134,7 +134,7 @@ __all__ = [
 <dl>
 <dt id="glean.metrics.labeled.LabeledBooleanMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledBooleanMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>
@@ -161,7 +161,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 </dd>
 <dt id="glean.metrics.labeled.LabeledCounterMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledCounterMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>
@@ -188,7 +188,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 </dd>
 <dt id="glean.metrics.labeled.LabeledStringMetricType"><code class="flex name class">
 <span>class <span class="ident">LabeledStringMetricType</span></span>
-<span>(</span><span>common_metric_data: glean._uniffi.glean.CommonMetricData, labels: Optional[Set[str]] = None)</span>
+<span>(</span><span>labeled_metric_data: glean._uniffi.glean.LabeledMetricData, labels: Optional[Set[str]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer-facing API for labeled metrics.</p>

@@ -307,13 +307,17 @@
 <a href="#307" id="307">307</a>
 <a href="#308" id="308">308</a>
 <a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 </span><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use super</span>::{metrics::<span class="kw-2">*</span>, CommonMetricData, Lifetime};
+<span class="kw">use super</span>::{metrics::<span class="kw-2">*</span>, CommonMetricData, LabeledMetricData, Lifetime};
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>CoreMetrics {
@@ -391,13 +395,15 @@
             }),
 
             pings_submitted: LabeledMetric::&lt;CounterMetric&gt;::new(
-                CommonMetricData {
-                    name: <span class="string">&quot;pings_submitted&quot;</span>.into(),
-                    category: <span class="string">&quot;glean.validation&quot;</span>.into(),
-                    send_in_pings: <span class="macro">vec!</span>[<span class="string">&quot;metrics&quot;</span>.into(), <span class="string">&quot;baseline&quot;</span>.into()],
-                    lifetime: Lifetime::Ping,
-                    disabled: <span class="bool-val">false</span>,
-                    dynamic_label: <span class="prelude-val">None</span>,
+                LabeledMetricData::Common {
+                    cmd: CommonMetricData {
+                        name: <span class="string">&quot;pings_submitted&quot;</span>.into(),
+                        category: <span class="string">&quot;glean.validation&quot;</span>.into(),
+                        send_in_pings: <span class="macro">vec!</span>[<span class="string">&quot;metrics&quot;</span>.into(), <span class="string">&quot;baseline&quot;</span>.into()],
+                        lifetime: Lifetime::Ping,
+                        disabled: <span class="bool-val">false</span>,
+                        dynamic_label: <span class="prelude-val">None</span>,
+                    },
                 },
                 <span class="prelude-val">None</span>,
             ),
@@ -463,13 +469,15 @@
     <span class="kw">pub fn </span>new() -&gt; UploadMetrics {
         UploadMetrics {
             ping_upload_failure: LabeledMetric::&lt;CounterMetric&gt;::new(
-                CommonMetricData {
-                    name: <span class="string">&quot;ping_upload_failure&quot;</span>.into(),
-                    category: <span class="string">&quot;glean.upload&quot;</span>.into(),
-                    send_in_pings: <span class="macro">vec!</span>[<span class="string">&quot;metrics&quot;</span>.into()],
-                    lifetime: Lifetime::Ping,
-                    disabled: <span class="bool-val">false</span>,
-                    dynamic_label: <span class="prelude-val">None</span>,
+                LabeledMetricData::Common {
+                    cmd: CommonMetricData {
+                        name: <span class="string">&quot;ping_upload_failure&quot;</span>.into(),
+                        category: <span class="string">&quot;glean.upload&quot;</span>.into(),
+                        send_in_pings: <span class="macro">vec!</span>[<span class="string">&quot;metrics&quot;</span>.into()],
+                        lifetime: Lifetime::Ping,
+                        disabled: <span class="bool-val">false</span>,
+                        dynamic_label: <span class="prelude-val">None</span>,
+                    },
                 },
                 <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[
                     Cow::from(<span class="string">&quot;status_code_4xx&quot;</span>),
