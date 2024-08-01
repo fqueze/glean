@@ -1262,6 +1262,11 @@
 <a href="#1262" id="1262">1262</a>
 <a href="#1263" id="1263">1263</a>
 <a href="#1264" id="1264">1264</a>
+<a href="#1265" id="1265">1265</a>
+<a href="#1266" id="1266">1266</a>
+<a href="#1267" id="1267">1267</a>
+<a href="#1268" id="1268">1268</a>
+<a href="#1269" id="1269">1269</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1407,6 +1412,11 @@
     /// Maps a ping name to a list of pings to schedule along with it.
     /// Only used if the ping&#39;s own ping schedule list is empty.
     </span><span class="kw">pub </span>ping_schedule: HashMap&lt;String, Vec&lt;String&gt;&gt;,
+
+    <span class="doccomment">/// Write count threshold when to auto-flush. `0` disables it.
+    </span><span class="kw">pub </span>ping_lifetime_threshold: u64,
+    <span class="doccomment">/// After what time to auto-flush. 0 disables it.
+    </span><span class="kw">pub </span>ping_lifetime_max_time: u64,
 }
 
 <span class="doccomment">/// How to specify the rate at which pings may be uploaded before they are throttled.
