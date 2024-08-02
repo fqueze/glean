@@ -227,9 +227,6 @@
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
 <a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -243,10 +240,7 @@
 <span class="kw">use super</span>::{DispatchError, DispatchGuard, Dispatcher};
 <span class="kw">use </span>crossbeam_channel::RecvTimeoutError;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;preinit_million_queue&quot;</span>)]
-</span><span class="kw">pub const </span>GLOBAL_DISPATCHER_LIMIT: usize = <span class="number">1000000</span>;
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;preinit_million_queue&quot;</span>))]
-</span><span class="kw">pub const </span>GLOBAL_DISPATCHER_LIMIT: usize = <span class="number">1000</span>;
+<span class="kw">pub const </span>GLOBAL_DISPATCHER_LIMIT: usize = <span class="number">1000000</span>;
 
 <span class="kw">static </span>GLOBAL_DISPATCHER: Lazy&lt;RwLock&lt;<span class="prelude-ty">Option</span>&lt;Dispatcher&gt;&gt;&gt; =
     Lazy::new(|| RwLock::new(<span class="prelude-val">Some</span>(Dispatcher::new(GLOBAL_DISPATCHER_LIMIT))));

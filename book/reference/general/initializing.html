@@ -197,7 +197,7 @@ as the application should already do that.</p>
 </blockquote>
 <h2 id="behavior-when-uninitialized"><a class="header" href="#behavior-when-uninitialized">Behavior when uninitialized</a></h2>
 <p>Any API called before Glean is initialized is queued and applied at initialization.
-To avoid unbounded memory growth the queue is bounded (currently to a maximum of 100 tasks),
+To avoid unbounded memory growth the queue is bounded (currently to a maximum of 1 million tasks),
 and further calls are dropped.</p>
 <p>The number of calls dropped, if any,
 is recorded in the <code>glean.error.preinit_tasks_overflow</code> metric.</p>

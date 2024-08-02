@@ -3895,7 +3895,7 @@ as the application should already do that.</p>
 </blockquote>
 <h2 id="behavior-when-uninitialized"><a class="header" href="#behavior-when-uninitialized">Behavior when uninitialized</a></h2>
 <p>Any API called before Glean is initialized is queued and applied at initialization.
-To avoid unbounded memory growth the queue is bounded (currently to a maximum of 100 tasks),
+To avoid unbounded memory growth the queue is bounded (currently to a maximum of 1 million tasks),
 and further calls are dropped.</p>
 <p>The number of calls dropped, if any,
 is recorded in the <code>glean.error.preinit_tasks_overflow</code> metric.</p>
@@ -12759,6 +12759,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <li>Android
 <ul>
 <li>Update to Gradle v8.9 (<a href="https://github.com/mozilla/glean/pull/2909">#2909</a>)</li>
+</ul>
+</li>
+<li>Rust
+<ul>
+<li>Remove cargo feature <code>preinit_million_queue</code> and set the default pre-init queue size to 10^6 for all consumers(<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1909246">Bug 1909246</a>)</li>
 </ul>
 </li>
 </ul>
