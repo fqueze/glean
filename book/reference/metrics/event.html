@@ -480,7 +480,8 @@ A maximum of 50 extra keys is allowed.</p>
 <li>In Glean.js the default value for <code>maxEvents</code> is 1. In all other SDKs it is 500.</li>
 <li>Once the <code>maxEvents</code> threshold is reached on the client an &quot;events&quot; ping is immediately sent.</li>
 <li>The <code>extra_keys</code> allows for a maximum of 50 keys.</li>
-<li>The keys in the <code>extra_keys</code> list must be in dotted snake case, with a maximum length of 40 bytes, when encoded as UTF-8.</li>
+<li>The keys in the <code>extra_keys</code> list must be written using printable ASCII characters,
+with a maximum length of 40 bytes, when encoded as UTF-8.</li>
 <li>The values in the <code>extras</code> object have a maximum length of 500 bytes when serialized and encoded as UTF-8.
 Longer values are truncated, and an <code>invalid_overflow</code> error is recorded.</li>
 </ul>
