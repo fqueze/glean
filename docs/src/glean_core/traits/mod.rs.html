@@ -54,6 +54,19 @@
 <a href="#54" id="54">54</a>
 <a href="#55" id="55">55</a>
 <a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
 </pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -110,5 +123,18 @@
 <span class="kw">pub use </span><span class="self">self</span>::url::Url;
 <span class="kw">pub use </span><span class="self">self</span>::uuid::Uuid;
 <span class="kw">pub use </span><span class="kw">crate</span>::histogram::HistogramType;
+
+<span class="attr">#[doc(hidden)]
+</span><span class="kw">pub mod </span>__serde_helper {
+    <span class="doccomment">/// Deserialize value to a `Vec&lt;T&gt;`.
+    ///
+    /// If the value was `null`  return an empty vector.
+    </span><span class="kw">pub fn </span>vec_null&lt;<span class="lifetime">&#39;de</span>, D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;, T: serde::Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;&gt;(
+        d: D,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;T&gt;, D::Error&gt; {
+        <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;Vec&lt;T&gt;&gt; = serde::Deserialize::deserialize(d)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(res.unwrap_or_default())
+    }
+}
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
