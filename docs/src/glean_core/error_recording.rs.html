@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/error_recording.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>error_recording.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glean_core/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/error_recording.rs`."><title>error_recording.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -236,7 +237,7 @@
 <a href="#236" id="236">236</a>
 <a href="#237" id="237">237</a>
 <a href="#238" id="238">238</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -247,7 +248,7 @@
 //!
 //! Error counts are stored in labeled counters in the `glean.error` category.
 //! The labeled counter metrics that store the errors are defined in the `metrics.yaml` for documentation purposes,
-//! but are not actually used directly, since the `send_in_pings` value needs to match the pings of the metric that is erroring (plus the &quot;metrics&quot; ping),
+//! but are not actually used directly, since the `send_in_pings` value needs to match the pings of the metric that is erroring (plus the "metrics" ping),
 //! not some constant value that we could define in `metrics.yaml`.
 
 </span><span class="kw">use </span>std::fmt::Display;
@@ -264,7 +265,7 @@
 /// Note: the cases in this enum must be kept in sync with the ones
 /// in the platform-specific code (e.g. `ErrorType.kt`) and with the
 /// metrics in the registry files.
-</span><span class="comment">// When adding a new error type ensure it&#39;s also added to `ErrorType::iter()` below.
+</span><span class="comment">// When adding a new error type ensure it's also added to `ErrorType::iter()` below.
 </span><span class="attr">#[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 </span><span class="kw">pub enum </span>ErrorType {
@@ -279,13 +280,13 @@
 }
 
 <span class="kw">impl </span>ErrorType {
-    <span class="doccomment">/// The error type&#39;s metric id
-    </span><span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="doccomment">/// The error type's metric id
+    </span><span class="kw">pub fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            ErrorType::InvalidValue =&gt; <span class="string">&quot;invalid_value&quot;</span>,
-            ErrorType::InvalidLabel =&gt; <span class="string">&quot;invalid_label&quot;</span>,
-            ErrorType::InvalidState =&gt; <span class="string">&quot;invalid_state&quot;</span>,
-            ErrorType::InvalidOverflow =&gt; <span class="string">&quot;invalid_overflow&quot;</span>,
+            ErrorType::InvalidValue =&gt; <span class="string">"invalid_value"</span>,
+            ErrorType::InvalidLabel =&gt; <span class="string">"invalid_label"</span>,
+            ErrorType::InvalidState =&gt; <span class="string">"invalid_state"</span>,
+            ErrorType::InvalidOverflow =&gt; <span class="string">"invalid_overflow"</span>,
         }
     }
 
@@ -327,21 +328,21 @@
 
 <span class="doccomment">/// For a given metric, get the metric in which to record errors
 </span><span class="kw">fn </span>get_error_metric_for_metric(meta: <span class="kw-2">&amp;</span>CommonMetricDataInternal, error: ErrorType) -&gt; CounterMetric {
-    <span class="comment">// Can&#39;t use meta.identifier here, since that might cause infinite recursion
+    <span class="comment">// Can't use meta.identifier here, since that might cause infinite recursion
     // if the label on this metric needs to report an error.
     </span><span class="kw">let </span>identifier = meta.base_identifier();
     <span class="kw">let </span>name = strip_label(<span class="kw-2">&amp;</span>identifier);
 
     <span class="comment">// Record errors in the pings the metric is in, as well as the metrics ping.
     </span><span class="kw">let </span><span class="kw-2">mut </span>send_in_pings = meta.inner.send_in_pings.clone();
-    <span class="kw">let </span>ping_name = <span class="string">&quot;metrics&quot;</span>.to_string();
+    <span class="kw">let </span>ping_name = <span class="string">"metrics"</span>.to_string();
     <span class="kw">if </span>!send_in_pings.contains(<span class="kw-2">&amp;</span>ping_name) {
         send_in_pings.push(ping_name);
     }
 
     CounterMetric::new(CommonMetricData {
         name: combine_base_identifier_and_label(error.as_str(), name),
-        category: <span class="string">&quot;glean.error&quot;</span>.into(),
+        category: <span class="string">"glean.error"</span>.into(),
         lifetime: Lifetime::Ping,
         send_in_pings,
         ..Default::default()
@@ -354,12 +355,12 @@
 ///
 /// *Note*: We do make assumptions here how labeled metrics are encoded, namely by having the name
 /// `&lt;name&gt;/&lt;label&gt;`.
-/// Errors do not adhere to the usual &quot;maximum label&quot; restriction.
+/// Errors do not adhere to the usual "maximum label" restriction.
 ///
 /// # Arguments
 ///
 /// * `glean` - The Glean instance containing the database
-/// * `meta` - The metric&#39;s meta data
+/// * `meta` - The metric's meta data
 /// * `error` -  The error type to record
 /// * `message` - The message to log. This message is not sent with the ping.
 ///             It does not need to include the metric id, as that is automatically prepended to the message.
@@ -373,7 +374,7 @@
 ) {
     <span class="kw">let </span>metric = get_error_metric_for_metric(meta, error);
 
-    <span class="macro">log::warn!</span>(<span class="string">&quot;{}: {}&quot;</span>, meta.base_identifier(), message);
+    <span class="macro">log::warn!</span>(<span class="string">"{}: {}"</span>, meta.base_identifier(), message);
     <span class="kw">let </span>to_report = num_errors.into().unwrap_or(<span class="number">1</span>);
     <span class="macro">debug_assert!</span>(to_report &gt; <span class="number">0</span>);
     metric.add_sync(glean, to_report);
@@ -399,9 +400,9 @@
 ) -&gt; <span class="prelude-ty">Result</span>&lt;i32, String&gt; {
     <span class="kw">let </span>metric = get_error_metric_for_metric(meta, error);
 
-    metric.get_value(glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>)).ok_or_else(|| {
+    metric.get_value(glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>)).ok_or_else(|| {
         <span class="macro">format!</span>(
-            <span class="string">&quot;No error recorded for {} in &#39;metrics&#39; store&quot;</span>,
+            <span class="string">"No error recorded for {} in 'metrics' store"</span>,
             meta.base_identifier(),
         )
     })
@@ -430,9 +431,9 @@
         <span class="kw">let </span>(glean, _t) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="kw">let </span>string_metric = StringMetric::new(CommonMetricData {
-            name: <span class="string">&quot;string_metric&quot;</span>.into(),
-            category: <span class="string">&quot;telemetry&quot;</span>.into(),
-            send_in_pings: <span class="macro">vec!</span>[<span class="string">&quot;store1&quot;</span>.into(), <span class="string">&quot;store2&quot;</span>.into()],
+            name: <span class="string">"string_metric"</span>.into(),
+            category: <span class="string">"telemetry"</span>.into(),
+            send_in_pings: <span class="macro">vec!</span>[<span class="string">"store1"</span>.into(), <span class="string">"store2"</span>.into()],
             disabled: <span class="bool-val">false</span>,
             lifetime: Lifetime::User,
             ..Default::default()
@@ -445,7 +446,7 @@
             <span class="kw-2">&amp;</span>glean,
             string_metric.meta(),
             ErrorType::InvalidValue,
-            <span class="string">&quot;Invalid value&quot;</span>,
+            <span class="string">"Invalid value"</span>,
             <span class="prelude-val">None</span>,
         );
 
@@ -453,7 +454,7 @@
             <span class="kw-2">&amp;</span>glean,
             string_metric.meta(),
             ErrorType::InvalidLabel,
-            <span class="string">&quot;Invalid label&quot;</span>,
+            <span class="string">"Invalid label"</span>,
             expected_invalid_labels_errors,
         );
 
@@ -461,7 +462,7 @@
             get_error_metric_for_metric(string_metric.meta(), ErrorType::InvalidValue);
         <span class="kw">let </span>invalid_label =
             get_error_metric_for_metric(string_metric.meta(), ErrorType::InvalidLabel);
-        <span class="kw">for </span><span class="kw-2">&amp;</span>store <span class="kw">in </span><span class="kw-2">&amp;</span>[<span class="string">&quot;store1&quot;</span>, <span class="string">&quot;store2&quot;</span>, <span class="string">&quot;metrics&quot;</span>] {
+        <span class="kw">for </span><span class="kw-2">&amp;</span>store <span class="kw">in </span><span class="kw-2">&amp;</span>[<span class="string">"store1"</span>, <span class="string">"store2"</span>, <span class="string">"metrics"</span>] {
             <span class="macro">assert_eq!</span>(
                 <span class="prelude-val">Some</span>(expected_invalid_values_errors),
                 invalid_val.get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(store))
@@ -474,5 +475,4 @@
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

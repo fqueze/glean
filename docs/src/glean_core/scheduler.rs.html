@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/scheduler.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>scheduler.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glean_core/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/scheduler.rs`."><title>scheduler.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -558,13 +559,13 @@
 <a href="#558" id="558">558</a>
 <a href="#559" id="559">559</a>
 <a href="#560" id="560">560</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 </span><span class="doccomment">//! # Metrics Ping Scheduler
 //!
-//! The Metrics Ping Scheduler (MPS) is responsible for scheduling &quot;metrics&quot; pings.
+//! The Metrics Ping Scheduler (MPS) is responsible for scheduling "metrics" pings.
 //! It implements the spec described in
 //! [the docs](https://mozilla.github.io/glean/book/user/pings/metrics.html#scheduling)
 
@@ -586,7 +587,7 @@
 </span><span class="kw">static </span>TASK_CONDVAR: Lazy&lt;Arc&lt;(Mutex&lt;bool&gt;, Condvar)&gt;&gt; =
     Lazy::new(|| Arc::new((Mutex::new(<span class="bool-val">false</span>), Condvar::new())));
 
-<span class="doccomment">/// Describes the interface for a submitter of &quot;metrics&quot; pings.
+<span class="doccomment">/// Describes the interface for a submitter of "metrics" pings.
 /// Used to decouple the implementation so we can test it.
 </span><span class="kw">trait </span>MetricsPingSubmitter {
     <span class="doccomment">/// Submits a metrics ping, updating the last sent time to `now`
@@ -594,36 +595,36 @@
     </span><span class="kw">fn </span>submit_metrics_ping(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, now: DateTime&lt;FixedOffset&gt;);
 }
 
-<span class="doccomment">/// Describes the interface for a scheduler of &quot;metrics&quot; pings.
+<span class="doccomment">/// Describes the interface for a scheduler of "metrics" pings.
 /// Used to decouple the implementation so we can test it.
 </span><span class="kw">trait </span>MetricsPingScheduler {
-    <span class="doccomment">/// Begins a recurring schedule of &quot;metrics&quot; ping submissions, on another thread.
+    <span class="doccomment">/// Begins a recurring schedule of "metrics" ping submissions, on another thread.
     /// `now` is used with `when` to determine the first schedule interval and
     /// may not be _right now_ due to processing delays (or in tests).
     </span><span class="kw">fn </span>start_scheduler(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">&#39;static</span>,
+        submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">'static</span>,
         now: DateTime&lt;FixedOffset&gt;,
         when: When,
     );
 }
 
-<span class="doccomment">/// Uses Glean to submit &quot;metrics&quot; pings directly.
+<span class="doccomment">/// Uses Glean to submit "metrics" pings directly.
 </span><span class="kw">struct </span>GleanMetricsPingSubmitter {}
 <span class="kw">impl </span>MetricsPingSubmitter <span class="kw">for </span>GleanMetricsPingSubmitter {
     <span class="kw">fn </span>submit_metrics_ping(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;, now: DateTime&lt;FixedOffset&gt;) {
-        glean.submit_ping_by_name(<span class="string">&quot;metrics&quot;</span>, reason);
+        glean.submit_ping_by_name(<span class="string">"metrics"</span>, reason);
         <span class="comment">// Always update the collection date, irrespective of the ping being sent.
         </span>get_last_sent_time_metric().set_sync_chrono(glean, now);
     }
 }
 
-<span class="doccomment">/// Schedule &quot;metrics&quot; pings directly using the default behaviour.
+<span class="doccomment">/// Schedule "metrics" pings directly using the default behaviour.
 </span><span class="kw">struct </span>GleanMetricsPingScheduler {}
 <span class="kw">impl </span>MetricsPingScheduler <span class="kw">for </span>GleanMetricsPingScheduler {
     <span class="kw">fn </span>start_scheduler(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">&#39;static</span>,
+        submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">'static</span>,
         now: DateTime&lt;FixedOffset&gt;,
         when: When,
     ) {
@@ -631,15 +632,15 @@
     }
 }
 
-<span class="doccomment">/// Performs startup checks to decide when to schedule the next &quot;metrics&quot; ping collection.
+<span class="doccomment">/// Performs startup checks to decide when to schedule the next "metrics" ping collection.
 /// **Must** be called before draining the preinit queue.
-/// (We&#39;re at the Language Bindings&#39; mercy for that)
+/// (We're at the Language Bindings' mercy for that)
 </span><span class="kw">pub fn </span>schedule(glean: <span class="kw-2">&amp;</span>Glean) {
     <span class="kw">let </span>now = local_now_with_offset();
 
     <span class="kw">let </span>(cancelled_lock, _condvar) = <span class="kw-2">&amp;**</span>TASK_CONDVAR;
     <span class="kw">if </span><span class="kw-2">*</span>cancelled_lock.lock().unwrap() {
-        <span class="macro">log::debug!</span>(<span class="string">&quot;Told to schedule, but already cancelled. Are we in a test?&quot;</span>);
+        <span class="macro">log::debug!</span>(<span class="string">"Told to schedule, but already cancelled. Are we in a test?"</span>);
     }
     <span class="kw-2">*</span>cancelled_lock.lock().unwrap() = <span class="bool-val">false</span>; <span class="comment">// Uncancel the thread.
 
@@ -658,20 +659,20 @@
 
 <span class="kw">fn </span>schedule_internal(
     glean: <span class="kw-2">&amp;</span>Glean,
-    submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">&#39;static</span>,
+    submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">'static</span>,
     scheduler: <span class="kw">impl </span>MetricsPingScheduler,
     now: DateTime&lt;FixedOffset&gt;,
 ) {
     <span class="kw">let </span>last_sent_build_metric = get_last_sent_build_metric();
     <span class="kw">if let </span><span class="prelude-val">Some</span>(last_sent_build) = last_sent_build_metric.get_value(glean, <span class="prelude-val">Some</span>(INTERNAL_STORAGE)) {
-        <span class="comment">// If `app_build` is longer than StringMetric&#39;s max length, we will always
-        // treat it as a changed build when really it isn&#39;t.
+        <span class="comment">// If `app_build` is longer than StringMetric's max length, we will always
+        // treat it as a changed build when really it isn't.
         // This will be externally-observable as InvalidOverflow errors on both the core
-        // `client_info.app_build` metric and the scheduler&#39;s internal metric.
+        // `client_info.app_build` metric and the scheduler's internal metric.
         </span><span class="kw">if </span>last_sent_build != glean.app_build {
             last_sent_build_metric.set_sync(glean, <span class="kw-2">&amp;</span>glean.app_build);
-            <span class="macro">log::info!</span>(<span class="string">&quot;App build changed. Sending &#39;metrics&#39; ping&quot;</span>);
-            submitter.submit_metrics_ping(glean, <span class="prelude-val">Some</span>(<span class="string">&quot;upgrade&quot;</span>), now);
+            <span class="macro">log::info!</span>(<span class="string">"App build changed. Sending 'metrics' ping"</span>);
+            submitter.submit_metrics_ping(glean, <span class="prelude-val">Some</span>(<span class="string">"upgrade"</span>), now);
             scheduler.start_scheduler(submitter, now, When::Reschedule);
             <span class="kw">return</span>;
         }
@@ -682,36 +683,36 @@
 
     <span class="kw">let </span>last_sent_time = get_last_sent_time_metric().get_value(glean, INTERNAL_STORAGE);
     <span class="kw">if let </span><span class="prelude-val">Some</span>(last_sent) = last_sent_time {
-        <span class="macro">log::info!</span>(<span class="string">&quot;The &#39;metrics&#39; ping was last sent on {}&quot;</span>, last_sent);
+        <span class="macro">log::info!</span>(<span class="string">"The 'metrics' ping was last sent on {}"</span>, last_sent);
     }
 
     <span class="comment">// We aim to cover 3 cases here:
     //
     // 1. The ping was already collected on the current calendar day;
     //    only schedule one for collection on the next calendar day at the due time.
-    // 2. The ping was NOT collected on the current calendar day AND we&#39;re later
-    //    than today&#39;s due time; collect the ping immediately.
+    // 2. The ping was NOT collected on the current calendar day AND we're later
+    //    than today's due time; collect the ping immediately.
     // 3. The ping was NOT collected on the current calendar day BUT we still have
     //    some time to the due time; schedule for submitting the current calendar day.
 
     </span><span class="kw">let </span>already_sent_today = last_sent_time.map_or(<span class="bool-val">false</span>, |d| d.date() == now.date());
     <span class="kw">if </span>already_sent_today {
         <span class="comment">// Case #1
-        </span><span class="macro">log::info!</span>(<span class="string">&quot;The &#39;metrics&#39; ping was already sent today, {}&quot;</span>, now);
+        </span><span class="macro">log::info!</span>(<span class="string">"The 'metrics' ping was already sent today, {}"</span>, now);
         scheduler.start_scheduler(submitter, now, When::Tomorrow);
     } <span class="kw">else if </span>now &gt; now.date().and_hms(SCHEDULED_HOUR, <span class="number">0</span>, <span class="number">0</span>) {
         <span class="comment">// Case #2
-        </span><span class="macro">log::info!</span>(<span class="string">&quot;Sending the &#39;metrics&#39; ping immediately, {}&quot;</span>, now);
-        submitter.submit_metrics_ping(glean, <span class="prelude-val">Some</span>(<span class="string">&quot;overdue&quot;</span>), now);
+        </span><span class="macro">log::info!</span>(<span class="string">"Sending the 'metrics' ping immediately, {}"</span>, now);
+        submitter.submit_metrics_ping(glean, <span class="prelude-val">Some</span>(<span class="string">"overdue"</span>), now);
         scheduler.start_scheduler(submitter, now, When::Reschedule);
     } <span class="kw">else </span>{
         <span class="comment">// Case #3
-        </span><span class="macro">log::info!</span>(<span class="string">&quot;The &#39;metrics&#39; collection is scheduled for today, {}&quot;</span>, now);
+        </span><span class="macro">log::info!</span>(<span class="string">"The 'metrics' collection is scheduled for today, {}"</span>, now);
         scheduler.start_scheduler(submitter, now, When::Today);
     }
 }
 
-<span class="doccomment">/// &quot;metrics&quot; ping scheduling deadlines.
+<span class="doccomment">/// "metrics" ping scheduling deadlines.
 </span><span class="attr">#[derive(Debug, PartialEq)]
 </span><span class="kw">enum </span>When {
     Today,
@@ -721,13 +722,13 @@
 
 <span class="kw">impl </span>When {
     <span class="doccomment">/// Returns the duration from now until our deadline.
-    /// Note that std::time::Duration doesn&#39;t do negative time spans, so if
+    /// Note that std::time::Duration doesn't do negative time spans, so if
     /// our deadline has passed, this will return zero.
     </span><span class="kw">fn </span>until(<span class="kw-2">&amp;</span><span class="self">self</span>, now: DateTime&lt;FixedOffset&gt;) -&gt; std::time::Duration {
         <span class="kw">let </span>fire_date = <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Today =&gt; now.date().and_hms(SCHEDULED_HOUR, <span class="number">0</span>, <span class="number">0</span>),
-            <span class="comment">// Doesn&#39;t actually save us from being an hour off on DST because
-            // chrono doesn&#39;t know when DST changes. : (
+            <span class="comment">// Doesn't actually save us from being an hour off on DST because
+            // chrono doesn't know when DST changes. : (
             </span><span class="self">Self</span>::Tomorrow | <span class="self">Self</span>::Reschedule =&gt; {
                 (now.date() + Duration::days(<span class="number">1</span>)).and_hms(SCHEDULED_HOUR, <span class="number">0</span>, <span class="number">0</span>)
             }
@@ -738,76 +739,76 @@
             .unwrap_or_else(|<span class="kw">_</span>| std::time::Duration::from_millis(<span class="number">0</span>))
     }
 
-    <span class="doccomment">/// The &quot;metrics&quot; ping reason corresponding to our deadline.
-    </span><span class="kw">fn </span>reason(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="doccomment">/// The "metrics" ping reason corresponding to our deadline.
+    </span><span class="kw">fn </span>reason(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Today =&gt; <span class="string">&quot;today&quot;</span>,
-            <span class="self">Self</span>::Tomorrow =&gt; <span class="string">&quot;tomorrow&quot;</span>,
-            <span class="self">Self</span>::Reschedule =&gt; <span class="string">&quot;reschedule&quot;</span>,
+            <span class="self">Self</span>::Today =&gt; <span class="string">"today"</span>,
+            <span class="self">Self</span>::Tomorrow =&gt; <span class="string">"tomorrow"</span>,
+            <span class="self">Self</span>::Reschedule =&gt; <span class="string">"reschedule"</span>,
         }
     }
 }
 
 <span class="kw">fn </span>start_scheduler(
-    submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">&#39;static</span>,
+    submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">'static</span>,
     now: DateTime&lt;FixedOffset&gt;,
     when: When,
 ) -&gt; JoinHandle&lt;()&gt; {
     <span class="kw">let </span>pair = Arc::clone(<span class="kw-2">&amp;</span>TASK_CONDVAR);
     std::thread::Builder::new()
-        .name(<span class="string">&quot;glean.mps&quot;</span>.into())
+        .name(<span class="string">"glean.mps"</span>.into())
         .spawn(<span class="kw">move </span>|| {
             <span class="kw">let </span>(cancelled_lock, condvar) = <span class="kw-2">&amp;*</span>pair;
             <span class="kw">let </span><span class="kw-2">mut </span>when = when;
             <span class="kw">let </span><span class="kw-2">mut </span>now = now;
             <span class="kw">loop </span>{
                 <span class="kw">let </span>dur = when.until(now);
-                <span class="macro">log::info!</span>(<span class="string">&quot;Scheduling for {} after {:?}, reason {:?}&quot;</span>, now, dur, when);
+                <span class="macro">log::info!</span>(<span class="string">"Scheduling for {} after {:?}, reason {:?}"</span>, now, dur, when);
                 <span class="kw">let </span><span class="kw-2">mut </span>timed_out = <span class="bool-val">false</span>;
                 {
                     <span class="kw">match </span>condvar.wait_timeout_while(cancelled_lock.lock().unwrap(), dur, |cancelled| !<span class="kw-2">*</span>cancelled) {
                         <span class="prelude-val">Err</span>(err) =&gt; {
-                            <span class="macro">log::warn!</span>(<span class="string">&quot;Condvar wait failure. MPS exiting. {}&quot;</span>, err);
+                            <span class="macro">log::warn!</span>(<span class="string">"Condvar wait failure. MPS exiting. {}"</span>, err);
                             <span class="kw">break</span>;
                         }
                         <span class="prelude-val">Ok</span>((cancelled, wait_result)) =&gt; {
                             <span class="kw">if </span><span class="kw-2">*</span>cancelled {
-                                <span class="macro">log::info!</span>(<span class="string">&quot;Metrics Ping Scheduler cancelled. Exiting.&quot;</span>);
+                                <span class="macro">log::info!</span>(<span class="string">"Metrics Ping Scheduler cancelled. Exiting."</span>);
                                 <span class="kw">break</span>;
                             } <span class="kw">else if </span>wait_result.timed_out() {
-                                <span class="comment">// Can&#39;t get the global glean while holding cancelled&#39;s lock.
+                                <span class="comment">// Can't get the global glean while holding cancelled's lock.
                                 </span>timed_out = <span class="bool-val">true</span>;
                             } <span class="kw">else </span>{
                                 <span class="comment">// This should be impossible. `cancelled_lock` is acquired, and
                                 // `!*cancelled` is checked by the condvar before it is allowed
                                 // to return from `wait_timeout_while` (I checked).
                                 // So `Ok(_)` implies `*cancelled || wait_result.timed_out`.
-                                </span><span class="macro">log::warn!</span>(<span class="string">&quot;Spurious wakeup of the MPS condvar should be impossible.&quot;</span>);
+                                </span><span class="macro">log::warn!</span>(<span class="string">"Spurious wakeup of the MPS condvar should be impossible."</span>);
                             }
                         }
                     }
                 }
                 <span class="comment">// Safety:
-                // We are okay dropping the condvar&#39;s cancelled lock here because it only guards
-                // whether we&#39;re cancelled, and we&#39;ve established that we weren&#39;t when we timed out.
+                // We are okay dropping the condvar's cancelled lock here because it only guards
+                // whether we're cancelled, and we've established that we weren't when we timed out.
                 // We might _now_ be cancelled at any time, in which case when we loop back over
-                // we&#39;ll immediately exit. But first we need to submit our &quot;metrics&quot; ping.
+                // we'll immediately exit. But first we need to submit our "metrics" ping.
                 </span><span class="kw">if </span>timed_out {
-                    <span class="macro">log::info!</span>(<span class="string">&quot;Time to submit our metrics ping, {:?}&quot;</span>, when);
-                    <span class="kw">let </span>glean = <span class="kw">crate</span>::core::global_glean().expect(<span class="string">&quot;Global Glean not present when trying to send scheduled &#39;metrics&#39; ping?!&quot;</span>).lock().unwrap();
+                    <span class="macro">log::info!</span>(<span class="string">"Time to submit our metrics ping, {:?}"</span>, when);
+                    <span class="kw">let </span>glean = <span class="kw">crate</span>::core::global_glean().expect(<span class="string">"Global Glean not present when trying to send scheduled 'metrics' ping?!"</span>).lock().unwrap();
                     submitter.submit_metrics_ping(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(when.reason()), now);
                     when = When::Reschedule;
                 }
                 now = local_now_with_offset();
             }
-        }).expect(<span class="string">&quot;Unable to spawn Metrics Ping Scheduler thread.&quot;</span>)
+        }).expect(<span class="string">"Unable to spawn Metrics Ping Scheduler thread."</span>)
 }
 
 <span class="kw">fn </span>get_last_sent_time_metric() -&gt; DatetimeMetric {
     DatetimeMetric::new(
         CommonMetricData {
-            name: <span class="string">&quot;last_sent_time&quot;</span>.into(),
-            category: <span class="string">&quot;mps&quot;</span>.into(),
+            name: <span class="string">"last_sent_time"</span>.into(),
+            category: <span class="string">"mps"</span>.into(),
             send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
             lifetime: Lifetime::User,
             ..Default::default()
@@ -818,8 +819,8 @@
 
 <span class="kw">fn </span>get_last_sent_build_metric() -&gt; StringMetric {
     StringMetric::new(CommonMetricData {
-        name: <span class="string">&quot;last_sent_build&quot;</span>.into(),
-        category: <span class="string">&quot;mps&quot;</span>.into(),
+        name: <span class="string">"last_sent_build"</span>.into(),
+        category: <span class="string">"mps"</span>.into(),
         send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
         lifetime: Lifetime::User,
         ..Default::default()
@@ -854,7 +855,7 @@
     <span class="kw">impl</span>&lt;F: Fn(DateTime&lt;FixedOffset&gt;, When)&gt; MetricsPingScheduler <span class="kw">for </span>ValidatingScheduler&lt;F&gt; {
         <span class="kw">fn </span>start_scheduler(
             <span class="kw-2">&amp;</span><span class="self">self</span>,
-            _submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">&#39;static</span>,
+            _submitter: <span class="kw">impl </span>MetricsPingSubmitter + Send + <span class="lifetime">'static</span>,
             now: DateTime&lt;FixedOffset&gt;,
             when: When,
         ) {
@@ -889,12 +890,12 @@
     }
 
     <span class="comment">// Ensure on first run that we actually set the last sent build metric.
-    // (and that we send an &quot;overdue&quot; ping if it&#39;s after the scheduled hour)
+    // (and that we send an "overdue" ping if it's after the scheduled hour)
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>first_run_last_sent_build() {
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, _t) = new_glean(<span class="prelude-val">None</span>);
 
-        glean.app_build = <span class="string">&quot;a build&quot;</span>.into();
+        glean.app_build = <span class="string">"a build"</span>.into();
         <span class="kw">let </span>lsb_metric = get_last_sent_build_metric();
         <span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, lsb_metric.get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(INTERNAL_STORAGE)));
 
@@ -903,7 +904,7 @@
             .and_hms(SCHEDULED_HOUR, <span class="number">0</span>, <span class="number">1</span>);
 
         <span class="kw">let </span>(submitter, submitter_count, scheduler, scheduler_count) = new_proxies(
-            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">&quot;overdue&quot;</span>)),
+            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">"overdue"</span>)),
             |<span class="kw">_</span>, when| <span class="macro">assert_eq!</span>(when, When::Reschedule),
         );
 
@@ -917,17 +918,17 @@
         );
     }
 
-    <span class="comment">// Ensure that if we have a different build, we immediately submit an &quot;upgrade&quot; ping
-    // and schedule a &quot;reschedule&quot; ping for tomorrow.
+    <span class="comment">// Ensure that if we have a different build, we immediately submit an "upgrade" ping
+    // and schedule a "reschedule" ping for tomorrow.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>different_app_builds_submit_and_reschedule() {
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, _t) = new_glean(<span class="prelude-val">None</span>);
 
-        glean.app_build = <span class="string">&quot;a build&quot;</span>.into();
-        get_last_sent_build_metric().set_sync(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;a different build&quot;</span>);
+        glean.app_build = <span class="string">"a build"</span>.into();
+        get_last_sent_build_metric().set_sync(<span class="kw-2">&amp;</span>glean, <span class="string">"a different build"</span>);
 
         <span class="kw">let </span>(submitter, submitter_count, scheduler, scheduler_count) = new_proxies(
-            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">&quot;upgrade&quot;</span>)),
+            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">"upgrade"</span>)),
             |<span class="kw">_</span>, when| <span class="macro">assert_eq!</span>(when, When::Reschedule),
         );
 
@@ -936,8 +937,8 @@
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, scheduler_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 
-    <span class="comment">// If we&#39;ve already sent a ping today, ensure we don&#39;t send a ping but we
-    // do schedule a ping for tomorrow. (&quot;Case #1&quot; in schedule_internal)
+    <span class="comment">// If we've already sent a ping today, ensure we don't send a ping but we
+    // do schedule a ping for tomorrow. ("Case #1" in schedule_internal)
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>case_1_no_submit_but_schedule_tomorrow() {
         <span class="kw">let </span>(glean, _t) = new_glean(<span class="prelude-val">None</span>);
@@ -946,7 +947,7 @@
         get_last_sent_time_metric().set_sync_chrono(<span class="kw-2">&amp;</span>glean, fake_now);
 
         <span class="kw">let </span>(submitter, submitter_count, scheduler, scheduler_count) = new_proxies(
-            |<span class="kw">_</span>, reason| <span class="macro">panic!</span>(<span class="string">&quot;Case #1 shouldn&#39;t submit a ping! reason: {:?}&quot;</span>, reason),
+            |<span class="kw">_</span>, reason| <span class="macro">panic!</span>(<span class="string">"Case #1 shouldn't submit a ping! reason: {:?}"</span>, reason),
             |<span class="kw">_</span>, when| <span class="macro">assert_eq!</span>(when, When::Tomorrow),
         );
         schedule_internal(<span class="kw-2">&amp;</span>glean, submitter, scheduler, fake_now);
@@ -954,9 +955,9 @@
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, scheduler_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 
-    <span class="comment">// If we haven&#39;t sent a ping today and we&#39;re after the scheduled time,
-    // ensure we send a ping and then schedule a &quot;reschedule&quot; ping for tomorrow.
-    // (&quot;Case #2&quot; in schedule_internal)
+    <span class="comment">// If we haven't sent a ping today and we're after the scheduled time,
+    // ensure we send a ping and then schedule a "reschedule" ping for tomorrow.
+    // ("Case #2" in schedule_internal)
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>case_2_submit_ping_and_reschedule() {
         <span class="kw">let </span>(glean, _t) = new_glean(<span class="prelude-val">None</span>);
@@ -968,7 +969,7 @@
         <span class="kw">let </span>fake_now = fake_yesterday + Duration::days(<span class="number">1</span>);
 
         <span class="kw">let </span>(submitter, submitter_count, scheduler, scheduler_count) = new_proxies(
-            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">&quot;overdue&quot;</span>)),
+            |<span class="kw">_</span>, reason| <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">"overdue"</span>)),
             |<span class="kw">_</span>, when| <span class="macro">assert_eq!</span>(when, When::Reschedule),
         );
         schedule_internal(<span class="kw-2">&amp;</span>glean, submitter, scheduler, fake_now);
@@ -976,9 +977,9 @@
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, scheduler_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 
-    <span class="comment">// If we haven&#39;t sent a ping today and we&#39;re before the scheduled time,
-    // ensure we don&#39;t send a ping but schedule a &quot;today&quot; ping for today.
-    // (&quot;Case #3&quot; in schedule_internal)
+    <span class="comment">// If we haven't sent a ping today and we're before the scheduled time,
+    // ensure we don't send a ping but schedule a "today" ping for today.
+    // ("Case #3" in schedule_internal)
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>case_3_no_submit_but_schedule_today() {
         <span class="kw">let </span>(glean, _t) = new_glean(<span class="prelude-val">None</span>);
@@ -991,7 +992,7 @@
         <span class="kw">let </span>fake_now = fake_yesterday + Duration::days(<span class="number">1</span>);
 
         <span class="kw">let </span>(submitter, submitter_count, scheduler, scheduler_count) = new_proxies(
-            |<span class="kw">_</span>, reason| <span class="macro">panic!</span>(<span class="string">&quot;Case #3 shouldn&#39;t submit a ping! reason: {:?}&quot;</span>, reason),
+            |<span class="kw">_</span>, reason| <span class="macro">panic!</span>(<span class="string">"Case #3 shouldn't submit a ping! reason: {:?}"</span>, reason),
             |<span class="kw">_</span>, when| <span class="macro">assert_eq!</span>(when, When::Today),
         );
         schedule_internal(<span class="kw-2">&amp;</span>glean, submitter, scheduler, fake_now);
@@ -999,7 +1000,7 @@
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, scheduler_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 
-    <span class="comment">// `When` is responsible for date math. Let&#39;s make sure it&#39;s correct.
+    <span class="comment">// `When` is responsible for date math. Let's make sure it's correct.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>when_gets_at_least_some_date_math_correct() {
         <span class="kw">let </span>now = FixedOffset::east(<span class="number">0</span>).ymd(<span class="number">2021</span>, <span class="number">4</span>, <span class="number">30</span>).and_hms(<span class="number">15</span>, <span class="number">2</span>, <span class="number">10</span>);
@@ -1014,7 +1015,7 @@
 
         <span class="comment">// `Tomorrow` and `Reschedule` should differ only in their `reason()`
         // 46670s is 12h57m10s (aka, the time from 15:02:10 to 04:00:00
-        // (when the timezone doesn&#39;t change between them)).
+        // (when the timezone doesn't change between them)).
         </span><span class="macro">assert_eq!</span>(
             std::time::Duration::from_secs(<span class="number">46670</span>),
             When::Tomorrow.until(now)
@@ -1051,11 +1052,11 @@
             new_proxies(
                 |<span class="kw">_</span>, reason| {
                     <span class="macro">panic!</span>(
-                        <span class="string">&quot;Shouldn&#39;t submit when testing scheduler. reason: {:?}&quot;</span>,
+                        <span class="string">"Shouldn't submit when testing scheduler. reason: {:?}"</span>,
                         reason
                     )
                 },
-                |<span class="kw">_</span>, <span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;Not even using the scheduler this time.&quot;</span>),
+                |<span class="kw">_</span>, <span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">"Not even using the scheduler this time."</span>),
             )
         };
 
@@ -1083,7 +1084,7 @@
         </span><span class="macro">assert_eq!</span>(<span class="number">0</span>, submitter_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 
-    <span class="comment">// We&#39;re not keen to wait like the scheduler is, but we can test a quick schedule.
+    <span class="comment">// We're not keen to wait like the scheduler is, but we can test a quick schedule.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>immediate_task_runs_immediately() {
         <span class="comment">// First and foremost, all scheduler tests must ensure they start uncancelled.
@@ -1092,25 +1093,25 @@
         <span class="kw">let </span>(cancelled_lock, _condvar) = <span class="kw-2">&amp;**</span>TASK_CONDVAR; <span class="comment">// One `*` for Lazy, the second for Arc
         </span><span class="kw-2">*</span>cancelled_lock.lock().unwrap() = <span class="bool-val">false</span>;
 
-        <span class="comment">// We&#39;re actually going to submit a ping from the scheduler, which requires a global glean.
+        <span class="comment">// We're actually going to submit a ping from the scheduler, which requires a global glean.
         </span><span class="kw">let </span>(glean, _t) = new_glean(<span class="prelude-val">None</span>);
         <span class="macro">assert!</span>(
             !glean.schedule_metrics_pings,
-            <span class="string">&quot;Real schedulers not allowed in tests!&quot;
+            <span class="string">"Real schedulers not allowed in tests!"
         </span>);
         <span class="macro">assert!</span>(<span class="kw">crate</span>::core::setup_glean(glean).is_ok());
 
-        <span class="comment">// We&#39;re choosing a time after SCHEDULED_HOUR so `When::Today` will give us a duration of 0.
+        <span class="comment">// We're choosing a time after SCHEDULED_HOUR so `When::Today` will give us a duration of 0.
         </span><span class="kw">let </span>now = FixedOffset::east(<span class="number">0</span>).ymd(<span class="number">2021</span>, <span class="number">4</span>, <span class="number">20</span>).and_hms(<span class="number">15</span>, <span class="number">42</span>, <span class="number">0</span>);
 
         <span class="kw">let </span>(submitter, submitter_count, <span class="kw">_</span>, <span class="kw">_</span>) = new_proxies(
             <span class="kw">move </span>|<span class="kw">_</span>, reason| {
-                <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">&quot;today&quot;</span>));
-                <span class="comment">// After submitting the ping we expect, let&#39;s cancel this scheduler so the thread exits.
-                // (But do it on another thread because the condvar loop is currently holding `cancelled`&#39;s mutex)
+                <span class="macro">assert_eq!</span>(reason, <span class="prelude-val">Some</span>(<span class="string">"today"</span>));
+                <span class="comment">// After submitting the ping we expect, let's cancel this scheduler so the thread exits.
+                // (But do it on another thread because the condvar loop is currently holding `cancelled`'s mutex)
                 </span>std::thread::spawn(<span class="kw">super</span>::cancel);
             },
-            |<span class="kw">_</span>, <span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;Not using the scheduler this time.&quot;</span>),
+            |<span class="kw">_</span>, <span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">"Not using the scheduler this time."</span>),
         );
 
         <span class="kw">let </span>handle = start_scheduler(submitter, now, When::Today);
@@ -1118,5 +1119,4 @@
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, submitter_count.swap(<span class="number">0</span>, Ordering::Relaxed));
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

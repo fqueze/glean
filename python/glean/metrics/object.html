@@ -163,17 +163,17 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
     def __init__(self, meta: &#34;CommonMetricData&#34;):
         _UniffiConverterTypeCommonMetricData.check_lower(meta)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_objectmetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_objectmetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta))
 
     def __del__(self):
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_objectmetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_objectmetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_objectmetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_objectmetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -186,7 +186,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
 
 
     def record_schema_error(self, ) -&gt; None:
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_record_schema_error,self._uniffi_clone_pointer(),)
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_record_schema_error,self._uniffi_clone_pointer(),)
 
 
 
@@ -196,7 +196,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
     def set_string(self, object: &#34;str&#34;) -&gt; None:
         _UniffiConverterString.check_lower(object)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_set_string,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_set_string,self._uniffi_clone_pointer(),
         _UniffiConverterString.lower(object))
 
 
@@ -208,7 +208,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -222,7 +222,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalTypeJsonValue.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -238,7 +238,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def record_schema_error(self, ) -&gt; None:
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_record_schema_error,self._uniffi_clone_pointer(),)</code></pre>
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_record_schema_error,self._uniffi_clone_pointer(),)</code></pre>
 </details>
 </dd>
 <dt id="glean.metrics.object.ObjectMetric.set_string"><code class="name flex">
@@ -253,7 +253,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
 <pre><code class="python">def set_string(self, object: &#34;str&#34;) -&gt; None:
     _UniffiConverterString.check_lower(object)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_set_string,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_set_string,self._uniffi_clone_pointer(),
     _UniffiConverterString.lower(object))</code></pre>
 </details>
 </dd>
@@ -270,7 +270,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -290,7 +290,7 @@ __all__ = [&#34;ObjectMetric&#34;, &#34;ObjectSerialize&#34;]</code></pre>
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalTypeJsonValue.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_objectmetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>

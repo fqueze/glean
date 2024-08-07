@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/event_database/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/event_database/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1302,7 +1303,7 @@
 <a href="#1302" id="1302">1302</a>
 <a href="#1303" id="1303">1303</a>
 <a href="#1304" id="1304">1304</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -1340,12 +1341,12 @@
     /// This allows to order events from a single process run.
     </span><span class="kw">pub </span>timestamp: u64,
 
-    <span class="doccomment">/// The event&#39;s category.
+    <span class="doccomment">/// The event's category.
     ///
     /// This is defined by users in the metrics file.
     </span><span class="kw">pub </span>category: String,
 
-    <span class="doccomment">/// The event&#39;s name.
+    <span class="doccomment">/// The event's name.
     ///
     /// This is defined by users in the metrics file.
     </span><span class="kw">pub </span>name: String,
@@ -1353,7 +1354,7 @@
     <span class="doccomment">/// A map of all extra data values.
     ///
     /// The set of allowed extra keys is defined by users in the metrics file.
-    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">&quot;Option::is_none&quot;</span>)]
+    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
     </span><span class="kw">pub </span>extra: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
 }
 
@@ -1368,7 +1369,7 @@
     /// Included to allow sending of events across Glean restarts (bug 1716725).
     /// Is i32 because it is stored in a CounterMetric.
     </span><span class="attr">#[serde(default)]
-    #[serde(skip_serializing_if = <span class="string">&quot;Option::is_none&quot;</span>)]
+    #[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
     </span><span class="kw">pub </span>execution_counter: <span class="prelude-ty">Option</span>&lt;i32&gt;,
 }
 
@@ -1411,7 +1412,7 @@
     /// * `data_path` - The directory to store events in. A new directory
     /// * `events` - will be created inside of this directory.
     </span><span class="kw">pub fn </span>new(data_path: <span class="kw-2">&amp;</span>Path) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>path = data_path.join(<span class="string">&quot;events&quot;</span>);
+        <span class="kw">let </span>path = data_path.join(<span class="string">"events"</span>);
         create_dir_all(<span class="kw-2">&amp;</span>path)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
@@ -1425,16 +1426,16 @@
     ///
     /// This must be called once on application startup, e.g. from
     /// [Glean.initialize], but after we are ready to send pings, since this
-    /// could potentially collect and send the &quot;events&quot; ping.
+    /// could potentially collect and send the "events" ping.
     ///
     /// If there are any events queued on disk, it loads them into memory so
     /// that the memory and disk representations are in sync.
     ///
-    /// If event records for the &quot;events&quot; ping are present, they are assembled into
-    /// an &quot;events&quot; ping which is submitted immediately with reason &quot;startup&quot;.
+    /// If event records for the "events" ping are present, they are assembled into
+    /// an "events" ping which is submitted immediately with reason "startup".
     ///
-    /// If event records for custom pings are present, we increment the custom pings&#39;
-    /// stores&#39; `execution_counter` and record a `glean.restarted`
+    /// If event records for custom pings are present, we increment the custom pings'
+    /// stores' `execution_counter` and record a `glean.restarted`
     /// event with the current client clock in its `glean.startup.date` extra.
     ///
     /// # Arguments
@@ -1445,7 +1446,7 @@
     ///
     /// # Returns
     ///
-    /// Whether the &quot;events&quot; ping was submitted.
+    /// Whether the "events" ping was submitted.
     </span><span class="kw">pub fn </span>flush_pending_events_on_startup(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         glean: <span class="kw-2">&amp;</span>Glean,
@@ -1463,11 +1464,11 @@
                 </span>};
                 <span class="comment">// We do not want to be holding the event stores lock when
                 // submitting a ping or recording new events.
-                </span><span class="kw">let </span>has_events_events = stores_with_events.contains(<span class="kw-2">&amp;</span><span class="string">&quot;events&quot;</span>.to_owned());
+                </span><span class="kw">let </span>has_events_events = stores_with_events.contains(<span class="kw-2">&amp;</span><span class="string">"events"</span>.to_owned());
                 <span class="kw">let </span>glean_restarted_stores = <span class="kw">if </span>has_events_events {
                     stores_with_events
                         .into_iter()
-                        .filter(|store| store != <span class="string">&quot;events&quot;</span>)
+                        .filter(|store| store != <span class="string">"events"</span>)
                         .collect()
                 } <span class="kw">else </span>{
                     stores_with_events
@@ -1475,7 +1476,7 @@
                 <span class="kw">if </span>!glean_restarted_stores.is_empty() {
                     <span class="kw">for </span>store_name <span class="kw">in </span>glean_restarted_stores.iter() {
                         CounterMetric::new(CommonMetricData {
-                            name: <span class="string">&quot;execution_counter&quot;</span>.into(),
+                            name: <span class="string">"execution_counter"</span>.into(),
                             category: store_name.into(),
                             send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
                             lifetime: Lifetime::Ping,
@@ -1484,19 +1485,19 @@
                         .add_sync(glean, <span class="number">1</span>);
                     }
                     <span class="kw">let </span>glean_restarted = CommonMetricData {
-                        name: <span class="string">&quot;restarted&quot;</span>.into(),
-                        category: <span class="string">&quot;glean&quot;</span>.into(),
+                        name: <span class="string">"restarted"</span>.into(),
+                        category: <span class="string">"glean"</span>.into(),
                         send_in_pings: glean_restarted_stores,
                         lifetime: Lifetime::Ping,
                         ..Default::default()
                     };
                     <span class="kw">let </span>startup = get_iso_time_string(glean.start_time(), TimeUnit::Minute);
                     <span class="kw">let </span><span class="kw-2">mut </span>extra: HashMap&lt;String, String&gt; =
-                        [(<span class="string">&quot;glean.startup.date&quot;</span>.into(), startup)].into();
+                        [(<span class="string">"glean.startup.date"</span>.into(), startup)].into();
                     <span class="kw">if </span>glean.with_timestamps() {
                         <span class="kw">let </span>now = Utc::now();
                         <span class="kw">let </span>precise_timestamp = now.timestamp_millis() <span class="kw">as </span>u64;
-                        extra.insert(<span class="string">&quot;glean_timestamp&quot;</span>.to_string(), precise_timestamp.to_string());
+                        extra.insert(<span class="string">"glean_timestamp"</span>.to_string(), precise_timestamp.to_string());
                     }
                     <span class="self">self</span>.record(
                         glean,
@@ -1505,10 +1506,10 @@
                         <span class="prelude-val">Some</span>(extra),
                     );
                 }
-                has_events_events &amp;&amp; glean.submit_ping_by_name(<span class="string">&quot;events&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;startup&quot;</span>))
+                has_events_events &amp;&amp; glean.submit_ping_by_name(<span class="string">"events"</span>, <span class="prelude-val">Some</span>(<span class="string">"startup"</span>))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">log::warn!</span>(<span class="string">&quot;Error loading events from disk: {}&quot;</span>, err);
+                <span class="macro">log::warn!</span>(<span class="string">"Error loading events from disk: {}"</span>, err);
                 <span class="bool-val">false
             </span>}
         }
@@ -1530,15 +1531,15 @@
             <span class="kw">let </span>entry = entry<span class="question-mark">?</span>;
             <span class="kw">if </span>entry.file_type()<span class="question-mark">?</span>.is_file() {
                 <span class="kw">let </span>store_name = entry.file_name().into_string()<span class="question-mark">?</span>;
-                <span class="macro">log::info!</span>(<span class="string">&quot;Loading events for {}&quot;</span>, store_name);
+                <span class="macro">log::info!</span>(<span class="string">"Loading events for {}"</span>, store_name);
                 <span class="kw">if </span>trim_data_to_registered_pings &amp;&amp; glean.get_ping_by_name(<span class="kw-2">&amp;</span>store_name).is_none() {
-                    <span class="macro">log::warn!</span>(<span class="string">&quot;Trimming {}&#39;s events&quot;</span>, store_name);
+                    <span class="macro">log::warn!</span>(<span class="string">"Trimming {}'s events"</span>, store_name);
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = fs::remove_file(entry.path()) {
                         <span class="kw">match </span>err.kind() {
                             std::io::ErrorKind::NotFound =&gt; {
                                 <span class="comment">// silently drop this error, the file was already non-existing
                             </span>}
-                            <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">&quot;Error trimming events file &#39;{}&#39;: {}&quot;</span>, store_name, err),
+                            <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">"Error trimming events file '{}': {}"</span>, store_name, err),
                         }
                     }
                     <span class="kw">continue</span>;
@@ -1579,7 +1580,7 @@
         timestamp: u64,
         extra: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
     ) -&gt; bool {
-        <span class="comment">// If upload is disabled we don&#39;t want to record.
+        <span class="comment">// If upload is disabled we don't want to record.
         </span><span class="kw">if </span>!glean.is_upload_enabled() {
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
@@ -1590,7 +1591,7 @@
             </span><span class="kw">for </span>store_name <span class="kw">in </span>meta.inner.send_in_pings.iter() {
                 <span class="kw">let </span>store = db.entry(store_name.to_string()).or_default();
                 <span class="kw">let </span>execution_counter = CounterMetric::new(CommonMetricData {
-                    name: <span class="string">&quot;execution_counter&quot;</span>.into(),
+                    name: <span class="string">"execution_counter"</span>.into(),
                     category: store_name.into(),
                     send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
                     lifetime: Lifetime::Ping,
@@ -1610,13 +1611,13 @@
                 <span class="kw">let </span>event_json = serde_json::to_string(<span class="kw-2">&amp;</span>event).unwrap(); <span class="comment">// safe unwrap, event can always be serialized
                 </span>store.push(event);
                 <span class="self">self</span>.write_event_to_disk(store_name, <span class="kw-2">&amp;</span>event_json);
-                <span class="kw">if </span>store_name == <span class="string">&quot;events&quot; </span>&amp;&amp; store.len() == glean.get_max_events() {
+                <span class="kw">if </span>store_name == <span class="string">"events" </span>&amp;&amp; store.len() == glean.get_max_events() {
                     submit_max_capacity_event_ping = <span class="bool-val">true</span>;
                 }
             }
         }
         <span class="kw">if </span>submit_max_capacity_event_ping {
-            glean.submit_ping_by_name(<span class="string">&quot;events&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;max_capacity&quot;</span>));
+            glean.submit_ping_by_name(<span class="string">"events"</span>, <span class="prelude-val">Some</span>(<span class="string">"max_capacity"</span>));
             <span class="bool-val">true
         </span>} <span class="kw">else </span>{
             <span class="bool-val">false
@@ -1635,9 +1636,9 @@
             .create(<span class="bool-val">true</span>)
             .append(<span class="bool-val">true</span>)
             .open(<span class="self">self</span>.path.join(store_name))
-            .and_then(|<span class="kw-2">mut </span>file| <span class="macro">writeln!</span>(file, <span class="string">&quot;{}&quot;</span>, event_json))
+            .and_then(|<span class="kw-2">mut </span>file| <span class="macro">writeln!</span>(file, <span class="string">"{}"</span>, event_json))
         {
-            <span class="macro">log::warn!</span>(<span class="string">&quot;IO error writing event to store &#39;{}&#39;: {}&quot;</span>, store_name, err);
+            <span class="macro">log::warn!</span>(<span class="string">"IO error writing event to store '{}': {}"</span>, store_name, err);
         }
     }
 
@@ -1652,10 +1653,10 @@
     ///    breaking ties so that `glean.restarted` comes first.
     /// 2. Remove all initial and final `glean.restarted` events
     /// 3. For each group of events that share a `execution_counter`,
-    ///    i. calculate the initial `glean.restarted` event&#39;s `timestamp`s to be
+    ///    i. calculate the initial `glean.restarted` event's `timestamp`s to be
     ///       clamp(glean.startup.date - ping_info.start_time, biggest_timestamp_of_previous_group + 1)
-    ///    ii. normalize each non-`glean-restarted` event&#39;s `timestamp`
-    ///        relative to the `glean.restarted` event&#39;s uncalculated `timestamp`
+    ///    ii. normalize each non-`glean-restarted` event's `timestamp`
+    ///        relative to the `glean.restarted` event's uncalculated `timestamp`
     /// 4. Remove `execution_counter` and `glean.startup.date` extra keys
     /// 5. Sort by `timestamp`
     ///
@@ -1666,9 +1667,9 @@
     /// # Arguments
     ///
     /// * `glean` - Used to report errors
-    /// * `store_name` - The name of the store we&#39;re normalizing.
-    /// * `store` - The store we&#39;re to normalize.
-    /// * `glean_start_time` - Used if the glean.startup.date or ping_info.start_time aren&#39;t available. Passed as a parameter to ease unit-testing.
+    /// * `store_name` - The name of the store we're normalizing.
+    /// * `store` - The store we're to normalize.
+    /// * `glean_start_time` - Used if the glean.startup.date or ping_info.start_time aren't available. Passed as a parameter to ease unit-testing.
     </span><span class="kw">fn </span>normalize_store(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         glean: <span class="kw-2">&amp;</span>Glean,
@@ -1677,10 +1678,10 @@
         glean_start_time: DateTime&lt;FixedOffset&gt;,
     ) {
         <span class="kw">let </span>is_glean_restarted =
-            |event: <span class="kw-2">&amp;</span>RecordedEvent| event.category == <span class="string">&quot;glean&quot; </span>&amp;&amp; event.name == <span class="string">&quot;restarted&quot;</span>;
+            |event: <span class="kw-2">&amp;</span>RecordedEvent| event.category == <span class="string">"glean" </span>&amp;&amp; event.name == <span class="string">"restarted"</span>;
         <span class="kw">let </span>glean_restarted_meta = |store_name: <span class="kw-2">&amp;</span>str| CommonMetricData {
-            name: <span class="string">&quot;restarted&quot;</span>.into(),
-            category: <span class="string">&quot;glean&quot;</span>.into(),
+            name: <span class="string">"restarted"</span>.into(),
+            category: <span class="string">"glean"</span>.into(),
             send_in_pings: <span class="macro">vec!</span>[store_name.into()],
             lifetime: Lifetime::Ping,
             ..Default::default()
@@ -1715,13 +1716,13 @@
             .unwrap_or(store.len());
         store.drain(..first_event);
         <span class="kw">if </span>store.is_empty() {
-            <span class="comment">// There was nothing but `glean.restarted` events. Job&#39;s done!
+            <span class="comment">// There was nothing but `glean.restarted` events. Job's done!
             </span><span class="kw">return</span>;
         }
         <span class="comment">// Step 3
         // It is allowed that there might not be any `glean.restarted` event, nor
         // `execution_counter` extra values. (This should always be the case for the
-        // &quot;events&quot; ping, for instance).
+        // "events" ping, for instance).
         // Other inconsistencies are evidence of errors, and so are logged.
         </span><span class="kw">let </span><span class="kw-2">mut </span>cur_ec = <span class="number">0</span>;
         <span class="comment">// The offset within a group of events with the same `execution_counter`.
@@ -1732,7 +1733,7 @@
         <span class="kw">for </span>event <span class="kw">in </span>store.iter_mut() {
             <span class="kw">let </span>execution_counter = event.execution_counter.take().unwrap_or(<span class="number">0</span>);
             <span class="kw">if </span>is_glean_restarted(<span class="kw-2">&amp;</span>event.event) {
-                <span class="comment">// We&#39;ve entered the next &quot;event group&quot;.
+                <span class="comment">// We've entered the next "event group".
                 // We need a new epoch based on glean.startup.date - ping_info.start_date
                 </span>cur_ec = execution_counter;
                 <span class="kw">let </span>glean_startup_date = event
@@ -1740,14 +1741,14 @@
                     .extra
                     .as_mut()
                     .and_then(|extra| {
-                        extra.remove(<span class="string">&quot;glean.startup.date&quot;</span>).and_then(|date_str| {
+                        extra.remove(<span class="string">"glean.startup.date"</span>).and_then(|date_str| {
                             DateTime::parse_from_str(<span class="kw-2">&amp;</span>date_str, TimeUnit::Minute.format_pattern())
                                 .map_err(|<span class="kw">_</span>| {
                                     record_error(
                                         glean,
                                         <span class="kw-2">&amp;</span>glean_restarted_meta(store_name).into(),
                                         ErrorType::InvalidState,
-                                        <span class="macro">format!</span>(<span class="string">&quot;Unparseable glean.startup.date &#39;{}&#39;&quot;</span>, date_str),
+                                        <span class="macro">format!</span>(<span class="string">"Unparseable glean.startup.date '{}'"</span>, date_str),
                                         <span class="prelude-val">None</span>,
                                     );
                                 })
@@ -1766,8 +1767,8 @@
                 }
                 <span class="kw">let </span>ping_start = DatetimeMetric::new(
                     CommonMetricData {
-                        name: <span class="macro">format!</span>(<span class="string">&quot;{}#start&quot;</span>, store_name),
-                        category: <span class="string">&quot;&quot;</span>.into(),
+                        name: <span class="macro">format!</span>(<span class="string">"{}#start"</span>, store_name),
+                        category: <span class="string">""</span>.into(),
                         send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
                         lifetime: Lifetime::User,
                         ..Default::default()
@@ -1787,10 +1788,10 @@
                         glean,
                         <span class="kw-2">&amp;</span>glean_restarted_meta(store_name).into(),
                         ErrorType::InvalidValue,
-                        <span class="macro">format!</span>(<span class="string">&quot;Time between restart and ping start {} indicates client clock weirdness.&quot;</span>, time_from_ping_start_to_glean_restarted),
+                        <span class="macro">format!</span>(<span class="string">"Time between restart and ping start {} indicates client clock weirdness."</span>, time_from_ping_start_to_glean_restarted),
                         <span class="prelude-val">None</span>,
                     );
-                    <span class="comment">// The client&#39;s clock went backwards enough that this event group&#39;s
+                    <span class="comment">// The client's clock went backwards enough that this event group's
                     // glean.restarted looks like it happened _before_ the final event of the previous group.
                     // Or, it went ahead enough to overflow u64.
                     // Adjust things so this group starts 1ms after the previous one.
@@ -1807,12 +1808,12 @@
                     <span class="kw-2">&amp;</span>glean_restarted_meta(store_name).into(),
                     ErrorType::InvalidState,
                     <span class="macro">format!</span>(
-                        <span class="string">&quot;Inconsistent execution counter {} (expected {})&quot;</span>,
+                        <span class="string">"Inconsistent execution counter {} (expected {})"</span>,
                         execution_counter, cur_ec
                     ),
                     <span class="prelude-val">None</span>,
                 );
-                <span class="comment">// Let&#39;s fix cur_ec up and hope this isn&#39;t a sign something big is broken.
+                <span class="comment">// Let's fix cur_ec up and hope this isn't a sign something big is broken.
                 </span>cur_ec = execution_counter;
             }
             <span class="kw">if </span>highest_ts &gt; event.event.timestamp {
@@ -1823,7 +1824,7 @@
                     <span class="kw-2">&amp;</span>glean_restarted_meta(store_name).into(),
                     ErrorType::InvalidState,
                     <span class="macro">format!</span>(
-                        <span class="string">&quot;Inconsistent previous highest timestamp {} (expected &lt;= {})&quot;</span>,
+                        <span class="string">"Inconsistent previous highest timestamp {} (expected &lt;= {})"</span>,
                         highest_ts, event.event.timestamp
                     ),
                     <span class="prelude-val">None</span>,
@@ -1855,7 +1856,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>db = <span class="self">self</span>.event_stores.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
             </span>db.get_mut(<span class="kw-2">&amp;</span>store_name.to_string()).and_then(|store| {
                 <span class="kw">if </span>!store.is_empty() {
-                    <span class="comment">// Normalization happens in-place, so if we&#39;re not clearing,
+                    <span class="comment">// Normalization happens in-place, so if we're not clearing,
                     // operate on a clone.
                     </span><span class="kw">let </span><span class="kw-2">mut </span>clone;
                     <span class="kw">let </span>store = <span class="kw">if </span>clear_store {
@@ -1868,7 +1869,7 @@
                     </span><span class="self">self</span>.normalize_store(glean, store_name, store, glean.start_time());
                     <span class="prelude-val">Some</span>(<span class="macro">json!</span>(store))
                 } <span class="kw">else </span>{
-                    <span class="macro">log::warn!</span>(<span class="string">&quot;Unexpectly got empty event store for &#39;{}&#39;&quot;</span>, store_name);
+                    <span class="macro">log::warn!</span>(<span class="string">"Unexpectly got empty event store for '{}'"</span>, store_name);
                     <span class="prelude-val">None
                 </span>}
             })
@@ -1886,7 +1887,7 @@
                     std::io::ErrorKind::NotFound =&gt; {
                         <span class="comment">// silently drop this error, the file was already non-existing
                     </span>}
-                    <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">&quot;Error removing events queue file &#39;{}&#39;: {}&quot;</span>, store_name, err),
+                    <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">"Error removing events queue file '{}': {}"</span>, store_name, err),
                 }
             }
         }
@@ -1912,10 +1913,10 @@
     /// Gets the vector of currently stored events for the given event metric in
     /// the given store.
     ///
-    /// This doesn&#39;t clear the stored value.
-    </span><span class="kw">pub fn </span>test_get_value&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
-        meta: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>CommonMetricDataInternal,
+    /// This doesn't clear the stored value.
+    </span><span class="kw">pub fn </span>test_get_value&lt;<span class="lifetime">'a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
+        meta: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>CommonMetricDataInternal,
         store_name: <span class="kw-2">&amp;</span>str,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;Vec&lt;RecordedEvent&gt;&gt; {
         record_coverage(<span class="kw-2">&amp;</span>meta.base_identifier());
@@ -1951,18 +1952,18 @@
 
         {
             <span class="kw">let </span>db = EventDatabase::new(t.path()).unwrap();
-            db.write_event_to_disk(<span class="string">&quot;events&quot;</span>, <span class="string">&quot;{\&quot;timestamp\&quot;: 500&quot;</span>);
-            db.write_event_to_disk(<span class="string">&quot;events&quot;</span>, <span class="string">&quot;{\&quot;timestamp\&quot;&quot;</span>);
+            db.write_event_to_disk(<span class="string">"events"</span>, <span class="string">"{\"timestamp\": 500"</span>);
+            db.write_event_to_disk(<span class="string">"events"</span>, <span class="string">"{\"timestamp\""</span>);
             db.write_event_to_disk(
-                <span class="string">&quot;events&quot;</span>,
-                <span class="string">&quot;{\&quot;timestamp\&quot;: 501, \&quot;category\&quot;: \&quot;ui\&quot;, \&quot;name\&quot;: \&quot;click\&quot;}&quot;</span>,
+                <span class="string">"events"</span>,
+                <span class="string">"{\"timestamp\": 501, \"category\": \"ui\", \"name\": \"click\"}"</span>,
             );
         }
 
         {
             <span class="kw">let </span>db = EventDatabase::new(t.path()).unwrap();
             db.load_events_from_disk(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>).unwrap();
-            <span class="kw">let </span>events = <span class="kw-2">&amp;</span>db.event_stores.read().unwrap()[<span class="string">&quot;events&quot;</span>];
+            <span class="kw">let </span>events = <span class="kw-2">&amp;</span>db.event_stores.read().unwrap()[<span class="string">"events"</span>];
             <span class="macro">assert_eq!</span>(<span class="number">1</span>, events.len());
         }
     }
@@ -1971,17 +1972,17 @@
     </span><span class="kw">fn </span>stable_serialization() {
         <span class="kw">let </span>event_empty = RecordedEvent {
             timestamp: <span class="number">2</span>,
-            category: <span class="string">&quot;cat&quot;</span>.to_string(),
-            name: <span class="string">&quot;name&quot;</span>.to_string(),
+            category: <span class="string">"cat"</span>.to_string(),
+            name: <span class="string">"name"</span>.to_string(),
             extra: <span class="prelude-val">None</span>,
         };
 
         <span class="kw">let </span><span class="kw-2">mut </span>data = HashMap::new();
-        data.insert(<span class="string">&quot;a key&quot;</span>.to_string(), <span class="string">&quot;a value&quot;</span>.to_string());
+        data.insert(<span class="string">"a key"</span>.to_string(), <span class="string">"a value"</span>.to_string());
         <span class="kw">let </span>event_data = RecordedEvent {
             timestamp: <span class="number">2</span>,
-            category: <span class="string">&quot;cat&quot;</span>.to_string(),
-            name: <span class="string">&quot;name&quot;</span>.to_string(),
+            category: <span class="string">"cat"</span>.to_string(),
+            name: <span class="string">"name"</span>.to_string(),
             extra: <span class="prelude-val">Some</span>(data),
         };
 
@@ -2006,38 +2007,38 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>deserialize_existing_data() {
-        <span class="kw">let </span>event_empty_json = <span class="string">r#&quot;
+        <span class="kw">let </span>event_empty_json = <span class="string">r#"
 {
-  &quot;timestamp&quot;: 2,
-  &quot;category&quot;: &quot;cat&quot;,
-  &quot;name&quot;: &quot;name&quot;
+  "timestamp": 2,
+  "category": "cat",
+  "name": "name"
 }
-            &quot;#</span>;
+            "#</span>;
 
-        <span class="kw">let </span>event_data_json = <span class="string">r#&quot;
+        <span class="kw">let </span>event_data_json = <span class="string">r#"
 {
-  &quot;timestamp&quot;: 2,
-  &quot;category&quot;: &quot;cat&quot;,
-  &quot;name&quot;: &quot;name&quot;,
-  &quot;extra&quot;: {
-    &quot;a key&quot;: &quot;a value&quot;
+  "timestamp": 2,
+  "category": "cat",
+  "name": "name",
+  "extra": {
+    "a key": "a value"
   }
 }
-        &quot;#</span>;
+        "#</span>;
 
         <span class="kw">let </span>event_empty = RecordedEvent {
             timestamp: <span class="number">2</span>,
-            category: <span class="string">&quot;cat&quot;</span>.to_string(),
-            name: <span class="string">&quot;name&quot;</span>.to_string(),
+            category: <span class="string">"cat"</span>.to_string(),
+            name: <span class="string">"name"</span>.to_string(),
             extra: <span class="prelude-val">None</span>,
         };
 
         <span class="kw">let </span><span class="kw-2">mut </span>data = HashMap::new();
-        data.insert(<span class="string">&quot;a key&quot;</span>.to_string(), <span class="string">&quot;a value&quot;</span>.to_string());
+        data.insert(<span class="string">"a key"</span>.to_string(), <span class="string">"a value"</span>.to_string());
         <span class="kw">let </span>event_data = RecordedEvent {
             timestamp: <span class="number">2</span>,
-            category: <span class="string">&quot;cat&quot;</span>.to_string(),
-            name: <span class="string">&quot;name&quot;</span>.to_string(),
+            category: <span class="string">"cat"</span>.to_string(),
+            name: <span class="string">"name"</span>.to_string(),
             extra: <span class="prelude-val">Some</span>(data),
         };
 
@@ -2062,9 +2063,9 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
         <span class="kw">let </span>db = EventDatabase::new(dir.path()).unwrap();
 
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
-        <span class="kw">let </span>test_category = <span class="string">&quot;category&quot;</span>;
-        <span class="kw">let </span>test_name = <span class="string">&quot;name&quot;</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
+        <span class="kw">let </span>test_category = <span class="string">"category"</span>;
+        <span class="kw">let </span>test_name = <span class="string">"name"</span>;
         <span class="kw">let </span>test_timestamp = <span class="number">2</span>;
         <span class="kw">let </span>test_meta = CommonMetricDataInternal::new(test_category, test_name, test_storage);
         <span class="kw">let </span>event_data = RecordedEvent {
@@ -2075,7 +2076,7 @@
         };
 
         <span class="comment">// Upload is not yet disabled,
-        // so let&#39;s check that everything is getting recorded as expected.
+        // so let's check that everything is getting recorded as expected.
         </span>db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_meta, <span class="number">2</span>, <span class="prelude-val">None</span>);
         {
             <span class="kw">let </span>event_stores = db.event_stores.read().unwrap();
@@ -2091,7 +2092,7 @@
 
         glean.set_upload_enabled(<span class="bool-val">false</span>);
 
-        <span class="comment">// Now that upload is disabled, let&#39;s check nothing is recorded.
+        <span class="comment">// Now that upload is disabled, let's check nothing is recorded.
         </span>db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_meta, <span class="number">2</span>, <span class="prelude-val">None</span>);
         {
             <span class="kw">let </span>event_stores = db.event_stores.read().unwrap();
@@ -2104,12 +2105,12 @@
         <span class="comment">// Make sure stores empty of anything but glean.restarted events normalize without issue.
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">2</span>,
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2141,15 +2142,15 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>normalize_store_of_glean_restarted_on_both_ends() {
-        <span class="comment">// Make sure stores with non-glean.restarted events don&#39;t get drained too far.
+        <span class="comment">// Make sure stores with non-glean.restarted events don't get drained too far.
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">2</span>,
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2157,8 +2158,8 @@
         <span class="kw">let </span>not_glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">20</span>,
-                category: <span class="string">&quot;category&quot;</span>.into(),
-                name: <span class="string">&quot;name&quot;</span>.into(),
+                category: <span class="string">"category"</span>.into(),
+                name: <span class="string">"name"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2193,12 +2194,12 @@
         // (( works = Initial event gets to be 0, subsequent events get normalized to that 0 ))
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">2</span>,
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2207,8 +2208,8 @@
         <span class="kw">let </span>not_glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: timestamps[<span class="number">0</span>],
-                category: <span class="string">&quot;category&quot;</span>.into(),
-                name: <span class="string">&quot;name&quot;</span>.into(),
+                category: <span class="string">"category"</span>.into(),
+                name: <span class="string">"name"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2259,19 +2260,19 @@
         //            Subsequent runs figure it out via glean.restarted.date and ping_info.start_time ))
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 ..Default::default()
             },
             execution_counter: <span class="prelude-val">None</span>,
         };
         <span class="kw">let </span>not_glean_restarted = StoredEvent {
             event: RecordedEvent {
-                category: <span class="string">&quot;category&quot;</span>.into(),
-                name: <span class="string">&quot;name&quot;</span>.into(),
+                category: <span class="string">"category"</span>.into(),
+                name: <span class="string">"name"</span>.into(),
                 ..Default::default()
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2284,7 +2285,7 @@
         <span class="kw">let </span>some_hour = <span class="number">16</span>;
         <span class="kw">let </span>startup_date = FixedOffset::east(<span class="number">0</span>)
             .ymd(<span class="number">2022</span>, <span class="number">11</span>, <span class="number">24</span>)
-            .and_hms(some_hour, <span class="number">29</span>, <span class="number">0</span>); <span class="comment">// TimeUnit::Minute -- don&#39;t put seconds
+            .and_hms(some_hour, <span class="number">29</span>, <span class="number">0</span>); <span class="comment">// TimeUnit::Minute -- don't put seconds
         </span><span class="kw">let </span>glean_start_time = startup_date.with_hour(some_hour - <span class="number">1</span>);
         <span class="kw">let </span>restarted_ts = <span class="number">2</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>store = <span class="macro">vec!</span>[
@@ -2313,7 +2314,7 @@
                 event: RecordedEvent {
                     extra: <span class="prelude-val">Some</span>(
                         [(
-                            <span class="string">&quot;glean.startup.date&quot;</span>.into(),
+                            <span class="string">"glean.startup.date"</span>.into(),
                             get_iso_time_string(startup_date, TimeUnit::Minute),
                         )]
                         .into(),
@@ -2338,9 +2339,9 @@
             <span class="kw-2">&amp;mut </span>store,
             glean_start_time.unwrap(),
         );
-        <span class="macro">assert_eq!</span>(<span class="number">5</span>, store.len()); <span class="comment">// 4 &quot;real&quot; events plus 1 `glean.restarted`
+        <span class="macro">assert_eq!</span>(<span class="number">5</span>, store.len()); <span class="comment">// 4 "real" events plus 1 `glean.restarted`
 
-        // Let&#39;s check the first three.
+        // Let's check the first three.
         </span><span class="kw">for </span>(timestamp, event) <span class="kw">in </span>timestamps[..timestamps.len() - <span class="number">1</span>].iter().zip(store.clone()) {
             <span class="macro">assert_eq!</span>(
                 StoredEvent {
@@ -2384,19 +2385,19 @@
         // ensure the timestamp math works. Even when the client clock goes backwards.
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 ..Default::default()
             },
             execution_counter: <span class="prelude-val">None</span>,
         };
         <span class="kw">let </span>not_glean_restarted = StoredEvent {
             event: RecordedEvent {
-                category: <span class="string">&quot;category&quot;</span>.into(),
-                name: <span class="string">&quot;name&quot;</span>.into(),
+                category: <span class="string">"category"</span>.into(),
+                name: <span class="string">"name"</span>.into(),
                 ..Default::default()
             },
             execution_counter: <span class="prelude-val">None</span>,
@@ -2409,7 +2410,7 @@
         <span class="kw">let </span>some_hour = <span class="number">10</span>;
         <span class="kw">let </span>startup_date = FixedOffset::east(<span class="number">0</span>)
             .ymd(<span class="number">2022</span>, <span class="number">11</span>, <span class="number">25</span>)
-            .and_hms(some_hour, <span class="number">37</span>, <span class="number">0</span>); <span class="comment">// TimeUnit::Minute -- don&#39;t put seconds
+            .and_hms(some_hour, <span class="number">37</span>, <span class="number">0</span>); <span class="comment">// TimeUnit::Minute -- don't put seconds
         </span><span class="kw">let </span>glean_start_time = startup_date.with_hour(some_hour + <span class="number">1</span>);
         <span class="kw">let </span>restarted_ts = <span class="number">2</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>store = <span class="macro">vec!</span>[
@@ -2431,7 +2432,7 @@
                 event: RecordedEvent {
                     extra: <span class="prelude-val">Some</span>(
                         [(
-                            <span class="string">&quot;glean.startup.date&quot;</span>.into(),
+                            <span class="string">"glean.startup.date"</span>.into(),
                             get_iso_time_string(startup_date, TimeUnit::Minute),
                         )]
                         .into(),
@@ -2463,9 +2464,9 @@
             <span class="kw-2">&amp;mut </span>store,
             glean_start_time.unwrap(),
         );
-        <span class="macro">assert_eq!</span>(<span class="number">5</span>, store.len()); <span class="comment">// 4 &quot;real&quot; events plus 1 `glean.restarted`
+        <span class="macro">assert_eq!</span>(<span class="number">5</span>, store.len()); <span class="comment">// 4 "real" events plus 1 `glean.restarted`
 
-        // Let&#39;s check the first two.
+        // Let's check the first two.
         </span><span class="kw">for </span>(timestamp, event) <span class="kw">in </span>timestamps[..timestamps.len() - <span class="number">2</span>].iter().zip(store.clone()) {
             <span class="macro">assert_eq!</span>(
                 StoredEvent {
@@ -2479,7 +2480,7 @@
             );
         }
         <span class="comment">// The third should be a glean.restarted. Its timestamp should be
-        // one larger than the largest timestamp seen so far (because that&#39;s
+        // one larger than the largest timestamp seen so far (because that's
         // how we ensure monotonic timestamps when client clocks go backwards).
         </span><span class="macro">assert_eq!</span>(
             store[<span class="number">2</span>],
@@ -2508,8 +2509,8 @@
             test_get_num_recorded_errors(
                 <span class="kw-2">&amp;</span>glean,
                 <span class="kw-2">&amp;</span>CommonMetricData {
-                    name: <span class="string">&quot;restarted&quot;</span>.into(),
-                    category: <span class="string">&quot;glean&quot;</span>.into(),
+                    name: <span class="string">"restarted"</span>.into(),
+                    category: <span class="string">"glean"</span>.into(),
                     send_in_pings: <span class="macro">vec!</span>[store_name.into()],
                     lifetime: Lifetime::Ping,
                     ..Default::default()
@@ -2526,12 +2527,12 @@
         // Ensure normalizing a store that begins with non-zero ec works.
         </span><span class="kw">let </span>(glean, _dir) = new_glean(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>store_name = <span class="string">&quot;store-name&quot;</span>;
+        <span class="kw">let </span>store_name = <span class="string">"store-name"</span>;
         <span class="kw">let </span>glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">2</span>,
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">Some</span>(<span class="number">2</span>),
@@ -2539,8 +2540,8 @@
         <span class="kw">let </span>not_glean_restarted = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">20</span>,
-                category: <span class="string">&quot;category&quot;</span>.into(),
-                name: <span class="string">&quot;name&quot;</span>.into(),
+                category: <span class="string">"category"</span>.into(),
+                name: <span class="string">"name"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">Some</span>(<span class="number">2</span>),
@@ -2548,8 +2549,8 @@
         <span class="kw">let </span>glean_restarted_2 = StoredEvent {
             event: RecordedEvent {
                 timestamp: <span class="number">2</span>,
-                category: <span class="string">&quot;glean&quot;</span>.into(),
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
                 extra: <span class="prelude-val">None</span>,
             },
             execution_counter: <span class="prelude-val">Some</span>(<span class="number">3</span>),
@@ -2580,8 +2581,8 @@
         </span><span class="macro">assert!</span>(test_get_num_recorded_errors(
             <span class="kw-2">&amp;</span>glean,
             <span class="kw-2">&amp;</span>CommonMetricData {
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
-                category: <span class="string">&quot;glean&quot;</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
                 send_in_pings: <span class="macro">vec!</span>[store_name.into()],
                 lifetime: Lifetime::Ping,
                 ..Default::default()
@@ -2590,12 +2591,12 @@
             ErrorType::InvalidState
         )
         .is_err());
-        <span class="comment">// (and, just because we&#39;re here, double-check there are no InvalidValue either).
+        <span class="comment">// (and, just because we're here, double-check there are no InvalidValue either).
         </span><span class="macro">assert!</span>(test_get_num_recorded_errors(
             <span class="kw-2">&amp;</span>glean,
             <span class="kw-2">&amp;</span>CommonMetricData {
-                name: <span class="string">&quot;restarted&quot;</span>.into(),
-                category: <span class="string">&quot;glean&quot;</span>.into(),
+                name: <span class="string">"restarted"</span>.into(),
+                category: <span class="string">"glean"</span>.into(),
                 send_in_pings: <span class="macro">vec!</span>[store_name.into()],
                 lifetime: Lifetime::Ping,
                 ..Default::default()
@@ -2606,5 +2607,4 @@
         .is_err());
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

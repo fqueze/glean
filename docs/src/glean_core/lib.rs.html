@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glean_core/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1267,7 +1268,7 @@
 <a href="#1267" id="1267">1267</a>
 <a href="#1268" id="1268">1268</a>
 <a href="#1269" id="1269">1269</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -1278,7 +1279,7 @@
 
 </span><span class="doccomment">//! Glean is a modern approach for recording and sending Telemetry data.
 //!
-//! It&#39;s in use at Mozilla.
+//! It's in use at Mozilla.
 //!
 //! All documentation can be found online:
 //!
@@ -1322,7 +1323,7 @@
 <span class="kw">pub mod </span>upload;
 <span class="kw">mod </span>util;
 
-<span class="attr">#[cfg(all(not(target_os = <span class="string">&quot;android&quot;</span>), not(target_os = <span class="string">&quot;ios&quot;</span>)))]
+<span class="attr">#[cfg(all(not(target_os = <span class="string">"android"</span>), not(target_os = <span class="string">"ios"</span>)))]
 </span><span class="kw">mod </span>fd_logger;
 
 <span class="kw">pub use </span><span class="kw">crate</span>::common_metric_data::{CommonMetricData, Lifetime};
@@ -1345,15 +1346,15 @@
 };
 <span class="kw">pub use </span><span class="kw">crate</span>::upload::{PingRequest, PingUploadTask, UploadResult, UploadTaskAction};
 
-<span class="kw">const </span>GLEAN_VERSION: <span class="kw-2">&amp;</span>str = <span class="macro">env!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>);
+<span class="kw">const </span>GLEAN_VERSION: <span class="kw-2">&amp;</span>str = <span class="macro">env!</span>(<span class="string">"CARGO_PKG_VERSION"</span>);
 <span class="kw">const </span>GLEAN_SCHEMA_VERSION: u32 = <span class="number">1</span>;
 <span class="kw">const </span>DEFAULT_MAX_EVENTS: u32 = <span class="number">500</span>;
 <span class="kw">static </span>KNOWN_CLIENT_ID: Lazy&lt;Uuid&gt; =
-    Lazy::new(|| Uuid::parse_str(<span class="string">&quot;c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0&quot;</span>).unwrap());
+    Lazy::new(|| Uuid::parse_str(<span class="string">"c0ffeec0-ffee-c0ff-eec0-ffeec0ffeec0"</span>).unwrap());
 
 <span class="comment">// The names of the pings directories.
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PENDING_PINGS_DIRECTORY: <span class="kw-2">&amp;</span>str = <span class="string">&quot;pending_pings&quot;</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DELETION_REQUEST_PINGS_DIRECTORY: <span class="kw-2">&amp;</span>str = <span class="string">&quot;deletion_request&quot;</span>;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PENDING_PINGS_DIRECTORY: <span class="kw-2">&amp;</span>str = <span class="string">"pending_pings"</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>DELETION_REQUEST_PINGS_DIRECTORY: <span class="kw-2">&amp;</span>str = <span class="string">"deletion_request"</span>;
 
 <span class="doccomment">/// Set when `glean::initialize()` returns.
 /// This allows to detect calls that happen before `glean::initialize()` was called.
@@ -1389,10 +1390,10 @@
     </span><span class="kw">pub </span>max_events: <span class="prelude-ty">Option</span>&lt;u32&gt;,
     <span class="doccomment">/// Whether Glean should delay persistence of data from metrics with ping lifetime.
     </span><span class="kw">pub </span>delay_ping_lifetime_io: bool,
-    <span class="doccomment">/// The application&#39;s build identifier. If this is different from the one provided for a previous init,
-    /// and use_core_mps is `true`, we will trigger a &quot;metrics&quot; ping.
+    <span class="doccomment">/// The application's build identifier. If this is different from the one provided for a previous init,
+    /// and use_core_mps is `true`, we will trigger a "metrics" ping.
     </span><span class="kw">pub </span>app_build: String,
-    <span class="doccomment">/// Whether Glean should schedule &quot;metrics&quot; pings.
+    <span class="doccomment">/// Whether Glean should schedule "metrics" pings.
     </span><span class="kw">pub </span>use_core_mps: bool,
     <span class="doccomment">/// Whether Glean should, on init, trim its event storage to only the registered pings.
     </span><span class="kw">pub </span>trim_data_to_registered_pings: bool,
@@ -1410,7 +1411,7 @@
     </span><span class="kw">pub </span>enable_internal_pings: bool,
     <span class="doccomment">/// A ping schedule map.
     /// Maps a ping name to a list of pings to schedule along with it.
-    /// Only used if the ping&#39;s own ping schedule list is empty.
+    /// Only used if the ping's own ping schedule list is empty.
     </span><span class="kw">pub </span>ping_schedule: HashMap&lt;String, Vec&lt;String&gt;&gt;,
 
     <span class="doccomment">/// Write count threshold when to auto-flush. `0` disables it.
@@ -1429,13 +1430,13 @@
 }
 
 <span class="doccomment">/// Launches a new task on the global dispatch queue with a reference to the Glean singleton.
-</span><span class="kw">fn </span>launch_with_glean(callback: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>Glean) + Send + <span class="lifetime">&#39;static</span>) {
+</span><span class="kw">fn </span>launch_with_glean(callback: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;</span>Glean) + Send + <span class="lifetime">'static</span>) {
     dispatcher::launch(|| core::with_glean(callback));
 }
 
 <span class="doccomment">/// Launches a new task on the global dispatch queue with a mutable reference to the
 /// Glean singleton.
-</span><span class="kw">fn </span>launch_with_glean_mut(callback: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;mut </span>Glean) + Send + <span class="lifetime">&#39;static</span>) {
+</span><span class="kw">fn </span>launch_with_glean_mut(callback: <span class="kw">impl </span>FnOnce(<span class="kw-2">&amp;mut </span>Glean) + Send + <span class="lifetime">'static</span>) {
     dispatcher::launch(|| core::with_glean_mut(callback));
 }
 
@@ -1446,7 +1447,7 @@
     dispatcher::block_on_queue()
 }
 
-<span class="doccomment">/// Returns a timestamp corresponding to &quot;now&quot; with millisecond precision.
+<span class="doccomment">/// Returns a timestamp corresponding to "now" with millisecond precision.
 </span><span class="kw">pub fn </span>get_timestamp_ms() -&gt; u64 {
     <span class="kw">const </span>NANOS_PER_MILLI: u64 = <span class="number">1_000_000</span>;
     zeitstempel::now() / NANOS_PER_MILLI
@@ -1471,16 +1472,16 @@
 <span class="doccomment">/// Get a reference to the global state object.
 ///
 /// Panics if no global state object was set.
-</span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we&#39;re interested in the caller.
-</span><span class="kw">fn </span>global_state() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Mutex&lt;State&gt; {
+</span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we're interested in the caller.
+</span><span class="kw">fn </span>global_state() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>Mutex&lt;State&gt; {
     STATE.get().unwrap()
 }
 
 <span class="doccomment">/// Attempt to get a reference to the global state object.
 ///
-/// If it hasn&#39;t been set yet, we return None.
-</span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we&#39;re interested in the caller.
-</span><span class="kw">fn </span>maybe_global_state() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Mutex&lt;State&gt;&gt; {
+/// If it hasn't been set yet, we return None.
+</span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we're interested in the caller.
+</span><span class="kw">fn </span>maybe_global_state() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>Mutex&lt;State&gt;&gt; {
     STATE.get()
 }
 
@@ -1498,7 +1499,7 @@
     </span><span class="kw">if </span>STATE.get().is_none() {
         <span class="kw">if </span>STATE.set(Mutex::new(state)).is_err() {
             <span class="macro">log::error!</span>(
-                <span class="string">&quot;Global Glean state object is initialized already. This probably happened concurrently.&quot;
+                <span class="string">"Global Glean state object is initialized already. This probably happened concurrently."
             </span>);
         }
     } <span class="kw">else </span>{
@@ -1515,7 +1516,7 @@
 </span><span class="kw">static </span>EVENT_LISTENERS: OnceCell&lt;Mutex&lt;HashMap&lt;String, Box&lt;<span class="kw">dyn </span>GleanEventListener&gt;&gt;&gt;&gt; =
     OnceCell::new();
 
-<span class="kw">fn </span>event_listeners() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Mutex&lt;HashMap&lt;String, Box&lt;<span class="kw">dyn </span>GleanEventListener&gt;&gt;&gt; {
+<span class="kw">fn </span>event_listeners() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>Mutex&lt;HashMap&lt;String, Box&lt;<span class="kw">dyn </span>GleanEventListener&gt;&gt;&gt; {
     EVENT_LISTENERS.get_or_init(|| Mutex::new(HashMap::new()))
 }
 
@@ -1537,8 +1538,8 @@
 }
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>CallbackError {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected error&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"Unexpected error"</span>)
     }
 }
 
@@ -1621,14 +1622,14 @@
     <span class="kw">let </span>glean = <span class="kw">match </span>Glean::new_for_subprocess(<span class="kw-2">&amp;</span>cfg, <span class="bool-val">true</span>) {
         <span class="prelude-val">Ok</span>(glean) =&gt; glean,
         <span class="prelude-val">Err</span>(err) =&gt; {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Failed to initialize Glean: {}&quot;</span>, err);
+            <span class="macro">log::error!</span>(<span class="string">"Failed to initialize Glean: {}"</span>, err);
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
     };
     <span class="kw">if </span>core::setup_glean(glean).is_err() {
         <span class="kw">return </span><span class="bool-val">false</span>;
     }
-    <span class="macro">log::info!</span>(<span class="string">&quot;Glean initialized for subprocess&quot;</span>);
+    <span class="macro">log::info!</span>(<span class="string">"Glean initialized for subprocess"</span>);
     <span class="bool-val">true
 </span>}
 
@@ -1638,12 +1639,12 @@
     callbacks: Box&lt;<span class="kw">dyn </span>OnGleanEvents&gt;,
 ) {
     <span class="kw">if </span>was_initialize_called() {
-        <span class="macro">log::error!</span>(<span class="string">&quot;Glean should not be initialized multiple times&quot;</span>);
+        <span class="macro">log::error!</span>(<span class="string">"Glean should not be initialized multiple times"</span>);
         <span class="kw">return</span>;
     }
 
     <span class="kw">let </span>init_handle = std::thread::Builder::new()
-        .name(<span class="string">&quot;glean.init&quot;</span>.into())
+        .name(<span class="string">"glean.init"</span>.into())
         .spawn(<span class="kw">move </span>|| {
             <span class="kw">let </span>upload_enabled = cfg.upload_enabled;
             <span class="kw">let </span>trim_data_to_registered_pings = cfg.trim_data_to_registered_pings;
@@ -1656,7 +1657,7 @@
             <span class="kw">let </span>glean = <span class="kw">match </span>Glean::new(cfg) {
                 <span class="prelude-val">Ok</span>(glean) =&gt; glean,
                 <span class="prelude-val">Err</span>(err) =&gt; {
-                    <span class="macro">log::error!</span>(<span class="string">&quot;Failed to initialize Glean: {}&quot;</span>, err);
+                    <span class="macro">log::error!</span>(<span class="string">"Failed to initialize Glean: {}"</span>, err);
                     <span class="kw">return</span>;
                 }
             };
@@ -1664,7 +1665,7 @@
                 <span class="kw">return</span>;
             }
 
-            <span class="macro">log::info!</span>(<span class="string">&quot;Glean initialized&quot;</span>);
+            <span class="macro">log::info!</span>(<span class="string">"Glean initialized"</span>);
 
             setup_state(State {
                 client_info,
@@ -1698,7 +1699,7 @@
 
                 <span class="comment">// Get the current value of the dirty flag so we know whether to
                 // send a dirty startup baseline ping below.  Immediately set it to
-                // `false` so that dirty startup pings won&#39;t be sent if Glean
+                // `false` so that dirty startup pings won't be sent if Glean
                 // initialization does not complete successfully.
                 </span>dirty_flag = glean.is_dirty_flag_set();
                 glean.set_dirty_flag(<span class="bool-val">false</span>);
@@ -1730,7 +1731,7 @@
                 // 2. Upload is disabled, to upload a possible deletion-request ping.
                 </span><span class="kw">if </span>pings_submitted || !upload_enabled {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                        <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                        <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
                     }
                 }
             }
@@ -1745,17 +1746,17 @@
             // For that it needs access to the `Glean` object.
             // Thus we need to unlock that by leaving the context above,
             // then re-lock it afterwards.
-            // That&#39;s safe because user-visible functions will be queued and thus not execute until
+            // That's safe because user-visible functions will be queued and thus not execute until
             // we unblock later anyway.
             </span>{
                 <span class="kw">let </span>state = global_state().lock().unwrap();
 
-                <span class="comment">// Set up information and scheduling for Glean owned pings. Ideally, the &quot;metrics&quot;
+                <span class="comment">// Set up information and scheduling for Glean owned pings. Ideally, the "metrics"
                 // ping startup check should be performed before any other ping, since it relies
                 // on being dispatched to the API context before any other metric.
                 </span><span class="kw">if </span>state.callbacks.start_metrics_ping_scheduler() {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                        <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                        <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
                     }
                 }
             }
@@ -1763,18 +1764,18 @@
             core::with_glean_mut(|glean| {
                 <span class="kw">let </span>state = global_state().lock().unwrap();
 
-                <span class="comment">// Check if the &quot;dirty flag&quot; is set. That means the product was probably
-                // force-closed. If that&#39;s the case, submit a &#39;baseline&#39; ping with the
-                // reason &quot;dirty_startup&quot;. We only do that from the second run.
+                <span class="comment">// Check if the "dirty flag" is set. That means the product was probably
+                // force-closed. If that's the case, submit a 'baseline' ping with the
+                // reason "dirty_startup". We only do that from the second run.
                 </span><span class="kw">if </span>!is_first_run &amp;&amp; dirty_flag {
                     <span class="comment">// The `submit_ping_by_name_sync` function cannot be used, otherwise
                     // startup will cause a dead-lock, since that function requests a
                     // write lock on the `glean` object.
                     // Note that unwrapping below is safe: the function will return an
                     // `Ok` value for a known ping.
-                    </span><span class="kw">if </span>glean.submit_ping_by_name(<span class="string">&quot;baseline&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;dirty_startup&quot;</span>)) {
+                    </span><span class="kw">if </span>glean.submit_ping_by_name(<span class="string">"baseline"</span>, <span class="prelude-val">Some</span>(<span class="string">"dirty_startup"</span>)) {
                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                            <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                            <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
                         }
                     }
                 }
@@ -1790,7 +1791,7 @@
 
             <span class="comment">// Signal Dispatcher that init is complete
             // bug 1839433: It is important that this happens after any init tasks
-            // that shutdown() depends on. At time of writing that&#39;s only setting up
+            // that shutdown() depends on. At time of writing that's only setting up
             // the global Glean, but it is probably best to flush the preinit queue
             // as late as possible in the glean.init thread.
             </span><span class="kw">match </span>dispatcher::flush_init() {
@@ -1801,15 +1802,15 @@
                     });
                 }
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
-                <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">log::error!</span>(<span class="string">&quot;Unable to flush the preinit queue: {}&quot;</span>, err),
+                <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">log::error!</span>(<span class="string">"Unable to flush the preinit queue: {}"</span>, err),
             }
 
             <span class="kw">let </span>state = global_state().lock().unwrap();
             state.callbacks.initialize_finished();
         })
-        .expect(<span class="string">&quot;Failed to spawn Glean&#39;s init thread&quot;</span>);
+        .expect(<span class="string">"Failed to spawn Glean's init thread"</span>);
 
-    <span class="comment">// For test purposes, store the glean init thread&#39;s JoinHandle.
+    <span class="comment">// For test purposes, store the glean init thread's JoinHandle.
     </span>INIT_HANDLES.lock().unwrap().push(init_handle);
 
     <span class="comment">// Mark the initialization as called: this needs to happen outside of the
@@ -1817,14 +1818,14 @@
     </span>INITIALIZE_CALLED.store(<span class="bool-val">true</span>, Ordering::SeqCst);
 
     <span class="comment">// In test mode we wait for initialization to finish.
-    // This needs to run after we set `INITIALIZE_CALLED`, so it&#39;s similar to normal behavior.
+    // This needs to run after we set `INITIALIZE_CALLED`, so it's similar to normal behavior.
     </span><span class="kw">if </span>dispatcher::global::is_test_mode() {
         join_init();
     }
 }
 
 <span class="doccomment">/// TEST ONLY FUNCTION
-/// Waits on all the glean.init threads&#39; join handles.
+/// Waits on all the glean.init threads' join handles.
 </span><span class="kw">pub fn </span>join_init() {
     <span class="kw">let </span><span class="kw-2">mut </span>handles = INIT_HANDLES.lock().unwrap();
     <span class="kw">for </span>handle <span class="kw">in </span>handles.drain(..) {
@@ -1844,25 +1845,25 @@
     <span class="kw">let </span>(tx, rx) = unbounded();
 
     <span class="kw">let </span>handle = thread::Builder::new()
-        .name(<span class="string">&quot;glean.shutdown&quot;</span>.to_string())
+        .name(<span class="string">"glean.shutdown"</span>.to_string())
         .spawn(<span class="kw">move </span>|| {
             <span class="kw">let </span>state = global_state().lock().unwrap();
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.shutdown() {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Shutdown callback failed: {e:?}&quot;</span>);
+                <span class="macro">log::error!</span>(<span class="string">"Shutdown callback failed: {e:?}"</span>);
             }
 
             <span class="comment">// Best-effort sending. The other side might have timed out already.
             </span><span class="kw">let _ </span>= tx.send(()).ok();
         })
-        .expect(<span class="string">&quot;Unable to spawn thread to wait on shutdown&quot;</span>);
+        .expect(<span class="string">"Unable to spawn thread to wait on shutdown"</span>);
 
-    <span class="comment">// TODO: 30 seconds? What&#39;s a good default here? Should this be configurable?
+    <span class="comment">// TODO: 30 seconds? What's a good default here? Should this be configurable?
     // Reasoning:
     //   * If we shut down early we might still be processing pending pings.
     //     In this case we wait at most 3 times for 1s = 3s before we upload.
-    //   * If we&#39;re rate-limited the uploader sleeps for up to 60s.
+    //   * If we're rate-limited the uploader sleeps for up to 60s.
     //     Thus waiting 30s will rarely allow another upload.
-    //   * We don&#39;t know how long uploads take until we get data from bug 1814592.
+    //   * We don't know how long uploads take until we get data from bug 1814592.
     </span><span class="kw">let </span>result = rx.recv_timeout(Duration::from_secs(<span class="number">30</span>));
 
     <span class="kw">let </span>stop_time = time::precise_time_ns();
@@ -1874,7 +1875,7 @@
     });
 
     <span class="kw">if </span>result.is_err() {
-        <span class="macro">log::warn!</span>(<span class="string">&quot;Waiting for upload failed. We&#39;re shutting down.&quot;</span>);
+        <span class="macro">log::warn!</span>(<span class="string">"Waiting for upload failed. We're shutting down."</span>);
     } <span class="kw">else </span>{
         <span class="kw">let _ </span>= handle.join().ok();
     }
@@ -1886,52 +1887,52 @@
     // 1) Before init was called
     //    * (data loss, oh well. Not enough time to do squat)
     // 2) After init was called, but before it completed
-    //    * (we&#39;re willing to wait a little bit for init to complete)
+    //    * (we're willing to wait a little bit for init to complete)
     // 3) After init completed
     //    * (we can shut down immediately)
 
-    // Case 1: &quot;Before init was called&quot;
+    // Case 1: "Before init was called"
     </span><span class="kw">if </span>!was_initialize_called() {
-        <span class="macro">log::warn!</span>(<span class="string">&quot;Shutdown called before Glean is initialized&quot;</span>);
+        <span class="macro">log::warn!</span>(<span class="string">"Shutdown called before Glean is initialized"</span>);
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatcher::kill() {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Can&#39;t kill dispatcher thread: {:?}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Can't kill dispatcher thread: {:?}"</span>, e);
         }
         <span class="kw">return</span>;
     }
 
-    <span class="comment">// Case 2: &quot;After init was called, but before it completed&quot;
+    <span class="comment">// Case 2: "After init was called, but before it completed"
     </span><span class="kw">if </span>core::global_glean().is_none() {
-        <span class="macro">log::warn!</span>(<span class="string">&quot;Shutdown called before Glean is initialized. Waiting.&quot;</span>);
-        <span class="comment">// We can&#39;t join on the `glean.init` thread because there&#39;s no (easy) way
+        <span class="macro">log::warn!</span>(<span class="string">"Shutdown called before Glean is initialized. Waiting."</span>);
+        <span class="comment">// We can't join on the `glean.init` thread because there's no (easy) way
         // to do that with a timeout. Instead, we wait for the preinit queue to
         // empty, which is the last meaningful thing we do on that thread.
 
         // TODO: Make the timeout configurable?
-        // We don&#39;t need the return value, as we&#39;re less interested in whether
-        // this times out than we are in whether there&#39;s a Global Glean at the end.
+        // We don't need the return value, as we're less interested in whether
+        // this times out than we are in whether there's a Global Glean at the end.
         </span><span class="kw">let _ </span>= dispatcher::block_on_queue_timeout(Duration::from_secs(<span class="number">10</span>));
     }
-    <span class="comment">// We can&#39;t shut down Glean if there&#39;s no Glean to shut down.
+    <span class="comment">// We can't shut down Glean if there's no Glean to shut down.
     </span><span class="kw">if </span>core::global_glean().is_none() {
-        <span class="macro">log::warn!</span>(<span class="string">&quot;Waiting for Glean initialization timed out. Exiting.&quot;</span>);
+        <span class="macro">log::warn!</span>(<span class="string">"Waiting for Glean initialization timed out. Exiting."</span>);
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatcher::kill() {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Can&#39;t kill dispatcher thread: {:?}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Can't kill dispatcher thread: {:?}"</span>, e);
         }
         <span class="kw">return</span>;
     }
 
-    <span class="comment">// Case 3: &quot;After init completed&quot;
+    <span class="comment">// Case 3: "After init completed"
     </span><span class="kw">crate</span>::launch_with_glean_mut(|glean| {
         glean.cancel_metrics_ping_scheduler();
         glean.set_dirty_flag(<span class="bool-val">false</span>);
     });
 
     <span class="comment">// We need to wait for above task to finish,
-    // but we also don&#39;t wait around forever.
+    // but we also don't wait around forever.
     //
     // TODO: Make the timeout configurable?
     // The default hang watchdog on Firefox waits 60s,
-    // Glean&#39;s `uploader_shutdown` further below waits up to 30s.
+    // Glean's `uploader_shutdown` further below waits up to 30s.
     </span><span class="kw">let </span>timer_id = core::with_glean(|glean| {
         glean
             .additional_metrics
@@ -1950,13 +1951,13 @@
     });
     <span class="kw">if </span>blocked.is_err() {
         <span class="macro">log::error!</span>(
-            <span class="string">&quot;Timeout while blocking on the dispatcher. No further shutdown cleanup will happen.&quot;
+            <span class="string">"Timeout while blocking on the dispatcher. No further shutdown cleanup will happen."
         </span>);
         <span class="kw">return</span>;
     }
 
     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatcher::shutdown() {
-        <span class="macro">log::error!</span>(<span class="string">&quot;Can&#39;t shutdown dispatcher thread: {:?}&quot;</span>, e);
+        <span class="macro">log::error!</span>(<span class="string">"Can't shutdown dispatcher thread: {:?}"</span>, e);
     }
 
     uploader_shutdown();
@@ -1964,17 +1965,17 @@
     <span class="comment">// Be sure to call this _after_ draining the dispatcher
     </span>core::with_glean(|glean| {
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = glean.persist_ping_lifetime_data() {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Can&#39;t persist ping lifetime data: {:?}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Can't persist ping lifetime data: {:?}"</span>, e);
         }
     });
 }
 
 <span class="doccomment">/// Asks the database to persist ping-lifetime data to disk. Probably expensive to call.
 /// Only has effect when Glean is configured with `delay_ping_lifetime_io: true`.
-/// If Glean hasn&#39;t been initialized this will dispatch and return Ok(()),
+/// If Glean hasn't been initialized this will dispatch and return Ok(()),
 /// otherwise it will block until the persist is done and return its Result.
 </span><span class="kw">pub fn </span>glean_persist_ping_lifetime_data() {
-    <span class="comment">// This is async, we can&#39;t get the Error back to the caller.
+    <span class="comment">// This is async, we can't get the Error back to the caller.
     </span><span class="kw">crate</span>::launch_with_glean(|glean| {
         <span class="kw">let _ </span>= glean.persist_ping_lifetime_data();
     });
@@ -2022,28 +2023,28 @@
 <span class="doccomment">/// Initialize the logging system based on the target platform. This ensures
 /// that logging is shown when executing the Glean SDK unit tests.
 </span><span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>glean_enable_logging() {
-    <span class="attr">#[cfg(target_os = <span class="string">&quot;android&quot;</span>)]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>glean_enable_logging() {
+    <span class="attr">#[cfg(target_os = <span class="string">"android"</span>)]
     </span>{
         <span class="kw">let _ </span>= std::panic::catch_unwind(|| {
             <span class="kw">let </span>filter = android_logger::FilterBuilder::new()
-                .filter_module(<span class="string">&quot;glean_ffi&quot;</span>, log::LevelFilter::Debug)
-                .filter_module(<span class="string">&quot;glean_core&quot;</span>, log::LevelFilter::Debug)
-                .filter_module(<span class="string">&quot;glean&quot;</span>, log::LevelFilter::Debug)
-                .filter_module(<span class="string">&quot;glean_core::ffi&quot;</span>, log::LevelFilter::Info)
+                .filter_module(<span class="string">"glean_ffi"</span>, log::LevelFilter::Debug)
+                .filter_module(<span class="string">"glean_core"</span>, log::LevelFilter::Debug)
+                .filter_module(<span class="string">"glean"</span>, log::LevelFilter::Debug)
+                .filter_module(<span class="string">"glean_core::ffi"</span>, log::LevelFilter::Info)
                 .build();
             android_logger::init_once(
                 android_logger::Config::default()
                     .with_max_level(log::LevelFilter::Debug)
                     .with_filter(filter)
-                    .with_tag(<span class="string">&quot;libglean_ffi&quot;</span>),
+                    .with_tag(<span class="string">"libglean_ffi"</span>),
             );
-            <span class="macro">log::trace!</span>(<span class="string">&quot;Android logging should be hooked up!&quot;</span>)
+            <span class="macro">log::trace!</span>(<span class="string">"Android logging should be hooked up!"</span>)
         });
     }
 
     <span class="comment">// On iOS enable logging with a level filter.
-    </span><span class="attr">#[cfg(target_os = <span class="string">&quot;ios&quot;</span>)]
+    </span><span class="attr">#[cfg(target_os = <span class="string">"ios"</span>)]
     </span>{
         <span class="comment">// Debug logging in debug mode.
         // (Note: `debug_assertions` is the next best thing to determine if this is a debug build)
@@ -2052,17 +2053,17 @@
         <span class="attr">#[cfg(not(debug_assertions))]
         </span><span class="kw">let </span>level = log::LevelFilter::Info;
 
-        <span class="kw">let </span>logger = oslog::OsLogger::new(<span class="string">&quot;org.mozilla.glean&quot;</span>)
+        <span class="kw">let </span>logger = oslog::OsLogger::new(<span class="string">"org.mozilla.glean"</span>)
             .level_filter(level)
             <span class="comment">// Filter UniFFI log messages
-            </span>.category_level_filter(<span class="string">&quot;glean_core::ffi&quot;</span>, log::LevelFilter::Info);
+            </span>.category_level_filter(<span class="string">"glean_core::ffi"</span>, log::LevelFilter::Info);
 
         <span class="kw">match </span>logger.init() {
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::trace!</span>(<span class="string">&quot;os_log should be hooked up!&quot;</span>),
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::trace!</span>(<span class="string">"os_log should be hooked up!"</span>),
             <span class="comment">// Please note that this is only expected to fail during unit tests,
             // where the logger might have already been initialized by a previous
-            // test. So it&#39;s fine to print with the &quot;logger&quot;.
-            </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::warn!</span>(<span class="string">&quot;os_log was already initialized&quot;</span>),
+            // test. So it's fine to print with the "logger".
+            </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::warn!</span>(<span class="string">"os_log was already initialized"</span>),
         };
     }
 
@@ -2070,17 +2071,17 @@
     // Use the RUST_LOG environment variable to set the desired log level,
     // e.g. setting RUST_LOG=debug sets the log level to debug.
     </span><span class="attr">#[cfg(all(
-        not(target_os = <span class="string">&quot;android&quot;</span>),
-        not(target_os = <span class="string">&quot;ios&quot;</span>),
-        feature = <span class="string">&quot;enable_env_logger&quot;
+        not(target_os = <span class="string">"android"</span>),
+        not(target_os = <span class="string">"ios"</span>),
+        feature = <span class="string">"enable_env_logger"
     </span>))]
     </span>{
         <span class="kw">match </span>env_logger::try_init() {
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::trace!</span>(<span class="string">&quot;stdout logging should be hooked up!&quot;</span>),
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::trace!</span>(<span class="string">"stdout logging should be hooked up!"</span>),
             <span class="comment">// Please note that this is only expected to fail during unit tests,
             // where the logger might have already been initialized by a previous
-            // test. So it&#39;s fine to print with the &quot;logger&quot;.
-            </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::warn!</span>(<span class="string">&quot;stdout logging was already initialized&quot;</span>),
+            // test. So it's fine to print with the "logger".
+            </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">log::warn!</span>(<span class="string">"stdout logging was already initialized"</span>),
         };
     }
 }
@@ -2100,7 +2101,7 @@
             </span>glean.cancel_metrics_ping_scheduler();
             <span class="comment">// Stop wrapper-controlled uploader.
             </span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.cancel_uploads() {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Canceling upload failed. Error: {}&quot;</span>, e);
+                <span class="macro">log::error!</span>(<span class="string">"Canceling upload failed. Error: {}"</span>, e);
             }
         }
 
@@ -2112,7 +2113,7 @@
 
         <span class="kw">if </span>original_enabled &amp;&amp; !enabled {
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
             }
         }
     })
@@ -2133,7 +2134,7 @@
         <span class="comment">// We need to keep track of pings, so they get re-registered after a reset or
         // if ping registration is attempted before Glean initializes.
         // This state is kept across Glean resets, which should only ever happen in test mode.
-        // It&#39;s a set and keeping them around forever should not have much of an impact.
+        // It's a set and keeping them around forever should not have much of an impact.
         </span><span class="kw">let </span>m = <span class="kw-2">&amp;</span>PRE_INIT_PING_REGISTRATION;
         <span class="kw">let </span><span class="kw-2">mut </span>lock = m.lock().unwrap();
         lock.push(ping.clone());
@@ -2162,7 +2163,7 @@
 
 <span class="doccomment">/// TEST ONLY FUNCTION.
 /// Returns the [`RecordedExperiment`] for the given `experiment_id`
-/// or `None` if the id isn&#39;t found.
+/// or `None` if the id isn't found.
 </span><span class="kw">pub fn </span>glean_test_get_experiment_data(experiment_id: String) -&gt; <span class="prelude-ty">Option</span>&lt;RecordedExperiment&gt; {
     block_on_dispatcher();
     core::with_glean(|glean| glean.test_get_experiment_data(experiment_id.to_owned()))
@@ -2170,7 +2171,7 @@
 
 <span class="doccomment">/// Set an experimentation identifier dynamically.
 ///
-/// Note: it&#39;s probably a good idea to unenroll from any experiments when identifiers change.
+/// Note: it's probably a good idea to unenroll from any experiments when identifiers change.
 </span><span class="kw">pub fn </span>glean_set_experimentation_id(experimentation_id: String) {
     launch_with_glean(<span class="kw">move </span>|glean| {
         glean
@@ -2187,7 +2188,7 @@
     core::with_glean(|glean| glean.test_get_experimentation_id())
 }
 
-<span class="doccomment">/// Sets a remote configuration to override metrics&#39; default enabled/disabled
+<span class="doccomment">/// Sets a remote configuration to override metrics' default enabled/disabled
 /// state
 ///
 /// See [`core::Glean::apply_server_knobs_config`].
@@ -2203,7 +2204,7 @@
             glean.apply_server_knobs_config(cfg);
         }),
         <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Error setting metrics feature config: {:?}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Error setting metrics feature config: {:?}"</span>, e);
         }
     }
 }
@@ -2211,11 +2212,11 @@
 <span class="doccomment">/// Sets a debug view tag.
 ///
 /// When the debug view tag is set, pings are sent with a `X-Debug-ID` header with the
-/// value of the tag and are sent to the [&quot;Ping Debug Viewer&quot;](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
+/// value of the tag and are sent to the ["Ping Debug Viewer"](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
 ///
 /// # Arguments
 ///
-/// * `tag` - A valid HTTP header value. Must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;.
+/// * `tag` - A valid HTTP header value. Must match the regex: "[a-zA-Z0-9-]{1,20}".
 ///
 /// # Returns
 ///
@@ -2233,7 +2234,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>lock = m.lock().unwrap();
         <span class="kw-2">*</span>lock = tag;
         <span class="comment">// When setting the debug view tag before initialization,
-        // we don&#39;t validate the tag, thus this function always returns true.
+        // we don't validate the tag, thus this function always returns true.
         </span><span class="bool-val">true
     </span>}
 }
@@ -2248,7 +2249,7 @@
 /// # Arguments
 ///
 /// * `tags` - A vector of at most 5 valid HTTP header values. Individual
-///   tags must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;.
+///   tags must match the regex: "[a-zA-Z0-9-]{1,20}".
 </span><span class="kw">pub fn </span>glean_set_source_tags(tags: Vec&lt;String&gt;) -&gt; bool {
     <span class="kw">if </span>was_initialize_called() {
         <span class="kw">crate</span>::launch_with_glean_mut(|glean| {
@@ -2261,7 +2262,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>lock = m.lock().unwrap();
         <span class="kw-2">*</span>lock = tags;
         <span class="comment">// When setting the source tags before initialization,
-        // we don&#39;t validate the tags, thus this function always returns true.
+        // we don't validate the tags, thus this function always returns true.
         </span><span class="bool-val">true
     </span>}
 }
@@ -2297,11 +2298,11 @@
         });
 
         <span class="comment">// The above call may generate pings, so we need to trigger
-        // the uploader. It&#39;s fine to trigger it if no ping was generated:
+        // the uploader. It's fine to trigger it if no ping was generated:
         // it will bail out.
         </span><span class="kw">let </span>state = global_state().lock().unwrap();
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
         }
     });
 
@@ -2330,11 +2331,11 @@
         });
 
         <span class="comment">// The above call may generate pings, so we need to trigger
-        // the uploader. It&#39;s fine to trigger it if no ping was generated:
+        // the uploader. It's fine to trigger it if no ping was generated:
         // it will bail out.
         </span><span class="kw">let </span>state = global_state().lock().unwrap();
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+            <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
         }
     })
 }
@@ -2348,7 +2349,7 @@
         <span class="kw">if </span>sent {
             <span class="kw">let </span>state = global_state().lock().unwrap();
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
             }
         }
     })
@@ -2377,7 +2378,7 @@
 
 <span class="doccomment">/// Unregister an event listener from recieving notifications.
 ///
-/// Does not panic if the listener doesn&#39;t exist.
+/// Does not panic if the listener doesn't exist.
 ///
 /// # Arguments
 ///
@@ -2398,7 +2399,7 @@
 /// Destroy the underlying database.
 </span><span class="kw">pub fn </span>glean_test_destroy_glean(clear_stores: bool, data_path: <span class="prelude-ty">Option</span>&lt;String&gt;) {
     <span class="kw">if </span>was_initialize_called() {
-        <span class="comment">// Just because initialize was called doesn&#39;t mean it&#39;s done.
+        <span class="comment">// Just because initialize was called doesn't mean it's done.
         </span>join_init();
 
         dispatcher::reset_dispatcher();
@@ -2432,7 +2433,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(data_path) = data_path {
             <span class="kw">let _ </span>= std::fs::remove_dir_all(data_path).ok();
         } <span class="kw">else </span>{
-            <span class="macro">log::warn!</span>(<span class="string">&quot;Asked to clear stores before initialization, but no data path given.&quot;</span>);
+            <span class="macro">log::warn!</span>(<span class="string">"Asked to clear stores before initialization, but no data path given."</span>);
         }
     }
 }
@@ -2454,7 +2455,7 @@
     core::with_glean(|glean| glean.set_dirty_flag(new_value))
 }
 
-<span class="attr">#[cfg(all(not(target_os = <span class="string">&quot;android&quot;</span>), not(target_os = <span class="string">&quot;ios&quot;</span>)))]
+<span class="attr">#[cfg(all(not(target_os = <span class="string">"android"</span>), not(target_os = <span class="string">"ios"</span>)))]
 </span><span class="kw">static </span>FD_LOGGER: OnceCell&lt;fd_logger::FdLogger&gt; = OnceCell::new();
 
 <span class="doccomment">/// Initialize the logging system to send JSON messages to a file descriptor
@@ -2468,8 +2469,8 @@
 ///
 /// `fd` MUST be a valid open file descriptor (Unix) or file handle (Windows).
 /// This function is marked safe,
-/// because we can&#39;t call unsafe functions from generated UniFFI code.
-</span><span class="attr">#[cfg(all(not(target_os = <span class="string">&quot;android&quot;</span>), not(target_os = <span class="string">&quot;ios&quot;</span>)))]
+/// because we can't call unsafe functions from generated UniFFI code.
+</span><span class="attr">#[cfg(all(not(target_os = <span class="string">"android"</span>), not(target_os = <span class="string">"ios"</span>)))]
 </span><span class="kw">pub fn </span>glean_enable_logging_to_fd(fd: u64) {
     <span class="comment">// SAFETY:
     // This functions is unsafe.
@@ -2484,7 +2485,7 @@
         </span><span class="kw">let </span>logger = FD_LOGGER.get_or_init(|| fd_logger::FdLogger::new(fd));
         <span class="comment">// Set the level so everything goes through to the language
         // binding side where it will be filtered by the language
-        // binding&#39;s logging system.
+        // binding's logging system.
         </span><span class="kw">if </span>log::set_logger(logger).is_ok() {
             log::set_max_level(log::LevelFilter::Debug);
         }
@@ -2492,7 +2493,7 @@
 }
 
 <span class="doccomment">/// Unused function. Not used on Android or iOS.
-</span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;android&quot;</span>, target_os = <span class="string">&quot;ios&quot;</span>))]
+</span><span class="attr">#[cfg(any(target_os = <span class="string">"android"</span>, target_os = <span class="string">"ios"</span>))]
 </span><span class="kw">pub fn </span>glean_enable_logging_to_fd(_fd: u64) {
     <span class="comment">// intentionally left empty
 </span>}
@@ -2500,9 +2501,9 @@
 <span class="attr">#[allow(missing_docs)]
 </span><span class="kw">mod </span>ffi {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="macro">uniffi::include_scaffolding!</span>(<span class="string">&quot;glean&quot;</span>);
+    <span class="macro">uniffi::include_scaffolding!</span>(<span class="string">"glean"</span>);
 
-    <span class="kw">type </span>CowString = Cow&lt;<span class="lifetime">&#39;static</span>, str&gt;;
+    <span class="kw">type </span>CowString = Cow&lt;<span class="lifetime">'static</span>, str&gt;;
 
     <span class="kw">impl </span>UniffiCustomTypeConverter <span class="kw">for </span>CowString {
         <span class="kw">type </span>Builtin = String;
@@ -2534,7 +2535,6 @@
 
 <span class="comment">// Split unit tests to a separate file, to reduce the file of this one.
 </span><span class="attr">#[cfg(test)]
-#[path = <span class="string">&quot;lib_unit_tests.rs&quot;</span>]
+#[path = <span class="string">"lib_unit_tests.rs"</span>]
 </span><span class="kw">mod </span>tests;
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

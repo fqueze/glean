@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/database/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/database/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1916,7 +1917,7 @@
 <a href="#1916" id="1916">1916</a>
 <a href="#1917" id="1917">1917</a>
 <a href="#1918" id="1918">1918</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -1970,7 +1971,7 @@
 <span class="doccomment">/// cbindgen:ignore
 </span><span class="kw">pub type </span>SingleStore = rkv::SingleStore&lt;rkv::backend::SafeModeDatabase&gt;;
 <span class="doccomment">/// cbindgen:ignore
-</span><span class="kw">pub type </span>Writer&lt;<span class="lifetime">&#39;t</span>&gt; = rkv::Writer&lt;rkv::backend::SafeModeRwTransaction&lt;<span class="lifetime">&#39;t</span>&gt;&gt;;
+</span><span class="kw">pub type </span>Writer&lt;<span class="lifetime">'t</span>&gt; = rkv::Writer&lt;rkv::backend::SafeModeRwTransaction&lt;<span class="lifetime">'t</span>&gt;&gt;;
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>RkvLoadState {
@@ -1984,17 +1985,17 @@
         // 1. An empty file.
         // 2. A corrupted file.
         //
-        // In both instances there&#39;s not much we can do.
+        // In both instances there's not much we can do.
         // Drop the data by removing the file, and start over.
         </span><span class="prelude-val">Err</span>(rkv::StoreError::FileInvalid) =&gt; {
-            <span class="kw">let </span>safebin = path.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>safebin = path.join(<span class="string">"data.safe.bin"</span>);
             fs::remove_file(safebin).map_err(|<span class="kw">_</span>| rkv::StoreError::FileInvalid)<span class="question-mark">?</span>;
             <span class="comment">// Now try again, we only handle that error once.
             </span><span class="kw">let </span>rkv = Rkv::new::&lt;rkv::backend::SafeMode&gt;(path)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((rkv, RkvLoadState::Err(rkv::StoreError::FileInvalid)))
         }
         <span class="prelude-val">Err</span>(rkv::StoreError::DatabaseCorrupted) =&gt; {
-            <span class="kw">let </span>safebin = path.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>safebin = path.join(<span class="string">"data.safe.bin"</span>);
             fs::remove_file(safebin).map_err(|<span class="kw">_</span>| rkv::StoreError::DatabaseCorrupted)<span class="question-mark">?</span>;
             <span class="comment">// Try again, only allowing the error once.
             </span><span class="kw">let </span>rkv = Rkv::new::&lt;rkv::backend::SafeMode&gt;(path)<span class="question-mark">?</span>;
@@ -2013,17 +2014,17 @@
             std::io::ErrorKind::NotFound =&gt; {
                 <span class="comment">// Silently drop this error, the file was already non-existing.
             </span>}
-            <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">&quot;{}&quot;</span>, msg),
+            <span class="kw">_ </span>=&gt; <span class="macro">log::warn!</span>(<span class="string">"{}"</span>, msg),
         }
     }
 }
 
 <span class="kw">fn </span>delete_lmdb_database(path: <span class="kw-2">&amp;</span>Path) {
-    <span class="kw">let </span>datamdb = path.join(<span class="string">&quot;data.mdb&quot;</span>);
-    delete_and_log(<span class="kw-2">&amp;</span>datamdb, <span class="string">&quot;Failed to delete old data.&quot;</span>);
+    <span class="kw">let </span>datamdb = path.join(<span class="string">"data.mdb"</span>);
+    delete_and_log(<span class="kw-2">&amp;</span>datamdb, <span class="string">"Failed to delete old data."</span>);
 
-    <span class="kw">let </span>lockmdb = path.join(<span class="string">&quot;lock.mdb&quot;</span>);
-    delete_and_log(<span class="kw-2">&amp;</span>lockmdb, <span class="string">&quot;Failed to delete old lock.&quot;</span>);
+    <span class="kw">let </span>lockmdb = path.join(<span class="string">"lock.mdb"</span>);
+    delete_and_log(<span class="kw-2">&amp;</span>lockmdb, <span class="string">"Failed to delete old lock."</span>);
 }
 
 <span class="doccomment">/// Migrate from LMDB storage to safe-mode storage.
@@ -2035,17 +2036,17 @@
 /// without migrating data.
 /// This is a no-op if no LMDB database file exists.
 </span><span class="kw">pub fn </span>migrate(path: <span class="kw-2">&amp;</span>Path, dst_env: <span class="kw-2">&amp;</span>Rkv) {
-    <span class="macro">log::debug!</span>(<span class="string">&quot;Migrating files in {}&quot;</span>, path.display());
+    <span class="macro">log::debug!</span>(<span class="string">"Migrating files in {}"</span>, path.display());
 
     <span class="comment">// Shortcut if no data to migrate is around.
-    </span><span class="kw">let </span>datamdb = path.join(<span class="string">&quot;data.mdb&quot;</span>);
+    </span><span class="kw">let </span>datamdb = path.join(<span class="string">"data.mdb"</span>);
     <span class="kw">if </span>!datamdb.exists() {
-        <span class="macro">log::debug!</span>(<span class="string">&quot;No data to migrate.&quot;</span>);
+        <span class="macro">log::debug!</span>(<span class="string">"No data to migrate."</span>);
         <span class="kw">return</span>;
     }
 
-    <span class="comment">// We&#39;re handling the same error cases as `easy_migrate_lmdb_to_safe_mode`,
-    // but annotate each why they don&#39;t cause problems for Glean.
+    <span class="comment">// We're handling the same error cases as `easy_migrate_lmdb_to_safe_mode`,
+    // but annotate each why they don't cause problems for Glean.
     // Additionally for known cases we delete the LMDB database regardless.
     </span><span class="kw">let </span>should_delete =
         <span class="kw">match </span>Migrator::open_and_migrate_lmdb_to_safe_mode(path, |builder| builder, dst_env) {
@@ -2058,8 +2059,8 @@
             // Nothing we can do really.
             </span><span class="prelude-val">Err</span>(MigrateError::StoreError(StoreError::IoError(<span class="kw">_</span>))) =&gt; <span class="bool-val">true</span>,
             <span class="comment">// Path accessible but incompatible for configuration.
-            // This should not happen, we never used storages that safe-mode doesn&#39;t understand.
-            // If it does happen, let&#39;s start fresh and use the safe-mode from now on.
+            // This should not happen, we never used storages that safe-mode doesn't understand.
+            // If it does happen, let's start fresh and use the safe-mode from now on.
             </span><span class="prelude-val">Err</span>(MigrateError::StoreError(StoreError::UnsuitableEnvironmentPath(<span class="kw">_</span>))) =&gt; <span class="bool-val">true</span>,
             <span class="comment">// Nothing to migrate.
             // Source database was empty. We just start fresh anyway.
@@ -2069,30 +2070,30 @@
             // or someone placed back an old data file.
             // In any case we better stay on the new data and delete the old one.
             </span><span class="prelude-val">Err</span>(MigrateError::DestinationNotEmpty) =&gt; {
-                <span class="macro">log::warn!</span>(<span class="string">&quot;Failed to migrate old data. Destination was not empty&quot;</span>);
+                <span class="macro">log::warn!</span>(<span class="string">"Failed to migrate old data. Destination was not empty"</span>);
                 <span class="bool-val">true
             </span>}
             <span class="comment">// An internal lock was poisoned.
             // This would only happen if multiple things run concurrently and one crashes.
             </span><span class="prelude-val">Err</span>(MigrateError::ManagerPoisonError) =&gt; <span class="bool-val">false</span>,
-            <span class="comment">// Couldn&#39;t close source environment and delete files on disk (e.g. other stores still open).
+            <span class="comment">// Couldn't close source environment and delete files on disk (e.g. other stores still open).
             // This could only happen if multiple instances are running,
             // we leave files in place.
             </span><span class="prelude-val">Err</span>(MigrateError::CloseError(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
             <span class="comment">// Other store errors are never returned from the migrator.
             // We need to handle them to please rustc.
             </span><span class="prelude-val">Err</span>(MigrateError::StoreError(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
-            <span class="comment">// Other errors can&#39;t happen, so this leaves us with the Ok case.
+            <span class="comment">// Other errors can't happen, so this leaves us with the Ok case.
             // This already deleted the LMDB files.
             </span><span class="prelude-val">Ok</span>(()) =&gt; <span class="bool-val">false</span>,
         };
 
     <span class="kw">if </span>should_delete {
-        <span class="macro">log::debug!</span>(<span class="string">&quot;Need to delete remaining LMDB files.&quot;</span>);
+        <span class="macro">log::debug!</span>(<span class="string">"Need to delete remaining LMDB files."</span>);
         delete_lmdb_database(path);
     }
 
-    <span class="macro">log::debug!</span>(<span class="string">&quot;Migration ended. Safe-mode database in {}&quot;</span>, path.display());
+    <span class="macro">log::debug!</span>(<span class="string">"Migration ended. Safe-mode database in {}"</span>, path.display());
 }
 
 <span class="kw">use </span><span class="kw">crate</span>::common_metric_data::CommonMetricDataInternal;
@@ -2105,16 +2106,16 @@
     <span class="doccomment">/// Handle to the database environment.
     </span>rkv: Rkv,
 
-    <span class="doccomment">/// Handles to the &quot;lifetime&quot; stores.
+    <span class="doccomment">/// Handles to the "lifetime" stores.
     ///
-    /// A &quot;store&quot; is a handle to the underlying database.
+    /// A "store" is a handle to the underlying database.
     /// We keep them open for fast and frequent access.
     </span>user_store: SingleStore,
     ping_store: SingleStore,
     application_store: SingleStore,
 
     <span class="doccomment">/// If the `delay_ping_lifetime_io` Glean config option is `true`,
-    /// we will save metrics with &#39;ping&#39; lifetime data in a map temporarily
+    /// we will save metrics with 'ping' lifetime data in a map temporarily
     /// so as to persist them to disk using rkv in bulk on demand.
     </span>ping_lifetime_data: <span class="prelude-ty">Option</span>&lt;RwLock&lt;BTreeMap&lt;String, Metric&gt;&gt;&gt;,
 
@@ -2152,12 +2153,12 @@
 
 <span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>Database {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>std::fmt::Formatter) -&gt; std::fmt::Result {
-        fmt.debug_struct(<span class="string">&quot;Database&quot;</span>)
-            .field(<span class="string">&quot;rkv&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.rkv)
-            .field(<span class="string">&quot;user_store&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;SingleStore&quot;</span>)
-            .field(<span class="string">&quot;ping_store&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;SingleStore&quot;</span>)
-            .field(<span class="string">&quot;application_store&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;SingleStore&quot;</span>)
-            .field(<span class="string">&quot;ping_lifetime_data&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data)
+        fmt.debug_struct(<span class="string">"Database"</span>)
+            .field(<span class="string">"rkv"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.rkv)
+            .field(<span class="string">"user_store"</span>, <span class="kw-2">&amp;</span><span class="string">"SingleStore"</span>)
+            .field(<span class="string">"ping_store"</span>, <span class="kw-2">&amp;</span><span class="string">"SingleStore"</span>)
+            .field(<span class="string">"application_store"</span>, <span class="kw-2">&amp;</span><span class="string">"SingleStore"</span>)
+            .field(<span class="string">"ping_lifetime_data"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data)
             .finish()
     }
 }
@@ -2206,8 +2207,8 @@
         ping_lifetime_threshold: usize,
         ping_lifetime_max_time: Duration,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>path = data_path.join(<span class="string">&quot;db&quot;</span>);
-        <span class="macro">log::debug!</span>(<span class="string">&quot;Database path: {:?}&quot;</span>, path.display());
+        <span class="kw">let </span>path = data_path.join(<span class="string">"db"</span>);
+        <span class="macro">log::debug!</span>(<span class="string">"Database path: {:?}"</span>, path.display());
         <span class="kw">let </span>file_size = database_size(<span class="kw-2">&amp;</span>path);
 
         <span class="kw">let </span>(rkv, rkv_load_state) = <span class="self">Self</span>::open_rkv(<span class="kw-2">&amp;</span>path)<span class="question-mark">?</span>;
@@ -2276,7 +2277,7 @@
         <span class="kw">let </span>(rkv, load_state) = rkv_new(path)<span class="question-mark">?</span>;
         migrate(path, <span class="kw-2">&amp;</span>rkv);
 
-        <span class="macro">log::info!</span>(<span class="string">&quot;Database initialized&quot;</span>);
+        <span class="macro">log::info!</span>(<span class="string">"Database initialized"</span>);
         <span class="prelude-val">Ok</span>((rkv, load_state))
     }
 
@@ -2294,20 +2295,20 @@
     /// A string representing the location in the database.
     </span><span class="kw">fn </span>get_storage_key(storage_name: <span class="kw-2">&amp;</span>str, metric_key: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; String {
         <span class="kw">match </span>metric_key {
-            <span class="prelude-val">Some</span>(k) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, storage_name, k),
-            <span class="prelude-val">None </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;{}#&quot;</span>, storage_name),
+            <span class="prelude-val">Some</span>(k) =&gt; <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, storage_name, k),
+            <span class="prelude-val">None </span>=&gt; <span class="macro">format!</span>(<span class="string">"{}#"</span>, storage_name),
         }
     }
 
     <span class="doccomment">/// Loads Lifetime::Ping data from rkv to memory,
     /// if `delay_ping_lifetime_io` is set to true.
     ///
-    /// Does nothing if it isn&#39;t or if there is not data to load.
+    /// Does nothing if it isn't or if there is not data to load.
     </span><span class="kw">fn </span>load_ping_lifetime_data(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
             <span class="kw">let </span><span class="kw-2">mut </span>data = ping_lifetime_data
                 .write()
-                .expect(<span class="string">&quot;Can&#39;t read ping lifetime data&quot;</span>);
+                .expect(<span class="string">"Can't read ping lifetime data"</span>);
 
             <span class="kw">let </span>reader = <span class="macro">unwrap_or!</span>(<span class="self">self</span>.rkv.read(), <span class="kw">return</span>);
             <span class="kw">let </span>store = <span class="self">self</span>.get_store(Lifetime::Ping);
@@ -2368,7 +2369,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
                 <span class="kw">let </span>data = ping_lifetime_data
                     .read()
-                    .expect(<span class="string">&quot;Can&#39;t read ping lifetime data&quot;</span>);
+                    .expect(<span class="string">"Can't read ping lifetime data"</span>);
                 <span class="kw">for </span>(key, value) <span class="kw">in </span>data.iter() {
                     <span class="kw">if </span>key.starts_with(<span class="kw-2">&amp;</span>iter_start) {
                         <span class="kw">let </span>key = <span class="kw-2">&amp;</span>key[len..];
@@ -2456,7 +2457,7 @@
 
     <span class="doccomment">/// Records a metric in the underlying storage system.
     </span><span class="kw">pub fn </span>record(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, data: <span class="kw-2">&amp;</span>CommonMetricDataInternal, value: <span class="kw-2">&amp;</span>Metric) {
-        <span class="comment">// If upload is disabled we don&#39;t want to record.
+        <span class="comment">// If upload is disabled we don't want to record.
         </span><span class="kw">if </span>!glean.is_upload_enabled() {
             <span class="kw">return</span>;
         }
@@ -2466,7 +2467,7 @@
         <span class="kw">for </span>ping_name <span class="kw">in </span>data.storage_names() {
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self</span>.record_per_lifetime(data.inner.lifetime, ping_name, <span class="kw-2">&amp;</span>name, value) {
                 <span class="macro">log::error!</span>(
-                    <span class="string">&quot;Failed to record metric &#39;{}&#39; into {}: {:?}&quot;</span>,
+                    <span class="string">"Failed to record metric '{}' into {}: {:?}"</span>,
                     data.base_identifier(),
                     ping_name,
                     e
@@ -2501,7 +2502,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
                 <span class="kw">let </span><span class="kw-2">mut </span>data = ping_lifetime_data
                     .write()
-                    .expect(<span class="string">&quot;Can&#39;t read ping lifetime data&quot;</span>);
+                    .expect(<span class="string">"Can't read ping lifetime data"</span>);
                 data.insert(final_key, metric.clone());
 
                 <span class="comment">// flush ping lifetime
@@ -2510,7 +2511,7 @@
             }
         }
 
-        <span class="kw">let </span>encoded = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+        <span class="kw">let </span>encoded = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">"IMPOSSIBLE: Serializing metric failed"</span>);
         <span class="kw">let </span>value = rkv::Value::Blob(<span class="kw-2">&amp;</span>encoded);
 
         <span class="kw">let </span><span class="kw-2">mut </span>writer = <span class="self">self</span>.rkv.write()<span class="question-mark">?</span>;
@@ -2526,7 +2527,7 @@
     <span class="kw">where
         </span>F: FnMut(<span class="prelude-ty">Option</span>&lt;Metric&gt;) -&gt; Metric,
     {
-        <span class="comment">// If upload is disabled we don&#39;t want to record.
+        <span class="comment">// If upload is disabled we don't want to record.
         </span><span class="kw">if </span>!glean.is_upload_enabled() {
             <span class="kw">return</span>;
         }
@@ -2537,7 +2538,7 @@
                 <span class="self">self</span>.record_per_lifetime_with(data.inner.lifetime, ping_name, <span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;mut </span>transform)
             {
                 <span class="macro">log::error!</span>(
-                    <span class="string">&quot;Failed to record metric &#39;{}&#39; into {}: {:?}&quot;</span>,
+                    <span class="string">"Failed to record metric '{}' into {}: {:?}"</span>,
                     data.base_identifier(),
                     ping_name,
                     e
@@ -2576,7 +2577,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
                 <span class="kw">let </span><span class="kw-2">mut </span>data = ping_lifetime_data
                     .write()
-                    .expect(<span class="string">&quot;Can&#39;t access ping lifetime data as writable&quot;</span>);
+                    .expect(<span class="string">"Can't access ping lifetime data as writable"</span>);
                 <span class="kw">let </span>entry = data.entry(final_key);
                 <span class="kw">match </span>entry {
                     Entry::Vacant(entry) =&gt; {
@@ -2609,7 +2610,7 @@
         };
 
         <span class="kw">let </span>encoded =
-            bincode::serialize(<span class="kw-2">&amp;</span>new_value).expect(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+            bincode::serialize(<span class="kw-2">&amp;</span>new_value).expect(<span class="string">"IMPOSSIBLE: Serializing metric failed"</span>);
         <span class="kw">let </span>value = rkv::Value::Blob(<span class="kw-2">&amp;</span>encoded);
         store.put(<span class="kw-2">&amp;mut </span>writer, final_key, <span class="kw-2">&amp;</span>value)<span class="question-mark">?</span>;
         <span class="macro">measure_commit!</span>(<span class="self">self</span>, writer.commit())<span class="question-mark">?</span>;
@@ -2635,7 +2636,7 @@
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
             ping_lifetime_data
                 .write()
-                .expect(<span class="string">&quot;Can&#39;t access ping lifetime data as writable&quot;</span>)
+                .expect(<span class="string">"Can't access ping lifetime data as writable"</span>)
                 .retain(|metric_id, <span class="kw">_</span>| !metric_id.starts_with(storage_name));
         }
 
@@ -2656,7 +2657,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>res = <span class="prelude-val">Ok</span>(());
             <span class="kw">for </span>to_delete <span class="kw">in </span>metrics {
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = store.delete(<span class="kw-2">&amp;mut </span>writer, to_delete) {
-                    <span class="macro">log::warn!</span>(<span class="string">&quot;Can&#39;t delete from store: {:?}&quot;</span>, e);
+                    <span class="macro">log::warn!</span>(<span class="string">"Can't delete from store: {:?}"</span>, e);
                     res = <span class="prelude-val">Err</span>(e);
                 }
             }
@@ -2698,7 +2699,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
                 <span class="kw">let </span><span class="kw-2">mut </span>data = ping_lifetime_data
                     .write()
-                    .expect(<span class="string">&quot;Can&#39;t access app lifetime data as writable&quot;</span>);
+                    .expect(<span class="string">"Can't access app lifetime data as writable"</span>);
                 data.remove(<span class="kw-2">&amp;</span>final_key);
             }
         }
@@ -2734,11 +2735,11 @@
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = res {
             <span class="comment">// We try to clear everything.
             // If there was no data to begin with we encounter a `NotFound` error.
-            // There&#39;s no point in logging that.
+            // There's no point in logging that.
             </span><span class="kw">if let </span>ErrorKind::Rkv(StoreError::IoError(ioerr)) = e.kind() {
                 <span class="kw">if let </span>io::ErrorKind::NotFound = ioerr.kind() {
                     <span class="macro">log::debug!</span>(
-                        <span class="string">&quot;Could not clear store for lifetime {:?}: {:?}&quot;</span>,
+                        <span class="string">"Could not clear store for lifetime {:?}: {:?}"</span>,
                         lifetime,
                         ioerr
                     );
@@ -2746,7 +2747,7 @@
                 }
             }
 
-            <span class="macro">log::warn!</span>(<span class="string">&quot;Could not clear store for lifetime {:?}: {:?}&quot;</span>, lifetime, e);
+            <span class="macro">log::warn!</span>(<span class="string">"Could not clear store for lifetime {:?}: {:?}"</span>, lifetime, e);
         }
     }
 
@@ -2761,7 +2762,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
             ping_lifetime_data
                 .write()
-                .expect(<span class="string">&quot;Can&#39;t access ping lifetime data as writable&quot;</span>)
+                .expect(<span class="string">"Can't access ping lifetime data as writable"</span>)
                 .clear();
         }
 
@@ -2781,7 +2782,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ping_lifetime_data) = <span class="kw-2">&amp;</span><span class="self">self</span>.ping_lifetime_data {
             <span class="kw">let </span>data = ping_lifetime_data
                 .read()
-                .expect(<span class="string">&quot;Can&#39;t read ping lifetime data&quot;</span>);
+                .expect(<span class="string">"Can't read ping lifetime data"</span>);
 
             <span class="comment">// We can reset the write-counter. Current data has been persisted.
             </span><span class="self">self</span>.ping_lifetime_count.store(<span class="number">0</span>, Ordering::Release);
@@ -2790,7 +2791,7 @@
             <span class="self">self</span>.write_with_store(Lifetime::Ping, |<span class="kw-2">mut </span>writer, store| {
                 <span class="kw">for </span>(key, value) <span class="kw">in </span>data.iter() {
                     <span class="kw">let </span>encoded =
-                        bincode::serialize(<span class="kw-2">&amp;</span>value).expect(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+                        bincode::serialize(<span class="kw-2">&amp;</span>value).expect(<span class="string">"IMPOSSIBLE: Serializing metric failed"</span>);
                     <span class="comment">// There is no need for `get_storage_key` here because
                     // the key is already formatted from when it was saved
                     // to ping_lifetime_data.
@@ -2808,7 +2809,7 @@
         data: <span class="kw-2">&amp;</span>BTreeMap&lt;String, Metric&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">if </span><span class="self">self</span>.ping_lifetime_threshold == <span class="number">0 </span>&amp;&amp; <span class="self">self</span>.ping_lifetime_max_time.is_zero() {
-            <span class="macro">log::trace!</span>(<span class="string">&quot;Auto-flush disabled.&quot;</span>);
+            <span class="macro">log::trace!</span>(<span class="string">"Auto-flush disabled."</span>);
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         }
 
@@ -2820,7 +2821,7 @@
             &amp;&amp; (<span class="self">self</span>.ping_lifetime_max_time.is_zero() || elapsed &lt; <span class="self">self</span>.ping_lifetime_max_time)
         {
             <span class="macro">log::trace!</span>(
-                <span class="string">&quot;Not flushing. write_count={} (threshold={}), elapsed={:?} (max={:?})&quot;</span>,
+                <span class="string">"Not flushing. write_count={} (threshold={}), elapsed={:?} (max={:?})"</span>,
                 write_count,
                 <span class="self">self</span>.ping_lifetime_threshold,
                 elapsed,
@@ -2831,12 +2832,12 @@
 
         <span class="kw">if </span><span class="self">self</span>.ping_lifetime_threshold &gt; <span class="number">0 </span>&amp;&amp; write_count &gt;= <span class="self">self</span>.ping_lifetime_threshold {
             <span class="macro">log::debug!</span>(
-                <span class="string">&quot;Flushing database due to threshold of {} reached.&quot;</span>,
+                <span class="string">"Flushing database due to threshold of {} reached."</span>,
                 <span class="self">self</span>.ping_lifetime_threshold
             )
         } <span class="kw">else if </span>!<span class="self">self</span>.ping_lifetime_max_time.is_zero() &amp;&amp; elapsed &gt;= <span class="self">self</span>.ping_lifetime_max_time {
             <span class="macro">log::debug!</span>(
-                <span class="string">&quot;Flushing database due to last write more than {:?} ago&quot;</span>,
+                <span class="string">"Flushing database due to last write more than {:?} ago"</span>,
                 <span class="self">self</span>.ping_lifetime_max_time
             );
         }
@@ -2846,7 +2847,7 @@
         <span class="self">self</span>.write_with_store(Lifetime::Ping, |<span class="kw-2">mut </span>writer, store| {
             <span class="kw">for </span>(key, value) <span class="kw">in </span>data.iter() {
                 <span class="kw">let </span>encoded =
-                    bincode::serialize(<span class="kw-2">&amp;</span>value).expect(<span class="string">&quot;IMPOSSIBLE: Serializing metric failed&quot;</span>);
+                    bincode::serialize(<span class="kw-2">&amp;</span>value).expect(<span class="string">"IMPOSSIBLE: Serializing metric failed"</span>);
                 <span class="comment">// There is no need for `get_storage_key` here because
                 // the key is already formatted from when it was saved
                 // to ping_lifetime_data.
@@ -2867,7 +2868,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_panicks_if_fails_dir_creation() {
-        <span class="kw">let </span>path = Path::new(<span class="string">&quot;/!#\&quot;&#39;@#°ç&quot;</span>);
+        <span class="kw">let </span>path = Path::new(<span class="string">"/!#\"'@#°ç"</span>);
         <span class="macro">assert!</span>(Database::new(path, <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).is_err());
     }
 
@@ -2877,7 +2878,7 @@
         <span class="kw">use </span>std::ffi::OsString;
         <span class="kw">use </span>std::os::windows::prelude::<span class="kw-2">*</span>;
 
-        <span class="comment">// Here the values 0x0066 and 0x006f correspond to &#39;f&#39; and &#39;o&#39;
+        <span class="comment">// Here the values 0x0066 and 0x006f correspond to 'f' and 'o'
         // respectively. The value 0xD800 is a lone surrogate half, invalid
         // in a UTF-16 sequence.
         </span><span class="kw">let </span>source = [<span class="number">0x0066</span>, <span class="number">0x006f</span>, <span class="number">0xD800</span>, <span class="number">0x006f</span>];
@@ -2890,19 +2891,19 @@
 
         <span class="macro">assert!</span>(
             res.is_ok(),
-            <span class="string">&quot;Database should succeed at {}: {:?}&quot;</span>,
+            <span class="string">"Database should succeed at {}: {:?}"</span>,
             path.display(),
             res
         );
     }
 
     <span class="attr">#[test]
-    #[cfg(target_os = <span class="string">&quot;linux&quot;</span>)]
+    #[cfg(target_os = <span class="string">"linux"</span>)]
     </span><span class="kw">fn </span>linux_invalid_utf8_panicfree() {
         <span class="kw">use </span>std::ffi::OsStr;
         <span class="kw">use </span>std::os::unix::ffi::OsStrExt;
 
-        <span class="comment">// Here, the values 0x66 and 0x6f correspond to &#39;f&#39; and &#39;o&#39;
+        <span class="comment">// Here, the values 0x66 and 0x6f correspond to 'f' and 'o'
         // respectively. The value 0x80 is a lone continuation byte, invalid
         // in a UTF-8 sequence.
         </span><span class="kw">let </span>source = [<span class="number">0x66</span>, <span class="number">0x6f</span>, <span class="number">0x80</span>, <span class="number">0x6f</span>];
@@ -2913,19 +2914,19 @@
         <span class="kw">let </span>res = Database::new(<span class="kw-2">&amp;</span>path, <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO);
         <span class="macro">assert!</span>(
             res.is_ok(),
-            <span class="string">&quot;Database should not fail at {}: {:?}&quot;</span>,
+            <span class="string">"Database should not fail at {}: {:?}"</span>,
             path.display(),
             res
         );
     }
 
     <span class="attr">#[test]
-    #[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+    #[cfg(target_os = <span class="string">"macos"</span>)]
     </span><span class="kw">fn </span>macos_invalid_utf8_panicfree() {
         <span class="kw">use </span>std::ffi::OsStr;
         <span class="kw">use </span>std::os::unix::ffi::OsStrExt;
 
-        <span class="comment">// Here, the values 0x66 and 0x6f correspond to &#39;f&#39; and &#39;o&#39;
+        <span class="comment">// Here, the values 0x66 and 0x6f correspond to 'f' and 'o'
         // respectively. The value 0x80 is a lone continuation byte, invalid
         // in a UTF-8 sequence.
         </span><span class="kw">let </span>source = [<span class="number">0x66</span>, <span class="number">0x6f</span>, <span class="number">0x80</span>, <span class="number">0x6f</span>];
@@ -2936,7 +2937,7 @@
         <span class="kw">let </span>res = Database::new(<span class="kw-2">&amp;</span>path, <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO);
         <span class="macro">assert!</span>(
             res.is_err(),
-            <span class="string">&quot;Database should not fail at {}: {:?}&quot;</span>,
+            <span class="string">"Database should not fail at {}: {:?}"</span>,
             path.display(),
             res
         );
@@ -2959,9 +2960,9 @@
         <span class="macro">assert!</span>(db.ping_lifetime_data.is_none());
 
         <span class="comment">// Attempt to record a known value.
-        </span><span class="kw">let </span>test_value = <span class="string">&quot;test-value&quot;</span>;
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
-        <span class="kw">let </span>test_metric_id = <span class="string">&quot;telemetry_test.test_name&quot;</span>;
+        </span><span class="kw">let </span>test_value = <span class="string">"test-value"</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
+        <span class="kw">let </span>test_metric_id = <span class="string">"telemetry_test.test_name"</span>;
         db.record_per_lifetime(
             Lifetime::Ping,
             test_storage,
@@ -2978,12 +2979,12 @@
             <span class="macro">assert_eq!</span>(test_metric_id, metric_id);
             <span class="kw">match </span>metric {
                 Metric::String(s) =&gt; <span class="macro">assert_eq!</span>(test_value, s),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
             }
         };
 
         db.iter_store_from(Lifetime::Ping, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, found_metrics, <span class="string">&quot;We only expect 1 Lifetime.Ping metric.&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, found_metrics, <span class="string">"We only expect 1 Lifetime.Ping metric."</span>);
     }
 
     <span class="attr">#[test]
@@ -2993,9 +2994,9 @@
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
 
         <span class="comment">// Attempt to record a known value.
-        </span><span class="kw">let </span>test_value = <span class="string">&quot;test-value&quot;</span>;
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage1&quot;</span>;
-        <span class="kw">let </span>test_metric_id = <span class="string">&quot;telemetry_test.test_name&quot;</span>;
+        </span><span class="kw">let </span>test_value = <span class="string">"test-value"</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage1"</span>;
+        <span class="kw">let </span>test_metric_id = <span class="string">"telemetry_test.test_name"</span>;
         db.record_per_lifetime(
             Lifetime::Application,
             test_storage,
@@ -3012,14 +3013,14 @@
             <span class="macro">assert_eq!</span>(test_metric_id, metric_id);
             <span class="kw">match </span>metric {
                 Metric::String(s) =&gt; <span class="macro">assert_eq!</span>(test_value, s),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
             }
         };
 
         db.iter_store_from(Lifetime::Application, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
         <span class="macro">assert_eq!</span>(
             <span class="number">1</span>, found_metrics,
-            <span class="string">&quot;We only expect 1 Lifetime.Application metric.&quot;
+            <span class="string">"We only expect 1 Lifetime.Application metric."
         </span>);
     }
 
@@ -3030,9 +3031,9 @@
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
 
         <span class="comment">// Attempt to record a known value.
-        </span><span class="kw">let </span>test_value = <span class="string">&quot;test-value&quot;</span>;
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage2&quot;</span>;
-        <span class="kw">let </span>test_metric_id = <span class="string">&quot;telemetry_test.test_name&quot;</span>;
+        </span><span class="kw">let </span>test_value = <span class="string">"test-value"</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage2"</span>;
+        <span class="kw">let </span>test_metric_id = <span class="string">"telemetry_test.test_name"</span>;
         db.record_per_lifetime(
             Lifetime::User,
             test_storage,
@@ -3049,12 +3050,12 @@
             <span class="macro">assert_eq!</span>(test_metric_id, metric_id);
             <span class="kw">match </span>metric {
                 Metric::String(s) =&gt; <span class="macro">assert_eq!</span>(test_value, s),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
             }
         };
 
         db.iter_store_from(Lifetime::User, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, found_metrics, <span class="string">&quot;We only expect 1 Lifetime.User metric.&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, found_metrics, <span class="string">"We only expect 1 Lifetime.User metric."</span>);
     }
 
     <span class="attr">#[test]
@@ -3064,26 +3065,26 @@
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
 
         <span class="comment">// Attempt to record a known value for every single lifetime.
-        </span><span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
+        </span><span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
         db.record_per_lifetime(
             Lifetime::User,
             test_storage,
-            <span class="string">&quot;telemetry_test.test_name_user&quot;</span>,
-            <span class="kw-2">&amp;</span>Metric::String(<span class="string">&quot;test-value-user&quot;</span>.to_string()),
+            <span class="string">"telemetry_test.test_name_user"</span>,
+            <span class="kw-2">&amp;</span>Metric::String(<span class="string">"test-value-user"</span>.to_string()),
         )
         .unwrap();
         db.record_per_lifetime(
             Lifetime::Ping,
             test_storage,
-            <span class="string">&quot;telemetry_test.test_name_ping&quot;</span>,
-            <span class="kw-2">&amp;</span>Metric::String(<span class="string">&quot;test-value-ping&quot;</span>.to_string()),
+            <span class="string">"telemetry_test.test_name_ping"</span>,
+            <span class="kw-2">&amp;</span>Metric::String(<span class="string">"test-value-ping"</span>.to_string()),
         )
         .unwrap();
         db.record_per_lifetime(
             Lifetime::Application,
             test_storage,
-            <span class="string">&quot;telemetry_test.test_name_application&quot;</span>,
-            <span class="kw-2">&amp;</span>Metric::String(<span class="string">&quot;test-value-application&quot;</span>.to_string()),
+            <span class="string">"telemetry_test.test_name_application"</span>,
+            <span class="kw-2">&amp;</span>Metric::String(<span class="string">"test-value-application"</span>.to_string()),
         )
         .unwrap();
 
@@ -3094,7 +3095,7 @@
                 <span class="kw">let </span>metric_id = String::from_utf8_lossy(metric_id).into_owned();
                 <span class="kw">match </span>metric {
                     Metric::String(s) =&gt; snapshot.insert(metric_id, s.to_string()),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 };
             };
 
@@ -3102,23 +3103,23 @@
             db.iter_store_from(Lifetime::Ping, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
             db.iter_store_from(Lifetime::Application, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
-            <span class="macro">assert_eq!</span>(<span class="number">3</span>, snapshot.len(), <span class="string">&quot;We expect all lifetimes to be present.&quot;</span>);
-            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">&quot;telemetry_test.test_name_user&quot;</span>));
-            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">&quot;telemetry_test.test_name_ping&quot;</span>));
-            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">&quot;telemetry_test.test_name_application&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="number">3</span>, snapshot.len(), <span class="string">"We expect all lifetimes to be present."</span>);
+            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">"telemetry_test.test_name_user"</span>));
+            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">"telemetry_test.test_name_ping"</span>));
+            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">"telemetry_test.test_name_application"</span>));
         }
 
         <span class="comment">// Clear the Ping lifetime.
         </span>db.clear_ping_lifetime_storage(test_storage).unwrap();
 
-        <span class="comment">// Take a snapshot again and check that we&#39;re only clearing the Ping lifetime.
+        <span class="comment">// Take a snapshot again and check that we're only clearing the Ping lifetime.
         </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>snapshot: HashMap&lt;String, String&gt; = HashMap::new();
             <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |metric_id: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                 <span class="kw">let </span>metric_id = String::from_utf8_lossy(metric_id).into_owned();
                 <span class="kw">match </span>metric {
                     Metric::String(s) =&gt; snapshot.insert(metric_id, s.to_string()),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 };
             };
 
@@ -3126,9 +3127,9 @@
             db.iter_store_from(Lifetime::Ping, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
             db.iter_store_from(Lifetime::Application, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
-            <span class="macro">assert_eq!</span>(<span class="number">2</span>, snapshot.len(), <span class="string">&quot;We only expect 2 metrics to be left.&quot;</span>);
-            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">&quot;telemetry_test.test_name_user&quot;</span>));
-            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">&quot;telemetry_test.test_name_application&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="number">2</span>, snapshot.len(), <span class="string">"We only expect 2 metrics to be left."</span>);
+            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">"telemetry_test.test_name_user"</span>));
+            <span class="macro">assert!</span>(snapshot.contains_key(<span class="string">"telemetry_test.test_name_application"</span>));
         }
     }
 
@@ -3138,44 +3139,44 @@
         </span><span class="kw">let </span>dir = tempdir().unwrap();
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
 
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage-single-lifetime&quot;</span>;
-        <span class="kw">let </span>metric_id_pattern = <span class="string">&quot;telemetry_test.single_metric&quot;</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage-single-lifetime"</span>;
+        <span class="kw">let </span>metric_id_pattern = <span class="string">"telemetry_test.single_metric"</span>;
 
         <span class="comment">// Write sample metrics to the database.
         </span><span class="kw">let </span>lifetimes = [Lifetime::User, Lifetime::Ping, Lifetime::Application];
 
         <span class="kw">for </span>lifetime <span class="kw">in </span>lifetimes.iter() {
-            <span class="kw">for </span>value <span class="kw">in </span><span class="kw-2">&amp;</span>[<span class="string">&quot;retain&quot;</span>, <span class="string">&quot;delete&quot;</span>] {
+            <span class="kw">for </span>value <span class="kw">in </span><span class="kw-2">&amp;</span>[<span class="string">"retain"</span>, <span class="string">"delete"</span>] {
                 db.record_per_lifetime(
                     <span class="kw-2">*</span>lifetime,
                     test_storage,
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}_{}&quot;</span>, metric_id_pattern, value),
+                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}_{}"</span>, metric_id_pattern, value),
                     <span class="kw-2">&amp;</span>Metric::String((<span class="kw-2">*</span>value).to_string()),
                 )
                 .unwrap();
             }
         }
 
-        <span class="comment">// Remove &quot;telemetry_test.single_metric_delete&quot; from each lifetime.
+        <span class="comment">// Remove "telemetry_test.single_metric_delete" from each lifetime.
         </span><span class="kw">for </span>lifetime <span class="kw">in </span>lifetimes.iter() {
             db.remove_single_metric(
                 <span class="kw-2">*</span>lifetime,
                 test_storage,
-                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}_delete&quot;</span>, metric_id_pattern),
+                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}_delete"</span>, metric_id_pattern),
             )
             .unwrap();
         }
 
-        <span class="comment">// Verify that &quot;telemetry_test.single_metric_retain&quot; is still around for all lifetimes.
+        <span class="comment">// Verify that "telemetry_test.single_metric_retain" is still around for all lifetimes.
         </span><span class="kw">for </span>lifetime <span class="kw">in </span>lifetimes.iter() {
             <span class="kw">let </span><span class="kw-2">mut </span>found_metrics = <span class="number">0</span>;
             <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |metric_id: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                 found_metrics += <span class="number">1</span>;
                 <span class="kw">let </span>metric_id = String::from_utf8_lossy(metric_id).into_owned();
-                <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{}_retain&quot;</span>, metric_id_pattern), metric_id);
+                <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{}_retain"</span>, metric_id_pattern), metric_id);
                 <span class="kw">match </span>metric {
-                    Metric::String(s) =&gt; <span class="macro">assert_eq!</span>(<span class="string">&quot;retain&quot;</span>, s),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    Metric::String(s) =&gt; <span class="macro">assert_eq!</span>(<span class="string">"retain"</span>, s),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 }
             };
 
@@ -3183,7 +3184,7 @@
             </span>db.iter_store_from(<span class="kw-2">*</span>lifetime, test_storage, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
             <span class="macro">assert_eq!</span>(
                 <span class="number">1</span>, found_metrics,
-                <span class="string">&quot;We only expect 1 metric for this lifetime.&quot;
+                <span class="string">"We only expect 1 metric for this lifetime."
             </span>);
         }
     }
@@ -3193,13 +3194,13 @@
         <span class="comment">// Init the database in a temporary directory.
         </span><span class="kw">let </span>dir = tempdir().unwrap();
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">true</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
 
         <span class="macro">assert!</span>(db.ping_lifetime_data.is_some());
 
         <span class="comment">// Attempt to record a known value.
-        </span><span class="kw">let </span>test_value1 = <span class="string">&quot;test-value1&quot;</span>;
-        <span class="kw">let </span>test_metric_id1 = <span class="string">&quot;telemetry_test.test_name1&quot;</span>;
+        </span><span class="kw">let </span>test_value1 = <span class="string">"test-value1"</span>;
+        <span class="kw">let </span>test_metric_id1 = <span class="string">"telemetry_test.test_name1"</span>;
         db.record_per_lifetime(
             Lifetime::Ping,
             test_storage,
@@ -3212,8 +3213,8 @@
         </span>db.persist_ping_lifetime_data().unwrap();
 
         <span class="comment">// Attempt to record another known value.
-        </span><span class="kw">let </span>test_value2 = <span class="string">&quot;test-value2&quot;</span>;
-        <span class="kw">let </span>test_metric_id2 = <span class="string">&quot;telemetry_test.test_name2&quot;</span>;
+        </span><span class="kw">let </span>test_value2 = <span class="string">"test-value2"</span>;
+        <span class="kw">let </span>test_metric_id2 = <span class="string">"telemetry_test.test_name2"</span>;
         db.record_per_lifetime(
             Lifetime::Ping,
             test_storage,
@@ -3234,27 +3235,27 @@
 
             <span class="comment">// Verify that test_value1 is in rkv.
             </span><span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_some());
             <span class="comment">// Verifiy that test_value2 is **not** in rkv.
             </span><span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id2))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id2))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_none());
 
             <span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="comment">// Verify that test_value1 is also in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .is_some());
             <span class="comment">// Verify that test_value2 is in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id2))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id2))
                 .is_some());
         }
 
@@ -3273,27 +3274,27 @@
 
             <span class="comment">// Verify that test_value1 is in rkv.
             </span><span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_some());
             <span class="comment">// Verifiy that test_value2 is also in rkv.
             </span><span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id2))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id2))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_some());
 
             <span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="comment">// Verify that test_value1 is also in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .is_some());
             <span class="comment">// Verify that test_value2 is also in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id2))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id2))
                 .is_some());
         }
     }
@@ -3303,9 +3304,9 @@
         <span class="comment">// Init the database in a temporary directory.
         </span><span class="kw">let </span>dir = tempdir().unwrap();
 
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
-        <span class="kw">let </span>test_value = <span class="string">&quot;test-value&quot;</span>;
-        <span class="kw">let </span>test_metric_id = <span class="string">&quot;telemetry_test.test_name&quot;</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
+        <span class="kw">let </span>test_value = <span class="string">"test-value"</span>;
+        <span class="kw">let </span>test_metric_id = <span class="string">"telemetry_test.test_name"</span>;
 
         {
             <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">true</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
@@ -3322,11 +3323,11 @@
             <span class="comment">// Verify that test_value is in memory.
             </span><span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id))
                 .is_some());
 
             <span class="comment">// Attempt to persist data.
@@ -3339,7 +3340,7 @@
                 .unwrap();
             <span class="kw">let </span>reader = db.rkv.read().unwrap();
             <span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_some());
         }
@@ -3352,11 +3353,11 @@
             <span class="comment">// Verify that test_value is in memory.
             </span><span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id))
                 .is_some());
 
             <span class="comment">// Verify that test_value is also in rkv.
@@ -3366,7 +3367,7 @@
                 .unwrap();
             <span class="kw">let </span>reader = db.rkv.read().unwrap();
             <span class="macro">assert!</span>(store
-                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id))
+                .get(<span class="kw-2">&amp;</span>reader, <span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id))
                 .unwrap_or(<span class="prelude-val">None</span>)
                 .is_some());
         }
@@ -3377,13 +3378,13 @@
         <span class="comment">// Init the database in a temporary directory.
         </span><span class="kw">let </span>dir = tempdir().unwrap();
         <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">true</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-        <span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
+        <span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
 
         <span class="macro">assert!</span>(db.ping_lifetime_data.is_some());
 
         <span class="comment">// Attempt to record a known value.
-        </span><span class="kw">let </span>test_value1 = <span class="string">&quot;test-value1&quot;</span>;
-        <span class="kw">let </span>test_metric_id1 = <span class="string">&quot;telemetry_test.test_name1&quot;</span>;
+        </span><span class="kw">let </span>test_value1 = <span class="string">"test-value1"</span>;
+        <span class="kw">let </span>test_metric_id1 = <span class="string">"telemetry_test.test_name1"</span>;
         db.record_per_lifetime(
             Lifetime::Ping,
             test_storage,
@@ -3395,44 +3396,44 @@
         {
             <span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="comment">// Verify that test_value1 is in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .is_some());
         }
 
-        <span class="comment">// Clear ping lifetime storage for a storage that isn&#39;t test_storage.
-        // Doesn&#39;t matter what it&#39;s called, just that it isn&#39;t test_storage.
-        </span>db.clear_ping_lifetime_storage(<span class="kw-2">&amp;</span>(test_storage.to_owned() + <span class="string">&quot;x&quot;</span>))
+        <span class="comment">// Clear ping lifetime storage for a storage that isn't test_storage.
+        // Doesn't matter what it's called, just that it isn't test_storage.
+        </span>db.clear_ping_lifetime_storage(<span class="kw-2">&amp;</span>(test_storage.to_owned() + <span class="string">"x"</span>))
             .unwrap();
 
         {
             <span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="comment">// Verify that test_value1 is still in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .is_some());
         }
 
-        <span class="comment">// Clear test_storage&#39;s ping lifetime storage.
+        <span class="comment">// Clear test_storage's ping lifetime storage.
         </span>db.clear_ping_lifetime_storage(test_storage).unwrap();
 
         {
             <span class="kw">let </span>data = <span class="kw">match </span><span class="kw-2">&amp;</span>db.ping_lifetime_data {
                 <span class="prelude-val">Some</span>(ping_lifetime_data) =&gt; ping_lifetime_data,
-                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected `ping_lifetime_data` to exist here!&quot;</span>),
+                <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected `ping_lifetime_data` to exist here!"</span>),
             };
             <span class="kw">let </span>data = data.read().unwrap();
             <span class="comment">// Verify that test_value1 is no longer in memory.
             </span><span class="macro">assert!</span>(data
-                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}#{}&quot;</span>, test_storage, test_metric_id1))
+                .get(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}#{}"</span>, test_storage, test_metric_id1))
                 .is_none());
         }
     }
@@ -3443,14 +3444,14 @@
 
         <span class="comment">// Init the database in a temporary directory.
 
-        </span><span class="kw">let </span>test_storage = <span class="string">&quot;test-storage&quot;</span>;
-        <span class="kw">let </span>test_data = CommonMetricDataInternal::new(<span class="string">&quot;category&quot;</span>, <span class="string">&quot;name&quot;</span>, test_storage);
+        </span><span class="kw">let </span>test_storage = <span class="string">"test-storage"</span>;
+        <span class="kw">let </span>test_data = CommonMetricDataInternal::new(<span class="string">"category"</span>, <span class="string">"name"</span>, test_storage);
         <span class="kw">let </span>test_metric_id = test_data.identifier(<span class="kw-2">&amp;</span>glean);
 
         <span class="comment">// Attempt to record metric with the record and record_with functions,
         // this should work since upload is enabled.
         </span><span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">true</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-        db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, <span class="kw-2">&amp;</span>Metric::String(<span class="string">&quot;record&quot;</span>.to_owned()));
+        db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, <span class="kw-2">&amp;</span>Metric::String(<span class="string">"record"</span>.to_owned()));
         db.iter_store_from(
             Lifetime::Ping,
             test_storage,
@@ -3461,14 +3462,14 @@
                     test_metric_id
                 );
                 <span class="kw">match </span>metric {
-                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">&quot;record&quot;</span>, <span class="kw-2">*</span>v),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">"record"</span>, <span class="kw-2">*</span>v),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 }
             },
         );
 
         db.record_with(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, |<span class="kw">_</span>| {
-            Metric::String(<span class="string">&quot;record_with&quot;</span>.to_owned())
+            Metric::String(<span class="string">"record_with"</span>.to_owned())
         });
         db.iter_store_from(
             Lifetime::Ping,
@@ -3480,8 +3481,8 @@
                     test_metric_id
                 );
                 <span class="kw">match </span>metric {
-                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">&quot;record_with&quot;</span>, <span class="kw-2">*</span>v),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">"record_with"</span>, <span class="kw-2">*</span>v),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 }
             },
         );
@@ -3491,7 +3492,7 @@
 
         <span class="comment">// Attempt to record metric with the record and record_with functions,
         // this should work since upload is now **disabled**.
-        </span>db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, <span class="kw-2">&amp;</span>Metric::String(<span class="string">&quot;record_nop&quot;</span>.to_owned()));
+        </span>db.record(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, <span class="kw-2">&amp;</span>Metric::String(<span class="string">"record_nop"</span>.to_owned()));
         db.iter_store_from(
             Lifetime::Ping,
             test_storage,
@@ -3502,13 +3503,13 @@
                     test_metric_id
                 );
                 <span class="kw">match </span>metric {
-                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">&quot;record_with&quot;</span>, <span class="kw-2">*</span>v),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">"record_with"</span>, <span class="kw-2">*</span>v),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 }
             },
         );
         db.record_with(<span class="kw-2">&amp;</span>glean, <span class="kw-2">&amp;</span>test_data, |<span class="kw">_</span>| {
-            Metric::String(<span class="string">&quot;record_with_nop&quot;</span>.to_owned())
+            Metric::String(<span class="string">"record_with_nop"</span>.to_owned())
         });
         db.iter_store_from(
             Lifetime::Ping,
@@ -3520,8 +3521,8 @@
                     test_metric_id
                 );
                 <span class="kw">match </span>metric {
-                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">&quot;record_with&quot;</span>, <span class="kw-2">*</span>v),
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unexpected data found&quot;</span>),
+                    Metric::String(v) =&gt; <span class="macro">assert_eq!</span>(<span class="string">"record_with"</span>, <span class="kw-2">*</span>v),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Unexpected data found"</span>),
                 }
             },
         );
@@ -3538,12 +3539,12 @@
             <span class="kw">let </span>dir = tempdir().unwrap();
 
             <span class="comment">// Create database directory structure.
-            </span><span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create database dir&quot;</span>);
+            </span><span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create database dir"</span>);
 
             <span class="comment">// Create empty database file.
-            </span><span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-            <span class="kw">let </span>f = File::create(safebin).expect(<span class="string">&quot;create database file&quot;</span>);
+            </span><span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+            <span class="kw">let </span>f = File::create(safebin).expect(<span class="string">"create database file"</span>);
             drop(f);
 
             <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
@@ -3551,7 +3552,7 @@
             <span class="macro">assert!</span>(dir.path().exists());
             <span class="macro">assert!</span>(
                 <span class="macro">matches!</span>(db.rkv_load_state, RkvLoadState::Err(<span class="kw">_</span>)),
-                <span class="string">&quot;Load error recorded&quot;
+                <span class="string">"Load error recorded"
             </span>);
         }
 
@@ -3560,19 +3561,19 @@
             <span class="kw">let </span>dir = tempdir().unwrap();
 
             <span class="comment">// Create database directory structure.
-            </span><span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create database dir&quot;</span>);
+            </span><span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create database dir"</span>);
 
             <span class="comment">// Create empty database file.
-            </span><span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-            fs::write(safebin, <span class="string">&quot;&lt;broken&gt;&quot;</span>).expect(<span class="string">&quot;write to database file&quot;</span>);
+            </span><span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+            fs::write(safebin, <span class="string">"&lt;broken&gt;"</span>).expect(<span class="string">"write to database file"</span>);
 
             <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
 
             <span class="macro">assert!</span>(dir.path().exists());
             <span class="macro">assert!</span>(
                 <span class="macro">matches!</span>(db.rkv_load_state, RkvLoadState::Err(<span class="kw">_</span>)),
-                <span class="string">&quot;Load error recorded&quot;
+                <span class="string">"Load error recorded"
             </span>);
         }
 
@@ -3580,34 +3581,34 @@
         </span><span class="kw">fn </span>migration_works_on_startup() {
             <span class="kw">let </span>dir = tempdir().unwrap();
 
-            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">&quot;data.mdb&quot;</span>);
-            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">&quot;lock.mdb&quot;</span>);
-            <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">"data.mdb"</span>);
+            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">"lock.mdb"</span>);
+            <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
 
             <span class="macro">assert!</span>(!safebin.exists());
             <span class="macro">assert!</span>(!datamdb.exists());
             <span class="macro">assert!</span>(!lockmdb.exists());
 
-            <span class="kw">let </span>store_name = <span class="string">&quot;store1&quot;</span>;
-            <span class="kw">let </span>metric_name = <span class="string">&quot;bool&quot;</span>;
+            <span class="kw">let </span>store_name = <span class="string">"store1"</span>;
+            <span class="kw">let </span>metric_name = <span class="string">"bool"</span>;
             <span class="kw">let </span>key = Database::get_storage_key(store_name, <span class="prelude-val">Some</span>(metric_name));
 
             <span class="comment">// Ensure some old data in the LMDB format exists.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
-                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;rkv env&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
+                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"rkv env"</span>);
 
                 <span class="kw">let </span>store = rkv_db
-                    .open_single(<span class="string">&quot;ping&quot;</span>, StoreOptions::create())
-                    .expect(<span class="string">&quot;opened&quot;</span>);
-                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">&quot;writer&quot;</span>);
+                    .open_single(<span class="string">"ping"</span>, StoreOptions::create())
+                    .expect(<span class="string">"opened"</span>);
+                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">"writer"</span>);
                 <span class="kw">let </span>metric = Metric::Boolean(<span class="bool-val">true</span>);
-                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">&quot;serialized&quot;</span>);
+                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">"serialized"</span>);
                 store
                     .put(<span class="kw-2">&amp;mut </span>writer, <span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>Value::Blob(<span class="kw-2">&amp;</span>value))
-                    .expect(<span class="string">&quot;wrote&quot;</span>);
-                writer.commit().expect(<span class="string">&quot;committed&quot;</span>);
+                    .expect(<span class="string">"wrote"</span>);
+                writer.commit().expect(<span class="string">"committed"</span>);
 
                 <span class="macro">assert!</span>(datamdb.exists());
                 <span class="macro">assert!</span>(lockmdb.exists());
@@ -3617,17 +3618,17 @@
             <span class="comment">// First open should migrate the data.
             </span>{
                 <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-                <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-                <span class="macro">assert!</span>(safebin.exists(), <span class="string">&quot;safe-mode file should exist&quot;</span>);
-                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">&quot;LMDB data should be deleted&quot;</span>);
-                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">&quot;LMDB lock should be deleted&quot;</span>);
+                <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+                <span class="macro">assert!</span>(safebin.exists(), <span class="string">"safe-mode file should exist"</span>);
+                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">"LMDB data should be deleted"</span>);
+                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">"LMDB lock should be deleted"</span>);
 
                 <span class="kw">let </span><span class="kw-2">mut </span>stored_metrics = <span class="macro">vec!</span>[];
                 <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |name: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                     <span class="kw">let </span>name = str::from_utf8(name).unwrap().to_string();
                     stored_metrics.push((name, metric.clone()))
                 };
-                db.iter_store_from(Lifetime::Ping, <span class="string">&quot;store1&quot;</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
+                db.iter_store_from(Lifetime::Ping, <span class="string">"store1"</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
                 <span class="macro">assert_eq!</span>(<span class="number">1</span>, stored_metrics.len());
                 <span class="macro">assert_eq!</span>(metric_name, stored_metrics[<span class="number">0</span>].<span class="number">0</span>);
@@ -3637,17 +3638,17 @@
             <span class="comment">// Next open should not re-create the LMDB files.
             </span>{
                 <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-                <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-                <span class="macro">assert!</span>(safebin.exists(), <span class="string">&quot;safe-mode file exists&quot;</span>);
-                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">&quot;LMDB data should not be recreated&quot;</span>);
-                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">&quot;LMDB lock should not be recreated&quot;</span>);
+                <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+                <span class="macro">assert!</span>(safebin.exists(), <span class="string">"safe-mode file exists"</span>);
+                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">"LMDB data should not be recreated"</span>);
+                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">"LMDB lock should not be recreated"</span>);
 
                 <span class="kw">let </span><span class="kw-2">mut </span>stored_metrics = <span class="macro">vec!</span>[];
                 <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |name: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                     <span class="kw">let </span>name = str::from_utf8(name).unwrap().to_string();
                     stored_metrics.push((name, metric.clone()))
                 };
-                db.iter_store_from(Lifetime::Ping, <span class="string">&quot;store1&quot;</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
+                db.iter_store_from(Lifetime::Ping, <span class="string">"store1"</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
                 <span class="macro">assert_eq!</span>(<span class="number">1</span>, stored_metrics.len());
                 <span class="macro">assert_eq!</span>(metric_name, stored_metrics[<span class="number">0</span>].<span class="number">0</span>);
@@ -3659,34 +3660,34 @@
         </span><span class="kw">fn </span>migration_doesnt_overwrite() {
             <span class="kw">let </span>dir = tempdir().unwrap();
 
-            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">&quot;data.mdb&quot;</span>);
-            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">&quot;lock.mdb&quot;</span>);
-            <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">"data.mdb"</span>);
+            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">"lock.mdb"</span>);
+            <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
 
             <span class="macro">assert!</span>(!safebin.exists());
             <span class="macro">assert!</span>(!datamdb.exists());
             <span class="macro">assert!</span>(!lockmdb.exists());
 
-            <span class="kw">let </span>store_name = <span class="string">&quot;store1&quot;</span>;
-            <span class="kw">let </span>metric_name = <span class="string">&quot;counter&quot;</span>;
+            <span class="kw">let </span>store_name = <span class="string">"store1"</span>;
+            <span class="kw">let </span>metric_name = <span class="string">"counter"</span>;
             <span class="kw">let </span>key = Database::get_storage_key(store_name, <span class="prelude-val">Some</span>(metric_name));
 
             <span class="comment">// Ensure some old data in the LMDB format exists.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
-                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;rkv env&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
+                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"rkv env"</span>);
 
                 <span class="kw">let </span>store = rkv_db
-                    .open_single(<span class="string">&quot;ping&quot;</span>, StoreOptions::create())
-                    .expect(<span class="string">&quot;opened&quot;</span>);
-                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">&quot;writer&quot;</span>);
+                    .open_single(<span class="string">"ping"</span>, StoreOptions::create())
+                    .expect(<span class="string">"opened"</span>);
+                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">"writer"</span>);
                 <span class="kw">let </span>metric = Metric::Counter(<span class="number">734</span>); <span class="comment">// this value will be ignored
-                </span><span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">&quot;serialized&quot;</span>);
+                </span><span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">"serialized"</span>);
                 store
                     .put(<span class="kw-2">&amp;mut </span>writer, <span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>Value::Blob(<span class="kw-2">&amp;</span>value))
-                    .expect(<span class="string">&quot;wrote&quot;</span>);
-                writer.commit().expect(<span class="string">&quot;committed&quot;</span>);
+                    .expect(<span class="string">"wrote"</span>);
+                writer.commit().expect(<span class="string">"committed"</span>);
 
                 <span class="macro">assert!</span>(datamdb.exists());
                 <span class="macro">assert!</span>(lockmdb.exists());
@@ -3694,20 +3695,20 @@
 
             <span class="comment">// Ensure some data exists in the new database.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
                 <span class="kw">let </span>rkv_db =
-                    rkv::Rkv::new::&lt;rkv::backend::SafeMode&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;rkv env&quot;</span>);
+                    rkv::Rkv::new::&lt;rkv::backend::SafeMode&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"rkv env"</span>);
 
                 <span class="kw">let </span>store = rkv_db
-                    .open_single(<span class="string">&quot;ping&quot;</span>, StoreOptions::create())
-                    .expect(<span class="string">&quot;opened&quot;</span>);
-                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">&quot;writer&quot;</span>);
+                    .open_single(<span class="string">"ping"</span>, StoreOptions::create())
+                    .expect(<span class="string">"opened"</span>);
+                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">"writer"</span>);
                 <span class="kw">let </span>metric = Metric::Counter(<span class="number">2</span>);
-                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">&quot;serialized&quot;</span>);
+                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">"serialized"</span>);
                 store
                     .put(<span class="kw-2">&amp;mut </span>writer, <span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>Value::Blob(<span class="kw-2">&amp;</span>value))
-                    .expect(<span class="string">&quot;wrote&quot;</span>);
-                writer.commit().expect(<span class="string">&quot;committed&quot;</span>);
+                    .expect(<span class="string">"wrote"</span>);
+                writer.commit().expect(<span class="string">"committed"</span>);
 
                 <span class="macro">assert!</span>(safebin.exists());
             }
@@ -3716,17 +3717,17 @@
             // It also deletes the leftover LMDB database.
             </span>{
                 <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-                <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-                <span class="macro">assert!</span>(safebin.exists(), <span class="string">&quot;safe-mode file should exist&quot;</span>);
-                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">&quot;LMDB data should be deleted&quot;</span>);
-                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">&quot;LMDB lock should be deleted&quot;</span>);
+                <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+                <span class="macro">assert!</span>(safebin.exists(), <span class="string">"safe-mode file should exist"</span>);
+                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">"LMDB data should be deleted"</span>);
+                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">"LMDB lock should be deleted"</span>);
 
                 <span class="kw">let </span><span class="kw-2">mut </span>stored_metrics = <span class="macro">vec!</span>[];
                 <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |name: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                     <span class="kw">let </span>name = str::from_utf8(name).unwrap().to_string();
                     stored_metrics.push((name, metric.clone()))
                 };
-                db.iter_store_from(Lifetime::Ping, <span class="string">&quot;store1&quot;</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
+                db.iter_store_from(Lifetime::Ping, <span class="string">"store1"</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
                 <span class="macro">assert_eq!</span>(<span class="number">1</span>, stored_metrics.len());
                 <span class="macro">assert_eq!</span>(metric_name, stored_metrics[<span class="number">0</span>].<span class="number">0</span>);
@@ -3738,60 +3739,60 @@
         </span><span class="kw">fn </span>migration_ignores_broken_database() {
             <span class="kw">let </span>dir = tempdir().unwrap();
 
-            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">&quot;data.mdb&quot;</span>);
-            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">&quot;lock.mdb&quot;</span>);
-            <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">"data.mdb"</span>);
+            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">"lock.mdb"</span>);
+            <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
 
             <span class="macro">assert!</span>(!safebin.exists());
             <span class="macro">assert!</span>(!datamdb.exists());
             <span class="macro">assert!</span>(!lockmdb.exists());
 
-            <span class="kw">let </span>store_name = <span class="string">&quot;store1&quot;</span>;
-            <span class="kw">let </span>metric_name = <span class="string">&quot;counter&quot;</span>;
+            <span class="kw">let </span>store_name = <span class="string">"store1"</span>;
+            <span class="kw">let </span>metric_name = <span class="string">"counter"</span>;
             <span class="kw">let </span>key = Database::get_storage_key(store_name, <span class="prelude-val">Some</span>(metric_name));
 
             <span class="comment">// Ensure some old data in the LMDB format exists.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
-                fs::write(<span class="kw-2">&amp;</span>datamdb, <span class="string">&quot;bogus&quot;</span>).expect(<span class="string">&quot;dbfile created&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
+                fs::write(<span class="kw-2">&amp;</span>datamdb, <span class="string">"bogus"</span>).expect(<span class="string">"dbfile created"</span>);
 
                 <span class="macro">assert!</span>(datamdb.exists());
             }
 
             <span class="comment">// Ensure some data exists in the new database.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
                 <span class="kw">let </span>rkv_db =
-                    rkv::Rkv::new::&lt;rkv::backend::SafeMode&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;rkv env&quot;</span>);
+                    rkv::Rkv::new::&lt;rkv::backend::SafeMode&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"rkv env"</span>);
 
                 <span class="kw">let </span>store = rkv_db
-                    .open_single(<span class="string">&quot;ping&quot;</span>, StoreOptions::create())
-                    .expect(<span class="string">&quot;opened&quot;</span>);
-                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">&quot;writer&quot;</span>);
+                    .open_single(<span class="string">"ping"</span>, StoreOptions::create())
+                    .expect(<span class="string">"opened"</span>);
+                <span class="kw">let </span><span class="kw-2">mut </span>writer = rkv_db.write().expect(<span class="string">"writer"</span>);
                 <span class="kw">let </span>metric = Metric::Counter(<span class="number">2</span>);
-                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">&quot;serialized&quot;</span>);
+                <span class="kw">let </span>value = bincode::serialize(<span class="kw-2">&amp;</span>metric).expect(<span class="string">"serialized"</span>);
                 store
                     .put(<span class="kw-2">&amp;mut </span>writer, <span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>Value::Blob(<span class="kw-2">&amp;</span>value))
-                    .expect(<span class="string">&quot;wrote&quot;</span>);
-                writer.commit().expect(<span class="string">&quot;committed&quot;</span>);
+                    .expect(<span class="string">"wrote"</span>);
+                writer.commit().expect(<span class="string">"committed"</span>);
             }
 
             <span class="comment">// First open should try migration and ignore it, because destination is not empty.
             // It also deletes the leftover LMDB database.
             </span>{
                 <span class="kw">let </span>db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-                <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-                <span class="macro">assert!</span>(safebin.exists(), <span class="string">&quot;safe-mode file should exist&quot;</span>);
-                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">&quot;LMDB data should be deleted&quot;</span>);
-                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">&quot;LMDB lock should be deleted&quot;</span>);
+                <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+                <span class="macro">assert!</span>(safebin.exists(), <span class="string">"safe-mode file should exist"</span>);
+                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">"LMDB data should be deleted"</span>);
+                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">"LMDB lock should be deleted"</span>);
 
                 <span class="kw">let </span><span class="kw-2">mut </span>stored_metrics = <span class="macro">vec!</span>[];
                 <span class="kw">let </span><span class="kw-2">mut </span>snapshotter = |name: <span class="kw-2">&amp;</span>[u8], metric: <span class="kw-2">&amp;</span>Metric| {
                     <span class="kw">let </span>name = str::from_utf8(name).unwrap().to_string();
                     stored_metrics.push((name, metric.clone()))
                 };
-                db.iter_store_from(Lifetime::Ping, <span class="string">&quot;store1&quot;</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
+                db.iter_store_from(Lifetime::Ping, <span class="string">"store1"</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;mut </span>snapshotter);
 
                 <span class="macro">assert_eq!</span>(<span class="number">1</span>, stored_metrics.len());
                 <span class="macro">assert_eq!</span>(metric_name, stored_metrics[<span class="number">0</span>].<span class="number">0</span>);
@@ -3803,10 +3804,10 @@
         </span><span class="kw">fn </span>migration_ignores_empty_database() {
             <span class="kw">let </span>dir = tempdir().unwrap();
 
-            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">&quot;db&quot;</span>);
-            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">&quot;data.mdb&quot;</span>);
-            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">&quot;lock.mdb&quot;</span>);
-            <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
+            <span class="kw">let </span>database_dir = dir.path().join(<span class="string">"db"</span>);
+            <span class="kw">let </span>datamdb = database_dir.join(<span class="string">"data.mdb"</span>);
+            <span class="kw">let </span>lockmdb = database_dir.join(<span class="string">"lock.mdb"</span>);
+            <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
 
             <span class="macro">assert!</span>(!safebin.exists());
             <span class="macro">assert!</span>(!datamdb.exists());
@@ -3814,8 +3815,8 @@
 
             <span class="comment">// Ensure old LMDB database exists, but is empty.
             </span>{
-                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;create dir&quot;</span>);
-                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">&quot;rkv env&quot;</span>);
+                fs::create_dir_all(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"create dir"</span>);
+                <span class="kw">let </span>rkv_db = rkv::Rkv::new::&lt;rkv::backend::Lmdb&gt;(<span class="kw-2">&amp;</span>database_dir).expect(<span class="string">"rkv env"</span>);
                 drop(rkv_db);
                 <span class="macro">assert!</span>(datamdb.exists());
                 <span class="macro">assert!</span>(lockmdb.exists());
@@ -3826,13 +3827,12 @@
             // It also deletes the leftover LMDB database.
             </span>{
                 <span class="kw">let </span>_db = Database::new(dir.path(), <span class="bool-val">false</span>, <span class="number">0</span>, Duration::ZERO).unwrap();
-                <span class="kw">let </span>safebin = database_dir.join(<span class="string">&quot;data.safe.bin&quot;</span>);
-                <span class="macro">assert!</span>(!safebin.exists(), <span class="string">&quot;safe-mode file should exist&quot;</span>);
-                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">&quot;LMDB data should be deleted&quot;</span>);
-                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">&quot;LMDB lock should be deleted&quot;</span>);
+                <span class="kw">let </span>safebin = database_dir.join(<span class="string">"data.safe.bin"</span>);
+                <span class="macro">assert!</span>(!safebin.exists(), <span class="string">"safe-mode file should exist"</span>);
+                <span class="macro">assert!</span>(!datamdb.exists(), <span class="string">"LMDB data should be deleted"</span>);
+                <span class="macro">assert!</span>(!lockmdb.exists(), <span class="string">"LMDB lock should be deleted"</span>);
             }
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

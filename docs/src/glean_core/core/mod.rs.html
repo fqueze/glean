@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/core/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/core/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1026,7 +1027,7 @@
 <a href="#1026" id="1026">1026</a>
 <a href="#1027" id="1027">1027</a>
 <a href="#1028" id="1028">1028</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -1058,7 +1059,7 @@
 
 <span class="kw">static </span>GLEAN: OnceCell&lt;Mutex&lt;Glean&gt;&gt; = OnceCell::new();
 
-<span class="kw">pub fn </span>global_glean() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Mutex&lt;Glean&gt;&gt; {
+<span class="kw">pub fn </span>global_glean() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>Mutex&lt;Glean&gt;&gt; {
     GLEAN.get()
 }
 
@@ -1076,7 +1077,7 @@
     </span><span class="kw">if </span>GLEAN.get().is_none() {
         <span class="kw">if </span>GLEAN.set(Mutex::new(glean)).is_err() {
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Global Glean object is initialized already. This probably happened concurrently.&quot;
+                <span class="string">"Global Glean object is initialized already. This probably happened concurrently."
             </span>)
         }
     } <span class="kw">else </span>{
@@ -1096,7 +1097,7 @@
 <span class="kw">where
     </span>F: FnOnce(<span class="kw-2">&amp;</span>Glean) -&gt; R,
 {
-    <span class="kw">let </span>glean = global_glean().expect(<span class="string">&quot;Global Glean object not initialized&quot;</span>);
+    <span class="kw">let </span>glean = global_glean().expect(<span class="string">"Global Glean object not initialized"</span>);
     <span class="kw">let </span>lock = glean.lock().unwrap();
     f(<span class="kw-2">&amp;</span>lock)
 }
@@ -1108,7 +1109,7 @@
 <span class="kw">where
     </span>F: FnOnce(<span class="kw-2">&amp;mut </span>Glean) -&gt; R,
 {
-    <span class="kw">let </span>glean = global_glean().expect(<span class="string">&quot;Global Glean object not initialized&quot;</span>);
+    <span class="kw">let </span>glean = global_glean().expect(<span class="string">"Global Glean object not initialized"</span>);
     <span class="kw">let </span><span class="kw-2">mut </span>lock = glean.lock().unwrap();
     f(<span class="kw-2">&amp;mut </span>lock)
 }
@@ -1136,13 +1137,13 @@
 /// ```rust,no_run
 /// # use glean_core::{Glean, InternalConfiguration, CommonMetricData, metrics::*};
 /// let cfg = InternalConfiguration {
-///     data_path: &quot;/tmp/glean&quot;.into(),
-///     application_id: &quot;glean.sample.app&quot;.into(),
-///     language_binding_name: &quot;Rust&quot;.into(),
+///     data_path: "/tmp/glean".into(),
+///     application_id: "glean.sample.app".into(),
+///     language_binding_name: "Rust".into(),
 ///     upload_enabled: true,
 ///     max_events: None,
 ///     delay_ping_lifetime_io: false,
-///     app_build: &quot;&quot;.into(),
+///     app_build: "".into(),
 ///     use_core_mps: false,
 ///     trim_data_to_registered_pings: false,
 ///     log_level: None,
@@ -1155,13 +1156,13 @@
 ///     ping_lifetime_max_time: 2000,
 /// };
 /// let mut glean = Glean::new(cfg).unwrap();
-/// let ping = PingType::new(&quot;sample&quot;, true, false, true, true, true, vec![], vec![]);
+/// let ping = PingType::new("sample", true, false, true, true, true, vec![], vec![]);
 /// glean.register_ping_type(&amp;ping);
 ///
 /// let call_counter: CounterMetric = CounterMetric::new(CommonMetricData {
-///     name: &quot;calls&quot;.into(),
-///     category: &quot;local&quot;.into(),
-///     send_in_pings: vec![&quot;sample&quot;.into()],
+///     name: "calls".into(),
+///     category: "local".into(),
+///     send_in_pings: vec!["sample".into()],
 ///     ..Default::default()
 /// });
 ///
@@ -1205,7 +1206,7 @@
     /// Importantly, this will not send any pings at startup, since that
     /// sort of management should only happen in the main process.
     </span><span class="kw">pub fn </span>new_for_subprocess(cfg: <span class="kw-2">&amp;</span>InternalConfiguration, scan_directories: bool) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="macro">log::info!</span>(<span class="string">&quot;Creating new Glean v{}&quot;</span>, GLEAN_VERSION);
+        <span class="macro">log::info!</span>(<span class="string">"Creating new Glean v{}"</span>, GLEAN_VERSION);
 
         <span class="kw">let </span>application_id = sanitize_application_id(<span class="kw-2">&amp;</span>cfg.application_id);
         <span class="kw">if </span>application_id.is_empty() {
@@ -1252,7 +1253,7 @@
             is_first_run: <span class="bool-val">false</span>,
             debug: DebugOptions::new(),
             app_build: cfg.app_build.to_string(),
-            <span class="comment">// Subprocess doesn&#39;t use &quot;metrics&quot; pings so has no need for a scheduler.
+            <span class="comment">// Subprocess doesn't use "metrics" pings so has no need for a scheduler.
             </span>schedule_metrics_pings: <span class="bool-val">false</span>,
             remote_settings_epoch: AtomicU8::new(<span class="number">0</span>),
             remote_settings_config: Arc::new(Mutex::new(RemoteSettingsConfig::new())),
@@ -1279,7 +1280,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>glean = <span class="self">Self</span>::new_for_subprocess(<span class="kw-2">&amp;</span>cfg, <span class="bool-val">false</span>)<span class="question-mark">?</span>;
 
         <span class="comment">// Creating the data store creates the necessary path as well.
-        // If that fails we bail out and don&#39;t initialize further.
+        // If that fails we bail out and don't initialize further.
         </span><span class="kw">let </span>data_path = Path::new(<span class="kw-2">&amp;</span>cfg.data_path);
         <span class="kw">let </span>ping_lifetime_threshold = cfg.ping_lifetime_threshold <span class="kw">as </span>usize;
         <span class="kw">let </span>ping_lifetime_max_time = Duration::from_millis(cfg.ping_lifetime_max_time);
@@ -1305,7 +1306,7 @@
             // instantiate the core metrics.
             </span>glean.on_upload_enabled();
         } <span class="kw">else </span>{
-            <span class="comment">// If upload is disabled, and we&#39;ve never run before, only set the
+            <span class="comment">// If upload is disabled, and we've never run before, only set the
             // client_id to KNOWN_CLIENT_ID, but do not send a deletion request
             // ping.
             // If we have run before, and if the client_id is not equal to
@@ -1315,7 +1316,7 @@
             </span><span class="kw">match </span>glean
                 .core_metrics
                 .client_id
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;glean_client_info&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"glean_client_info"</span>))
             {
                 <span class="prelude-val">None </span>=&gt; glean.clear_metrics(),
                 <span class="prelude-val">Some</span>(uuid) =&gt; {
@@ -1330,14 +1331,14 @@
         }
 
         <span class="comment">// We set this only for non-subprocess situations.
-        // If internal pings are disabled, we don&#39;t set up the MPS either,
-        // it wouldn&#39;t send any data anyway.
+        // If internal pings are disabled, we don't set up the MPS either,
+        // it wouldn't send any data anyway.
         </span>glean.schedule_metrics_pings = cfg.enable_internal_pings &amp;&amp; cfg.use_core_mps;
 
         <span class="comment">// We only scan the pendings pings directories **after** dealing with the upload state.
         // If upload is disabled, we delete all pending pings files
         // and we need to do that **before** scanning the pending pings folder
-        // to ensure we don&#39;t enqueue pings before their files are deleted.
+        // to ensure we don't enqueue pings before their files are deleted.
         </span><span class="kw">let </span>_scanning_thread = glean.upload_manager.scan_pending_pings_directories(<span class="bool-val">true</span>);
 
         <span class="prelude-val">Ok</span>(glean)
@@ -1354,11 +1355,11 @@
         <span class="kw">let </span>cfg = InternalConfiguration {
             data_path: data_path.into(),
             application_id: application_id.into(),
-            language_binding_name: <span class="string">&quot;Rust&quot;</span>.into(),
+            language_binding_name: <span class="string">"Rust"</span>.into(),
             upload_enabled,
             max_events: <span class="prelude-val">None</span>,
             delay_ping_lifetime_io: <span class="bool-val">false</span>,
-            app_build: <span class="string">&quot;Unknown&quot;</span>.into(),
+            app_build: <span class="string">"Unknown"</span>.into(),
             use_core_mps: <span class="bool-val">false</span>,
             trim_data_to_registered_pings: <span class="bool-val">false</span>,
             log_level: <span class="prelude-val">None</span>,
@@ -1386,12 +1387,12 @@
         <span class="self">self</span>.data_store = <span class="prelude-val">None</span>;
     }
 
-    <span class="doccomment">/// Initializes the core metrics managed by Glean&#39;s Rust core.
+    <span class="doccomment">/// Initializes the core metrics managed by Glean's Rust core.
     </span><span class="kw">fn </span>initialize_core_metrics(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">let </span>need_new_client_id = <span class="kw">match </span><span class="self">self
             </span>.core_metrics
             .client_id
-            .get_value(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;glean_client_info&quot;</span>))
+            .get_value(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">"glean_client_info"</span>))
         {
             <span class="prelude-val">None </span>=&gt; <span class="bool-val">true</span>,
             <span class="prelude-val">Some</span>(uuid) =&gt; uuid == <span class="kw-2">*</span>KNOWN_CLIENT_ID,
@@ -1403,29 +1404,29 @@
         <span class="kw">if </span><span class="self">self
             </span>.core_metrics
             .first_run_date
-            .get_value(<span class="self">self</span>, <span class="string">&quot;glean_client_info&quot;</span>)
+            .get_value(<span class="self">self</span>, <span class="string">"glean_client_info"</span>)
             .is_none()
         {
             <span class="self">self</span>.core_metrics.first_run_date.set_sync(<span class="self">self</span>, <span class="prelude-val">None</span>);
             <span class="comment">// The `first_run_date` field is generated on the very first run
             // and persisted across upload toggling. We can assume that, the only
-            // time it is set, that&#39;s indeed our &quot;first run&quot;.
+            // time it is set, that's indeed our "first run".
             </span><span class="self">self</span>.is_first_run = <span class="bool-val">true</span>;
         }
 
         <span class="self">self</span>.set_application_lifetime_core_metrics();
     }
 
-    <span class="doccomment">/// Initializes the database metrics managed by Glean&#39;s Rust core.
+    <span class="doccomment">/// Initializes the database metrics managed by Glean's Rust core.
     </span><span class="kw">fn </span>initialize_database_metrics(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Initializing database metrics&quot;</span>);
+        <span class="macro">log::trace!</span>(<span class="string">"Initializing database metrics"</span>);
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(size) = <span class="self">self
             </span>.data_store
             .as_ref()
             .and_then(|database| database.file_size())
         {
-            <span class="macro">log::trace!</span>(<span class="string">&quot;Database file size: {}&quot;</span>, size.get());
+            <span class="macro">log::trace!</span>(<span class="string">"Database file size: {}"</span>, size.get());
             <span class="self">self</span>.database_metrics
                 .size
                 .accumulate_sync(<span class="self">self</span>, size.get() <span class="kw">as </span>i64)
@@ -1455,7 +1456,7 @@
     ///
     /// # Returns
     ///
-    /// Whether the &quot;events&quot; ping was submitted.
+    /// Whether the "events" ping was submitted.
     </span><span class="kw">pub fn </span>on_ready_to_submit_pings(<span class="kw-2">&amp;</span><span class="self">self</span>, trim_data_to_registered_pings: bool) -&gt; bool {
         <span class="self">self</span>.event_data_store
             .flush_pending_events_on_startup(<span class="self">self</span>, trim_data_to_registered_pings)
@@ -1463,7 +1464,7 @@
 
     <span class="doccomment">/// Sets whether upload is enabled or not.
     ///
-    /// When uploading is disabled, metrics aren&#39;t recorded at all and no
+    /// When uploading is disabled, metrics aren't recorded at all and no
     /// data is uploaded.
     ///
     /// When disabling, all pending metrics, events and queued pings are cleared.
@@ -1481,7 +1482,7 @@
     /// Whether the flag was different from the current value,
     /// and actual work was done to clear or reinstate metrics.
     </span><span class="kw">pub fn </span>set_upload_enabled(<span class="kw-2">&amp;mut </span><span class="self">self</span>, flag: bool) -&gt; bool {
-        <span class="macro">log::info!</span>(<span class="string">&quot;Upload enabled: {:?}&quot;</span>, flag);
+        <span class="macro">log::info!</span>(<span class="string">"Upload enabled: {:?}"</span>, flag);
 
         <span class="kw">if </span><span class="self">self</span>.upload_enabled != flag {
             <span class="kw">if </span>flag {
@@ -1523,18 +1524,18 @@
     /// Afterward, the upload_enabled flag is set to false.
     </span><span class="kw">fn </span>on_upload_disabled(<span class="kw-2">&amp;mut </span><span class="self">self</span>, during_init: bool) {
         <span class="comment">// The upload_enabled flag should be true here, or the deletion ping
-        // won&#39;t be submitted.
+        // won't be submitted.
         </span><span class="kw">let </span>reason = <span class="kw">if </span>during_init {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;at_init&quot;</span>)
+            <span class="prelude-val">Some</span>(<span class="string">"at_init"</span>)
         } <span class="kw">else </span>{
-            <span class="prelude-val">Some</span>(<span class="string">&quot;set_upload_enabled&quot;</span>)
+            <span class="prelude-val">Some</span>(<span class="string">"set_upload_enabled"</span>)
         };
         <span class="kw">if </span>!<span class="self">self
             </span>.internal_pings
             .deletion_request
             .submit_sync(<span class="self">self</span>, reason)
         {
-            <span class="macro">log::error!</span>(<span class="string">&quot;Failed to submit deletion-request ping on optout.&quot;</span>);
+            <span class="macro">log::error!</span>(<span class="string">"Failed to submit deletion-request ping on optout."</span>);
         }
         <span class="self">self</span>.clear_metrics();
         <span class="self">self</span>.upload_enabled = <span class="bool-val">false</span>;
@@ -1543,7 +1544,7 @@
     <span class="doccomment">/// Clear any pending metrics when telemetry is disabled.
     </span><span class="kw">fn </span>clear_metrics(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="comment">// Clear the pending pings queue and acquire the lock
-        // so that it can&#39;t be accessed until this function is done.
+        // so that it can't be accessed until this function is done.
         </span><span class="kw">let </span>_lock = <span class="self">self</span>.upload_manager.clear_ping_queue();
 
         <span class="comment">// There is only one metric that we want to survive after clearing all
@@ -1552,12 +1553,12 @@
         </span><span class="kw">let </span>existing_first_run_date = <span class="self">self
             </span>.core_metrics
             .first_run_date
-            .get_value(<span class="self">self</span>, <span class="string">&quot;glean_client_info&quot;</span>);
+            .get_value(<span class="self">self</span>, <span class="string">"glean_client_info"</span>);
 
         <span class="comment">// Clear any pending pings.
         </span><span class="kw">let </span>ping_maker = PingMaker::new();
         <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = ping_maker.clear_pending_pings(<span class="self">self</span>.get_data_path()) {
-            <span class="macro">log::warn!</span>(<span class="string">&quot;Error clearing pending pings: {}&quot;</span>, err);
+            <span class="macro">log::warn!</span>(<span class="string">"Error clearing pending pings: {}"</span>, err);
         }
 
         <span class="comment">// Delete all stored metrics.
@@ -1567,10 +1568,10 @@
             data.clear_all()
         }
         <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = <span class="self">self</span>.event_data_store.clear_all() {
-            <span class="macro">log::warn!</span>(<span class="string">&quot;Error clearing pending events: {}&quot;</span>, err);
+            <span class="macro">log::warn!</span>(<span class="string">"Error clearing pending events: {}"</span>, err);
         }
 
-        <span class="comment">// This does not clear the experiments store (which isn&#39;t managed by the
+        <span class="comment">// This does not clear the experiments store (which isn't managed by the
         // StorageEngineManager), since doing so would mean we would have to have the
         // application tell us again which experiments are active if telemetry is
         // re-enabled.
@@ -1580,11 +1581,11 @@
             // is not a no-op. This is safe, since nothing on the Rust side can
             // run concurrently to this since we hold a mutable reference to the
             // Glean object. Additionally, the pending pings have been cleared
-            // from disk, so the PingUploader can&#39;t wake up and start sending
+            // from disk, so the PingUploader can't wake up and start sending
             // pings.
             </span><span class="self">self</span>.upload_enabled = <span class="bool-val">true</span>;
 
-            <span class="comment">// Store a &quot;dummy&quot; KNOWN_CLIENT_ID in the client_id metric. This will
+            <span class="comment">// Store a "dummy" KNOWN_CLIENT_ID in the client_id metric. This will
             // make it easier to detect if pings were unintentionally sent after
             // uploading is disabled.
             </span><span class="self">self</span>.core_metrics
@@ -1613,9 +1614,9 @@
     }
 
     <span class="doccomment">/// Gets a handle to the database.
-    </span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we&#39;re interested in the caller.
+    </span><span class="attr">#[track_caller] </span><span class="comment">// If this fails we're interested in the caller.
     </span><span class="kw">pub fn </span>storage(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Database {
-        <span class="self">self</span>.data_store.as_ref().expect(<span class="string">&quot;No database found&quot;</span>)
+        <span class="self">self</span>.data_store.as_ref().expect(<span class="string">"No database found"</span>)
     }
 
     <span class="doccomment">/// Gets an optional handle to the database.
@@ -1689,12 +1690,12 @@
     </span><span class="kw">pub fn </span>snapshot(<span class="kw-2">&amp;mut </span><span class="self">self</span>, store_name: <span class="kw-2">&amp;</span>str, clear_store: bool) -&gt; String {
         StorageManager
             .snapshot(<span class="self">self</span>.storage(), store_name, clear_store)
-            .unwrap_or_else(|| String::from(<span class="string">&quot;&quot;</span>))
+            .unwrap_or_else(|| String::from(<span class="string">""</span>))
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>make_path(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="kw-2">&amp;</span>str, doc_id: <span class="kw-2">&amp;</span>str) -&gt; String {
         <span class="macro">format!</span>(
-            <span class="string">&quot;/submit/{}/{}/{}/{}&quot;</span>,
+            <span class="string">"/submit/{}/{}/{}/{}"</span>,
             <span class="self">self</span>.get_application_id(),
             ping_name,
             GLEAN_SCHEMA_VERSION,
@@ -1725,7 +1726,7 @@
     </span><span class="kw">pub fn </span>submit_ping_by_name(<span class="kw-2">&amp;</span><span class="self">self</span>, ping_name: <span class="kw-2">&amp;</span>str, reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; bool {
         <span class="kw">match </span><span class="self">self</span>.get_ping_by_name(ping_name) {
             <span class="prelude-val">None </span>=&gt; {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Attempted to submit unknown ping &#39;{}&#39;&quot;</span>, ping_name);
+                <span class="macro">log::error!</span>(<span class="string">"Attempted to submit unknown ping '{}'"</span>, ping_name);
                 <span class="bool-val">false
             </span>}
             <span class="prelude-val">Some</span>(ping) =&gt; ping.submit_sync(<span class="self">self</span>, reason),
@@ -1745,7 +1746,7 @@
     <span class="doccomment">/// Register a new [`PingType`](metrics/struct.PingType.html).
     </span><span class="kw">pub fn </span>register_ping_type(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ping: <span class="kw-2">&amp;</span>PingType) {
         <span class="kw">if </span><span class="self">self</span>.ping_registry.contains_key(ping.name()) {
-            <span class="macro">log::debug!</span>(<span class="string">&quot;Duplicate ping named &#39;{}&#39;&quot;</span>, ping.name())
+            <span class="macro">log::debug!</span>(<span class="string">"Duplicate ping named '{}'"</span>, ping.name())
         }
 
         <span class="self">self</span>.ping_registry
@@ -1816,7 +1817,7 @@
     /// * `cfg` - The stringified JSON representation of a `RemoteSettingsConfig` object
     </span><span class="kw">pub fn </span>apply_server_knobs_config(<span class="kw-2">&amp;</span><span class="self">self</span>, cfg: RemoteSettingsConfig) {
         <span class="comment">// Set the current RemoteSettingsConfig, keeping the lock until the epoch is
-        // updated to prevent against reading a &quot;new&quot; config but an &quot;old&quot; epoch
+        // updated to prevent against reading a "new" config but an "old" epoch
         </span><span class="kw">let </span><span class="kw-2">mut </span>remote_settings_config = <span class="self">self</span>.remote_settings_config.lock().unwrap();
 
         <span class="comment">// Merge the exising metrics configuration with the supplied one
@@ -1857,7 +1858,7 @@
     ///
     /// Clears all the metrics that have [`Lifetime::Application`].
     </span><span class="kw">pub fn </span>clear_application_lifetime_metrics(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Clearing Lifetime::Application metrics&quot;</span>);
+        <span class="macro">log::trace!</span>(<span class="string">"Clearing Lifetime::Application metrics"</span>);
         <span class="kw">if let </span><span class="prelude-val">Some</span>(data) = <span class="self">self</span>.data_store.as_ref() {
             data.clear_lifetime(Lifetime::Application);
         }
@@ -1876,16 +1877,16 @@
     /// This will return `false` in case `value` is not a valid tag.
     ///
     /// When the debug view tag is set, pings are sent with a `X-Debug-ID` header with the value of the tag
-    /// and are sent to the [&quot;Ping Debug Viewer&quot;](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
+    /// and are sent to the ["Ping Debug Viewer"](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
     ///
     /// # Arguments
     ///
-    /// * `value` - A valid HTTP header value. Must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;.
+    /// * `value` - A valid HTTP header value. Must match the regex: "[a-zA-Z0-9-]{1,20}".
     </span><span class="kw">pub fn </span>set_debug_view_tag(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>str) -&gt; bool {
         <span class="self">self</span>.debug.debug_view_tag.set(value.into())
     }
 
-    <span class="doccomment">/// Return the value for the debug view tag or [`None`] if it hasn&#39;t been set.
+    <span class="doccomment">/// Return the value for the debug view tag or [`None`] if it hasn't been set.
     ///
     /// The `debug_view_tag` may be set from an environment variable
     /// (`GLEAN_DEBUG_VIEW_TAG`) or through the [`set_debug_view_tag`] function.
@@ -1903,12 +1904,12 @@
     ///
     /// # Arguments
     ///
-    /// * `value` - A vector of at most 5 valid HTTP header values. Individual tags must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;.
+    /// * `value` - A vector of at most 5 valid HTTP header values. Individual tags must match the regex: "[a-zA-Z0-9-]{1,20}".
     </span><span class="kw">pub fn </span>set_source_tags(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Vec&lt;String&gt;) -&gt; bool {
         <span class="self">self</span>.debug.source_tags.set(value)
     }
 
-    <span class="doccomment">/// Return the value for the source tags or [`None`] if it hasn&#39;t been set.
+    <span class="doccomment">/// Return the value for the source tags or [`None`] if it hasn't been set.
     ///
     /// The `source_tags` may be set from an environment variable (`GLEAN_SOURCE_TAGS`)
     /// or through the [`set_source_tags`] function.
@@ -1930,7 +1931,7 @@
         <span class="self">self</span>.debug.log_pings.set(value)
     }
 
-    <span class="doccomment">/// Return the value for the log pings debug option or [`None`] if it hasn&#39;t been set.
+    <span class="doccomment">/// Return the value for the log pings debug option or [`None`] if it hasn't been set.
     ///
     /// The `log_pings` option may be set from an environment variable (`GLEAN_LOG_PINGS`)
     /// or through the [`set_log_pings`] function.
@@ -1940,9 +1941,9 @@
 
     <span class="kw">fn </span>get_dirty_bit_metric(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; metrics::BooleanMetric {
         metrics::BooleanMetric::new(CommonMetricData {
-            name: <span class="string">&quot;dirtybit&quot;</span>.into(),
-            <span class="comment">// We don&#39;t need a category, the name is already unique
-            </span>category: <span class="string">&quot;&quot;</span>.into(),
+            name: <span class="string">"dirtybit"</span>.into(),
+            <span class="comment">// We don't need a category, the name is already unique
+            </span>category: <span class="string">""</span>.into(),
             send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
             lifetime: Lifetime::User,
             ..Default::default()
@@ -1951,9 +1952,9 @@
 
     <span class="doccomment">/// **This is not meant to be used directly.**
     ///
-    /// Sets the value of a &quot;dirty flag&quot; in the permanent storage.
+    /// Sets the value of a "dirty flag" in the permanent storage.
     ///
-    /// The &quot;dirty flag&quot; is meant to have the following behaviour, implemented
+    /// The "dirty flag" is meant to have the following behaviour, implemented
     /// by the consumers of the FFI layer:
     ///
     /// - on mobile: set to `false` when going to background or shutting down,
@@ -1961,7 +1962,7 @@
     /// - on non-mobile platforms: set to `true` at startup and `false` at
     ///   shutdown.
     ///
-    /// At startup, before setting its new value, if the &quot;dirty flag&quot; value is
+    /// At startup, before setting its new value, if the "dirty flag" value is
     /// `true`, then Glean knows it did not exit cleanly and can implement
     /// coping mechanisms (e.g. sending a `baseline` ping).
     </span><span class="kw">pub fn </span>set_dirty_flag(<span class="kw-2">&amp;</span><span class="self">self</span>, new_value: bool) {
@@ -1970,7 +1971,7 @@
 
     <span class="doccomment">/// **This is not meant to be used directly.**
     ///
-    /// Checks the stored value of the &quot;dirty flag&quot;.
+    /// Checks the stored value of the "dirty flag".
     </span><span class="kw">pub fn </span>is_dirty_flag_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">let </span>dirty_bit_metric = <span class="self">self</span>.get_dirty_bit_metric();
         <span class="kw">match </span>StorageManager.snapshot_metric(
@@ -1992,9 +1993,9 @@
         <span class="kw">if </span>!<span class="self">self
             </span>.internal_pings
             .baseline
-            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;active&quot;</span>))
+            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">"active"</span>))
         {
-            <span class="macro">log::info!</span>(<span class="string">&quot;baseline ping not submitted on active&quot;</span>);
+            <span class="macro">log::info!</span>(<span class="string">"baseline ping not submitted on active"</span>);
         }
 
         <span class="self">self</span>.set_dirty_flag(<span class="bool-val">true</span>);
@@ -2008,17 +2009,17 @@
         <span class="kw">if </span>!<span class="self">self
             </span>.internal_pings
             .baseline
-            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;inactive&quot;</span>))
+            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">"inactive"</span>))
         {
-            <span class="macro">log::info!</span>(<span class="string">&quot;baseline ping not submitted on inactive&quot;</span>);
+            <span class="macro">log::info!</span>(<span class="string">"baseline ping not submitted on inactive"</span>);
         }
 
         <span class="kw">if </span>!<span class="self">self
             </span>.internal_pings
             .events
-            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;inactive&quot;</span>))
+            .submit_sync(<span class="self">self</span>, <span class="prelude-val">Some</span>(<span class="string">"inactive"</span>))
         {
-            <span class="macro">log::info!</span>(<span class="string">&quot;events ping not submitted on inactive&quot;</span>);
+            <span class="macro">log::info!</span>(<span class="string">"events ping not submitted on inactive"</span>);
         }
 
         <span class="self">self</span>.set_dirty_flag(<span class="bool-val">false</span>);
@@ -2034,11 +2035,11 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(data) = <span class="self">self</span>.data_store.as_ref() {
             data.clear_all()
         }
-        <span class="comment">// We don&#39;t care about this failing, maybe the data does just not exist.
+        <span class="comment">// We don't care about this failing, maybe the data does just not exist.
         </span><span class="kw">let _ </span>= <span class="self">self</span>.event_data_store.clear_all();
     }
 
-    <span class="doccomment">/// Instructs the Metrics Ping Scheduler&#39;s thread to exit cleanly.
+    <span class="doccomment">/// Instructs the Metrics Ping Scheduler's thread to exit cleanly.
     /// If Glean was configured with `use_core_mps: false`, this has no effect.
     </span><span class="kw">pub fn </span>cancel_metrics_ping_scheduler(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">if </span><span class="self">self</span>.schedule_metrics_pings {
@@ -2054,5 +2055,4 @@
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

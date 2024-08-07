@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/metrics/ping.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ping.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/metrics/ping.rs`."><title>ping.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -317,7 +318,7 @@
 <a href="#317" id="317">317</a>
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -352,21 +353,21 @@
     </span><span class="kw">pub </span>enabled: bool,
     <span class="doccomment">/// Other pings that should be scheduled when this ping is sent.
     </span><span class="kw">pub </span>schedules_pings: Vec&lt;String&gt;,
-    <span class="doccomment">/// The &quot;reason&quot; codes that this ping can send
+    <span class="doccomment">/// The "reason" codes that this ping can send
     </span><span class="kw">pub </span>reason_codes: Vec&lt;String&gt;,
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>PingType {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;PingType&quot;</span>)
-            .field(<span class="string">&quot;name&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.name)
-            .field(<span class="string">&quot;include_client_id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_client_id)
-            .field(<span class="string">&quot;send_if_empty&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.send_if_empty)
-            .field(<span class="string">&quot;precise_timestamps&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.precise_timestamps)
-            .field(<span class="string">&quot;include_info_sections&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_info_sections)
-            .field(<span class="string">&quot;enabled&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.enabled)
-            .field(<span class="string">&quot;schedules_pings&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.schedules_pings)
-            .field(<span class="string">&quot;reason_codes&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.reason_codes)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"PingType"</span>)
+            .field(<span class="string">"name"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.name)
+            .field(<span class="string">"include_client_id"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_client_id)
+            .field(<span class="string">"send_if_empty"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.send_if_empty)
+            .field(<span class="string">"precise_timestamps"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.precise_timestamps)
+            .field(<span class="string">"include_info_sections"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.include_info_sections)
+            .field(<span class="string">"enabled"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.enabled)
+            .field(<span class="string">"schedules_pings"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.schedules_pings)
+            .field(<span class="string">"reason_codes"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.reason_codes)
             .finish()
     }
 }
@@ -500,7 +501,7 @@
             <span class="kw">if </span>sent {
                 <span class="kw">let </span>state = <span class="kw">crate</span>::global_state().lock().unwrap();
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
-                    <span class="macro">log::error!</span>(<span class="string">&quot;Triggering upload failed. Error: {}&quot;</span>, e);
+                    <span class="macro">log::error!</span>(<span class="string">"Triggering upload failed. Error: {}"</span>, e);
                 }
             }
         })
@@ -514,7 +515,7 @@
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>submit_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; bool {
         <span class="kw">if </span>!glean.is_upload_enabled() {
-            <span class="macro">log::info!</span>(<span class="string">&quot;Glean disabled: not submitting any pings.&quot;</span>);
+            <span class="macro">log::info!</span>(<span class="string">"Glean disabled: not submitting any pings."</span>);
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
 
@@ -523,7 +524,7 @@
         <span class="comment">// Allowing `clippy::manual_filter`.
         // This causes a false positive.
         // We have a side-effect in the `else` branch,
-        // so shouldn&#39;t delete it.
+        // so shouldn't delete it.
         </span><span class="attr">#[allow(unknown_lints)]
         #[allow(clippy::manual_filter)]
         </span><span class="kw">let </span>corrected_reason = <span class="kw">match </span>reason {
@@ -531,7 +532,7 @@
                 <span class="kw">if </span>ping.reason_codes.contains(<span class="kw-2">&amp;</span>reason.to_string()) {
                     <span class="prelude-val">Some</span>(reason)
                 } <span class="kw">else </span>{
-                    <span class="macro">log::error!</span>(<span class="string">&quot;Invalid reason code {} for ping {}&quot;</span>, reason, ping.name);
+                    <span class="macro">log::error!</span>(<span class="string">"Invalid reason code {} for ping {}"</span>, reason, ping.name);
                     <span class="prelude-val">None
                 </span>}
             }
@@ -544,7 +545,7 @@
         <span class="kw">match </span>ping_maker.collect(glean, <span class="self">self</span>, corrected_reason, <span class="kw-2">&amp;</span>doc_id, <span class="kw-2">&amp;</span>url_path) {
             <span class="prelude-val">None </span>=&gt; {
                 <span class="macro">log::info!</span>(
-                    <span class="string">&quot;No content for ping &#39;{}&#39;, therefore no ping queued.&quot;</span>,
+                    <span class="string">"No content for ping '{}', therefore no ping queued."</span>,
                     ping.name
                 );
                 <span class="bool-val">false
@@ -552,7 +553,7 @@
             <span class="prelude-val">Some</span>(ping) =&gt; {
                 <span class="kw">if </span>!<span class="self">self</span>.enabled(glean) {
                     <span class="macro">log::info!</span>(
-                        <span class="string">&quot;The ping &#39;{}&#39; is disabled and will be discarded and not submitted&quot;</span>,
+                        <span class="string">"The ping '{}' is disabled and will be discarded and not submitted"</span>,
                         ping.name
                     );
 
@@ -571,7 +572,7 @@
 
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = ping_maker.store_ping(glean.get_data_path(), <span class="kw-2">&amp;</span>ping) {
                     <span class="macro">log::warn!</span>(
-                        <span class="string">&quot;IO error while writing ping to file: {}. Enqueuing upload of what we have in memory.&quot;</span>,
+                        <span class="string">"IO error while writing ping to file: {}. Enqueuing upload of what we have in memory."</span>,
                         e
                     );
                     glean.additional_metrics.io_errors.add_sync(glean, <span class="number">1</span>);
@@ -580,8 +581,8 @@
                     // However `ping.content` is already a `JsonValue`,
                     // so both scenarios should be impossible.
                     </span><span class="kw">let </span>content =
-                        ::serde_json::to_string(<span class="kw-2">&amp;</span>ping.content).expect(<span class="string">&quot;ping serialization failed&quot;</span>);
-                    <span class="comment">// TODO: Shouldn&#39;t we consolidate on a single collected Ping representation?
+                        ::serde_json::to_string(<span class="kw-2">&amp;</span>ping.content).expect(<span class="string">"ping serialization failed"</span>);
+                    <span class="comment">// TODO: Shouldn't we consolidate on a single collected Ping representation?
                     </span><span class="kw">let </span>ping = PingPayload {
                         document_id: ping.doc_id.to_string(),
                         upload_path: ping.url_path.to_string(),
@@ -598,7 +599,7 @@
                 glean.upload_manager.enqueue_ping_from_file(glean, <span class="kw-2">&amp;</span>doc_id);
 
                 <span class="macro">log::info!</span>(
-                    <span class="string">&quot;The ping &#39;{}&#39; was submitted and will be sent as soon as possible&quot;</span>,
+                    <span class="string">"The ping '{}' was submitted and will be sent as soon as possible"</span>,
                     ping.name
                 );
 
@@ -611,7 +612,7 @@
 
                     <span class="kw">if </span>!ping_schedule.is_empty() {
                         <span class="macro">log::info!</span>(
-                            <span class="string">&quot;The ping &#39;{}&#39; is being used to schedule other pings: {:?}&quot;</span>,
+                            <span class="string">"The ping '{}' is being used to schedule other pings: {:?}"</span>,
                             ping.name,
                             ping_schedule
                         );
@@ -622,7 +623,7 @@
                     }
                 } <span class="kw">else </span>{
                     <span class="macro">log::info!</span>(
-                        <span class="string">&quot;The ping &#39;{}&#39; is being used to schedule other pings: {:?}&quot;</span>,
+                        <span class="string">"The ping '{}' is being used to schedule other pings: {:?}"</span>,
                         ping.name,
                         ping.schedules_pings
                     );
@@ -636,5 +637,4 @@
         }
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

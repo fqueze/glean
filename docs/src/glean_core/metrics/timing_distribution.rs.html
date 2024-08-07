@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/metrics/timing_distribution.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>timing_distribution.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/metrics/timing_distribution.rs`."><title>timing_distribution.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -642,7 +643,7 @@
 <a href="#642" id="642">642</a>
 <a href="#643" id="643">643</a>
 <a href="#644" id="644">644</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -678,10 +679,10 @@
 <span class="doccomment">/// Identifier for a running timer.
 ///
 /// Its internals are considered private,
-/// but due to UniFFI&#39;s behavior we expose its field for now.
+/// but due to UniFFI's behavior we expose its field for now.
 </span><span class="attr">#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 </span><span class="kw">pub struct </span>TimerId {
-    <span class="doccomment">/// This timer&#39;s id.
+    <span class="doccomment">/// This timer's id.
     </span><span class="kw">pub </span>id: u64,
 }
 
@@ -805,7 +806,7 @@
     /// Use [`start`](Self::start) instead.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>set_start(<span class="kw-2">&amp;</span><span class="self">self</span>, id: TimerId, start_time: u64) {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = <span class="self">self</span>.start_times.lock().expect(<span class="string">&quot;can&#39;t lock timings map&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>map = <span class="self">self</span>.start_times.lock().expect(<span class="string">"can't lock timings map"</span>);
         map.insert(id, start_time);
     }
 
@@ -828,10 +829,10 @@
     }
 
     <span class="kw">fn </span>set_stop(<span class="kw-2">&amp;</span><span class="self">self</span>, id: TimerId, stop_time: u64) -&gt; <span class="prelude-ty">Result</span>&lt;u64, (ErrorType, <span class="kw-2">&amp;</span>str)&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>start_times = <span class="self">self</span>.start_times.lock().expect(<span class="string">&quot;can&#39;t lock timings map&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>start_times = <span class="self">self</span>.start_times.lock().expect(<span class="string">"can't lock timings map"</span>);
         <span class="kw">let </span>start_time = <span class="kw">match </span>start_times.remove(<span class="kw-2">&amp;</span>id) {
             <span class="prelude-val">Some</span>(start_time) =&gt; start_time,
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>((ErrorType::InvalidState, <span class="string">&quot;Timing not running&quot;</span>)),
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>((ErrorType::InvalidState, <span class="string">"Timing not running"</span>)),
         };
 
         <span class="kw">let </span>duration = <span class="kw">match </span>stop_time.checked_sub(start_time) {
@@ -839,7 +840,7 @@
             <span class="prelude-val">None </span>=&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>((
                     ErrorType::InvalidValue,
-                    <span class="string">&quot;Timer stopped with negative duration&quot;</span>,
+                    <span class="string">"Timer stopped with negative duration"</span>,
                 ))
             }
         };
@@ -855,7 +856,7 @@
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>set_stop_and_accumulate(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, id: TimerId, stop_time: u64) {
         <span class="kw">if </span>!<span class="self">self</span>.should_record(glean) {
-            <span class="kw">let </span><span class="kw-2">mut </span>start_times = <span class="self">self</span>.start_times.lock().expect(<span class="string">&quot;can&#39;t lock timings map&quot;</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>start_times = <span class="self">self</span>.start_times.lock().expect(<span class="string">"can't lock timings map"</span>);
             start_times.remove(<span class="kw-2">&amp;</span>id);
             <span class="kw">return</span>;
         }
@@ -878,7 +879,7 @@
             </span>min_sample_time
         } <span class="kw">else if </span>duration &gt; max_sample_time {
             <span class="kw">let </span>msg = <span class="macro">format!</span>(
-                <span class="string">&quot;Sample is longer than the max for a time_unit of {:?} ({} ns)&quot;</span>,
+                <span class="string">"Sample is longer than the max for a time_unit of {:?} ({} ns)"</span>,
                 <span class="self">self</span>.time_unit, max_sample_time
             );
             record_error(glean, <span class="kw-2">&amp;</span><span class="self">self</span>.meta, ErrorType::InvalidOverflow, msg, <span class="prelude-val">None</span>);
@@ -891,10 +892,10 @@
             <span class="kw">return</span>;
         }
 
-        <span class="comment">// Let&#39;s be defensive here:
+        <span class="comment">// Let's be defensive here:
         // The uploader tries to store some timing distribution metrics,
         // but in tests that storage might be gone already.
-        // Let&#39;s just ignore those.
+        // Let's just ignore those.
         // We do the same for counters.
         // This should never happen in real app usage.
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(storage) = glean.storage_opt() {
@@ -911,7 +912,7 @@
             });
         } <span class="kw">else </span>{
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Couldn&#39;t get storage. Can&#39;t record timing distribution &#39;{}&#39;.&quot;</span>,
+                <span class="string">"Couldn't get storage. Can't record timing distribution '{}'."</span>,
                 <span class="self">self</span>.meta.base_identifier()
             );
         }
@@ -933,7 +934,7 @@
 
     <span class="doccomment">/// Aborts a previous [`start`](Self::start) call synchronously.
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>cancel_sync(<span class="kw-2">&amp;</span><span class="self">self</span>, id: TimerId) {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = <span class="self">self</span>.start_times.lock().expect(<span class="string">&quot;can&#39;t lock timings map&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>map = <span class="self">self</span>.start_times.lock().expect(<span class="string">"can't lock timings map"</span>);
         map.remove(<span class="kw-2">&amp;</span>id);
     }
 
@@ -945,7 +946,7 @@
     /// sample.
     ///
     /// Please note that this assumes that the provided samples are already in
-    /// the &quot;unit&quot; declared by the instance of the metric type (e.g. if the
+    /// the "unit" declared by the instance of the metric type (e.g. if the
     /// instance this method was called on is using [`TimeUnit::Second`], then
     /// `samples` are assumed to be in that unit).
     ///
@@ -973,7 +974,7 @@
     /// sample.
     ///
     /// Please note that this assumes that the provided sample is already in
-    /// the &quot;unit&quot; declared by the instance of the metric type (e.g. if the
+    /// the "unit" declared by the instance of the metric type (e.g. if the
     /// instance this method was called on is using [`crate::TimeUnit::Second`], then
     /// `sample` is assumed to be in that unit).
     ///
@@ -1037,7 +1038,7 @@
         });
 
         <span class="kw">if </span>num_negative_samples &gt; <span class="number">0 </span>{
-            <span class="kw">let </span>msg = <span class="macro">format!</span>(<span class="string">&quot;Accumulated {} negative samples&quot;</span>, num_negative_samples);
+            <span class="kw">let </span>msg = <span class="macro">format!</span>(<span class="string">"Accumulated {} negative samples"</span>, num_negative_samples);
             record_error(
                 glean,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.meta,
@@ -1049,7 +1050,7 @@
 
         <span class="kw">if </span>num_too_long_samples &gt; <span class="number">0 </span>{
             <span class="kw">let </span>msg = <span class="macro">format!</span>(
-                <span class="string">&quot;{} samples are longer than the maximum of {}&quot;</span>,
+                <span class="string">"{} samples are longer than the maximum of {}"</span>,
                 num_too_long_samples, max_sample_time
             );
             record_error(
@@ -1085,7 +1086,7 @@
     /// duration is:
     ///
     ///  * measured externally, or
-    ///  * is in a unit different from the timing_distribution&#39;s internal TimeUnit.
+    ///  * is in a unit different from the timing_distribution's internal TimeUnit.
     ///
     /// # Arguments
     ///
@@ -1098,8 +1099,8 @@
     ///
     /// The API client is responsible for ensuring that `duration` is derived from a
     /// monotonic clock source that behaves consistently over computer sleep across
-    /// the application&#39;s platforms. Otherwise the resulting data may not share the same
-    /// guarantees that other `timing_distribution` metrics&#39; data do.
+    /// the application's platforms. Otherwise the resulting data may not share the same
+    /// guarantees that other `timing_distribution` metrics' data do.
     </span><span class="kw">pub fn </span>accumulate_raw_duration(<span class="kw-2">&amp;</span><span class="self">self</span>, duration: Duration) {
         <span class="kw">let </span>duration_ns = duration.as_nanos().try_into().unwrap_or(u64::MAX);
         <span class="kw">let </span>metric = <span class="self">self</span>.clone();
@@ -1148,7 +1149,7 @@
 
         <span class="kw">if </span>num_too_long_samples &gt; <span class="number">0 </span>{
             <span class="kw">let </span>msg = <span class="macro">format!</span>(
-                <span class="string">&quot;{} samples are longer than the maximum of {}&quot;</span>,
+                <span class="string">"{} samples are longer than the maximum of {}"</span>,
                 num_too_long_samples, max_sample_time
             );
             record_error(
@@ -1163,7 +1164,7 @@
 
     <span class="doccomment">/// Gets the currently stored value as an integer.
     </span><span class="attr">#[doc(hidden)]
-    </span><span class="kw">pub fn </span>get_value&lt;<span class="lifetime">&#39;a</span>, S: Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;&gt;(
+    </span><span class="kw">pub fn </span>get_value&lt;<span class="lifetime">'a</span>, S: Into&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;&gt;&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         glean: <span class="kw-2">&amp;</span>Glean,
         ping_name: S,
@@ -1187,7 +1188,7 @@
     ///
     /// Gets the currently stored value as an integer.
     ///
-    /// This doesn&#39;t clear the stored value.
+    /// This doesn't clear the stored value.
     ///
     /// # Arguments
     ///
@@ -1239,19 +1240,19 @@
         <span class="kw">let </span>snap = snapshot(<span class="kw-2">&amp;</span>hist);
 
         <span class="kw">let </span>expected_json = <span class="macro">json!</span>({
-            <span class="string">&quot;sum&quot;</span>: <span class="number">55</span>,
-            <span class="string">&quot;values&quot;</span>: {
-                <span class="string">&quot;1&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;2&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;3&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;4&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;5&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;6&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;7&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;8&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;9&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;10&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;11&quot;</span>: <span class="number">0</span>,
+            <span class="string">"sum"</span>: <span class="number">55</span>,
+            <span class="string">"values"</span>: {
+                <span class="string">"1"</span>: <span class="number">1</span>,
+                <span class="string">"2"</span>: <span class="number">1</span>,
+                <span class="string">"3"</span>: <span class="number">1</span>,
+                <span class="string">"4"</span>: <span class="number">1</span>,
+                <span class="string">"5"</span>: <span class="number">1</span>,
+                <span class="string">"6"</span>: <span class="number">1</span>,
+                <span class="string">"7"</span>: <span class="number">1</span>,
+                <span class="string">"8"</span>: <span class="number">1</span>,
+                <span class="string">"9"</span>: <span class="number">1</span>,
+                <span class="string">"10"</span>: <span class="number">1</span>,
+                <span class="string">"11"</span>: <span class="number">0</span>,
             },
         });
 
@@ -1272,19 +1273,18 @@
         <span class="kw">let </span>snap = snapshot(<span class="kw-2">&amp;</span>hist);
 
         <span class="kw">let </span>expected_json = <span class="macro">json!</span>({
-            <span class="string">&quot;sum&quot;</span>: <span class="number">4612</span>,
-            <span class="string">&quot;values&quot;</span>: {
-                <span class="string">&quot;1024&quot;</span>: <span class="number">2</span>,
-                <span class="string">&quot;1116&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;1217&quot;</span>: <span class="number">0</span>,
-                <span class="string">&quot;1327&quot;</span>: <span class="number">0</span>,
-                <span class="string">&quot;1448&quot;</span>: <span class="number">1</span>,
-                <span class="string">&quot;1579&quot;</span>: <span class="number">0</span>,
+            <span class="string">"sum"</span>: <span class="number">4612</span>,
+            <span class="string">"values"</span>: {
+                <span class="string">"1024"</span>: <span class="number">2</span>,
+                <span class="string">"1116"</span>: <span class="number">1</span>,
+                <span class="string">"1217"</span>: <span class="number">0</span>,
+                <span class="string">"1327"</span>: <span class="number">0</span>,
+                <span class="string">"1448"</span>: <span class="number">1</span>,
+                <span class="string">"1579"</span>: <span class="number">0</span>,
             },
         });
 
         <span class="macro">assert_eq!</span>(expected_json, <span class="macro">json!</span>(snap));
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

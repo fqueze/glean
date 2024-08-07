@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/ping/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/ping/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -438,7 +439,7 @@
 <a href="#438" id="438">438</a>
 <a href="#439" id="439">439</a>
 <a href="#440" id="440">440</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -459,13 +460,13 @@
 <span class="kw">use crate</span>::{Glean, <span class="prelude-ty">Result</span>, DELETION_REQUEST_PINGS_DIRECTORY, PENDING_PINGS_DIRECTORY};
 
 <span class="doccomment">/// Holds everything you need to store or send a ping.
-</span><span class="kw">pub struct </span>Ping&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>Ping&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// The unique document id.
-    </span><span class="kw">pub </span>doc_id: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
-    <span class="doccomment">/// The ping&#39;s name.
-    </span><span class="kw">pub </span>name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    </span><span class="kw">pub </span>doc_id: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+    <span class="doccomment">/// The ping's name.
+    </span><span class="kw">pub </span>name: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
     <span class="doccomment">/// The path on the server to use when uplaoding this ping.
-    </span><span class="kw">pub </span>url_path: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    </span><span class="kw">pub </span>url_path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
     <span class="doccomment">/// The payload, including `*_info` fields.
     </span><span class="kw">pub </span>content: JsonValue,
     <span class="doccomment">/// The headers to upload with the payload.
@@ -476,7 +477,7 @@
     </span><span class="kw">pub </span>schedules_pings: Vec&lt;String&gt;,
 }
 
-<span class="doccomment">/// Collect a ping&#39;s data, assemble it into its full payload and store it on disk.
+<span class="doccomment">/// Collect a ping's data, assemble it into its full payload and store it on disk.
 </span><span class="kw">pub struct </span>PingMaker;
 
 <span class="kw">fn </span>merge(a: <span class="kw-2">&amp;mut </span>JsonValue, b: <span class="kw-2">&amp;</span>JsonValue) {
@@ -508,9 +509,9 @@
     </span><span class="kw">fn </span>get_ping_seq(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, storage_name: <span class="kw-2">&amp;</span>str) -&gt; usize {
         <span class="comment">// Sequence numbers are stored as a counter under a name that includes the storage name
         </span><span class="kw">let </span>seq = CounterMetric::new(CommonMetricData {
-            name: <span class="macro">format!</span>(<span class="string">&quot;{}#sequence&quot;</span>, storage_name),
-            <span class="comment">// We don&#39;t need a category, the name is already unique
-            </span>category: <span class="string">&quot;&quot;</span>.into(),
+            name: <span class="macro">format!</span>(<span class="string">"{}#sequence"</span>, storage_name),
+            <span class="comment">// We don't need a category, the name is already unique
+            </span>category: <span class="string">""</span>.into(),
             send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
             lifetime: Lifetime::User,
             ..Default::default()
@@ -541,8 +542,8 @@
     ) -&gt; (String, String) {
         <span class="kw">let </span>start_time = DatetimeMetric::new(
             CommonMetricData {
-                name: <span class="macro">format!</span>(<span class="string">&quot;{}#start&quot;</span>, storage_name),
-                category: <span class="string">&quot;&quot;</span>.into(),
+                name: <span class="macro">format!</span>(<span class="string">"{}#start"</span>, storage_name),
+                category: <span class="string">""</span>.into(),
                 send_in_pings: <span class="macro">vec!</span>[INTERNAL_STORAGE.into()],
                 lifetime: Lifetime::User,
                 ..Default::default()
@@ -550,7 +551,7 @@
             time_unit,
         );
 
-        <span class="comment">// &quot;start_time&quot; is the time the ping was generated the last time.
+        <span class="comment">// "start_time" is the time the ping was generated the last time.
         // If not available, we use the date the Glean object was initialized.
         </span><span class="kw">let </span>start_time_data = start_time
             .get_value(glean, INTERNAL_STORAGE)
@@ -575,15 +576,15 @@
     ) -&gt; JsonValue {
         <span class="kw">let </span>(start_time, end_time) = <span class="self">self</span>.get_start_end_times(glean, storage_name, precision);
         <span class="kw">let </span><span class="kw-2">mut </span>map = <span class="macro">json!</span>({
-            <span class="string">&quot;seq&quot;</span>: <span class="self">self</span>.get_ping_seq(glean, storage_name),
-            <span class="string">&quot;start_time&quot;</span>: start_time,
-            <span class="string">&quot;end_time&quot;</span>: end_time,
+            <span class="string">"seq"</span>: <span class="self">self</span>.get_ping_seq(glean, storage_name),
+            <span class="string">"start_time"</span>: start_time,
+            <span class="string">"end_time"</span>: end_time,
         });
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(reason) = reason {
             map.as_object_mut()
                 .unwrap() <span class="comment">// safe unwrap, we created the object above
-                </span>.insert(<span class="string">&quot;reason&quot;</span>.to_string(), JsonValue::String(reason.to_string()));
+                </span>.insert(<span class="string">"reason"</span>.to_string(), JsonValue::String(reason.to_string()));
         };
 
         <span class="comment">// Get the experiment data, if available.
@@ -592,33 +593,33 @@
         {
             map.as_object_mut()
                 .unwrap() <span class="comment">// safe unwrap, we created the object above
-                </span>.insert(<span class="string">&quot;experiments&quot;</span>.to_string(), experiment_data);
+                </span>.insert(<span class="string">"experiments"</span>.to_string(), experiment_data);
         };
 
         map
     }
 
     <span class="kw">fn </span>get_client_info(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, include_client_id: bool) -&gt; JsonValue {
-        <span class="comment">// Add the &quot;telemetry_sdk_build&quot;, which is the glean-core version.
+        <span class="comment">// Add the "telemetry_sdk_build", which is the glean-core version.
         </span><span class="kw">let </span><span class="kw-2">mut </span>map = <span class="macro">json!</span>({
-            <span class="string">&quot;telemetry_sdk_build&quot;</span>: <span class="kw">crate</span>::GLEAN_VERSION,
+            <span class="string">"telemetry_sdk_build"</span>: <span class="kw">crate</span>::GLEAN_VERSION,
         });
 
         <span class="comment">// Flatten the whole thing.
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(client_info) =
-            StorageManager.snapshot_as_json(glean.storage(), <span class="string">&quot;glean_client_info&quot;</span>, <span class="bool-val">true</span>)
+            StorageManager.snapshot_as_json(glean.storage(), <span class="string">"glean_client_info"</span>, <span class="bool-val">true</span>)
         {
             <span class="kw">let </span>client_info_obj = client_info.as_object().unwrap(); <span class="comment">// safe unwrap, snapshot always returns an object.
             </span><span class="kw">for </span>(_key, value) <span class="kw">in </span>client_info_obj {
                 merge(<span class="kw-2">&amp;mut </span>map, value);
             }
         } <span class="kw">else </span>{
-            <span class="macro">log::warn!</span>(<span class="string">&quot;Empty client info data.&quot;</span>);
+            <span class="macro">log::warn!</span>(<span class="string">"Empty client info data."</span>);
         }
 
         <span class="kw">if </span>!include_client_id {
             <span class="comment">// safe unwrap, we created the object above
-            </span>map.as_object_mut().unwrap().remove(<span class="string">&quot;client_id&quot;</span>);
+            </span>map.as_object_mut().unwrap().remove(<span class="string">"client_id"</span>);
         }
 
         <span class="macro">json!</span>(map)
@@ -641,11 +642,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>headers_map = HeaderMap::new();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(debug_view_tag) = glean.debug_view_tag() {
-            headers_map.insert(<span class="string">&quot;X-Debug-ID&quot;</span>.to_string(), debug_view_tag.to_string());
+            headers_map.insert(<span class="string">"X-Debug-ID"</span>.to_string(), debug_view_tag.to_string());
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(source_tags) = glean.source_tags() {
-            headers_map.insert(<span class="string">&quot;X-Source-Tags&quot;</span>.to_string(), source_tags.join(<span class="string">&quot;,&quot;</span>));
+            headers_map.insert(<span class="string">"X-Source-Tags"</span>.to_string(), source_tags.join(<span class="string">","</span>));
         }
 
         headers_map
@@ -658,22 +659,22 @@
     /// * `glean` - the [`Glean`] instance to collect data from.
     /// * `ping` - the ping to collect for.
     /// * `reason` - an optional reason code to include in the ping.
-    /// * `doc_id` - the ping&#39;s unique document identifier.
+    /// * `doc_id` - the ping's unique document identifier.
     /// * `url_path` - the path on the server to upload this ping to.
     ///
     /// # Returns
     ///
     /// A fully assembled representation of the ping payload and associated metadata.
     /// If there is no data stored for the ping, `None` is returned.
-    </span><span class="kw">pub fn </span>collect&lt;<span class="lifetime">&#39;a</span>&gt;(
+    </span><span class="kw">pub fn </span>collect&lt;<span class="lifetime">'a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         glean: <span class="kw-2">&amp;</span>Glean,
-        ping: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PingType,
+        ping: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>PingType,
         reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
-        doc_id: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
-        url_path: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
-    ) -&gt; <span class="prelude-ty">Option</span>&lt;Ping&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;Collecting {}&quot;</span>, ping.name());
+        doc_id: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+        url_path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;Ping&lt;<span class="lifetime">'a</span>&gt;&gt; {
+        <span class="macro">info!</span>(<span class="string">"Collecting {}"</span>, ping.name());
         <span class="kw">let </span>database = glean.storage();
 
         <span class="comment">// HACK: Only for metrics pings we add the ping timings.
@@ -699,21 +700,21 @@
             &amp;&amp; glean.test_get_experimentation_id().is_some()
             &amp;&amp; metrics_data.is_some()
         {
-            <span class="comment">// There is a lot of unwrapping here, but that&#39;s fine because the `if` conditions above mean that the
+            <span class="comment">// There is a lot of unwrapping here, but that's fine because the `if` conditions above mean that the
             // experimentation id is present in the metrics.
             </span><span class="kw">let </span>metrics = metrics_data.as_mut().unwrap().as_object_mut().unwrap();
             <span class="kw">let </span>metrics_count = metrics.len();
-            <span class="kw">let </span>strings = metrics.get_mut(<span class="string">&quot;string&quot;</span>).unwrap().as_object_mut().unwrap();
+            <span class="kw">let </span>strings = metrics.get_mut(<span class="string">"string"</span>).unwrap().as_object_mut().unwrap();
             <span class="kw">let </span>string_count = strings.len();
 
             <span class="comment">// Handle the send_if_empty case by checking if the experimentation id is the only metric in the data.
             </span><span class="kw">let </span>empty_payload = events_data.is_none() &amp;&amp; metrics_count == <span class="number">1 </span>&amp;&amp; string_count == <span class="number">1</span>;
             <span class="kw">if </span>!ping.include_client_id() || (!ping.send_if_empty() &amp;&amp; empty_payload) {
-                strings.remove(<span class="string">&quot;glean.client.annotation.experimentation_id&quot;</span>);
+                strings.remove(<span class="string">"glean.client.annotation.experimentation_id"</span>);
             }
 
             <span class="kw">if </span>strings.is_empty() {
-                metrics.remove(<span class="string">&quot;string&quot;</span>);
+                metrics.remove(<span class="string">"string"</span>);
             }
 
             <span class="kw">if </span>metrics.is_empty() {
@@ -723,14 +724,14 @@
 
         <span class="kw">let </span>is_empty = metrics_data.is_none() &amp;&amp; events_data.is_none();
         <span class="kw">if </span>!ping.send_if_empty() &amp;&amp; is_empty {
-            <span class="macro">info!</span>(<span class="string">&quot;Storage for {} empty. Bailing out.&quot;</span>, ping.name());
+            <span class="macro">info!</span>(<span class="string">"Storage for {} empty. Bailing out."</span>, ping.name());
             <span class="kw">return </span><span class="prelude-val">None</span>;
-        } <span class="kw">else if </span>ping.name() == <span class="string">&quot;events&quot; </span>&amp;&amp; events_data.is_none() {
-            <span class="macro">info!</span>(<span class="string">&quot;No events for &#39;events&#39; ping. Bailing out.&quot;</span>);
+        } <span class="kw">else if </span>ping.name() == <span class="string">"events" </span>&amp;&amp; events_data.is_none() {
+            <span class="macro">info!</span>(<span class="string">"No events for 'events' ping. Bailing out."</span>);
             <span class="kw">return </span><span class="prelude-val">None</span>;
         } <span class="kw">else if </span>is_empty {
             <span class="macro">info!</span>(
-                <span class="string">&quot;Storage for {} empty. Ping will still be sent.&quot;</span>,
+                <span class="string">"Storage for {} empty. Ping will still be sent."</span>,
                 ping.name()
             );
         }
@@ -746,8 +747,8 @@
             <span class="kw">let </span>client_info = <span class="self">self</span>.get_client_info(glean, ping.include_client_id());
 
             <span class="macro">json!</span>({
-                <span class="string">&quot;ping_info&quot;</span>: ping_info,
-                <span class="string">&quot;client_info&quot;</span>: client_info
+                <span class="string">"ping_info"</span>: ping_info,
+                <span class="string">"client_info"</span>: client_info
             })
         } <span class="kw">else </span>{
             <span class="macro">json!</span>({})
@@ -755,10 +756,10 @@
 
         <span class="kw">let </span>json_obj = json.as_object_mut()<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(metrics_data) = metrics_data {
-            json_obj.insert(<span class="string">&quot;metrics&quot;</span>.to_string(), metrics_data);
+            json_obj.insert(<span class="string">"metrics"</span>.to_string(), metrics_data);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(events_data) = events_data {
-            json_obj.insert(<span class="string">&quot;events&quot;</span>.to_string(), events_data);
+            json_obj.insert(<span class="string">"events"</span>.to_string(), events_data);
         }
 
         <span class="prelude-val">Some</span>(Ping {
@@ -779,7 +780,7 @@
     </span><span class="kw">fn </span>get_pings_dir(<span class="kw-2">&amp;</span><span class="self">self</span>, data_path: <span class="kw-2">&amp;</span>Path, ping_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; std::io::Result&lt;PathBuf&gt; {
         <span class="comment">// Use a special directory for deletion-request pings
         </span><span class="kw">let </span>pings_dir = <span class="kw">match </span>ping_type {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;deletion-request&quot;</span>) =&gt; data_path.join(DELETION_REQUEST_PINGS_DIRECTORY),
+            <span class="prelude-val">Some</span>(<span class="string">"deletion-request"</span>) =&gt; data_path.join(DELETION_REQUEST_PINGS_DIRECTORY),
             <span class="kw">_ </span>=&gt; data_path.join(PENDING_PINGS_DIRECTORY),
         };
 
@@ -792,7 +793,7 @@
     /// The directory will be created inside the `data_path`.
     /// The `tmp` directory (and its parents) is created if it does not exist.
     </span><span class="kw">fn </span>get_tmp_dir(<span class="kw-2">&amp;</span><span class="self">self</span>, data_path: <span class="kw-2">&amp;</span>Path) -&gt; std::io::Result&lt;PathBuf&gt; {
-        <span class="kw">let </span>pings_dir = data_path.join(<span class="string">&quot;tmp&quot;</span>);
+        <span class="kw">let </span>pings_dir = data_path.join(<span class="string">"tmp"</span>);
         create_dir_all(<span class="kw-2">&amp;</span>pings_dir)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(pings_dir)
     }
@@ -808,7 +809,7 @@
         <span class="kw">let </span>ping_path = pings_dir.join(ping.doc_id);
 
         <span class="macro">log::debug!</span>(
-            <span class="string">&quot;Storing ping &#39;{}&#39; at &#39;{}&#39;&quot;</span>,
+            <span class="string">"Storing ping '{}' at '{}'"</span>,
             ping.doc_id,
             ping_path.display()
         );
@@ -816,12 +817,12 @@
         {
             <span class="kw">let </span><span class="kw-2">mut </span>file = File::create(<span class="kw-2">&amp;</span>temp_ping_path)<span class="question-mark">?</span>;
             file.write_all(ping.url_path.as_bytes())<span class="question-mark">?</span>;
-            file.write_all(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
+            file.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
             file.write_all(::serde_json::to_string(<span class="kw-2">&amp;</span>ping.content)<span class="question-mark">?</span>.as_bytes())<span class="question-mark">?</span>;
-            file.write_all(<span class="string">b&quot;\n&quot;</span>)<span class="question-mark">?</span>;
+            file.write_all(<span class="string">b"\n"</span>)<span class="question-mark">?</span>;
             <span class="kw">let </span>metadata = PingMetadata {
-                <span class="comment">// We don&#39;t actually need to clone the headers except to match PingMetadata&#39;s ownership.
-                // But since we&#39;re going to write a file to disk in a sec,
+                <span class="comment">// We don't actually need to clone the headers except to match PingMetadata's ownership.
+                // But since we're going to write a file to disk in a sec,
                 // and HeaderMaps tend to have only like two things in them, tops,
                 // the cost is bearable.
                 </span>headers: <span class="prelude-val">Some</span>(ping.headers.clone()),
@@ -833,7 +834,7 @@
 
         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = std::fs::rename(<span class="kw-2">&amp;</span>temp_ping_path, <span class="kw-2">&amp;</span>ping_path) {
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Unable to move &#39;{}&#39; to &#39;{}&quot;</span>,
+                <span class="string">"Unable to move '{}' to '{}"</span>,
                 temp_ping_path.display(),
                 ping_path.display()
             );
@@ -850,7 +851,7 @@
         std::fs::remove_dir_all(<span class="kw-2">&amp;</span>pings_dir)<span class="question-mark">?</span>;
         create_dir_all(<span class="kw-2">&amp;</span>pings_dir)<span class="question-mark">?</span>;
 
-        <span class="macro">log::debug!</span>(<span class="string">&quot;All pending pings deleted&quot;</span>);
+        <span class="macro">log::debug!</span>(<span class="string">"All pending pings deleted"</span>);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -866,17 +867,16 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, _t) = new_glean(<span class="prelude-val">None</span>);
         <span class="kw">let </span>ping_maker = PingMaker::new();
 
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
 
         glean.set_upload_enabled(<span class="bool-val">false</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
 
         glean.set_upload_enabled(<span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">&quot;custom&quot;</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

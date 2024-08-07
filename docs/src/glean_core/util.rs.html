@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/util.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>util.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glean_core/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/util.rs`."><title>util.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -310,7 +311,7 @@
 <a href="#310" id="310">310</a>
 <a href="#311" id="311">311</a>
 <a href="#312" id="312">312</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -328,12 +329,12 @@
     application_id
         .chars()
         .filter_map(|x| <span class="kw">match </span>x {
-            <span class="string">&#39;A&#39;</span>..=<span class="string">&#39;Z&#39; </span>| <span class="string">&#39;a&#39;</span>..=<span class="string">&#39;z&#39; </span>| <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39; </span>=&gt; {
+            <span class="string">'A'</span>..=<span class="string">'Z' </span>| <span class="string">'a'</span>..=<span class="string">'z' </span>| <span class="string">'0'</span>..=<span class="string">'9' </span>=&gt; {
                 last_dash = <span class="bool-val">false</span>;
                 <span class="prelude-val">Some</span>(x.to_ascii_lowercase())
             }
             <span class="kw">_ </span>=&gt; {
-                <span class="kw">let </span>result = <span class="kw">if </span>last_dash { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(<span class="string">&#39;-&#39;</span>) };
+                <span class="kw">let </span>result = <span class="kw">if </span>last_dash { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(<span class="string">'-'</span>) };
                 last_dash = <span class="bool-val">true</span>;
                 result
             }
@@ -361,20 +362,20 @@
 /// This converts from the `Local` timezone into its fixed-offset equivalent.
 /// If a timezone outside of [-24h, +24h] is detected it corrects the timezone offset to UTC (+0).
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>local_now_with_offset() -&gt; DateTime&lt;FixedOffset&gt; {
-    <span class="attr">#[cfg(target_os = <span class="string">&quot;windows&quot;</span>)]
+    <span class="attr">#[cfg(target_os = <span class="string">"windows"</span>)]
     </span>{
-        <span class="comment">// `Local::now` takes the user&#39;s timezone offset
-        // and panics if it&#39;s not within a range of [-24, +24] hours.
+        <span class="comment">// `Local::now` takes the user's timezone offset
+        // and panics if it's not within a range of [-24, +24] hours.
         // This causes crashes in a small number of clients on Windows.
         //
-        // We can&#39;t determine the faulty clients
+        // We can't determine the faulty clients
         // or the circumstancens under which this happens,
         // so the best we can do is have a workaround:
         //
         // We try getting the time and timezone first,
         // then manually check that it is a valid timezone offset.
         // If it is, we proceed and use that time and offset.
-        // If it isn&#39;t we fallback to UTC.
+        // If it isn't we fallback to UTC.
         //
         // This has the small downside that it will use 2 calls to get the time,
         // but only on Windows.
@@ -383,14 +384,14 @@
 
         </span><span class="kw">use </span>chrono::Utc;
 
-        <span class="comment">// Get timespec, including the user&#39;s timezone.
+        <span class="comment">// Get timespec, including the user's timezone.
         </span><span class="kw">let </span>tm = time::now();
         <span class="comment">// Same as chrono:
         // https://docs.rs/chrono/0.4.10/src/chrono/offset/local.rs.html#37
         </span><span class="kw">let </span>offset = tm.tm_utcoff;
         <span class="kw">if let </span><span class="prelude-val">None </span>= FixedOffset::east_opt(offset) {
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Detected invalid timezone offset: {}. Using UTC fallback.&quot;</span>,
+                <span class="string">"Detected invalid timezone offset: {}. Using UTC fallback."</span>,
                 offset
             );
             <span class="kw">let </span>now: DateTime&lt;Utc&gt; = Utc::now();
@@ -403,7 +404,7 @@
     now.with_timezone(now.offset())
 }
 
-<span class="doccomment">/// Truncates a string, ensuring that it doesn&#39;t end in the middle of a codepoint.
+<span class="doccomment">/// Truncates a string, ensuring that it doesn't end in the middle of a codepoint.
 ///
 /// # Arguments
 ///
@@ -425,12 +426,12 @@
         }
         <span class="comment">// If we never saw a character boundary, the safest thing we can do is
         // return the empty string, though this should never happen in practice.
-        </span><span class="kw">return </span><span class="string">&quot;&quot;</span>.to_string();
+        </span><span class="kw">return </span><span class="string">""</span>.to_string();
     }
     s
 }
 
-<span class="doccomment">/// Truncates a string, ensuring that it doesn&#39;t end in the middle of a codepoint.
+<span class="doccomment">/// Truncates a string, ensuring that it doesn't end in the middle of a codepoint.
 /// If the string required truncation, records an error through the error
 /// reporting mechanism.
 ///
@@ -454,7 +455,7 @@
 ) -&gt; String {
     <span class="kw">let </span>s = value.into();
     <span class="kw">if </span>s.len() &gt; length {
-        <span class="kw">let </span>msg = <span class="macro">format!</span>(<span class="string">&quot;Value length {} exceeds maximum of {}&quot;</span>, s.len(), length);
+        <span class="kw">let </span>msg = <span class="macro">format!</span>(<span class="string">"Value length {} exceeds maximum of {}"</span>, s.len(), length);
         record_error(glean, meta, ErrorType::InvalidOverflow, msg, <span class="prelude-val">None</span>);
         truncate_string_at_boundary(s, length)
     } <span class="kw">else </span>{
@@ -470,17 +471,17 @@
 // to match our other targets and platforms.
 //
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1623335 for additional context.
-</span><span class="attr">#[cfg(all(target_os = <span class="string">&quot;windows&quot;</span>, target_env = <span class="string">&quot;gnu&quot;</span>))]
+</span><span class="attr">#[cfg(all(target_os = <span class="string">"windows"</span>, target_env = <span class="string">"gnu"</span>))]
 </span><span class="kw">pub mod </span>floating_point_context {
-    <span class="comment">// `size_t` is &quot;pointer size&quot;, which is equivalent to Rust&#39;s `usize`.
-    // It&#39;s defined as such in libc:
+    <span class="comment">// `size_t` is "pointer size", which is equivalent to Rust's `usize`.
+    // It's defined as such in libc:
     // * https://github.com/rust-lang/libc/blob/bcbfeb5516cd5bb055198dbfbddf8d626fa2be07/src/unix/mod.rs#L19
     // * https://github.com/rust-lang/libc/blob/bcbfeb5516cd5bb055198dbfbddf8d626fa2be07/src/windows/mod.rs#L16
     </span><span class="attr">#[allow(non_camel_case_types)]
     </span><span class="kw">type </span>size_t = usize;
 
-    <span class="attr">#[link(name = <span class="string">&quot;m&quot;</span>)]
-    </span><span class="kw">extern </span><span class="string">&quot;C&quot; </span>{
+    <span class="attr">#[link(name = <span class="string">"m"</span>)]
+    </span><span class="kw">extern </span><span class="string">"C" </span>{
         <span class="comment">// Gets and sets the floating point control word.
         // See documentation here:
         // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/controlfp-s
@@ -519,7 +520,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(all(target_os = <span class="string">&quot;windows&quot;</span>, target_env = <span class="string">&quot;gnu&quot;</span>)))]
+<span class="attr">#[cfg(not(all(target_os = <span class="string">"windows"</span>, target_env = <span class="string">"gnu"</span>)))]
 </span><span class="kw">pub mod </span>floating_point_context {
     <span class="kw">pub struct </span>FloatingPointContext {}
 
@@ -538,20 +539,20 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_sanitize_application_id() {
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;org-mozilla-test-app&quot;</span>,
-            sanitize_application_id(<span class="string">&quot;org.mozilla.test-app&quot;</span>)
+            <span class="string">"org-mozilla-test-app"</span>,
+            sanitize_application_id(<span class="string">"org.mozilla.test-app"</span>)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;org-mozilla-test-app&quot;</span>,
-            sanitize_application_id(<span class="string">&quot;org.mozilla..test---app&quot;</span>)
+            <span class="string">"org-mozilla-test-app"</span>,
+            sanitize_application_id(<span class="string">"org.mozilla..test---app"</span>)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;org-mozilla-test-app&quot;</span>,
-            sanitize_application_id(<span class="string">&quot;org-mozilla-test-app&quot;</span>)
+            <span class="string">"org-mozilla-test-app"</span>,
+            sanitize_application_id(<span class="string">"org-mozilla-test-app"</span>)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;org-mozilla-test-app&quot;</span>,
-            sanitize_application_id(<span class="string">&quot;org.mozilla.Test.App&quot;</span>)
+            <span class="string">"org-mozilla-test-app"</span>,
+            sanitize_application_id(<span class="string">"org.mozilla.Test.App"</span>)
         );
     }
 
@@ -562,30 +563,30 @@
             .ymd(<span class="number">1985</span>, <span class="number">7</span>, <span class="number">3</span>)
             .and_hms_nano(<span class="number">12</span>, <span class="number">9</span>, <span class="number">14</span>, <span class="number">1_560_274</span>);
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12:09:14.001560274+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12:09:14.001560274+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Nanosecond)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12:09:14.001560+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12:09:14.001560+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Microsecond)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12:09:14.001+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12:09:14.001+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Millisecond)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12:09:14+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12:09:14+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Second)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12:09+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12:09+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Minute)
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;1985-07-03T12+01:00&quot;</span>,
+            <span class="string">"1985-07-03T12+01:00"</span>,
             get_iso_time_string(dt, TimeUnit::Hour)
         );
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;1985-07-03+01:00&quot;</span>, get_iso_time_string(dt, TimeUnit::Day));
+        <span class="macro">assert_eq!</span>(<span class="string">"1985-07-03+01:00"</span>, get_iso_time_string(dt, TimeUnit::Day));
     }
 
     <span class="attr">#[test]
@@ -593,11 +594,11 @@
         <span class="kw">let </span>now = Local::now();
         <span class="kw">let </span>fixed_now = local_now_with_offset();
 
-        <span class="comment">// We can&#39;t compare across differing timezones, so we just compare the UTC timestamps.
+        <span class="comment">// We can't compare across differing timezones, so we just compare the UTC timestamps.
         // The second timestamp should be just a few nanoseconds later.
         </span><span class="macro">assert!</span>(
             fixed_now.naive_utc() &gt;= now.naive_utc(),
-            <span class="string">&quot;Time mismatch. Local now: {:?}, Fixed now: {:?}&quot;</span>,
+            <span class="string">"Time mismatch. Local now: {:?}, Fixed now: {:?}"</span>,
             now,
             fixed_now
         );
@@ -605,22 +606,21 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>truncate_safely_test() {
-        <span class="kw">let </span>value = <span class="string">&quot;电脑坏了&quot;</span>.to_string();
+        <span class="kw">let </span>value = <span class="string">"电脑坏了"</span>.to_string();
         <span class="kw">let </span>truncated = truncate_string_at_boundary(value, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;电脑坏&quot;</span>, truncated);
+        <span class="macro">assert_eq!</span>(<span class="string">"电脑坏"</span>, truncated);
 
-        <span class="kw">let </span>value = <span class="string">&quot;0123456789abcdef&quot;</span>.to_string();
+        <span class="kw">let </span>value = <span class="string">"0123456789abcdef"</span>.to_string();
         <span class="kw">let </span>truncated = truncate_string_at_boundary(value, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;0123456789&quot;</span>, truncated);
+        <span class="macro">assert_eq!</span>(<span class="string">"0123456789"</span>, truncated);
     }
 
     <span class="attr">#[test]
     #[should_panic]
     </span><span class="kw">fn </span>truncate_naive() {
         <span class="comment">// Ensure that truncating the naïve way on this string would panic
-        </span><span class="kw">let </span>value = <span class="string">&quot;电脑坏了&quot;</span>.to_string();
+        </span><span class="kw">let </span>value = <span class="string">"电脑坏了"</span>.to_string();
         value[<span class="number">0</span>..<span class="number">10</span>].to_string();
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

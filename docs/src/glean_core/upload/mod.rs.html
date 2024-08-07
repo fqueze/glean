@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/upload/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/upload/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1933,7 +1934,7 @@
 <a href="#1933" id="1933">1933</a>
 <a href="#1934" id="1934">1934</a>
 <a href="#1935" id="1935">1935</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -2047,7 +2048,7 @@
         }
 
         <span class="kw">if </span><span class="self">self</span>.count == <span class="self">self</span>.max_count {
-            <span class="comment">// Note that `remining` can&#39;t be a negative number because we just called `reset`,
+            <span class="comment">// Note that `remining` can't be a negative number because we just called `reset`,
             // which will check if it is and reset if so.
             </span><span class="kw">let </span>remaining = <span class="self">self</span>.interval.as_millis() - <span class="self">self</span>.elapsed().as_millis();
             <span class="kw">return </span>RateLimiterState::Throttled(
@@ -2083,7 +2084,7 @@
         </span>time: u64,
     },
 
-    <span class="doccomment">/// A flag signaling that requester doesn&#39;t need to request any more upload tasks at this moment.
+    <span class="doccomment">/// A flag signaling that requester doesn't need to request any more upload tasks at this moment.
     ///
     /// There are three possibilities for this scenario:
     /// * Pending pings queue is empty, no more pings to request;
@@ -2092,12 +2093,12 @@
     ///   recoverable upload failures on the same uploading window (see below)
     ///   and should stop requesting at this moment.
     ///
-    /// An &quot;uploading window&quot; starts when a requester gets a new
+    /// An "uploading window" starts when a requester gets a new
     /// `PingUploadTask::Upload(PingRequest)` response and finishes when they
     /// finally get a `PingUploadTask::Done` or `PingUploadTask::Wait` response.
     </span>Done {
         <span class="attr">#[doc(hidden)]
-        </span><span class="doccomment">/// Unused field. Required because UniFFI can&#39;t handle variants without fields.
+        </span><span class="doccomment">/// Unused field. Required because UniFFI can't handle variants without fields.
         </span>unused: i8,
     },
 }
@@ -2191,13 +2192,13 @@
         <span class="kw">let </span>local_cached_pings = <span class="self">self</span>.cached_pings.clone();
         <span class="kw">let </span>local_flag = <span class="self">self</span>.processed_pending_pings.clone();
         thread::Builder::new()
-            .name(<span class="string">&quot;glean.ping_directory_manager.process_dir&quot;</span>.to_string())
+            .name(<span class="string">"glean.ping_directory_manager.process_dir"</span>.to_string())
             .spawn(<span class="kw">move </span>|| {
                 {
                     <span class="comment">// Be sure to drop local_cached_pings lock before triggering upload.
                     </span><span class="kw">let </span><span class="kw-2">mut </span>local_cached_pings = local_cached_pings
                         .write()
-                        .expect(<span class="string">&quot;Can&#39;t write to pending pings cache.&quot;</span>);
+                        .expect(<span class="string">"Can't write to pending pings cache."</span>);
                     local_cached_pings.extend(local_manager.process_dirs());
                     local_flag.store(<span class="bool-val">true</span>, Ordering::SeqCst);
                 }
@@ -2207,7 +2208,7 @@
                         {
                             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = state.callbacks.trigger_upload() {
                                 <span class="macro">log::error!</span>(
-                                    <span class="string">&quot;Triggering upload after pending ping scan failed. Error: {}&quot;</span>,
+                                    <span class="string">"Triggering upload after pending ping scan failed. Error: {}"</span>,
                                     e
                                 );
                             }
@@ -2215,13 +2216,13 @@
                     });
                 }
             })
-            .expect(<span class="string">&quot;Unable to spawn thread to process pings directories.&quot;</span>)
+            .expect(<span class="string">"Unable to spawn thread to process pings directories."</span>)
     }
 
     <span class="doccomment">/// Creates a new upload manager with no limitations, for tests.
     </span><span class="attr">#[cfg(test)]
     </span><span class="kw">pub fn </span>no_policy&lt;P: Into&lt;PathBuf&gt;&gt;(data_path: P) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span><span class="kw-2">mut </span>upload_manager = <span class="self">Self</span>::new(data_path, <span class="string">&quot;Test&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>upload_manager = <span class="self">Self</span>::new(data_path, <span class="string">"Test"</span>);
 
         <span class="comment">// Disable all policies for tests, if necessary individuals tests can re-enable them.
         </span>upload_manager.policy.set_max_recoverable_failures(<span class="prelude-val">None</span>);
@@ -2283,7 +2284,7 @@
         <span class="kw">match </span>request.build() {
             <span class="prelude-val">Ok</span>(request) =&gt; <span class="prelude-val">Some</span>(request),
             <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">log::warn!</span>(<span class="string">&quot;Error trying to build ping request: {}&quot;</span>, e);
+                <span class="macro">log::warn!</span>(<span class="string">"Error trying to build ping request: {}"</span>, e);
                 <span class="self">self</span>.directory_manager.delete_file(<span class="kw-2">&amp;</span>document_id);
 
                 <span class="comment">// Record the error.
@@ -2304,7 +2305,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>queue = <span class="self">self
             </span>.queue
             .write()
-            .expect(<span class="string">&quot;Can&#39;t write to pending pings queue.&quot;</span>);
+            .expect(<span class="string">"Can't write to pending pings queue."</span>);
 
         <span class="kw">let </span>PingPayload {
             <span class="kw-2">ref </span>document_id,
@@ -2317,7 +2318,7 @@
             .any(|request| request.document_id.as_str() == document_id)
         {
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Attempted to enqueue a duplicate ping {} at {}.&quot;</span>,
+                <span class="string">"Attempted to enqueue a duplicate ping {} at {}."</span>,
                 document_id,
                 path
             );
@@ -2328,7 +2329,7 @@
             <span class="kw">let </span>in_flight = <span class="self">self</span>.in_flight.read().unwrap();
             <span class="kw">if </span>in_flight.contains_key(document_id) {
                 <span class="macro">log::warn!</span>(
-                    <span class="string">&quot;Attempted to enqueue an in-flight ping {} at {}.&quot;</span>,
+                    <span class="string">"Attempted to enqueue an in-flight ping {} at {}."</span>,
                     document_id,
                     path
                 );
@@ -2339,7 +2340,7 @@
             }
         }
 
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Enqueuing ping {} at {}&quot;</span>, document_id, path);
+        <span class="macro">log::trace!</span>(<span class="string">"Enqueuing ping {} at {}"</span>, document_id, path);
         <span class="kw">if let </span><span class="prelude-val">Some</span>(request) = <span class="self">self</span>.build_ping_request(glean, ping) {
             queue.push_back(request)
         }
@@ -2348,15 +2349,15 @@
     <span class="doccomment">/// Enqueues pings that might have been cached.
     ///
     /// The size of the PENDING_PINGS_DIRECTORY directory will be calculated
-    /// (by accumulating each ping&#39;s size in that directory)
+    /// (by accumulating each ping's size in that directory)
     /// and in case we exceed the quota, defined by the `quota` arg,
     /// outstanding pings get deleted and are not enqueued.
     ///
     /// The size of the DELETION_REQUEST_PINGS_DIRECTORY will not be calculated
     /// and no deletion-request pings will be deleted. Deletion request pings
-    /// are not very common and usually don&#39;t contain any data,
-    /// we don&#39;t expect that directory to ever reach quota.
-    /// Most importantly, we don&#39;t want to ever delete deletion-request pings.
+    /// are not very common and usually don't contain any data,
+    /// we don't expect that directory to ever reach quota.
+    /// Most importantly, we don't want to ever delete deletion-request pings.
     ///
     /// # Arguments
     ///
@@ -2365,7 +2366,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>cached_pings = <span class="self">self
             </span>.cached_pings
             .write()
-            .expect(<span class="string">&quot;Can&#39;t write to pending pings cache.&quot;</span>);
+            .expect(<span class="string">"Can't write to pending pings cache."</span>);
 
         <span class="kw">if </span>cached_pings.len() &gt; <span class="number">0 </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>pending_pings_directory_size: u64 = <span class="number">0</span>;
@@ -2379,7 +2380,7 @@
 
             <span class="kw">if </span>total &gt; <span class="self">self</span>.policy.max_pending_pings_count() {
                 <span class="macro">log::warn!</span>(
-                    <span class="string">&quot;More than {} pending pings in the directory, will delete {} old pings.&quot;</span>,
+                    <span class="string">"More than {} pending pings in the directory, will delete {} old pings."</span>,
                     <span class="self">self</span>.policy.max_pending_pings_count(),
                     total - <span class="self">self</span>.policy.max_pending_pings_count()
                 );
@@ -2395,10 +2396,10 @@
                 pending_pings_count += <span class="number">1</span>;
                 pending_pings_directory_size += file_size;
 
-                <span class="comment">// We don&#39;t want to spam the log for every ping over the quota.
+                <span class="comment">// We don't want to spam the log for every ping over the quota.
                 </span><span class="kw">if </span>!deleting &amp;&amp; pending_pings_directory_size &gt; <span class="self">self</span>.policy.max_pending_pings_directory_size() {
                     <span class="macro">log::warn!</span>(
-                        <span class="string">&quot;Pending pings directory has reached the size quota of {} bytes, outstanding pings will be deleted.&quot;</span>,
+                        <span class="string">"Pending pings directory has reached the size quota of {} bytes, outstanding pings will be deleted."</span>,
                         <span class="self">self</span>.policy.max_pending_pings_directory_size()
                     );
                     deleting = <span class="bool-val">true</span>;
@@ -2461,7 +2462,7 @@
 
     <span class="doccomment">/// Reads a ping file, creates a `PingRequest` and adds it to the queue.
     ///
-    /// Duplicate requests won&#39;t be added.
+    /// Duplicate requests won't be added.
     ///
     /// # Arguments
     ///
@@ -2474,16 +2475,16 @@
     }
 
     <span class="doccomment">/// Clears the pending pings queue, leaves the deletion-request pings.
-    </span><span class="kw">pub fn </span>clear_ping_queue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RwLockWriteGuard&lt;<span class="lifetime">&#39;_</span>, VecDeque&lt;PingRequest&gt;&gt; {
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Clearing ping queue&quot;</span>);
+    </span><span class="kw">pub fn </span>clear_ping_queue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RwLockWriteGuard&lt;<span class="lifetime">'_</span>, VecDeque&lt;PingRequest&gt;&gt; {
+        <span class="macro">log::trace!</span>(<span class="string">"Clearing ping queue"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>queue = <span class="self">self
             </span>.queue
             .write()
-            .expect(<span class="string">&quot;Can&#39;t write to pending pings queue.&quot;</span>);
+            .expect(<span class="string">"Can't write to pending pings queue."</span>);
 
         queue.retain(|ping| ping.is_deletion_request());
         <span class="macro">log::trace!</span>(
-            <span class="string">&quot;{} pings left in the queue (only deletion-request expected)&quot;</span>,
+            <span class="string">"{} pings left in the queue (only deletion-request expected)"</span>,
             queue.len()
         );
         queue
@@ -2505,7 +2506,7 @@
 
         <span class="kw">if </span>!<span class="self">self</span>.processed_pending_pings() {
             <span class="macro">log::info!</span>(
-                <span class="string">&quot;Tried getting an upload task, but processing is ongoing. Will come back later.&quot;
+                <span class="string">"Tried getting an upload task, but processing is ongoing. Will come back later."
             </span>);
             <span class="kw">return </span>wait_or_done(WAIT_TIME_FOR_PING_PROCESSING);
         }
@@ -2515,7 +2516,7 @@
 
         <span class="kw">if </span><span class="self">self</span>.recoverable_failure_count() &gt;= <span class="self">self</span>.policy.max_recoverable_failures() {
             <span class="macro">log::warn!</span>(
-                <span class="string">&quot;Reached maximum recoverable failures for the current uploading window. You are done.&quot;
+                <span class="string">"Reached maximum recoverable failures for the current uploading window. You are done."
             </span>);
             <span class="kw">return </span>PingUploadTask::done();
         }
@@ -2523,23 +2524,23 @@
         <span class="kw">let </span><span class="kw-2">mut </span>queue = <span class="self">self
             </span>.queue
             .write()
-            .expect(<span class="string">&quot;Can&#39;t write to pending pings queue.&quot;</span>);
+            .expect(<span class="string">"Can't write to pending pings queue."</span>);
         <span class="kw">match </span>queue.front() {
             <span class="prelude-val">Some</span>(request) =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(rate_limiter) = <span class="kw-2">&amp;</span><span class="self">self</span>.rate_limiter {
                     <span class="kw">let </span><span class="kw-2">mut </span>rate_limiter = rate_limiter
                         .write()
-                        .expect(<span class="string">&quot;Can&#39;t write to the rate limiter.&quot;</span>);
+                        .expect(<span class="string">"Can't write to the rate limiter."</span>);
                     <span class="kw">if let </span>RateLimiterState::Throttled(remaining) = rate_limiter.get_state() {
                         <span class="macro">log::info!</span>(
-                            <span class="string">&quot;Tried getting an upload task, but we are throttled at the moment.&quot;
+                            <span class="string">"Tried getting an upload task, but we are throttled at the moment."
                         </span>);
                         <span class="kw">return </span>wait_or_done(remaining);
                     }
                 }
 
                 <span class="macro">log::info!</span>(
-                    <span class="string">&quot;New upload task with id {} (path: {})&quot;</span>,
+                    <span class="string">"New upload task with id {} (path: {})"</span>,
                     request.document_id,
                     request.path
                 );
@@ -2548,13 +2549,13 @@
                     <span class="kw">if let </span><span class="prelude-val">Some</span>(body) = request.pretty_body() {
                         chunked_log_info(<span class="kw-2">&amp;</span>request.path, <span class="kw-2">&amp;</span>body);
                     } <span class="kw">else </span>{
-                        chunked_log_info(<span class="kw-2">&amp;</span>request.path, <span class="string">&quot;&lt;invalid ping payload&gt;&quot;</span>);
+                        chunked_log_info(<span class="kw-2">&amp;</span>request.path, <span class="string">"&lt;invalid ping payload&gt;"</span>);
                     }
                 }
 
                 {
                     <span class="comment">// Synchronous timer starts.
-                    // We&#39;re in the uploader thread anyway.
+                    // We're in the uploader thread anyway.
                     // But also: No data is stored on disk.
                     </span><span class="kw">let </span><span class="kw-2">mut </span>in_flight = <span class="self">self</span>.in_flight.write().unwrap();
                     <span class="kw">let </span>success_id = <span class="self">self</span>.upload_metrics.send_success.start_sync();
@@ -2567,12 +2568,12 @@
                 <span class="comment">// Adding the `Date` header just before actual upload happens.
                 </span>request
                     .headers
-                    .insert(<span class="string">&quot;Date&quot;</span>.to_string(), create_date_header_value(Utc::now()));
+                    .insert(<span class="string">"Date"</span>.to_string(), create_date_header_value(Utc::now()));
 
                 PingUploadTask::Upload { request }
             }
             <span class="prelude-val">None </span>=&gt; {
-                <span class="macro">log::info!</span>(<span class="string">&quot;No more pings to upload! You are done.&quot;</span>);
+                <span class="macro">log::info!</span>(<span class="string">"No more pings to upload! You are done."</span>);
                 PingUploadTask::done()
             }
         }
@@ -2666,7 +2667,7 @@
 
         <span class="kw">match </span>status {
             HttpStatus { code } <span class="kw">if </span>(<span class="number">200</span>..=<span class="number">299</span>).contains(<span class="kw-2">&amp;</span>code) =&gt; {
-                <span class="macro">log::info!</span>(<span class="string">&quot;Ping {} successfully sent {}.&quot;</span>, document_id, code);
+                <span class="macro">log::info!</span>(<span class="string">"Ping {} successfully sent {}."</span>, document_id, code);
                 <span class="kw">if let </span><span class="prelude-val">Some</span>((success_id, failure_id)) = send_ids {
                     <span class="self">self</span>.upload_metrics
                         .send_success
@@ -2678,7 +2679,7 @@
 
             UnrecoverableFailure { .. } | HttpStatus { code: <span class="number">400</span>..=<span class="number">499 </span>} =&gt; {
                 <span class="macro">log::warn!</span>(
-                    <span class="string">&quot;Unrecoverable upload failure while attempting to send ping {}. Error was {:?}&quot;</span>,
+                    <span class="string">"Unrecoverable upload failure while attempting to send ping {}. Error was {:?}"</span>,
                     document_id,
                     status
                 );
@@ -2693,7 +2694,7 @@
 
             RecoverableFailure { .. } | HttpStatus { .. } =&gt; {
                 <span class="macro">log::warn!</span>(
-                    <span class="string">&quot;Recoverable upload failure while attempting to send ping {}, will retry. Error was {:?}&quot;</span>,
+                    <span class="string">"Recoverable upload failure while attempting to send ping {}, will retry. Error was {:?}"</span>,
                     document_id,
                     status
                 );
@@ -2709,7 +2710,7 @@
             }
 
             Done { .. } =&gt; {
-                <span class="macro">log::debug!</span>(<span class="string">&quot;Uploader signaled Done. Exiting.&quot;</span>);
+                <span class="macro">log::debug!</span>(<span class="string">"Uploader signaled Done. Exiting."</span>);
                 <span class="kw">if let </span><span class="prelude-val">Some</span>((success_id, failure_id)) = send_ids {
                     <span class="self">self</span>.upload_metrics.send_success.cancel_sync(success_id);
                     <span class="self">self</span>.upload_metrics.send_failure.cancel_sync(failure_id);
@@ -2723,18 +2724,18 @@
 }
 
 <span class="doccomment">/// Splits log message into chunks on Android.
-</span><span class="attr">#[cfg(target_os = <span class="string">&quot;android&quot;</span>)]
+</span><span class="attr">#[cfg(target_os = <span class="string">"android"</span>)]
 </span><span class="kw">pub fn </span>chunked_log_info(path: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>str) {
-    <span class="comment">// Since the logcat ring buffer size is configurable, but it&#39;s &#39;max payload&#39; size is not,
+    <span class="comment">// Since the logcat ring buffer size is configurable, but it's 'max payload' size is not,
     // we must break apart long pings into chunks no larger than the max payload size of 4076b.
     // We leave some head space for our prefix.
     </span><span class="kw">const </span>MAX_LOG_PAYLOAD_SIZE_BYTES: usize = <span class="number">4000</span>;
 
     <span class="comment">// If the length of the ping will fit within one logcat payload, then we can
     // short-circuit here and avoid some overhead, otherwise we must split up the
-    // message so that we don&#39;t truncate it.
+    // message so that we don't truncate it.
     </span><span class="kw">if </span>path.len() + payload.len() &lt;= MAX_LOG_PAYLOAD_SIZE_BYTES {
-        <span class="macro">log::info!</span>(<span class="string">&quot;Glean ping to URL: {}\n{}&quot;</span>, path, payload);
+        <span class="macro">log::info!</span>(<span class="string">"Glean ping to URL: {}\n{}"</span>, path, payload);
         <span class="kw">return</span>;
     }
 
@@ -2748,7 +2749,7 @@
 
     <span class="kw">while </span>end &lt; payload.len() {
         <span class="comment">// Find char boundary from the end.
-        // It&#39;s UTF-8, so it is within 4 bytes from here.
+        // It's UTF-8, so it is within 4 bytes from here.
         </span><span class="kw">for _ in </span><span class="number">0</span>..<span class="number">4 </span>{
             <span class="kw">if </span>payload.is_char_boundary(end) {
                 <span class="kw">break</span>;
@@ -2757,7 +2758,7 @@
         }
 
         <span class="macro">log::info!</span>(
-            <span class="string">&quot;Glean ping to URL: {} [Part {} of {}]\n{}&quot;</span>,
+            <span class="string">"Glean ping to URL: {} [Part {} of {}]\n{}"</span>,
             path,
             chunk_idx,
             total_chunks,
@@ -2773,7 +2774,7 @@
     <span class="comment">// Print any suffix left
     </span><span class="kw">if </span>start &lt; payload.len() {
         <span class="macro">log::info!</span>(
-            <span class="string">&quot;Glean ping to URL: {} [Part {} of {}]\n{}&quot;</span>,
+            <span class="string">"Glean ping to URL: {} [Part {} of {}]\n{}"</span>,
             path,
             chunk_idx,
             total_chunks,
@@ -2783,9 +2784,9 @@
 }
 
 <span class="doccomment">/// Logs payload in one go (all other OS).
-</span><span class="attr">#[cfg(not(target_os = <span class="string">&quot;android&quot;</span>))]
+</span><span class="attr">#[cfg(not(target_os = <span class="string">"android"</span>))]
 </span><span class="kw">pub fn </span>chunked_log_info(_path: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>str) {
-    <span class="macro">log::info!</span>(<span class="string">&quot;{}&quot;</span>, payload)
+    <span class="macro">log::info!</span>(<span class="string">"{}"</span>, payload)
 }
 
 <span class="attr">#[cfg(test)]
@@ -2796,7 +2797,7 @@
     <span class="kw">use </span><span class="kw">crate</span>::metrics::PingType;
     <span class="kw">use crate</span>::{tests::new_glean, PENDING_PINGS_DIRECTORY};
 
-    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;/submit/app_id/ping_name/schema_version/doc_id&quot;</span>;
+    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span>str = <span class="string">"/submit/app_id/ping_name/schema_version/doc_id"</span>;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>doesnt_error_when_there_are_no_pending_pings() {
@@ -2819,10 +2820,10 @@
             PingPayload {
                 document_id: Uuid::new_v4().to_string(),
                 upload_path: PATH.into(),
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                ping_name: <span class="string">"ping-name"</span>.into(),
             },
         );
 
@@ -2846,10 +2847,10 @@
                 PingPayload {
                     document_id: Uuid::new_v4().to_string(),
                     upload_path: PATH.into(),
-                    json_body: <span class="string">&quot;&quot;</span>.into(),
+                    json_body: <span class="string">""</span>.into(),
                     headers: <span class="prelude-val">None</span>,
                     body_has_info_sections: <span class="bool-val">true</span>,
-                    ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                    ping_name: <span class="string">"ping-name"</span>.into(),
                 },
             );
         }
@@ -2884,10 +2885,10 @@
                 PingPayload {
                     document_id: Uuid::new_v4().to_string(),
                     upload_path: PATH.into(),
-                    json_body: <span class="string">&quot;&quot;</span>.into(),
+                    json_body: <span class="string">""</span>.into(),
                     headers: <span class="prelude-val">None</span>,
                     body_has_info_sections: <span class="bool-val">true</span>,
-                    ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                    ping_name: <span class="string">"ping-name"</span>.into(),
                 },
             );
         }
@@ -2904,10 +2905,10 @@
             PingPayload {
                 document_id: Uuid::new_v4().to_string(),
                 upload_path: PATH.into(),
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                ping_name: <span class="string">"ping-name"</span>.into(),
             },
         );
 
@@ -2917,7 +2918,7 @@
                 <span class="comment">// Wait for the uploading window to reset
                 </span>thread::sleep(Duration::from_millis(time));
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return a wait task!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return a wait task!"</span>),
         };
 
         <span class="kw">let </span>task = upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>);
@@ -2937,10 +2938,10 @@
                 PingPayload {
                     document_id: Uuid::new_v4().to_string(),
                     upload_path: PATH.into(),
-                    json_body: <span class="string">&quot;&quot;</span>.into(),
+                    json_body: <span class="string">""</span>.into(),
                     headers: <span class="prelude-val">None</span>,
                     body_has_info_sections: <span class="bool-val">true</span>,
-                    ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                    ping_name: <span class="string">"ping-name"</span>.into(),
                 },
             );
         }
@@ -2948,7 +2949,7 @@
         <span class="comment">// Clear the queue
         </span>drop(upload_manager.clear_ping_queue());
 
-        <span class="comment">// Verify there really isn&#39;t any ping in the queue
+        <span class="comment">// Verify there really isn't any ping in the queue
         </span><span class="macro">assert_eq!</span>(
             upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>),
             PingUploadTask::done()
@@ -2961,7 +2962,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -2989,10 +2990,10 @@
         <span class="kw">let </span>upload_task = glean.get_upload_task();
         <span class="kw">match </span>upload_task {
             PingUploadTask::Upload { request } =&gt; <span class="macro">assert!</span>(request.is_deletion_request()),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
-        <span class="comment">// Verify there really isn&#39;t any other pings in the queue
+        <span class="comment">// Verify there really isn't any other pings in the queue
         </span><span class="macro">assert_eq!</span>(glean.get_upload_task(), PingUploadTask::done());
     }
 
@@ -3002,7 +3003,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3041,7 +3042,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3067,7 +3068,7 @@
                 <span class="comment">// Verify file was deleted
                 </span><span class="macro">assert!</span>(!pending_pings_dir.join(document_id).exists());
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Verify that after request is returned, none are left
@@ -3080,7 +3081,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3106,7 +3107,7 @@
                 <span class="comment">// Verify file was deleted
                 </span><span class="macro">assert!</span>(!pending_pings_dir.join(document_id).exists());
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Verify that after request is returned, none are left
@@ -3119,7 +3120,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3144,10 +3145,10 @@
                     PingUploadTask::Upload { request } =&gt; {
                         <span class="macro">assert_eq!</span>(document_id, request.document_id);
                     }
-                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+                    <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
                 }
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Verify that after request is returned, none are left
@@ -3160,7 +3161,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3189,7 +3190,7 @@
                 <span class="comment">// Verify file was deleted
                 </span><span class="macro">assert!</span>(!pending_pings_dir.join(document_id).exists());
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Verify that after request is returned, none are left
@@ -3203,10 +3204,10 @@
         <span class="kw">let </span>upload_manager = PingUploadManager::no_policy(dir.path());
 
         <span class="kw">let </span>doc1 = Uuid::new_v4().to_string();
-        <span class="kw">let </span>path1 = <span class="macro">format!</span>(<span class="string">&quot;/submit/app_id/test-ping/1/{}&quot;</span>, doc1);
+        <span class="kw">let </span>path1 = <span class="macro">format!</span>(<span class="string">"/submit/app_id/test-ping/1/{}"</span>, doc1);
 
         <span class="kw">let </span>doc2 = Uuid::new_v4().to_string();
-        <span class="kw">let </span>path2 = <span class="macro">format!</span>(<span class="string">&quot;/submit/app_id/test-ping/1/{}&quot;</span>, doc2);
+        <span class="kw">let </span>path2 = <span class="macro">format!</span>(<span class="string">"/submit/app_id/test-ping/1/{}"</span>, doc2);
 
         <span class="comment">// Enqueue a ping
         </span>upload_manager.enqueue_ping(
@@ -3214,30 +3215,30 @@
             PingPayload {
                 document_id: doc1.clone(),
                 upload_path: path1,
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;test-ping&quot;</span>.into(),
+                ping_name: <span class="string">"test-ping"</span>.into(),
             },
         );
 
         <span class="comment">// Try and get the first request.
         </span><span class="kw">let </span>req = <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
             PingUploadTask::Upload { request } =&gt; request,
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         };
         <span class="macro">assert_eq!</span>(doc1, req.document_id);
 
-        <span class="comment">// Schedule the next one while the first one is &quot;in progress&quot;
+        <span class="comment">// Schedule the next one while the first one is "in progress"
         </span>upload_manager.enqueue_ping(
             <span class="kw-2">&amp;</span>glean,
             PingPayload {
                 document_id: doc2.clone(),
                 upload_path: path2,
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;test-ping&quot;</span>.into(),
+                ping_name: <span class="string">"test-ping"</span>.into(),
             },
         );
 
@@ -3251,7 +3252,7 @@
         <span class="comment">// Get the second request.
         </span><span class="kw">let </span>req = <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
             PingUploadTask::Upload { request } =&gt; request,
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         };
         <span class="macro">assert_eq!</span>(doc2, req.document_id);
 
@@ -3262,7 +3263,7 @@
             UploadResult::http_status(<span class="number">200</span>),
         );
 
-        <span class="comment">// ... and then we&#39;re done.
+        <span class="comment">// ... and then we're done.
         </span><span class="macro">assert_eq!</span>(
             upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>),
             PingUploadTask::done()
@@ -3273,11 +3274,11 @@
     </span><span class="kw">fn </span>adds_debug_view_header_to_requests_when_tag_is_set() {
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, _t) = new_glean(<span class="prelude-val">None</span>);
 
-        glean.set_debug_view_tag(<span class="string">&quot;valid-tag&quot;</span>);
+        glean.set_debug_view_tag(<span class="string">"valid-tag"</span>);
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3294,9 +3295,9 @@
         <span class="comment">// Get the submitted PingRequest
         </span><span class="kw">match </span>glean.get_upload_task() {
             PingUploadTask::Upload { request } =&gt; {
-                <span class="macro">assert_eq!</span>(request.headers.get(<span class="string">&quot;X-Debug-ID&quot;</span>).unwrap(), <span class="string">&quot;valid-tag&quot;</span>)
+                <span class="macro">assert_eq!</span>(request.headers.get(<span class="string">"X-Debug-ID"</span>).unwrap(), <span class="string">"valid-tag"</span>)
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
     }
 
@@ -3305,11 +3306,11 @@
         <span class="kw">let </span>(glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Create a new upload manager so that we have access to its functions directly,
-        // make it synchronous so we don&#39;t have to manually wait for the scanning to finish.
+        // make it synchronous so we don't have to manually wait for the scanning to finish.
         </span><span class="kw">let </span>upload_manager = PingUploadManager::no_policy(dir.path());
 
         <span class="kw">let </span>doc_id = Uuid::new_v4().to_string();
-        <span class="kw">let </span>path = <span class="macro">format!</span>(<span class="string">&quot;/submit/app_id/test-ping/1/{}&quot;</span>, doc_id);
+        <span class="kw">let </span>path = <span class="macro">format!</span>(<span class="string">"/submit/app_id/test-ping/1/{}"</span>, doc_id);
 
         <span class="comment">// Try to enqueue a ping with the same doc_id twice
         </span>upload_manager.enqueue_ping(
@@ -3317,10 +3318,10 @@
             PingPayload {
                 document_id: doc_id.clone(),
                 upload_path: path.clone(),
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;test-ping&quot;</span>.into(),
+                ping_name: <span class="string">"test-ping"</span>.into(),
             },
         );
         upload_manager.enqueue_ping(
@@ -3328,10 +3329,10 @@
             PingPayload {
                 document_id: doc_id,
                 upload_path: path,
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;test-ping&quot;</span>.into(),
+                ping_name: <span class="string">"test-ping"</span>.into(),
             },
         );
 
@@ -3352,7 +3353,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3387,12 +3388,12 @@
                         UploadResult::recoverable_failure(),
                     );
                 }
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
             }
         }
 
         <span class="comment">// Verify that after returning the max amount of recoverable failures,
-        // we are done even though we haven&#39;t gotten all the enqueued requests.
+        // we are done even though we haven't gotten all the enqueued requests.
         </span><span class="macro">assert_eq!</span>(
             upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>),
             PingUploadTask::done()
@@ -3411,7 +3412,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3446,7 +3447,7 @@
         //
         // From manual testing I figured out an empty ping file is 324bytes,
         // I am setting this a little over just so that minor changes to the ping structure
-        // don&#39;t immediatelly break this.
+        // don't immediatelly break this.
         </span>upload_manager
             .policy
             .set_max_pending_pings_directory_size(<span class="prelude-val">Some</span>(<span class="number">500</span>));
@@ -3456,7 +3457,7 @@
         // Make sure it is the newest ping.
         </span><span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
             PingUploadTask::Upload { request } =&gt; <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>request.document_id, newest_ping_id),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Verify that no other requests were returned,
@@ -3472,7 +3473,7 @@
             upload_manager
                 .upload_metrics
                 .deleted_pings_after_quota_hit
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
@@ -3480,7 +3481,7 @@
             upload_manager
                 .upload_metrics
                 .pending_pings
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
     }
@@ -3491,7 +3492,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3536,7 +3537,7 @@
         </span><span class="kw">for </span>ping_id <span class="kw">in </span>expected_pings.iter().rev() {
             <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
                 PingUploadTask::Upload { request } =&gt; <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>request.document_id, ping_id),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
             }
         }
 
@@ -3553,7 +3554,7 @@
             upload_manager
                 .upload_metrics
                 .deleted_pings_after_quota_hit
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
@@ -3561,7 +3562,7 @@
             upload_manager
                 .upload_metrics
                 .pending_pings
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
     }
@@ -3572,7 +3573,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3619,7 +3620,7 @@
         </span><span class="kw">for </span>ping_id <span class="kw">in </span>expected_pings.iter().rev() {
             <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
                 PingUploadTask::Upload { request } =&gt; <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>request.document_id, ping_id),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
             }
         }
 
@@ -3636,7 +3637,7 @@
             upload_manager
                 .upload_metrics
                 .deleted_pings_after_quota_hit
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
@@ -3644,7 +3645,7 @@
             upload_manager
                 .upload_metrics
                 .pending_pings
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
     }
@@ -3655,7 +3656,7 @@
 
         <span class="comment">// Register a ping for testing
         </span><span class="kw">let </span>ping_type = PingType::new(
-            <span class="string">&quot;test&quot;</span>,
+            <span class="string">"test"</span>,
             <span class="bool-val">true</span>,
             <span class="comment">/* send_if_empty */ </span><span class="bool-val">true</span>,
             <span class="bool-val">true</span>,
@@ -3702,7 +3703,7 @@
         </span><span class="kw">for </span>ping_id <span class="kw">in </span>expected_pings.iter().rev() {
             <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
                 PingUploadTask::Upload { request } =&gt; <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>request.document_id, ping_id),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
             }
         }
 
@@ -3719,7 +3720,7 @@
             upload_manager
                 .upload_metrics
                 .deleted_pings_after_quota_hit
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
@@ -3727,7 +3728,7 @@
             upload_manager
                 .upload_metrics
                 .pending_pings
-                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">&quot;metrics&quot;</span>))
+                .get_value(<span class="kw-2">&amp;</span>glean, <span class="prelude-val">Some</span>(<span class="string">"metrics"</span>))
                 .unwrap()
         );
     }
@@ -3747,7 +3748,7 @@
         <span class="comment">// Add a rate limiter to the upload mangager with max of 1 ping 5secs.
         //
         // We arbitrarily set the maximum pings per interval to a very low number,
-        // when the rate limiter reaches it&#39;s limit get_upload_task returns a PingUploadTask::Wait,
+        // when the rate limiter reaches it's limit get_upload_task returns a PingUploadTask::Wait,
         // which will allow us to test the limitations around returning too many of those in a row.
         </span><span class="kw">let </span>secs_per_interval = <span class="number">5</span>;
         <span class="kw">let </span>max_pings_per_interval = <span class="number">1</span>;
@@ -3759,10 +3760,10 @@
             PingPayload {
                 document_id: Uuid::new_v4().to_string(),
                 upload_path: PATH.into(),
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                ping_name: <span class="string">"ping-name"</span>.into(),
             },
         );
         upload_manager.enqueue_ping(
@@ -3770,17 +3771,17 @@
             PingPayload {
                 document_id: Uuid::new_v4().to_string(),
                 upload_path: PATH.into(),
-                json_body: <span class="string">&quot;&quot;</span>.into(),
+                json_body: <span class="string">""</span>.into(),
                 headers: <span class="prelude-val">None</span>,
                 body_has_info_sections: <span class="bool-val">true</span>,
-                ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+                ping_name: <span class="string">"ping-name"</span>.into(),
             },
         );
 
         <span class="comment">// Get the first ping, it should be returned normally.
         </span><span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
             PingUploadTask::Upload { .. } =&gt; {}
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return the next request!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return the next request!"</span>),
         }
 
         <span class="comment">// Try to get the next ping,
@@ -3805,7 +3806,7 @@
         </span><span class="kw">let </span>task = upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>);
         <span class="macro">assert!</span>(task.is_upload());
 
-        <span class="comment">// And once we are done we don&#39;t need to wait anymore.
+        <span class="comment">// And once we are done we don't need to wait anymore.
         </span><span class="macro">assert_eq!</span>(
             upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>),
             PingUploadTask::done()
@@ -3815,12 +3816,12 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>wait_task_contains_expected_wait_time_when_pending_pings_dir_not_processed_yet() {
         <span class="kw">let </span>(glean, dir) = new_glean(<span class="prelude-val">None</span>);
-        <span class="kw">let </span>upload_manager = PingUploadManager::new(dir.path(), <span class="string">&quot;test&quot;</span>);
+        <span class="kw">let </span>upload_manager = PingUploadManager::new(dir.path(), <span class="string">"test"</span>);
         <span class="kw">match </span>upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>) {
             PingUploadTask::Wait { time } =&gt; {
                 <span class="macro">assert_eq!</span>(time, WAIT_TIME_FOR_PING_PROCESSING);
             }
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Expected upload manager to return a wait task!&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Expected upload manager to return a wait task!"</span>),
         };
     }
 
@@ -3835,10 +3836,10 @@
         <span class="kw">let </span>ping = PingPayload {
             document_id: identifier.to_string(),
             upload_path: PATH.into(),
-            json_body: <span class="string">&quot;&quot;</span>.into(),
+            json_body: <span class="string">""</span>.into(),
             headers: <span class="prelude-val">None</span>,
             body_has_info_sections: <span class="bool-val">true</span>,
-            ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+            ping_name: <span class="string">"ping-name"</span>.into(),
         };
         upload_manager.enqueue_ping(<span class="kw-2">&amp;</span>glean, ping);
         <span class="macro">assert!</span>(upload_manager.get_upload_task(<span class="kw-2">&amp;</span>glean, <span class="bool-val">false</span>).is_upload());
@@ -3847,10 +3848,10 @@
         </span><span class="kw">let </span>ping = PingPayload {
             document_id: identifier.to_string(),
             upload_path: PATH.into(),
-            json_body: <span class="string">&quot;&quot;</span>.into(),
+            json_body: <span class="string">""</span>.into(),
             headers: <span class="prelude-val">None</span>,
             body_has_info_sections: <span class="bool-val">true</span>,
-            ping_name: <span class="string">&quot;ping-name&quot;</span>.into(),
+            ping_name: <span class="string">"ping-name"</span>.into(),
         };
         upload_manager.enqueue_ping(<span class="kw-2">&amp;</span>glean, ping);
 
@@ -3868,5 +3869,4 @@
         );
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

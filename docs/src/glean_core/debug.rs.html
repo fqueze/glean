@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/debug.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>debug.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../glean_core/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/debug.rs`."><title>debug.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -316,7 +317,7 @@
 <a href="#316" id="316">316</a>
 <a href="#317" id="317">317</a>
 <a href="#318" id="318">318</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -331,9 +332,9 @@
 //!
 //! * **Ping logging** - logging the contents of ping requests that are correctly assembled;
 //!         This may be set by calling glean.set_log_pings(value: bool)
-//!         or by setting the environment variable GLEAN_LOG_PINGS=&quot;true&quot;;
+//!         or by setting the environment variable GLEAN_LOG_PINGS="true";
 //! * **Debug tagging** - Adding the X-Debug-ID header to every ping request,
-//!         allowing these tagged pings to be sent to the [&quot;Ping Debug Viewer&quot;](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
+//!         allowing these tagged pings to be sent to the ["Ping Debug Viewer"](https://mozilla.github.io/glean/book/dev/core/internal/debug-pings.html).
 //!         This may be set by calling glean.set_debug_view_tag(value: &amp;str)
 //!         or by setting the environment variable `GLEAN_DEBUG_VIEW_TAG=&lt;some tag&gt;`;
 //! * **Source tagging** - Adding the X-Source-Tags header to every ping request,
@@ -345,12 +346,12 @@
 
 </span><span class="kw">use </span>std::env;
 
-<span class="kw">const </span>GLEAN_LOG_PINGS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;GLEAN_LOG_PINGS&quot;</span>;
-<span class="kw">const </span>GLEAN_DEBUG_VIEW_TAG: <span class="kw-2">&amp;</span>str = <span class="string">&quot;GLEAN_DEBUG_VIEW_TAG&quot;</span>;
-<span class="kw">const </span>GLEAN_SOURCE_TAGS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;GLEAN_SOURCE_TAGS&quot;</span>;
+<span class="kw">const </span>GLEAN_LOG_PINGS: <span class="kw-2">&amp;</span>str = <span class="string">"GLEAN_LOG_PINGS"</span>;
+<span class="kw">const </span>GLEAN_DEBUG_VIEW_TAG: <span class="kw-2">&amp;</span>str = <span class="string">"GLEAN_DEBUG_VIEW_TAG"</span>;
+<span class="kw">const </span>GLEAN_SOURCE_TAGS: <span class="kw-2">&amp;</span>str = <span class="string">"GLEAN_SOURCE_TAGS"</span>;
 <span class="kw">const </span>GLEAN_MAX_SOURCE_TAGS: usize = <span class="number">5</span>;
 
-<span class="doccomment">/// A representation of all of Glean&#39;s debug options.
+<span class="doccomment">/// A representation of all of Glean's debug options.
 </span><span class="kw">pub struct </span>DebugOptions {
     <span class="doccomment">/// Option to log the payload of pings that are successfully assembled into a ping request.
     </span><span class="kw">pub </span>log_pings: DebugOption&lt;bool&gt;,
@@ -363,10 +364,10 @@
 
 <span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>DebugOptions {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>std::fmt::Formatter) -&gt; std::fmt::Result {
-        fmt.debug_struct(<span class="string">&quot;DebugOptions&quot;</span>)
-            .field(<span class="string">&quot;log_pings&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.log_pings.get())
-            .field(<span class="string">&quot;debug_view_tag&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.debug_view_tag.get())
-            .field(<span class="string">&quot;source_tags&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.source_tags.get())
+        fmt.debug_struct(<span class="string">"DebugOptions"</span>)
+            .field(<span class="string">"log_pings"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.log_pings.get())
+            .field(<span class="string">"debug_view_tag"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.debug_view_tag.get())
+            .field(<span class="string">"source_tags"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.source_tags.get())
             .finish()
     }
 }
@@ -439,7 +440,7 @@
                 }
                 <span class="prelude-val">None </span>=&gt; {
                     <span class="macro">log::error!</span>(
-                        <span class="string">&quot;Unable to parse debug option {}={} into {}. Ignoring.&quot;</span>,
+                        <span class="string">"Unable to parse debug option {}={} into {}. Ignoring."</span>,
                         <span class="self">self</span>.env,
                         env_value,
                         std::any::type_name::&lt;T&gt;()
@@ -447,7 +448,7 @@
                 }
             },
             <span class="prelude-val">Err</span>(env::VarError::NotUnicode(<span class="kw">_</span>)) =&gt; {
-                <span class="macro">log::error!</span>(<span class="string">&quot;The value of {} is not valid unicode. Ignoring.&quot;</span>, <span class="self">self</span>.env)
+                <span class="macro">log::error!</span>(<span class="string">"The value of {} is not valid unicode. Ignoring."</span>, <span class="self">self</span>.env)
             }
             <span class="comment">// The other possible error is that the env var is not set,
             // which is not an error for us and can safely be ignored.
@@ -465,11 +466,11 @@
     </span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: T) -&gt; bool {
         <span class="kw">let </span>validated = <span class="self">self</span>.validate(<span class="kw-2">&amp;</span>value);
         <span class="kw">if </span>validated {
-            <span class="macro">log::info!</span>(<span class="string">&quot;Setting the debug option {}.&quot;</span>, <span class="self">self</span>.env);
+            <span class="macro">log::info!</span>(<span class="string">"Setting the debug option {}."</span>, <span class="self">self</span>.env);
             <span class="self">self</span>.value = <span class="prelude-val">Some</span>(value);
             <span class="kw">return </span><span class="bool-val">true</span>;
         }
-        <span class="macro">log::error!</span>(<span class="string">&quot;Invalid value for debug option {}.&quot;</span>, <span class="self">self</span>.env);
+        <span class="macro">log::error!</span>(<span class="string">"Invalid value for debug option {}."</span>, <span class="self">self</span>.env);
         <span class="bool-val">false
     </span>}
 
@@ -489,20 +490,20 @@
         <span class="kw">return </span><span class="prelude-val">None</span>;
     }
 
-    <span class="prelude-val">Some</span>(trimmed.split(<span class="string">&#39;,&#39;</span>).map(|s| s.trim().to_string()).collect())
+    <span class="prelude-val">Some</span>(trimmed.split(<span class="string">','</span>).map(|s| s.trim().to_string()).collect())
 }
 
 <span class="doccomment">/// A tag is the value used in both the `X-Debug-ID` and `X-Source-Tags` headers
 /// of tagged ping requests, thus is it must be a valid header value.
 ///
-/// In other words, it must match the regex: &quot;[a-zA-Z0-9-]{1,20}&quot;
+/// In other words, it must match the regex: "[a-zA-Z0-9-]{1,20}"
 ///
-/// The regex crate isn&#39;t used here because it adds to the binary size,
-/// and the Glean SDK doesn&#39;t use regular expressions anywhere else.
+/// The regex crate isn't used here because it adds to the binary size,
+/// and the Glean SDK doesn't use regular expressions anywhere else.
 </span><span class="attr">#[allow(clippy::ptr_arg)]
 </span><span class="kw">fn </span>validate_tag(value: <span class="kw-2">&amp;</span>String) -&gt; bool {
     <span class="kw">if </span>value.is_empty() {
-        <span class="macro">log::error!</span>(<span class="string">&quot;A tag must have at least one character.&quot;</span>);
+        <span class="macro">log::error!</span>(<span class="string">"A tag must have at least one character."</span>);
         <span class="kw">return </span><span class="bool-val">false</span>;
     }
 
@@ -514,16 +515,16 @@
             <span class="comment">// We are done, so the whole expression is valid.
             </span><span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="bool-val">true</span>,
             <span class="comment">// Valid characters.
-            </span><span class="prelude-val">Some</span>(<span class="string">&#39;-&#39;</span>) | <span class="prelude-val">Some</span>(<span class="string">&#39;a&#39;</span>..=<span class="string">&#39;z&#39;</span>) | <span class="prelude-val">Some</span>(<span class="string">&#39;A&#39;</span>..=<span class="string">&#39;Z&#39;</span>) | <span class="prelude-val">Some</span>(<span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) =&gt; (),
+            </span><span class="prelude-val">Some</span>(<span class="string">'-'</span>) | <span class="prelude-val">Some</span>(<span class="string">'a'</span>..=<span class="string">'z'</span>) | <span class="prelude-val">Some</span>(<span class="string">'A'</span>..=<span class="string">'Z'</span>) | <span class="prelude-val">Some</span>(<span class="string">'0'</span>..=<span class="string">'9'</span>) =&gt; (),
             <span class="comment">// An invalid character
             </span><span class="prelude-val">Some</span>(c) =&gt; {
-                <span class="macro">log::error!</span>(<span class="string">&quot;Invalid character &#39;{}&#39; in the tag.&quot;</span>, c);
+                <span class="macro">log::error!</span>(<span class="string">"Invalid character '{}' in the tag."</span>, c);
                 <span class="kw">return </span><span class="bool-val">false</span>;
             }
         }
         count += <span class="number">1</span>;
         <span class="kw">if </span>count == <span class="number">20 </span>{
-            <span class="macro">log::error!</span>(<span class="string">&quot;A tag cannot exceed 20 characters.&quot;</span>);
+            <span class="macro">log::error!</span>(<span class="string">"A tag cannot exceed 20 characters."</span>);
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
     }
@@ -541,14 +542,14 @@
 
     <span class="kw">if </span>tags.len() &gt; GLEAN_MAX_SOURCE_TAGS {
         <span class="macro">log::error!</span>(
-            <span class="string">&quot;A list of tags cannot contain more than {} elements.&quot;</span>,
+            <span class="string">"A list of tags cannot contain more than {} elements."</span>,
             GLEAN_MAX_SOURCE_TAGS
         );
         <span class="kw">return </span><span class="bool-val">false</span>;
     }
 
-    <span class="kw">if </span>tags.iter().any(|s| s.starts_with(<span class="string">&quot;glean&quot;</span>)) {
-        <span class="macro">log::error!</span>(<span class="string">&quot;Tags starting with `glean` are reserved and must not be used.&quot;</span>);
+    <span class="kw">if </span>tags.iter().any(|s| s.starts_with(<span class="string">"glean"</span>)) {
+        <span class="macro">log::error!</span>(<span class="string">"Tags starting with `glean` are reserved and must not be used."</span>);
         <span class="kw">return </span><span class="bool-val">false</span>;
     }
 
@@ -561,78 +562,77 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>debug_option_is_correctly_loaded_from_env() {
-        env::set_var(<span class="string">&quot;GLEAN_TEST_1&quot;</span>, <span class="string">&quot;test&quot;</span>);
-        <span class="kw">let </span>option: DebugOption&lt;String&gt; = DebugOption::new(<span class="string">&quot;GLEAN_TEST_1&quot;</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">&quot;test&quot;</span>);
+        env::set_var(<span class="string">"GLEAN_TEST_1"</span>, <span class="string">"test"</span>);
+        <span class="kw">let </span>option: DebugOption&lt;String&gt; = DebugOption::new(<span class="string">"GLEAN_TEST_1"</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">"test"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>debug_option_is_correctly_validated_when_necessary() {
         <span class="attr">#[allow(clippy::ptr_arg)]
         </span><span class="kw">fn </span>validate(value: <span class="kw-2">&amp;</span>String) -&gt; bool {
-            value == <span class="string">&quot;test&quot;
+            value == <span class="string">"test"
         </span>}
 
         <span class="comment">// Invalid values from the env are not set
-        </span>env::set_var(<span class="string">&quot;GLEAN_TEST_2&quot;</span>, <span class="string">&quot;invalid&quot;</span>);
+        </span>env::set_var(<span class="string">"GLEAN_TEST_2"</span>, <span class="string">"invalid"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>option: DebugOption&lt;String&gt; =
-            DebugOption::new(<span class="string">&quot;GLEAN_TEST_2&quot;</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">Some</span>(validate));
+            DebugOption::new(<span class="string">"GLEAN_TEST_2"</span>, <span class="prelude-val">Some</span>, <span class="prelude-val">Some</span>(validate));
         <span class="macro">assert!</span>(option.get().is_none());
 
         <span class="comment">// Valid values are set using the `set` function
-        </span><span class="macro">assert!</span>(option.set(<span class="string">&quot;test&quot;</span>.into()));
-        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">&quot;test&quot;</span>);
+        </span><span class="macro">assert!</span>(option.set(<span class="string">"test"</span>.into()));
+        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">"test"</span>);
 
         <span class="comment">// Invalid values are not set using the `set` function
-        </span><span class="macro">assert!</span>(!option.set(<span class="string">&quot;invalid&quot;</span>.into()));
-        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">&quot;test&quot;</span>);
+        </span><span class="macro">assert!</span>(!option.set(<span class="string">"invalid"</span>.into()));
+        <span class="macro">assert_eq!</span>(option.get().unwrap(), <span class="string">"test"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>tokenize_string_splits_correctly() {
         <span class="comment">// Valid list is properly tokenized and spaces are trimmed.
         </span><span class="macro">assert_eq!</span>(
-            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="string">&quot;test1&quot;</span>.to_string(), <span class="string">&quot;test2&quot;</span>.to_string()]),
-            tokenize_string(<span class="string">&quot;    test1,        test2  &quot;</span>.to_string())
+            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="string">"test1"</span>.to_string(), <span class="string">"test2"</span>.to_string()]),
+            tokenize_string(<span class="string">"    test1,        test2  "</span>.to_string())
         );
 
         <span class="comment">// Empty strings return no item.
-        </span><span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, tokenize_string(<span class="string">&quot;&quot;</span>.to_string()));
+        </span><span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, tokenize_string(<span class="string">""</span>.to_string()));
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>validates_tag_correctly() {
-        <span class="macro">assert!</span>(validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;valid-value&quot;</span>.to_string()));
-        <span class="macro">assert!</span>(validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;-also-valid-value&quot;</span>.to_string()));
-        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;invalid_value&quot;</span>.to_string()));
-        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;invalid value&quot;</span>.to_string()));
-        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;!nv@lid-val*e&quot;</span>.to_string()));
+        <span class="macro">assert!</span>(validate_tag(<span class="kw-2">&amp;</span><span class="string">"valid-value"</span>.to_string()));
+        <span class="macro">assert!</span>(validate_tag(<span class="kw-2">&amp;</span><span class="string">"-also-valid-value"</span>.to_string()));
+        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">"invalid_value"</span>.to_string()));
+        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">"invalid value"</span>.to_string()));
+        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">"!nv@lid-val*e"</span>.to_string()));
         <span class="macro">assert!</span>(!validate_tag(
-            <span class="kw-2">&amp;</span><span class="string">&quot;invalid-value-because-way-too-long&quot;</span>.to_string()
+            <span class="kw-2">&amp;</span><span class="string">"invalid-value-because-way-too-long"</span>.to_string()
         ));
-        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">&quot;&quot;</span>.to_string()));
+        <span class="macro">assert!</span>(!validate_tag(<span class="kw-2">&amp;</span><span class="string">""</span>.to_string()));
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>validates_source_tags_correctly() {
         <span class="comment">// Empty tags.
-        </span><span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">&quot;&quot;</span>.to_string()]));
+        </span><span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">""</span>.to_string()]));
         <span class="comment">// Too many tags.
         </span><span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[
-            <span class="string">&quot;1&quot;</span>.to_string(),
-            <span class="string">&quot;2&quot;</span>.to_string(),
-            <span class="string">&quot;3&quot;</span>.to_string(),
-            <span class="string">&quot;4&quot;</span>.to_string(),
-            <span class="string">&quot;5&quot;</span>.to_string(),
-            <span class="string">&quot;6&quot;</span>.to_string()
+            <span class="string">"1"</span>.to_string(),
+            <span class="string">"2"</span>.to_string(),
+            <span class="string">"3"</span>.to_string(),
+            <span class="string">"4"</span>.to_string(),
+            <span class="string">"5"</span>.to_string(),
+            <span class="string">"6"</span>.to_string()
         ]));
         <span class="comment">// Invalid tags.
-        </span><span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">&quot;!nv@lid-val*e&quot;</span>.to_string()]));
+        </span><span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">"!nv@lid-val*e"</span>.to_string()]));
         <span class="macro">assert!</span>(!validate_source_tags(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[
-            <span class="string">&quot;glean-test1&quot;</span>.to_string(),
-            <span class="string">&quot;test2&quot;</span>.to_string()
+            <span class="string">"glean-test1"</span>.to_string(),
+            <span class="string">"test2"</span>.to_string()
         ]));
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

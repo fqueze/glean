@@ -208,7 +208,6 @@ Protocol classes can be generic, they are defined as::</p>
     class RECOVERABLE_FAILURE:
         unused: &#34;int&#34;
 
-        @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
             self.unused = unused
 
@@ -225,7 +224,6 @@ Protocol classes can be generic, they are defined as::</p>
     class UNRECOVERABLE_FAILURE:
         unused: &#34;int&#34;
 
-        @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
             self.unused = unused
 
@@ -242,7 +240,6 @@ Protocol classes can be generic, they are defined as::</p>
     class HTTP_STATUS:
         code: &#34;int&#34;
 
-        @typing.no_type_check
         def __init__(self,code: &#34;int&#34;):
             self.code = code
 
@@ -259,7 +256,6 @@ Protocol classes can be generic, they are defined as::</p>
     class DONE:
         unused: &#34;int&#34;
 
-        @typing.no_type_check
         def __init__(self,unused: &#34;int&#34;):
             self.unused = unused
 

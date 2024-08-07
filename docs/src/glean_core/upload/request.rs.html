@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/upload/request.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>request.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../glean_core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `glean-core/src/upload/request.rs`."><title>request.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -312,7 +313,7 @@
 <a href="#312" id="312">312</a>
 <a href="#313" id="313">313</a>
 <a href="#314" id="314">314</a>
-</pre><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
+</pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
@@ -339,11 +340,11 @@
     //
     // as documented here:
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
-    // Unfortunately we can&#39;t use `current_time.to_rfc2822()` as it
-    // formats as &quot;Mon, 22 Jun 2020 10:40:34 +0000&quot;, with an ending
-    // &quot;+0000&quot; instead of &quot;GMT&quot;. That&#39;s why we need to go with manual
+    // Unfortunately we can't use `current_time.to_rfc2822()` as it
+    // formats as "Mon, 22 Jun 2020 10:40:34 +0000", with an ending
+    // "+0000" instead of "GMT". That's why we need to go with manual
     // formatting.
-    </span>current_time.format(<span class="string">&quot;%a, %d %b %Y %T GMT&quot;</span>).to_string()
+    </span>current_time.format(<span class="string">"%a, %d %b %Y %T GMT"</span>).to_string()
 }
 
 <span class="kw">fn </span>create_x_telemetry_agent_header_value(
@@ -352,7 +353,7 @@
     system: <span class="kw-2">&amp;</span>str,
 ) -&gt; String {
     <span class="macro">format!</span>(
-        <span class="string">&quot;Glean/{} ({} on {})&quot;</span>,
+        <span class="string">"Glean/{} ({} on {})"</span>,
         version, language_binding_name, system
     )
 }
@@ -363,7 +364,7 @@
 
     <span class="comment">// Attempt to add the content to the gzipper.
     </span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = gzipper.write_all(content) {
-        <span class="macro">log::warn!</span>(<span class="string">&quot;Failed to write to the gzipper: {} - {:?}&quot;</span>, path, e);
+        <span class="macro">log::warn!</span>(<span class="string">"Failed to write to the gzipper: {} - {:?}"</span>, path, e);
         <span class="kw">return </span><span class="prelude-val">None</span>;
     }
 
@@ -385,7 +386,7 @@
     </span><span class="kw">pub fn </span>new(language_binding_name: <span class="kw-2">&amp;</span>str, body_max_size: usize) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>headers = HashMap::new();
         headers.insert(
-            <span class="string">&quot;X-Telemetry-Agent&quot;</span>.to_string(),
+            <span class="string">"X-Telemetry-Agent"</span>.to_string(),
             create_x_telemetry_agent_header_value(
                 <span class="kw">crate</span>::GLEAN_VERSION,
                 language_binding_name,
@@ -393,8 +394,8 @@
             ),
         );
         headers.insert(
-            <span class="string">&quot;Content-Type&quot;</span>.to_string(),
-            <span class="string">&quot;application/json; charset=utf-8&quot;</span>.to_string(),
+            <span class="string">"Content-Type"</span>.to_string(),
+            <span class="string">"application/json; charset=utf-8"</span>.to_string(),
         );
 
         <span class="self">Self </span>{
@@ -425,11 +426,11 @@
     /// This method will also attempt to gzip the body contents
     /// and add headers related to the body that was just added.
     ///
-    /// Namely these headers are the &quot;Content-Length&quot; with the length of the body
-    /// and in case we are successfull on gzipping the contents, the &quot;Content-Encoding&quot;=&quot;gzip&quot;.
+    /// Namely these headers are the "Content-Length" with the length of the body
+    /// and in case we are successfull on gzipping the contents, the "Content-Encoding"="gzip".
     ///
     /// **Important**
-    /// If we are unable to gzip we don&#39;t panic and instead just set the uncompressed body.
+    /// If we are unable to gzip we don't panic and instead just set the uncompressed body.
     ///
     /// # Panics
     ///
@@ -440,16 +441,16 @@
         <span class="kw">let </span>gzipped_content = gzip_content(
             <span class="self">self</span>.path
                 .as_ref()
-                .expect(<span class="string">&quot;Path must be set before attempting to set the body&quot;</span>),
+                .expect(<span class="string">"Path must be set before attempting to set the body"</span>),
             original_as_string.as_bytes(),
         );
         <span class="kw">let </span>add_gzip_header = gzipped_content.is_some();
         <span class="kw">let </span>body = gzipped_content.unwrap_or_else(|| original_as_string.into_bytes());
 
         <span class="comment">// Include headers related to body
-        </span><span class="self">self </span>= <span class="self">self</span>.header(<span class="string">&quot;Content-Length&quot;</span>, <span class="kw-2">&amp;</span>body.len().to_string());
+        </span><span class="self">self </span>= <span class="self">self</span>.header(<span class="string">"Content-Length"</span>, <span class="kw-2">&amp;</span>body.len().to_string());
         <span class="kw">if </span>add_gzip_header {
-            <span class="self">self </span>= <span class="self">self</span>.header(<span class="string">&quot;Content-Encoding&quot;</span>, <span class="string">&quot;gzip&quot;</span>);
+            <span class="self">self </span>= <span class="self">self</span>.header(<span class="string">"Content-Encoding"</span>, <span class="string">"gzip"</span>);
         }
 
         <span class="self">self</span>.body = <span class="prelude-val">Some</span>(body);
@@ -462,7 +463,7 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Sets the ping&#39;s name aka doctype.
+    <span class="doccomment">/// Sets the ping's name aka doctype.
     </span><span class="kw">pub fn </span>ping_name&lt;S: Into&lt;String&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, ping_name: S) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.ping_name = <span class="prelude-val">Some</span>(ping_name.into());
         <span class="self">self
@@ -489,7 +490,7 @@
     </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;PingRequest&gt; {
         <span class="kw">let </span>body = <span class="self">self
             </span>.body
-            .expect(<span class="string">&quot;body must be set before attempting to build PingRequest&quot;</span>);
+            .expect(<span class="string">"body must be set before attempting to build PingRequest"</span>);
 
         <span class="kw">if </span>body.len() &gt; <span class="self">self</span>.body_max_size {
             <span class="kw">return </span><span class="prelude-val">Err</span>(ErrorKind::PingBodyOverflow(body.len()).into());
@@ -498,18 +499,18 @@
         <span class="prelude-val">Ok</span>(PingRequest {
             document_id: <span class="self">self
                 </span>.document_id
-                .expect(<span class="string">&quot;document_id must be set before attempting to build PingRequest&quot;</span>),
+                .expect(<span class="string">"document_id must be set before attempting to build PingRequest"</span>),
             path: <span class="self">self
                 </span>.path
-                .expect(<span class="string">&quot;path must be set before attempting to build PingRequest&quot;</span>),
+                .expect(<span class="string">"path must be set before attempting to build PingRequest"</span>),
             body,
             headers: <span class="self">self</span>.headers,
             body_has_info_sections: <span class="self">self</span>.body_has_info_sections.expect(
-                <span class="string">&quot;body_has_info_sections must be set before attempting to build PingRequest&quot;</span>,
+                <span class="string">"body_has_info_sections must be set before attempting to build PingRequest"</span>,
             ),
             ping_name: <span class="self">self
                 </span>.ping_name
-                .expect(<span class="string">&quot;ping_name must be set before attempting to build PingRequest&quot;</span>),
+                .expect(<span class="string">"ping_name must be set before attempting to build PingRequest"</span>),
         })
     }
 }
@@ -530,7 +531,7 @@
     </span><span class="kw">pub </span>headers: HeaderMap,
     <span class="doccomment">/// Whether the body has {client|ping}_info sections.
     </span><span class="kw">pub </span>body_has_info_sections: bool,
-    <span class="doccomment">/// The ping&#39;s name. Likely also somewhere in `path`.
+    <span class="doccomment">/// The ping's name. Likely also somewhere in `path`.
     </span><span class="kw">pub </span>ping_name: String,
 }
 
@@ -548,7 +549,7 @@
 
     <span class="doccomment">/// Verifies if current request is for a deletion-request ping.
     </span><span class="kw">pub fn </span>is_deletion_request(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.ping_name == <span class="string">&quot;deletion-request&quot;
+        <span class="self">self</span>.ping_name == <span class="string">"deletion-request"
     </span>}
 
     <span class="doccomment">/// Decompresses and pretty-format the ping payload
@@ -577,35 +578,35 @@
     </span><span class="kw">fn </span>date_header_resolution() {
         <span class="kw">let </span>date: DateTime&lt;Utc&gt; = Utc.ymd(<span class="number">2018</span>, <span class="number">2</span>, <span class="number">25</span>).and_hms(<span class="number">11</span>, <span class="number">10</span>, <span class="number">37</span>);
         <span class="kw">let </span>test_value = create_date_header_value(date);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Sun, 25 Feb 2018 11:10:37 GMT&quot;</span>, test_value);
+        <span class="macro">assert_eq!</span>(<span class="string">"Sun, 25 Feb 2018 11:10:37 GMT"</span>, test_value);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>x_telemetry_agent_header_resolution() {
-        <span class="kw">let </span>test_value = create_x_telemetry_agent_header_value(<span class="string">&quot;0.0.0&quot;</span>, <span class="string">&quot;Rust&quot;</span>, <span class="string">&quot;Windows&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Glean/0.0.0 (Rust on Windows)&quot;</span>, test_value);
+        <span class="kw">let </span>test_value = create_x_telemetry_agent_header_value(<span class="string">"0.0.0"</span>, <span class="string">"Rust"</span>, <span class="string">"Windows"</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">"Glean/0.0.0 (Rust on Windows)"</span>, test_value);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>correctly_builds_ping_request() {
-        <span class="kw">let </span>request = PingRequest::builder(<span class="comment">/* language_binding_name */ </span><span class="string">&quot;Rust&quot;</span>, <span class="number">1024 </span>* <span class="number">1024</span>)
-            .document_id(<span class="string">&quot;woop&quot;</span>)
-            .path(<span class="string">&quot;/random/path/doesnt/matter&quot;</span>)
-            .body(<span class="string">&quot;{}&quot;</span>)
+        <span class="kw">let </span>request = PingRequest::builder(<span class="comment">/* language_binding_name */ </span><span class="string">"Rust"</span>, <span class="number">1024 </span>* <span class="number">1024</span>)
+            .document_id(<span class="string">"woop"</span>)
+            .path(<span class="string">"/random/path/doesnt/matter"</span>)
+            .body(<span class="string">"{}"</span>)
             .body_has_info_sections(<span class="bool-val">false</span>)
-            .ping_name(<span class="string">&quot;whatevs&quot;</span>)
+            .ping_name(<span class="string">"whatevs"</span>)
             .build()
             .unwrap();
 
-        <span class="macro">assert_eq!</span>(request.document_id, <span class="string">&quot;woop&quot;</span>);
-        <span class="macro">assert_eq!</span>(request.path, <span class="string">&quot;/random/path/doesnt/matter&quot;</span>);
+        <span class="macro">assert_eq!</span>(request.document_id, <span class="string">"woop"</span>);
+        <span class="macro">assert_eq!</span>(request.path, <span class="string">"/random/path/doesnt/matter"</span>);
         <span class="macro">assert!</span>(!request.body_has_info_sections);
-        <span class="macro">assert_eq!</span>(request.ping_name, <span class="string">&quot;whatevs&quot;</span>);
+        <span class="macro">assert_eq!</span>(request.ping_name, <span class="string">"whatevs"</span>);
 
         <span class="comment">// Make sure all the expected headers were added.
-        </span><span class="macro">assert!</span>(request.headers.contains_key(<span class="string">&quot;X-Telemetry-Agent&quot;</span>));
-        <span class="macro">assert!</span>(request.headers.contains_key(<span class="string">&quot;Content-Type&quot;</span>));
-        <span class="macro">assert!</span>(request.headers.contains_key(<span class="string">&quot;Content-Length&quot;</span>));
+        </span><span class="macro">assert!</span>(request.headers.contains_key(<span class="string">"X-Telemetry-Agent"</span>));
+        <span class="macro">assert!</span>(request.headers.contains_key(<span class="string">"Content-Type"</span>));
+        <span class="macro">assert!</span>(request.headers.contains_key(<span class="string">"Content-Length"</span>));
 
         <span class="comment">// the `Date` header is added by the `get_upload_task` just before
         // returning the upload request
@@ -616,15 +617,14 @@
         <span class="comment">// Create a new builder with an arbitrarily small value,
         // se we can test that the builder errors when body max size exceeds the expected.
         </span><span class="kw">let </span>request = Builder::new(
-            <span class="comment">/* language_binding_name */ </span><span class="string">&quot;Rust&quot;</span>, <span class="comment">/* body_max_size */ </span><span class="number">1</span>,
+            <span class="comment">/* language_binding_name */ </span><span class="string">"Rust"</span>, <span class="comment">/* body_max_size */ </span><span class="number">1</span>,
         )
-        .document_id(<span class="string">&quot;woop&quot;</span>)
-        .path(<span class="string">&quot;/random/path/doesnt/matter&quot;</span>)
-        .body(<span class="string">&quot;{}&quot;</span>)
+        .document_id(<span class="string">"woop"</span>)
+        .path(<span class="string">"/random/path/doesnt/matter"</span>)
+        .body(<span class="string">"{}"</span>)
         .build();
 
         <span class="macro">assert!</span>(request.is_err());
     }
 }
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="glean_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

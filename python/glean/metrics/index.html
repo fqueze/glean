@@ -167,17 +167,17 @@ __all__ = [
     def __init__(self, meta: &#34;CommonMetricData&#34;):
         _UniffiConverterTypeCommonMetricData.check_lower(meta)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_booleanmetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_booleanmetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta))
 
     def __del__(self):
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_booleanmetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_booleanmetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_booleanmetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_booleanmetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -192,7 +192,7 @@ __all__ = [
     def set(self, value: &#34;bool&#34;) -&gt; None:
         _UniffiConverterBool.check_lower(value)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_set,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_set,self._uniffi_clone_pointer(),
         _UniffiConverterBool.lower(value))
 
 
@@ -204,7 +204,7 @@ __all__ = [
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -218,7 +218,7 @@ __all__ = [
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalBool.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -236,7 +236,7 @@ __all__ = [
 <pre><code class="python">def set(self, value: &#34;bool&#34;) -&gt; None:
     _UniffiConverterBool.check_lower(value)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_set,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_set,self._uniffi_clone_pointer(),
     _UniffiConverterBool.lower(value))</code></pre>
 </details>
 </dd>
@@ -253,7 +253,7 @@ __all__ = [
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -273,7 +273,7 @@ __all__ = [
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalBool.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_booleanmetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>
@@ -297,7 +297,6 @@ __all__ = [
     lifetime: &#34;Lifetime&#34;
     disabled: &#34;bool&#34;
     dynamic_label: &#34;typing.Optional[str]&#34;
-    @typing.no_type_check
     def __init__(self, *, category: &#34;str&#34;, name: &#34;str&#34;, send_in_pings: &#34;typing.List[str]&#34;, lifetime: &#34;Lifetime&#34;, disabled: &#34;bool&#34;, dynamic_label: &#34;typing.Optional[str]&#34; = _DEFAULT):
         self.category = category
         self.name = name
@@ -370,17 +369,17 @@ __all__ = [
     def __init__(self, meta: &#34;CommonMetricData&#34;):
         _UniffiConverterTypeCommonMetricData.check_lower(meta)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_countermetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_countermetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta))
 
     def __del__(self):
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_countermetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_countermetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_countermetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_countermetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -397,7 +396,7 @@ __all__ = [
             amount = 1
         _UniffiConverterInt32.check_lower(amount)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_add,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_add,self._uniffi_clone_pointer(),
         _UniffiConverterInt32.lower(amount))
 
 
@@ -409,7 +408,7 @@ __all__ = [
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -423,7 +422,7 @@ __all__ = [
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -443,7 +442,7 @@ __all__ = [
         amount = 1
     _UniffiConverterInt32.check_lower(amount)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_add,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_add,self._uniffi_clone_pointer(),
     _UniffiConverterInt32.lower(amount))</code></pre>
 </details>
 </dd>
@@ -460,7 +459,7 @@ __all__ = [
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -480,7 +479,7 @@ __all__ = [
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_countermetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>
@@ -1062,7 +1061,6 @@ metric storage and rearrange them correctly in the ping.</p></div>
     class COMMON:
         cmd: &#34;CommonMetricData&#34;
 
-        @typing.no_type_check
         def __init__(self,cmd: &#34;CommonMetricData&#34;):
             self.cmd = cmd
 
@@ -1083,7 +1081,6 @@ metric storage and rearrange them correctly in the ping.</p></div>
         bucket_count: &#34;int&#34;
         histogram_type: &#34;HistogramType&#34;
 
-        @typing.no_type_check
         def __init__(self,cmd: &#34;CommonMetricData&#34;, range_min: &#34;int&#34;, range_max: &#34;int&#34;, bucket_count: &#34;int&#34;, histogram_type: &#34;HistogramType&#34;):
             self.cmd = cmd
             self.range_min = range_min
@@ -1113,7 +1110,6 @@ metric storage and rearrange them correctly in the ping.</p></div>
         cmd: &#34;CommonMetricData&#34;
         unit: &#34;MemoryUnit&#34;
 
-        @typing.no_type_check
         def __init__(self,cmd: &#34;CommonMetricData&#34;, unit: &#34;MemoryUnit&#34;):
             self.cmd = cmd
             self.unit = unit
@@ -1134,7 +1130,6 @@ metric storage and rearrange them correctly in the ping.</p></div>
         cmd: &#34;CommonMetricData&#34;
         unit: &#34;TimeUnit&#34;
 
-        @typing.no_type_check
         def __init__(self,cmd: &#34;CommonMetricData&#34;, unit: &#34;TimeUnit&#34;):
             self.cmd = cmd
             self.unit = unit
@@ -1327,7 +1322,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
         
         _UniffiConverterTypeMemoryUnit.check_lower(memory_unit)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_memorydistributionmetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_memorydistributionmetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta),
         _UniffiConverterTypeMemoryUnit.lower(memory_unit))
 
@@ -1335,10 +1330,10 @@ metric storage and rearrange them correctly in the ping.</p></div>
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_memorydistributionmetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_memorydistributionmetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_memorydistributionmetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_memorydistributionmetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -1353,7 +1348,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
     def accumulate(self, sample: &#34;int&#34;) -&gt; None:
         _UniffiConverterInt64.check_lower(sample)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate,self._uniffi_clone_pointer(),
         _UniffiConverterInt64.lower(sample))
 
 
@@ -1364,7 +1359,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
     def accumulate_samples(self, samples: &#34;typing.List[int]&#34;) -&gt; None:
         _UniffiConverterSequenceInt64.check_lower(samples)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate_samples,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate_samples,self._uniffi_clone_pointer(),
         _UniffiConverterSequenceInt64.lower(samples))
 
 
@@ -1376,7 +1371,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -1390,7 +1385,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalTypeDistributionData.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -1408,7 +1403,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 <pre><code class="python">def accumulate(self, sample: &#34;int&#34;) -&gt; None:
     _UniffiConverterInt64.check_lower(sample)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate,self._uniffi_clone_pointer(),
     _UniffiConverterInt64.lower(sample))</code></pre>
 </details>
 </dd>
@@ -1424,7 +1419,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
 <pre><code class="python">def accumulate_samples(self, samples: &#34;typing.List[int]&#34;) -&gt; None:
     _UniffiConverterSequenceInt64.check_lower(samples)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate_samples,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_accumulate_samples,self._uniffi_clone_pointer(),
     _UniffiConverterSequenceInt64.lower(samples))</code></pre>
 </details>
 </dd>
@@ -1441,7 +1436,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -1461,7 +1456,7 @@ metric storage and rearrange them correctly in the ping.</p></div>
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalTypeDistributionData.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_memorydistributionmetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>
@@ -1906,17 +1901,17 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     def __init__(self, meta: &#34;CommonMetricData&#34;):
         _UniffiConverterTypeCommonMetricData.check_lower(meta)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_quantitymetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_quantitymetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta))
 
     def __del__(self):
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_quantitymetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_quantitymetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_quantitymetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_quantitymetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -1931,7 +1926,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     def set(self, value: &#34;int&#34;) -&gt; None:
         _UniffiConverterInt64.check_lower(value)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_set,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_set,self._uniffi_clone_pointer(),
         _UniffiConverterInt64.lower(value))
 
 
@@ -1943,7 +1938,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -1957,7 +1952,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalInt64.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -1975,7 +1970,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
 <pre><code class="python">def set(self, value: &#34;int&#34;) -&gt; None:
     _UniffiConverterInt64.check_lower(value)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_set,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_set,self._uniffi_clone_pointer(),
     _UniffiConverterInt64.lower(value))</code></pre>
 </details>
 </dd>
@@ -1992,7 +1987,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -2012,7 +2007,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalInt64.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_quantitymetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>
@@ -2034,7 +2029,6 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     category: &#34;str&#34;
     name: &#34;str&#34;
     extra: &#34;typing.Optional[dict[str, str]]&#34;
-    @typing.no_type_check
     def __init__(self, *, timestamp: &#34;int&#34;, category: &#34;str&#34;, name: &#34;str&#34;, extra: &#34;typing.Optional[dict[str, str]]&#34;):
         self.timestamp = timestamp
         self.category = category
@@ -2088,7 +2082,6 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
 <pre><code class="python">class RecordedExperiment:
     branch: &#34;str&#34;
     extra: &#34;typing.Optional[dict[str, str]]&#34;
-    @typing.no_type_check
     def __init__(self, *, branch: &#34;str&#34;, extra: &#34;typing.Optional[dict[str, str]]&#34;):
         self.branch = branch
         self.extra = extra
@@ -2130,17 +2123,17 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     def __init__(self, meta: &#34;CommonMetricData&#34;):
         _UniffiConverterTypeCommonMetricData.check_lower(meta)
         
-        self._pointer = _rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_stringlistmetric_new,
+        self._pointer = _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_constructor_stringlistmetric_new,
         _UniffiConverterTypeCommonMetricData.lower(meta))
 
     def __del__(self):
         # In case of partial initialization of instances.
         pointer = getattr(self, &#34;_pointer&#34;, None)
         if pointer is not None:
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_free_stringlistmetric, pointer)
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_free_stringlistmetric, pointer)
 
     def _uniffi_clone_pointer(self):
-        return _rust_call(_UniffiLib.uniffi_glean_core_fn_clone_stringlistmetric, self._pointer)
+        return _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_clone_stringlistmetric, self._pointer)
 
     # Used by alternative constructors or any methods which return this type.
     @classmethod
@@ -2155,7 +2148,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     def add(self, value: &#34;str&#34;) -&gt; None:
         _UniffiConverterString.check_lower(value)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_add,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_add,self._uniffi_clone_pointer(),
         _UniffiConverterString.lower(value))
 
 
@@ -2166,7 +2159,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     def set(self, value: &#34;typing.List[str]&#34;) -&gt; None:
         _UniffiConverterSequenceString.check_lower(value)
         
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_set,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_set,self._uniffi_clone_pointer(),
         _UniffiConverterSequenceString.lower(value))
 
 
@@ -2178,7 +2171,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
         _UniffiConverterTypeErrorType.check_lower(error)
         
         return _UniffiConverterInt32.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
         _UniffiConverterTypeErrorType.lower(error))
         )
 
@@ -2192,7 +2185,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
         _UniffiConverterOptionalString.check_lower(ping_name)
         
         return _UniffiConverterOptionalSequenceString.lift(
-            _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_value,self._uniffi_clone_pointer(),
+            _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_value,self._uniffi_clone_pointer(),
         _UniffiConverterOptionalString.lower(ping_name))
         )</code></pre>
 </details>
@@ -2210,7 +2203,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
 <pre><code class="python">def add(self, value: &#34;str&#34;) -&gt; None:
     _UniffiConverterString.check_lower(value)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_add,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_add,self._uniffi_clone_pointer(),
     _UniffiConverterString.lower(value))</code></pre>
 </details>
 </dd>
@@ -2226,7 +2219,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
 <pre><code class="python">def set(self, value: &#34;typing.List[str]&#34;) -&gt; None:
     _UniffiConverterSequenceString.check_lower(value)
     
-    _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_set,self._uniffi_clone_pointer(),
+    _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_set,self._uniffi_clone_pointer(),
     _UniffiConverterSequenceString.lower(value))</code></pre>
 </details>
 </dd>
@@ -2243,7 +2236,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     _UniffiConverterTypeErrorType.check_lower(error)
     
     return _UniffiConverterInt32.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_num_recorded_errors,self._uniffi_clone_pointer(),
     _UniffiConverterTypeErrorType.lower(error))
     )</code></pre>
 </details>
@@ -2263,7 +2256,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
     _UniffiConverterOptionalString.check_lower(ping_name)
     
     return _UniffiConverterOptionalSequenceString.lift(
-        _rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_value,self._uniffi_clone_pointer(),
+        _uniffi_rust_call(_UniffiLib.uniffi_glean_core_fn_method_stringlistmetric_test_get_value,self._uniffi_clone_pointer(),
     _UniffiConverterOptionalString.lower(ping_name))
     )</code></pre>
 </details>
@@ -2453,7 +2446,6 @@ the string exceeds the maximum length, it will be truncated.</dd>
 </summary>
 <pre><code class="python">class TimerId:
     id: &#34;int&#34;
-    @typing.no_type_check
     def __init__(self, *, id: &#34;int&#34;):
         self.id = id
 
