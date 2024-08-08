@@ -208,7 +208,18 @@ self.start = devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+auto timerId = mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .Start();
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">const timerId = Glean.devtools.coldToolboxOpenDelay[toolbox_id].start();
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors"><a class="header" href="#recorded-errors">Recorded Errors</a></h4>
@@ -240,7 +251,18 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .StopAndAccumulate(std::move(timerId));
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.devtools.coldToolboxOpenDelay[toolbox_id].stopAndAccumulate(timerId);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-1"><a class="header" href="#recorded-errors-1">Recorded errors</a></h4>
@@ -271,7 +293,18 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .Cancel(std::move(timerId));
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.devtools.coldToolboxOpenDelay[toolbox_id].cancel(timerId);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-2"><a class="header" href="#recorded-errors-2">Recorded errors</a></h4>
@@ -312,7 +345,17 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .AccumulateRawSamples(samples);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-3"><a class="header" href="#recorded-errors-3">Recorded errors</a></h4>
@@ -355,7 +398,17 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolboxId)
+    .AccumulateRawDuration(aDuration);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-4"><a class="header" href="#recorded-errors-4">Recorded errors</a></h4>
@@ -397,7 +450,19 @@ assert_ge!(400, snapshot.sum);
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+const data = mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(&quot;webconsole&quot;_ns)
+    .TestGetValue().value().unwrap();
+ASSERT_TRUE(data.sum &gt; 0);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Assert.ok(Glean.devtools.coldToolboxOpenDelay[&quot;webconsole&quot;].testGetValue().sum &gt; 0);
+</code></pre>
+</div>
 </div>
 </div>
 <h3 id="testgetnumrecordederrors"><a class="header" href="#testgetnumrecordederrors"><code>testGetNumRecordedErrors</code></a></h3>

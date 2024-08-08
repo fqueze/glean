@@ -206,7 +206,19 @@ network::http_upload_bandwidth
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::network::http_upload_bandwidth
+    .Get(httpVersion)
+    .Accumulate(this.mRequestSize * 8.0 / 1048576.0 / sendTime.AsSeconds());
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.network.httpUploadBandwidth[httpVersion]
+  .accumulate(requestSize * 8.0 / 1048576.0 / sendTime.asSeconds())
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors"><a class="header" href="#recorded-errors">Recorded Errors</a></h4>
@@ -247,7 +259,20 @@ assert_eq!(1, network::http_upload_bandwidth.get(&quot;h2&quot;).test_get_value(
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+const data = mozilla::glean::network::http_upload_bandwidth
+    .Get(&quot;h2&quot;)
+    .TestGetValue().value().unwrap()
+ASSERT_EQ(42UL, data.sum);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">const data = Glean.network.httpUploadBandwidth[&quot;h2&quot;].testGetValue();
+Assert.equal(42, data.sum);
+</code></pre>
+</div>
 </div>
 </div>
 <h3 id="testgetnumrecordederrors"><a class="header" href="#testgetnumrecordederrors"><code>testGetNumRecordedErrors</code></a></h3>

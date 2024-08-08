@@ -7970,7 +7970,13 @@ function onPageLoaded() {
 </code></pre>
 </div>
 <div data-lang="Firefox Desktop" class="tab">
-<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1884183">Bug 1884183</a>.</p>
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::pages::page_load.AccumulateRawDuration(aDuration);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
 </div>
 </div>
 </div>
@@ -8415,7 +8421,18 @@ self.start = devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+auto timerId = mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .Start();
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">const timerId = Glean.devtools.coldToolboxOpenDelay[toolbox_id].start();
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-14"><a class="header" href="#recorded-errors-14">Recorded Errors</a></h4>
@@ -8447,7 +8464,18 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .StopAndAccumulate(std::move(timerId));
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.devtools.coldToolboxOpenDelay[toolbox_id].stopAndAccumulate(timerId);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-15"><a class="header" href="#recorded-errors-15">Recorded errors</a></h4>
@@ -8478,7 +8506,18 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .Cancel(std::move(timerId));
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.devtools.coldToolboxOpenDelay[toolbox_id].cancel(timerId);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-16"><a class="header" href="#recorded-errors-16">Recorded errors</a></h4>
@@ -8519,7 +8558,17 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolbox_id)
+    .AccumulateRawSamples(samples);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-17"><a class="header" href="#recorded-errors-17">Recorded errors</a></h4>
@@ -8562,7 +8611,17 @@ devtools::cold_toolbox_open_delay
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(toolboxId)
+    .AccumulateRawDuration(aDuration);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<p>This operation is not currently supported in JavaScript.</p>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-18"><a class="header" href="#recorded-errors-18">Recorded errors</a></h4>
@@ -8604,7 +8663,19 @@ assert_ge!(400, snapshot.sum);
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+const data = mozilla::glean::devtools::cold_toolbox_open_delay
+    .Get(&quot;webconsole&quot;_ns)
+    .TestGetValue().value().unwrap();
+ASSERT_TRUE(data.sum &gt; 0);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Assert.ok(Glean.devtools.coldToolboxOpenDelay[&quot;webconsole&quot;].testGetValue().sum &gt; 0);
+</code></pre>
+</div>
 </div>
 </div>
 <h3 id="testgetnumrecordederrors-9"><a class="header" href="#testgetnumrecordederrors-9"><code>testGetNumRecordedErrors</code></a></h3>
@@ -9125,7 +9196,19 @@ network::http_upload_bandwidth
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::network::http_upload_bandwidth
+    .Get(httpVersion)
+    .Accumulate(this.mRequestSize * 8.0 / 1048576.0 / sendTime.AsSeconds());
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.network.httpUploadBandwidth[httpVersion]
+  .accumulate(requestSize * 8.0 / 1048576.0 / sendTime.asSeconds())
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-20"><a class="header" href="#recorded-errors-20">Recorded Errors</a></h4>
@@ -9166,7 +9249,20 @@ assert_eq!(1, network::http_upload_bandwidth.get(&quot;h2&quot;).test_get_value(
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-c++">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+const data = mozilla::glean::network::http_upload_bandwidth
+    .Get(&quot;h2&quot;)
+    .TestGetValue().value().unwrap()
+ASSERT_EQ(42UL, data.sum);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">const data = Glean.network.httpUploadBandwidth[&quot;h2&quot;].testGetValue();
+Assert.equal(42, data.sum);
+</code></pre>
+</div>
 </div>
 </div>
 <h3 id="testgetnumrecordederrors-11"><a class="header" href="#testgetnumrecordederrors-11"><code>testGetNumRecordedErrors</code></a></h3>
@@ -10497,7 +10593,7 @@ graphics.checkerboardPeak.accumulateSamples([23]);
 mozilla::glean::graphics::checkerboard_peak.AccumulateSamples({ 23 });
 </code></pre>
 <p><strong>JavaScript</strong></p>
-<pre><code class="language-js">Glean.graphics.checkerboardPeak.accumulateSamples([23])
+<pre><code class="language-js">Glean.graphics.checkerboardPeak.accumulateSamples([23]);
 </code></pre>
 </div>
 </div>
@@ -10534,7 +10630,14 @@ graphics.checkerboardPeak.accumulateSingleSample(23);
 </code></pre>
 </div>
 <div data-lang="Firefox Desktop" class="tab">
-<p>This API is not currently exposed in Firefox Desktop, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1884183">Bug 1884183</a>.</p>
+<p><strong>C++</strong></p>
+<pre><code class="language-cpp">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::graphics::checkerboard_peak.AccumulateSingleSample(23);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.graphics.checkerboardPeak.accumulateSingleSample(23);
+</code></pre>
 </div>
 </div>
 </div>
@@ -10817,7 +10920,24 @@ network::http3_late_ack_ratio
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-cpp">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::network::http3_late_ack_ratio
+    .Get(&quot;ack&quot;)
+    .AccumulateSamples({(stats.late_ack * 10000) / stats.packets_tx});
+mozilla::glean::network::http3_late_ack_ratio
+    .Get(&quot;pto&quot;)
+    .AccumulateSamples({(stats.pto_ack * 10000) / stats.packets_tx});
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.network.http3LateAckRatio[&quot;ack&quot;]
+  .accumulateSamples([(stats.late_ack * 10000) / stats.packets_tx]);
+Glean.network.http3LateAckRatio[&quot;pto&quot;]
+  .accumulateSamples([(stats.pto_ack * 10000) / stats.packets_tx]);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-26"><a class="header" href="#recorded-errors-26">Recorded Errors</a></h4>
@@ -10851,7 +10971,24 @@ network::http3_late_ack_ratio
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-cpp">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+mozilla::glean::network::http3_late_ack_ratio
+    .Get(&quot;ack&quot;)
+    .AccumulateSingleSample((stats.late_ack * 10000) / stats.packets_tx);
+mozilla::glean::network::http3_late_ack_ratio
+    .Get(&quot;pto&quot;)
+    .AccumulateSingleSample((stats.pto_ack * 10000) / stats.packets_tx);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">Glean.network.http3LateAckRatio[&quot;ack&quot;]
+  .accumulateSingleSample((stats.late_ack * 10000) / stats.packets_tx);
+Glean.network.http3LateAckRatio[&quot;pto&quot;]
+  .accumulateSingleSample((stats.pto_ack * 10000) / stats.packets_tx);
+</code></pre>
+</div>
 </div>
 </div>
 <h4 id="recorded-errors-27"><a class="header" href="#recorded-errors-27">Recorded Errors</a></h4>
@@ -10888,11 +11025,26 @@ assert_eq!(42, network::http3_late_ack_ratio.get(&quot;ack&quot;).test_get_value
 assert_eq!(1, network::http3_late_ack_ratio.get(&quot;ack&quot;).test_get_value(None).unwrap().count);
 
 // Buckets are indexed by their lower bound.
-assert_eq!(1, etwork::http3_late_ack_ratio.get(&quot;ack&quot;).test_get_value(None).unwrap().values[41]);
+assert_eq!(1, network::http3_late_ack_ratio.get(&quot;ack&quot;).test_get_value(None).unwrap().values[41]);
 </code></pre>
 </div>
 <div data-lang="JavaScript" class="tab"></div>
-<div data-lang="Firefox Desktop" class="tab"></div>
+<div data-lang="Firefox Desktop" class="tab">
+<p><strong>C++</strong></p>
+<pre><code class="language-cpp">#include &quot;mozilla/glean/GleanMetrics.h&quot;
+
+auto data = mozilla::glean::network::http3_late_ack_ratio.Get(&quot;ack&quot;).TestGetValue().value();
+ASSERT_EQ(42UL, data.sum);
+ASSERT_EQ(1, data.count);
+ASSERT_EQ(1, data.values[41]);
+</code></pre>
+<p><strong>JavaScript</strong></p>
+<pre><code class="language-js">let data = Glean.network.http3LateAckRatio[&quot;ack&quot;].testGetValue();
+Assert.equal(42, data.sum);
+Assert.equal(1, data.count);
+Assert.equal(1, data.values[41]);
+</code></pre>
+</div>
 </div>
 </div>
 <h3 id="testgetnumrecordederrors-17"><a class="header" href="#testgetnumrecordederrors-17"><code>testGetNumRecordedErrors</code></a></h3>
