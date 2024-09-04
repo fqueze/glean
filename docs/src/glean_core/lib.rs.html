@@ -1268,6 +1268,8 @@
 <a href="#1267" id="1267">1267</a>
 <a href="#1268" id="1268">1268</a>
 <a href="#1269" id="1269">1269</a>
+<a href="#1270" id="1270">1270</a>
+<a href="#1271" id="1271">1271</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1970,7 +1972,9 @@
     });
 }
 
-<span class="doccomment">/// Asks the database to persist ping-lifetime data to disk. Probably expensive to call.
+<span class="doccomment">/// Asks the database to persist ping-lifetime data to disk.
+///
+/// Probably expensive to call.
 /// Only has effect when Glean is configured with `delay_ping_lifetime_io: true`.
 /// If Glean hasn't been initialized this will dispatch and return Ok(()),
 /// otherwise it will block until the persist is done and return its Result.

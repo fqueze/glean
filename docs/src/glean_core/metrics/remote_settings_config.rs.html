@@ -57,6 +57,8 @@
 <a href="#56" id="56">56</a>
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -66,9 +68,11 @@
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="doccomment">/// Represents a list of metrics and an associated boolean property
-/// indicating if the metric is enabledfrom the remote-settings
-/// configuration store. The expected format of this data is stringified JSON
-/// in the following format:
+/// indicating if the metric is enabled from the remote-settings
+/// configuration store.
+///
+/// The expected format of this data is stringified JSON in the following format:
+///
 /// ```json
 /// {
 ///     "category.metric_name": true
