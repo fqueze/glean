@@ -1007,7 +1007,7 @@ Having a telemetry plan (see above) will help to identify this work early.</p>
 <p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="user/metrics/adding-new-metrics.html#when-should-the-glean-sdk-automatically-clear-the-measurement">metric lifetimes</a> below.</p>
 <h3 id="are-you-measuring-user-behavior"><a class="header" href="#are-you-measuring-user-behavior">Are you measuring user behavior?</a></h3>
 <p>For tracking user behavior, it is usually meaningful to know the over of events that lead to the use of a feature.  Therefore, for user behavior, an <a href="user/metrics/../../reference/metrics/event.html">event metric</a> is usually the best choice.</p>
-<p>Be aware, however, that events can be particularly expensive to transmit, store and analyze, so should not be used for higher-frequency measurements.</p>
+<p>Be aware, however, that events can be particularly expensive to transmit, store and analyze, so should not be used for higher-frequency measurements - though this is less of a concern in <a href="user/metrics/../adding-glean-to-your-project/server.html">server environments</a>.</p>
 <h3 id="are-you-counting-things"><a class="header" href="#are-you-counting-things">Are you counting things?</a></h3>
 <p>If you want to know how many times something happened, use a <a href="user/metrics/../../reference/metrics/counter.html">counter metric</a>.  If you are counting a group of related things, or you don't know what all of the things to count are at build time, use a <a href="user/metrics/../../reference/metrics/labeled_counters.html">labeled counter metric</a>.</p>
 <p>If you need to know how many times something happened relative to the number of times something else happened,
@@ -1298,7 +1298,7 @@ mozilla::glean::compound_category::metric_name...
 <p>For all of the metric types in this section that measure single values, it is especially important to consider how the lifetime of the value relates to the ping it is being sent in. Since these metrics don't perform any aggregation on the client side, when a ping containing the metric is submitted, it will contain only the &quot;last known&quot; value for the metric, potentially resulting in <strong>data loss</strong>.  There is further discussion of <a href="user/metrics/adding-new-metrics.html#when-should-the-glean-sdk-automatically-clear-the-measurement">metric lifetimes</a> below.</p>
 <h3 id="are-you-measuring-user-behavior-1"><a class="header" href="#are-you-measuring-user-behavior-1">Are you measuring user behavior?</a></h3>
 <p>For tracking user behavior, it is usually meaningful to know the over of events that lead to the use of a feature.  Therefore, for user behavior, an <a href="user/metrics/../../reference/metrics/event.html">event metric</a> is usually the best choice.</p>
-<p>Be aware, however, that events can be particularly expensive to transmit, store and analyze, so should not be used for higher-frequency measurements.</p>
+<p>Be aware, however, that events can be particularly expensive to transmit, store and analyze, so should not be used for higher-frequency measurements - though this is less of a concern in <a href="user/metrics/../adding-glean-to-your-project/server.html">server environments</a>.</p>
 <h3 id="are-you-counting-things-1"><a class="header" href="#are-you-counting-things-1">Are you counting things?</a></h3>
 <p>If you want to know how many times something happened, use a <a href="user/metrics/../../reference/metrics/counter.html">counter metric</a>.  If you are counting a group of related things, or you don't know what all of the things to count are at build time, use a <a href="user/metrics/../../reference/metrics/labeled_counters.html">labeled counter metric</a>.</p>
 <p>If you need to know how many times something happened relative to the number of times something else happened,
@@ -10269,7 +10269,7 @@ say every time a view was open and from where.</p>
 </ul>
 </li>
 <li>The name of the event.</li>
-<li>A set of key-value pairs, where the keys are predefined in the <code>extra_keys</code> metric parameter, and the values are strings.</li>
+<li>A set of key-value pairs, where the keys are predefined in the <code>extra_keys</code> metric parameter. Values are one of <code>string</code>, <code>boolean</code>, <code>quantity</code>, and are converted to <code>string</code> for transmission.</li>
 </ul>
 <div class="special-quote special-quote-info fa fa-info-circle"></div>
 <h2 id="immediate-submission-or-batching"><a class="header" href="#immediate-submission-or-batching">Immediate submission or batching?</a></h2>
@@ -10543,9 +10543,15 @@ A maximum of 50 extra keys is allowed.</p>
 <li><code>description</code>: <strong>Required.</strong> A description of the key.</li>
 </ul>
 <ul>
-<li><code>type</code>: The type of value this extra key can hold. One of <code>string</code>, <code>boolean</code>, <code>quantity</code>. Defaults to <code>string</code>.
+<li><code>type</code>: The type of value this extra key can hold. One of <code>string</code>, <code>boolean</code>, <code>quantity</code>. Defaults to <code>string</code>. Recorded value is converted to string for transmission.
 <strong>Note</strong>: If not specified only the legacy API on <code>record</code> is available.</li>
 </ul>
+<div class="special-quote special-quote-info fa fa-info-circle"></div>
+<h4 id="extras-or-string-metrics"><a class="header" href="#extras-or-string-metrics">Extras or string metrics?</a></h4>
+<blockquote>
+<p>When designing your metrics, define properties that are slow-changing and common across all events in a given ping as string metrics.
+Properties specific to a single event or a subset of events should be defined as event extras.</p>
+</blockquote>
 <h2 id="data-questions-15"><a class="header" href="#data-questions-15">Data questions</a></h2>
 <ul>
 <li>When and from where was the login view opened?</li>
