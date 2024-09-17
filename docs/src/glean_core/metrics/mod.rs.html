@@ -297,6 +297,7 @@
 <a href="#296" id="296">296</a>
 <a href="#297" id="297">297</a>
 <a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -355,7 +356,7 @@
     LabeledBoolean, LabeledCounter, LabeledCustomDistribution, LabeledMemoryDistribution,
     LabeledMetric, LabeledString, LabeledTimingDistribution,
 };
-<span class="kw">pub use </span><span class="self">self</span>::memory_distribution::MemoryDistributionMetric;
+<span class="kw">pub use </span><span class="self">self</span>::memory_distribution::{LocalMemoryDistribution, MemoryDistributionMetric};
 <span class="kw">pub use </span><span class="self">self</span>::memory_unit::MemoryUnit;
 <span class="kw">pub use </span><span class="self">self</span>::numerator::NumeratorMetric;
 <span class="kw">pub use </span><span class="self">self</span>::object::ObjectMetric;
@@ -367,6 +368,7 @@
 <span class="kw">pub use </span><span class="self">self</span>::text::TextMetric;
 <span class="kw">pub use </span><span class="self">self</span>::time_unit::TimeUnit;
 <span class="kw">pub use </span><span class="self">self</span>::timespan::TimespanMetric;
+<span class="kw">pub use </span><span class="self">self</span>::timing_distribution::LocalTimingDistribution;
 <span class="kw">pub use </span><span class="self">self</span>::timing_distribution::TimerId;
 <span class="kw">pub use </span><span class="self">self</span>::timing_distribution::TimingDistributionMetric;
 <span class="kw">pub use </span><span class="self">self</span>::url::UrlMetric;
@@ -381,7 +383,7 @@
 // Note: Be careful when changing this structure.
 // The serialized form ends up in the ping payload.
 // New fields might require to be skipped on serialization.
-</span><span class="attr">#[derive(Debug, Serialize)]
+</span><span class="attr">#[derive(Debug, Serialize, PartialEq)]
 </span><span class="kw">pub struct </span>DistributionData {
     <span class="doccomment">/// A map containig the bucket index mapped to the accumulated count.
     ///

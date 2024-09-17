@@ -220,10 +220,10 @@
     <span class="comment">// Don't serialize the (potentially large) array of ranges, instead compute them on first
     // access.
     </span><span class="attr">#[serde(skip)]
-    </span>bucket_ranges: OnceCell&lt;Vec&lt;u64&gt;&gt;,
-    min: u64,
-    max: u64,
-    bucket_count: usize,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) bucket_ranges: OnceCell&lt;Vec&lt;u64&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) min: u64,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) max: u64,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) bucket_count: usize,
 }
 
 <span class="kw">impl </span>Bucketing <span class="kw">for </span>PrecomputedLinear {

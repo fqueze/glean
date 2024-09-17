@@ -1270,6 +1270,7 @@
 <a href="#1269" id="1269">1269</a>
 <a href="#1270" id="1270">1270</a>
 <a href="#1271" id="1271">1271</a>
+<a href="#1272" id="1272">1272</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1341,10 +1342,11 @@
 };
 <span class="kw">pub use </span><span class="kw">crate</span>::metrics::{
     BooleanMetric, CounterMetric, CustomDistributionMetric, Datetime, DatetimeMetric,
-    DenominatorMetric, DistributionData, EventMetric, MemoryDistributionMetric, MemoryUnit,
-    NumeratorMetric, ObjectMetric, PingType, QuantityMetric, Rate, RateMetric, RecordedEvent,
-    RecordedExperiment, StringListMetric, StringMetric, TextMetric, TimeUnit, TimerId,
-    TimespanMetric, TimingDistributionMetric, UrlMetric, UuidMetric,
+    DenominatorMetric, DistributionData, EventMetric, LocalMemoryDistribution,
+    LocalTimingDistribution, MemoryDistributionMetric, MemoryUnit, NumeratorMetric, ObjectMetric,
+    PingType, QuantityMetric, Rate, RateMetric, RecordedEvent, RecordedExperiment,
+    StringListMetric, StringMetric, TextMetric, TimeUnit, TimerId, TimespanMetric,
+    TimingDistributionMetric, UrlMetric, UuidMetric,
 };
 <span class="kw">pub use </span><span class="kw">crate</span>::upload::{PingRequest, PingUploadTask, UploadResult, UploadTaskAction};
 
