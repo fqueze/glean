@@ -184,25 +184,37 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="real-time-events"><a class="header" href="#real-time-events">&quot;Real-Time&quot; Events</a></h1>
-<h2 id="defining-real-time-glean-events"><a class="header" href="#defining-real-time-glean-events">Defining &quot;Real-Time&quot; Glean Events</a></h2>
-<p>&quot;Real-Time&quot; in the context of <a href="../../../reference/metrics/event.html">Glean events</a> directly relates to configuring the Glean SDK to send each event in an <a href="../../pings/events.html">&quot;events&quot; ping</a> as soon as it is recorded.
-This minimizes the time between instrumentation and reporting, but doesn't describe how quickly received data is made available for querying.</p>
-<h2 id="configuring-glean-for-real-time-events"><a class="header" href="#configuring-glean-for-real-time-events">Configuring Glean For &quot;Real-Time&quot; Events</a></h2>
-<p>Glean &quot;events&quot; ping submission can either be configured at <a href="../../../reference/general/initializing.html">initialization</a> or through <a href="../../../user/server-knobs/other/max-events.html">Server Knobs</a>.</p>
-<p>Setting the maximum event threshold to a value of <code>1</code> will configure the Glean SDK to submit an &quot;events&quot; ping for every event recorded.</p>
+<h2 id="defining-real-time-events-within-the-glean-sdk"><a class="header" href="#defining-real-time-events-within-the-glean-sdk">Defining &quot;real-time&quot; events within the Glean SDK</a></h2>
+<p>For the purposes of the Glean SDK and its capabilities, &quot;real-time&quot; is limited to: minimizing the time between instrumentation and reporting.
+It does not imply or describe how quickly received data is made available for querying.</p>
+<h2 id="methods-to-achieve-this-with-glean"><a class="header" href="#methods-to-achieve-this-with-glean">Methods to achieve this with Glean</a></h2>
+<h3 id="option-1-configuring-glean-to-send-all-events-as-soon-as-they-are-recorded"><a class="header" href="#option-1-configuring-glean-to-send-all-events-as-soon-as-they-are-recorded">Option 1: Configuring Glean to send all events as soon as they are recorded</a></h3>
+<p>Glean <a href="../../pings/events.html">&quot;events&quot; ping</a> submission can be configured either during <a href="../../../reference/general/initializing.html">initialization</a> or through <a href="../../../user/server-knobs/other/max-events.html">Server Knobs</a>.</p>
+<p>Setting the maximum event threshold to a value of <code>1</code> will configure the Glean SDK to submit an &quot;events&quot; ping for each and every <a href="../../../reference/metrics/event.html">event</a> as they
+are recorded. By default, the Glean SDK will batch 500 events per &quot;events&quot; ping.</p>
+<h3 id="option-2-using-a-custom-ping-and-submitting-it-immediately-pings-as-events"><a class="header" href="#option-2-using-a-custom-ping-and-submitting-it-immediately-pings-as-events">Option 2: Using a custom ping and submitting it immediately (&quot;Pings-as-Events&quot;)</a></h3>
+<p>If it isn't necessary to receive all Glean SDK events that are instrumented in an application in &quot;real-time&quot;, it may be preferable to create a
+<a href="../../pings/custom.html">custom ping</a> which contains the relevant information to capture the context around the event and submit it as soon as
+the application event occurs.</p>
+<p>This has some additional advantages over using just an event in that custom pings are less restrictive than the extras attached to the event
+in what data and Glean SDK metric types can be used.</p>
+<p>If it is important to see the event that is being represented as a custom ping in context with other application events, then you only need to
+define an event metric and use the <code>send_in_pings</code> parameter to send it in both the custom ping and the Glean built-in &quot;events&quot; ping. It can
+then be seen in sequence and within context of all of the application events, and still be sent in &quot;real-time&quot; as needed.</p>
 <h2 id="considerations"><a class="header" href="#considerations">Considerations</a></h2>
-<h3 id="what-real-time-glean-events-are-not"><a class="header" href="#what-real-time-glean-events-are-not">What &quot;Real-Time&quot; Glean Events Are <em>Not</em></a></h3>
-<p>Configuring the Glean SDK to submit events as soon as they are recorded does not mean to imply that the event data is available for analysis in
-real time. There are networks to traverse, ingestion pipelines, etl, etc. that are all factors to keep in mind when considering how soon the data
-is available for analysis purposes. This documentation only purports to cover configuring the Glean SDK to send the data in a real-time fashion and
-does not make any assumptions about the analysis of data in real-time.</p>
-<h3 id="more-network-requests"><a class="header" href="#more-network-requests">More Network Requests</a></h3>
-<p>For every event recorded, a network request will be generated when the event is submitted for ingestion. By default, the Glean SDK batches up to
-500 events per &quot;events&quot; ping, so this has the potential to generate up to 500 times as many network requests than the current default.</p>
-<h3 id="more-ingestion-endpoint-traffic"><a class="header" href="#more-ingestion-endpoint-traffic">More Ingestion Endpoint Traffic</a></h3>
+<h3 id="what-real-time-glean-eventspings-are-not"><a class="header" href="#what-real-time-glean-eventspings-are-not">What &quot;real-time&quot; Glean events/pings are <em>not</em></a></h3>
+<p>Configuring the Glean SDK to submit events as soon as they are recorded or using custom pings to submit data immediately does not mean that the
+data is available for analysis in real time. There are networks to traverse, ingestion pipelines, etl, etc. that are all factors to keep in
+mind when considering how soon the data is available for analysis purposes. This documentation only purports to cover configuring the Glean SDK
+to send the data in a real-time fashion and does not make any assumptions about the analysis of data in real-time.</p>
+<h3 id="more-network-requests"><a class="header" href="#more-network-requests">More network requests</a></h3>
+<p>For every event recorded or custom ping submitted, a network request will be generated as the ping is submitted for ingestion. By default, the
+Glean SDK batches up to 500 events per &quot;events&quot; ping, so this has the potential to generate up to 500 times as many network requests than the
+current defaults for the Glean SDK &quot;events&quot; ping.</p>
+<h3 id="more-ingestion-endpoint-traffic"><a class="header" href="#more-ingestion-endpoint-traffic">More ingestion endpoint traffic</a></h3>
 <p>As a result of the increased network requests, the ingestion endpoint will need to handle this additional traffic. This increases the load
 of all the processing steps that are involved with ingesting event data from an application.</p>
-<h3 id="storage-space"><a class="header" href="#storage-space">Storage Space</a></h3>
+<h3 id="storage-space-requirements"><a class="header" href="#storage-space-requirements">Storage space requirements</a></h3>
 <p>Typically the raw dataset for Glean events contains 1-500 events in a single row of the database. This row also includes metadata such as
 information about the client application and the ping itself. With only a single event per &quot;events&quot; ping, the replication of this metadata
 across the database will use additional space to house this repeated information that should rarely if ever change between events</p>
