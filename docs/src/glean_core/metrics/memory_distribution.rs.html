@@ -445,8 +445,8 @@
         // specialized snapshot function.
         </span>values: hist
             .snapshot()
-            .into_iter()
-            .map(|(k, v)| (k <span class="kw">as </span>i64, v <span class="kw">as </span>i64))
+            .iter()
+            .map(|(<span class="kw-2">&amp;</span>k, <span class="kw-2">&amp;</span>v)| (k <span class="kw">as </span>i64, v <span class="kw">as </span>i64))
             .collect(),
         sum: hist.sum() <span class="kw">as </span>i64,
         count: hist.count() <span class="kw">as </span>i64,

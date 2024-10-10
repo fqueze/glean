@@ -745,10 +745,6 @@
 <a href="#744" id="744">744</a>
 <a href="#745" id="745">745</a>
 <a href="#746" id="746">746</a>
-<a href="#747" id="747">747</a>
-<a href="#748" id="748">748</a>
-<a href="#749" id="749">749</a>
-<a href="#750" id="750">750</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -825,8 +821,8 @@
         // specialized snapshot function.
         </span>values: hist
             .snapshot()
-            .into_iter()
-            .map(|(k, v)| (k <span class="kw">as </span>i64, v <span class="kw">as </span>i64))
+            .iter()
+            .map(|(<span class="kw-2">&amp;</span>k, <span class="kw-2">&amp;</span>v)| (k <span class="kw">as </span>i64, v <span class="kw">as </span>i64))
             .collect(),
         sum: hist.sum() <span class="kw">as </span>i64,
         count: hist.count() <span class="kw">as </span>i64,
@@ -1464,7 +1460,6 @@
                 <span class="string">"8"</span>: <span class="number">1</span>,
                 <span class="string">"9"</span>: <span class="number">1</span>,
                 <span class="string">"10"</span>: <span class="number">1</span>,
-                <span class="string">"11"</span>: <span class="number">0</span>,
             },
         });
 
@@ -1489,10 +1484,7 @@
             <span class="string">"values"</span>: {
                 <span class="string">"1024"</span>: <span class="number">2</span>,
                 <span class="string">"1116"</span>: <span class="number">1</span>,
-                <span class="string">"1217"</span>: <span class="number">0</span>,
-                <span class="string">"1327"</span>: <span class="number">0</span>,
                 <span class="string">"1448"</span>: <span class="number">1</span>,
-                <span class="string">"1579"</span>: <span class="number">0</span>,
             },
         });
 

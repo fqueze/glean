@@ -13000,6 +13000,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <ul>
 <li><strong>BREAKING</strong>: Remove LMDB-to-safe-mode migration.
 Safe-mode became the default in Glean v51. (<a href="appendix/changelog/">#TODO</a>)</li>
+<li><strong>BREAKING</strong>: Stop sending buckets with 0 counts in memory_distribution and timing_distribution metric payloads (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1898336">bug 1898336</a>)</li>
 </ul>
 </li>
 </ul>
