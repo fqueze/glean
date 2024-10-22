@@ -189,8 +189,14 @@
 <li>General
 <ul>
 <li><strong>BREAKING</strong>: Remove LMDB-to-safe-mode migration.
-Safe-mode became the default in Glean v51. (<a href="">#TODO</a>)</li>
+Safe-mode became the default in Glean v51. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1780370">bug 1780370</a>)</li>
 <li><strong>BREAKING</strong>: Stop sending buckets with 0 counts in memory_distribution and timing_distribution metric payloads (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1898336">bug 1898336</a>)</li>
+<li>Require <code>glean_parser</code> v15.2.0 (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1925346">bug 1925346</a>)</li>
+</ul>
+</li>
+<li>Rust
+<ul>
+<li>New Metric Type: <code>labeled_quantity</code> (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1925346">bug 1925346</a>)</li>
 </ul>
 </li>
 </ul>
