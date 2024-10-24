@@ -3615,13 +3615,14 @@ across the database will use additional space to house this repeated information
 </ul>
 </li>
 </ul>
-<h3 id="6-os-sdk-version-android-ios"><a class="header" href="#6-os-sdk-version-android-ios">6. OS SDK Version (Android, iOS)</a></h3>
+<h3 id="6-osplatform-sdk-version"><a class="header" href="#6-osplatform-sdk-version">6. OS/Platform SDK Version</a></h3>
 <ul>
-<li>Purpose: Check if platform SDK changes are impacting data collection.</li>
+<li>Purpose: Check if Operating System or platform SDK changes are impacting data collection.</li>
 <li>Column Names: <code>client_info.os_version</code> (Android only: <code>client_info.android_sdk_version</code>)</li>
 <li>Considerations:
 <ul>
 <li>Have there been changes to platform lifecycle events or background task behaviors (e.g., 0-duration pings, or ping submission issues)?</li>
+<li>Has the OS changed the behaviour of system APIs?</li>
 </ul>
 </li>
 </ul>
@@ -3644,7 +3645,7 @@ across the database will use additional space to house this repeated information
 </ul>
 </li>
 </ul>
-<h3 id="9-hardware-details-manufacturerversion"><a class="header" href="#9-hardware-details-manufacturerversion">9. Hardware Details (Manufacturer/Version)</a></h3>
+<h3 id="9-hardware-details-manufacturerversion-mobile-platforms-only"><a class="header" href="#9-hardware-details-manufacturerversion-mobile-platforms-only">9. Hardware Details (Manufacturer/Version) (Mobile platforms only)</a></h3>
 <ul>
 <li>Purpose: Determine if the issue is hardware-specific.</li>
 <li>Column Names: <code>client_info.device_manufacturer</code>, <code>client_info.device_model</code></li>
