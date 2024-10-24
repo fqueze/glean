@@ -1271,6 +1271,8 @@
 <a href="#1270" id="1270">1270</a>
 <a href="#1271" id="1271">1271</a>
 <a href="#1272" id="1272">1272</a>
+<a href="#1273" id="1273">1273</a>
+<a href="#1274" id="1274">1274</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -2505,6 +2507,8 @@
 </span>}
 
 <span class="attr">#[allow(missing_docs)]
+</span><span class="comment">// uniffi-generated code should not be checked.
+</span><span class="attr">#[allow(clippy::all)]
 </span><span class="kw">mod </span>ffi {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="macro">uniffi::include_scaffolding!</span>(<span class="string">"glean"</span>);
