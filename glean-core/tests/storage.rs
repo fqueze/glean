@@ -26,14 +26,14 @@ fn can_snapshot() {
     let local_metric = StringMetric::new(CommonMetricData {
         name: "can_snapshot_local_metric".into(),
         category: "local".into(),
-        send_in_pings: vec!["store".into()],
+        send_in_pings: vec!["store1".into()],
         ..Default::default()
     });
 
     local_metric.set_sync(&glean, "snapshot 42");
 
     assert!(StorageManager
-        .snapshot(glean.storage(), "store", true)
+        .snapshot(glean.storage(), "store1", true)
         .is_some())
 }
 

@@ -456,6 +456,7 @@ class EventMetricTypeTest {
 
     @Test
     fun `overdue events are discarded if ping is not registered`() {
+        // TODO: We dismiss events now for unknown pings. This test doesn't apply as such anymore.
         // This is similar to the above test,
         // except that we register the custom ping AFTER initialize.
         // Overdue events are thus discarded because the ping is unknown at initialization time.

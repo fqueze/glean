@@ -396,7 +396,7 @@ fn snapshot_sorts_the_timestamps() {
 fn ensure_custom_ping_events_dont_overflow() {
     let (glean, _dir) = new_glean(None);
 
-    let store_name = "store-name";
+    let store_name = "store1";
     let event_meta = CommonMetricData {
         name: "name".into(),
         category: "category".into(),
@@ -441,7 +441,7 @@ fn ensure_custom_ping_events_dont_overflow() {
 fn ensure_custom_ping_events_from_multiple_runs_work() {
     let (mut tempdir, _) = tempdir();
 
-    let store_name = "store-name";
+    let store_name = "store1";
     let event = EventMetric::new(
         CommonMetricData {
             name: "name".into(),
@@ -507,6 +507,7 @@ fn event_storage_trimming() {
         },
         vec![],
     );
+    // TODO: Update these comments
     // First, record the event in the two pings.
     // Successfully records just fine because nothing's checking on record that these pings
     // exist and are registered.
@@ -515,8 +516,8 @@ fn event_storage_trimming() {
         tempdir = dir;
         event.record_sync(&glean, 10, HashMap::new(), 0);
 
-        assert_eq!(1, event.get_value(&glean, store_name).unwrap().len());
-        assert_eq!(1, event.get_value(&glean, store_name_2).unwrap().len());
+        assert!(event.get_value(&glean, store_name).is_none());
+        assert!(event.get_value(&glean, store_name_2).is_none());
     }
     // Second, construct (but don't init) Glean over again.
     // Register exactly one of the two pings.
@@ -536,6 +537,9 @@ fn event_storage_trimming() {
             vec![],
             vec![],
         ));
+
+        // Now we can record
+        event.record_sync(&glean, 10, HashMap::new(), 0);
 
         glean.on_ready_to_submit_pings(true);
 
@@ -568,9 +572,11 @@ fn with_event_timestamps() {
         ping_lifetime_threshold: 0,
         ping_lifetime_max_time: 0,
     };
-    let glean = Glean::new(cfg).unwrap();
+    let mut glean = Glean::new(cfg).unwrap();
+    let ping = PingType::new("store1", true, false, true, true, true, vec![], vec![]);
+    glean.register_ping_type(&ping);
 
-    let store_name = "store-name";
+    let store_name = "store1";
     let event = EventMetric::new(
         CommonMetricData {
             name: "name".into(),

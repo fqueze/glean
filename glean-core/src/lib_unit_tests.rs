@@ -7,6 +7,7 @@
 
 use std::collections::HashSet;
 
+use internal_pings::InternalPings;
 use serde_json::json;
 
 use super::*;
@@ -19,7 +20,13 @@ pub fn new_glean(tempdir: Option<tempfile::TempDir>) -> (Glean, tempfile::TempDi
         None => tempfile::tempdir().unwrap(),
     };
     let tmpname = dir.path().display().to_string();
-    let glean = Glean::with_options(&tmpname, GLOBAL_APPLICATION_ID, true, true);
+    let mut glean = Glean::with_options(&tmpname, GLOBAL_APPLICATION_ID, true, true);
+    // Register the builtin pings as enabled.
+    _ = InternalPings::new(true);
+
+    // store1 is used throughout tests
+    let ping = PingType::new_internal("store1", true, false, true, true, true, vec![], vec![]);
+    glean.register_ping_type(&ping);
     (glean, dir)
 }
 
@@ -617,6 +624,7 @@ fn test_first_run() {
 
 #[test]
 fn test_dirty_bit() {
+    let _ = env_logger::builder().try_init();
     let dir = tempfile::tempdir().unwrap();
     let tmpname = dir.path().display().to_string();
     {

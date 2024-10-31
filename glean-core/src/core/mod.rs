@@ -474,6 +474,34 @@ impl Glean {
         self.upload_enabled
     }
 
+    /// TODO
+    pub fn is_ping_enabled(&self, ping: &str) -> bool {
+        log::debug!("ping: {ping:?}");
+
+        // We "abuse" pings/storage names for internal data.
+        const DEFAULT_ENABLED: &[&str] = &[
+            "glean_client_info",
+            "glean_internal_info",
+            // for `experimentation_id`.
+            // That should probably have gone into `glean_internal_info` instead.
+            "all-pings",
+        ];
+
+        // `client_info`-like stuff is always enabled.
+        if DEFAULT_ENABLED.contains(&ping) {
+            log::debug!("client_info default-enabled.");
+            return true;
+        }
+
+        let Some(ping) = self.ping_registry.get(ping) else {
+            log::debug!("ping {ping:?} is disabled.");
+            return false;
+        };
+
+        log::debug!("ping {ping:?} might be enabled.");
+        ping.enabled(self)
+    }
+
     /// Handles the changing of state from upload disabled to enabled.
     ///
     /// Should only be called when the state actually changes.
