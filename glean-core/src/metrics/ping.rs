@@ -3,6 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use std::fmt;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
 use crate::ping::PingMaker;
@@ -30,11 +31,15 @@ struct InnerPing {
     /// Whether to include the {client|ping}_info sections on assembly.
     pub include_info_sections: bool,
     /// Whether this ping is enabled.
-    pub enabled: bool,
+    pub enabled: AtomicBool,
     /// Other pings that should be scheduled when this ping is sent.
     pub schedules_pings: Vec<String>,
     /// The "reason" codes that this ping can send
     pub reason_codes: Vec<String>,
+
+    /// True when it follows the `collection_enabled` flag (aka `upload_enabled`) flag.
+    /// Otherwise it needs to be enabled through `enabled_pings`.
+    follows_collection_enabled: AtomicBool,
 }
 
 impl fmt::Debug for PingType {
@@ -45,7 +50,7 @@ impl fmt::Debug for PingType {
             .field("send_if_empty", &self.0.send_if_empty)
             .field("precise_timestamps", &self.0.precise_timestamps)
             .field("include_info_sections", &self.0.include_info_sections)
-            .field("enabled", &self.0.enabled)
+            .field("enabled", &self.0.enabled.load(Ordering::Relaxed))
             .field("schedules_pings", &self.0.schedules_pings)
             .field("reason_codes", &self.0.reason_codes)
             .finish()
@@ -90,7 +95,16 @@ impl PingType {
             enabled,
             schedules_pings,
             reason_codes,
+            /*follows_collection_enabled:*/ true,
         )
+    }
+
+    /// TODO
+    pub fn with_follows(self, value: bool) -> Self {
+        self.0
+            .follows_collection_enabled
+            .store(value, Ordering::Relaxed);
+        self
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -103,6 +117,7 @@ impl PingType {
         enabled: bool,
         schedules_pings: Vec<String>,
         reason_codes: Vec<String>,
+        follows_collection_enabled: bool,
     ) -> Self {
         let this = Self(Arc::new(InnerPing {
             name: name.into(),
@@ -110,9 +125,10 @@ impl PingType {
             send_if_empty,
             precise_timestamps,
             include_info_sections,
-            enabled,
+            enabled: AtomicBool::new(enabled),
             schedules_pings,
             reason_codes,
+            follows_collection_enabled: AtomicBool::new(follows_collection_enabled),
         }));
 
         // Register this ping.
@@ -142,16 +158,44 @@ impl PingType {
         self.0.include_info_sections
     }
 
-    pub(crate) fn enabled(&self, glean: &Glean) -> bool {
-        let remote_settings_config = &glean.remote_settings_config.lock().unwrap();
+    /// TODO
+    pub fn set_enabled(&self, enabled: bool) {
+        self.0.enabled.store(enabled, Ordering::Release);
+    }
 
-        if !remote_settings_config.pings_enabled.is_empty() {
-            if let Some(remote_enabled) = remote_settings_config.pings_enabled.get(self.name()) {
-                return *remote_enabled;
+    pub(crate) fn enabled(&self, glean: &Glean) -> bool {
+        // If this ping follows builtin (collection_enabled/upload_enabled),
+        // but that is turned off, then this ping is disabled.
+        //
+        // Otherwise:
+        // If this ping is not in the `enabled_pings` list, this ping is disabled.
+        //
+        // Otherwise:
+        // Check the server-knobs config
+        //
+        // Otherwise:
+        // Check the static config
+
+        if self.0.follows_collection_enabled.load(Ordering::Relaxed) {
+            // if this follows collection_enabled:
+            // 1. check that first. if disabled, we're done
+            // 2. if enabled, check server-knobs
+            // 3. If that is not set, fall-through checking the ping
+            if !glean.is_upload_enabled() {
+                return false;
+            }
+
+            let remote_settings_config = &glean.remote_settings_config.lock().unwrap();
+
+            if !remote_settings_config.pings_enabled.is_empty() {
+                if let Some(remote_enabled) = remote_settings_config.pings_enabled.get(self.name())
+                {
+                    return *remote_enabled;
+                }
             }
         }
 
-        self.0.enabled
+        self.0.enabled.load(Ordering::Relaxed)
     }
 
     pub(crate) fn schedules_pings(&self) -> &[String] {
@@ -194,8 +238,18 @@ impl PingType {
     /// Whether the ping was succesfully assembled and queued.
     #[doc(hidden)]
     pub fn submit_sync(&self, glean: &Glean, reason: Option<&str>) -> bool {
-        if !glean.is_upload_enabled() {
-            log::info!("Glean disabled: not submitting any pings.");
+        log::debug!(
+            "ping {}. reason: {:?}, enabled: {:?}",
+            self.0.name,
+            reason,
+            self.enabled(glean)
+        );
+        if !self.enabled(glean) {
+            log::info!(
+                "The ping '{}' is disabled and will be discarded and not submitted",
+                self.0.name
+            );
+
             return false;
         }
 

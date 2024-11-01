@@ -62,6 +62,19 @@ impl PingType {
         }
     }
 
+    /// TODO
+    pub fn with_follows(self, value: bool) -> Self {
+        let Self {
+            mut inner,
+            test_callback,
+        } = self;
+        inner = inner.with_follows(value);
+        Self {
+            inner,
+            test_callback,
+        }
+    }
+
     /// Submits the ping for eventual uploading.
     ///
     /// The ping content is assembled as soon as possible, but upload is not
