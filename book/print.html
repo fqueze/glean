@@ -13100,6 +13100,7 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 Safe-mode became the default in Glean v51. (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1780370">bug 1780370</a>)</li>
 <li><strong>BREAKING</strong>: Stop sending buckets with 0 counts in memory_distribution and timing_distribution metric payloads (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1898336">bug 1898336</a>)</li>
 <li>Require <code>glean_parser</code> v15.2.0 (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1925346">bug 1925346</a>)</li>
+<li>Disabled the <code>glean.database.write_time</code> metric as the instrumented behavior was triggering metrics pings to be sent containing only that metric (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1928168">Bug 1928168</a>)</li>
 </ul>
 </li>
 <li>Rust
