@@ -852,6 +852,11 @@ pub fn glean_set_upload_enabled(enabled: bool) {
     })
 }
 
+/// TODO
+pub fn glean_set_collection_enabled(_enabled: bool) {
+    // TODO
+}
+
 /// Register a new [`PingType`](PingType).
 pub(crate) fn register_ping_type(ping: &PingType) {
     // If this happens after Glean.initialize is called (and returns),
