@@ -179,7 +179,11 @@ pub trait MetricType {
     /// and whether upload is enabled on the Glean object.
     fn should_record(&self, glean: &Glean) -> bool {
         if !glean.is_upload_enabled() {
-            return false;
+            log::debug!(
+                "metric '{}' would check collection_enabled. skipping for now.",
+                self.meta().base_identifier()
+            );
+            //return false;
         }
 
         // Technically nothing prevents multiple calls to should_record() to run in parallel,

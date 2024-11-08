@@ -857,6 +857,11 @@ pub fn glean_set_collection_enabled(_enabled: bool) {
     // TODO
 }
 
+/// TODO
+pub fn glean_set_ping_enabled(ping: String, enabled: bool) {
+    crate::launch_with_glean_mut(move |glean| glean.set_ping_enabled(ping, enabled));
+}
+
 /// Register a new [`PingType`](PingType).
 pub(crate) fn register_ping_type(ping: &PingType) {
     // If this happens after Glean.initialize is called (and returns),

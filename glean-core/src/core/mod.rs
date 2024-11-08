@@ -368,6 +368,7 @@ impl Glean {
             None => true,
             Some(uuid) => uuid == *KNOWN_CLIENT_ID,
         };
+        log::debug!("need new client_id: {need_new_client_id:?}");
         if need_new_client_id {
             self.core_metrics.client_id.generate_and_set_sync(self);
         }
@@ -464,6 +465,13 @@ impl Glean {
             true
         } else {
             false
+        }
+    }
+
+    /// TODO
+    pub fn set_ping_enabled(&mut self, ping: String, enabled: bool) {
+        if let Some(ping) = self.ping_registry.get(&ping) {
+            ping.set_enabled(enabled)
         }
     }
 

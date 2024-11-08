@@ -144,6 +144,11 @@ pub fn set_upload_enabled(enabled: bool) {
     glean_core::glean_set_upload_enabled(enabled)
 }
 
+/// TODO
+pub fn set_ping_enabled(ping: &str, enabled: bool) {
+    glean_core::glean_set_ping_enabled(ping.to_string(), enabled)
+}
+
 /// Collects and submits a ping for eventual uploading by name.
 ///
 /// Note that this needs to be public in order for RLB consumers to
