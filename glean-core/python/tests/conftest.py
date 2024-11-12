@@ -49,6 +49,15 @@ def pytest_runtest_setup(item):
         schedules_pings=[],
         reason_codes=[],
     )
+    PingType(
+        name="store3",
+        include_client_id=True,
+        send_if_empty=False,
+        precise_timestamps=True,
+        include_info_sections=True,
+        schedules_pings=[],
+        reason_codes=[],
+    )
     testing.reset_glean(application_id="glean-python-test", application_version=glean_version)
 
 
