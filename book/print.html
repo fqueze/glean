@@ -3655,6 +3655,23 @@ across the database will use additional space to house this repeated information
 </ul>
 </li>
 </ul>
+<h3 id="10-ping-reason"><a class="header" href="#10-ping-reason">10. Ping reason</a></h3>
+<ul>
+<li>Purpose: Determine the reason a ping was sent.</li>
+<li>Column Names: <code>ping_info.reason</code></li>
+<li>Considerations:
+<ul>
+<li>Does the anomaly occur primarily for a specific reason?</li>
+<li>The built-in pings have different ping reasons based on their schedule
+<ul>
+<li><a href="user/howto/investigating-data-issues/../../pings/baseline.html#scheduling"><code>baseline</code> ping schedule and reasons</a></li>
+<li><a href="user/howto/investigating-data-issues/../../pings/metrics.html#scheduling"><code>metrics</code> ping schedule and reasons</a></li>
+<li><a href="user/howto/investigating-data-issues/../../pings/events.html#scheduling"><code>events</code> ping schedule and reasons</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/user/howto/investigating-data-issues/investigating-data-issues.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="yaml-registry-format"><a class="header" href="#yaml-registry-format">YAML Registry Format</a></h1>
 <p>User defined Glean pings and metrics are declared in YAML files, which must be parsed by
 <a href="https://pypi.org/project/glean-parser/"><code>glean_parser</code></a> to generate public APIs
