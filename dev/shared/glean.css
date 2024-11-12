@@ -15,25 +15,6 @@ a.header code:hover {
     background-color: rgba(230, 230, 230, 1);
 }
 
-:root {
-    --tab-bg: #f1f1f1;
-    --tab-fg: #000;
-    --tab-bg-disabled: var(--tab-bg);
-    --tab-fg-disabled: #ccc;
-    --tab-border: #ccc;
-    --tab-bg-active: #ccc;
-    --tab-fg-active: #000;
-}
-
-.coal, .navy, .ayu {
-    --tab-bg: var(--bg);
-    --tab-fg: var(--fg);
-    --tab-bg-disabled: var(--tab-bg);
-    --tab-fg-disabled: #505254;
-    --tab-bg-active: #e6e6e6;
-    --tab-fg-active: #000;
-}
-
 /* Style the tab */
 .tabs {
     display: flex;
@@ -42,9 +23,8 @@ a.header code:hover {
 }
 
 .tabbar {
-    border: 1px solid var(--tab-border);
-    background-color: var(--tab-bg);
-    color: var(--tab-fg);
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
     width: 100%;
     box-sizing: border-box;
 }
@@ -52,7 +32,6 @@ a.header code:hover {
 /* Style the buttons that are used to open the tab content */
 .tabbar button {
     background-color: inherit;
-    color: var(--tab-fg);
     float: left;
     border: none;
     outline: none;
@@ -63,8 +42,7 @@ a.header code:hover {
 
 /* Change background color of buttons on hover */
 .tabbar button:hover {
-    background-color: var(--tab-bg-active);
-    color: var(--tab-fg-active);
+    background-color: #ddd;
 }
 
 .tabbar button.disabled:hover {
@@ -73,13 +51,11 @@ a.header code:hover {
 
 /* Create an active/current tablink class */
 .tabbar button.active {
-    background-color: var(--tab-bg-active);
-    color: var(--tab-fg-active);
+    background-color: #ccc;
 }
 
 .tabbar button.disabled {
-    background-color: var(--tab-bg-disabled);
-    color: var(--tab-fg-disabled);
+    color: #ccc;
     cursor: default;
 }
 
@@ -92,7 +68,7 @@ a.header code:hover {
 .tab {
     display: none;
     width: 100%;
-    border: 1px solid var(--tab-border);
+    border: 1px solid #ccc;
     border-top: none;
     padding: 6px 12px;
     box-sizing: border-box;
