@@ -309,10 +309,6 @@
 <a href="#308" id="308">308</a>
 <a href="#309" id="309">309</a>
 <a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -380,10 +376,6 @@
     <span class="doccomment">/// Set start time synchronously.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>set_start(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, start_time: u64) {
-        <span class="kw">if </span>!<span class="self">self</span>.should_record(glean) {
-            <span class="kw">return</span>;
-        }
-
         <span class="kw">let </span><span class="kw-2">mut </span>lock = <span class="self">self
             </span>.start_time
             .write()
