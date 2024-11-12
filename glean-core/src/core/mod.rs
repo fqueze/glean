@@ -471,7 +471,14 @@ impl Glean {
     /// TODO
     pub fn set_ping_enabled(&mut self, ping: String, enabled: bool) {
         if let Some(ping) = self.ping_registry.get(&ping) {
-            ping.set_enabled(enabled)
+            ping.set_enabled(enabled);
+            if !enabled {
+                if let Some(data) = self.data_store.as_ref() {
+                    _ = data.clear_ping_lifetime_storage(ping.name());
+                    _ = data.clear_lifetime_storage(Lifetime::User, ping.name());
+                    _ = data.clear_lifetime_storage(Lifetime::Application, ping.name());
+                }
+            }
         }
     }
 
