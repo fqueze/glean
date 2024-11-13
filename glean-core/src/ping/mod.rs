@@ -66,6 +66,11 @@ impl PingMaker {
 
     /// Gets, and then increments, the sequence number for a given ping.
     fn get_ping_seq(&self, glean: &Glean, storage_name: &str) -> usize {
+        // Don't attempt to increase sequence number for disabled ping
+        if !glean.is_ping_enabled(storage_name) {
+            return 0;
+        }
+
         // Sequence numbers are stored as a counter under a name that includes the storage name
         let seq = CounterMetric::new(CommonMetricData {
             name: format!("{}#sequence", storage_name),
@@ -460,15 +465,15 @@ mod test {
         let (mut glean, _t) = new_glean(None);
         let ping_maker = PingMaker::new();
 
-        assert_eq!(0, ping_maker.get_ping_seq(&glean, "custom"));
-        assert_eq!(1, ping_maker.get_ping_seq(&glean, "custom"));
+        assert_eq!(0, ping_maker.get_ping_seq(&glean, "store1"));
+        assert_eq!(1, ping_maker.get_ping_seq(&glean, "store1"));
 
         glean.set_upload_enabled(false);
-        assert_eq!(0, ping_maker.get_ping_seq(&glean, "custom"));
-        assert_eq!(0, ping_maker.get_ping_seq(&glean, "custom"));
+        assert_eq!(0, ping_maker.get_ping_seq(&glean, "store1"));
+        assert_eq!(0, ping_maker.get_ping_seq(&glean, "store1"));
 
         glean.set_upload_enabled(true);
-        assert_eq!(0, ping_maker.get_ping_seq(&glean, "custom"));
-        assert_eq!(1, ping_maker.get_ping_seq(&glean, "custom"));
+        assert_eq!(0, ping_maker.get_ping_seq(&glean, "store1"));
+        assert_eq!(1, ping_maker.get_ping_seq(&glean, "store1"));
     }
 }

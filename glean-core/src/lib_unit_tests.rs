@@ -24,8 +24,30 @@ pub fn new_glean(tempdir: Option<tempfile::TempDir>) -> (Glean, tempfile::TempDi
     // Register the builtin pings as enabled.
     _ = InternalPings::new(true);
 
-    // store1 is used throughout tests
-    let ping = PingType::new_internal("store1", true, false, true, true, true, vec![], vec![], true);
+    // store{1, 2} is used throughout tests
+    let ping = PingType::new_internal(
+        "store1",
+        true,
+        false,
+        true,
+        true,
+        true,
+        vec![],
+        vec![],
+        true,
+    );
+    glean.register_ping_type(&ping);
+    let ping = PingType::new_internal(
+        "store2",
+        true,
+        false,
+        true,
+        true,
+        true,
+        vec![],
+        vec![],
+        true,
+    );
     glean.register_ping_type(&ping);
     (glean, dir)
 }
