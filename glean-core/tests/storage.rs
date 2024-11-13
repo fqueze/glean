@@ -77,7 +77,7 @@ fn storage_is_thread_safe() {
     let threadsafe_metric = CounterMetric::new(CommonMetricData {
         name: "threadsafe".into(),
         category: "global".into(),
-        send_in_pings: vec!["core".into(), "metrics".into()],
+        send_in_pings: vec!["store1".into(), "metrics".into()],
         ..Default::default()
     });
     let threadsafe_metric = Arc::new(threadsafe_metric);
@@ -99,7 +99,7 @@ fn storage_is_thread_safe() {
     child.join().unwrap();
 
     let snapshot = StorageManager
-        .snapshot_as_json(glean.lock().unwrap().storage(), "core", true)
+        .snapshot_as_json(glean.lock().unwrap().storage(), "store1", true)
         .unwrap();
     assert_eq!(json!({"counter": { "global.threadsafe": 4 }}), snapshot);
 }

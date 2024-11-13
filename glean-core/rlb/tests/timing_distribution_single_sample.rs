@@ -10,7 +10,7 @@
 
 mod common;
 
-use glean::{ConfigurationBuilder, ErrorType};
+use glean::{private::PingType, ConfigurationBuilder, ErrorType};
 use std::time::Duration;
 
 /// A timing_distribution
@@ -26,7 +26,7 @@ mod metrics {
             CommonMetricData {
                 name: "boo".into(),
                 category: "sample".into(),
-                send_in_pings: vec!["validation".into()],
+                send_in_pings: vec!["store1".into()],
                 lifetime: Lifetime::Ping,
                 disabled: false,
                 ..Default::default()
@@ -44,6 +44,7 @@ fn raw_duration_works() {
     let dir = tempfile::tempdir().unwrap();
     let tmpname = dir.path().to_path_buf();
 
+    _ = PingType::new("store1", true, true, true, true, true, vec![], vec![]);
     let cfg = ConfigurationBuilder::new(true, tmpname, "firefox-desktop")
         .with_server_endpoint("invalid-test-host")
         .build();
