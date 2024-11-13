@@ -528,7 +528,11 @@ impl Database {
     {
         // If upload is disabled we don't want to record.
         if !glean.is_upload_enabled() {
-            return;
+            log::debug!(
+                "record. no check for upload enabled for '{}'",
+                data.base_identifier()
+            );
+            //return;
         }
 
         let name = data.identifier(glean);
