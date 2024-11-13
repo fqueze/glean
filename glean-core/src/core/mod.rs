@@ -571,7 +571,13 @@ impl Glean {
 
         // Clear any pending pings.
         let ping_maker = PingMaker::new();
-        if let Err(err) = ping_maker.clear_pending_pings(self.get_data_path()) {
+        let disabled_pings = self
+            .ping_registry
+            .iter()
+            .filter(|&(_ping_name, ping)| ping.follows_collection_enabled())
+            .map(|(ping_name, _ping)| &ping_name[..])
+            .collect::<Vec<_>>();
+        if let Err(err) = ping_maker.clear_pending_pings(self.get_data_path(), &disabled_pings) {
             log::warn!("Error clearing pending pings: {}", err);
         }
 

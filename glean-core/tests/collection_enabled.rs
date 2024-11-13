@@ -53,7 +53,7 @@ fn pings_with_follows_false_are_exempt() {
     assert_eq!(2, counter_val);
 
     glean.set_upload_enabled(false);
-    assert_eq!(0, get_queued_pings(glean.get_data_path()).unwrap().len());
+    assert_eq!(1, get_queued_pings(glean.get_data_path()).unwrap().len());
     // Disabling upload generates a deletion ping
     assert_eq!(1, get_deletion_pings(glean.get_data_path()).unwrap().len());
 
@@ -158,4 +158,54 @@ fn nofollows_ping_can_ride_along() {
             }
         }
     }
+}
+
+#[test]
+fn queued_nofollows_pings_are_not_removed() {
+    let (mut glean, _t) = new_glean(None);
+
+    // When `follows_collection_enabled=false` then by default `enabled=false`
+    let nofollows_ping = PingType::new(
+        "nofollows",
+        /* include_client_id */ false,
+        /* send_if_empty */ true,
+        /* precise_timestamps */ true,
+        /* include_info_sections */ false,
+        /* enabled */ false,
+        vec![],
+        vec![],
+    )
+    .with_follows(false);
+    glean.register_ping_type(&nofollows_ping);
+    glean.set_ping_enabled("nofollows".to_string(), true);
+
+    let manual_ping = PingType::new(
+        "manual",
+        /* include_client_id */ true,
+        /* send_if_empty */ false,
+        /* precise_timestamps */ true,
+        /* include_info_sections */ true,
+        /* enabled */ true,
+        vec![],
+        vec![],
+    );
+    glean.register_ping_type(&manual_ping);
+
+    // We need to store a metric as an empty ping is not stored.
+    let counter = CounterMetric::new(CommonMetricData {
+        name: "counter".into(),
+        category: "local".into(),
+        send_in_pings: vec!["manual".into(), "nofollows".into()],
+        lifetime: Lifetime::Application,
+        ..Default::default()
+    });
+
+    // Trigger a ping with data.
+    counter.add_sync(&glean, 1);
+    assert!(manual_ping.submit_sync(&glean, Some("triggered")));
+    assert!(nofollows_ping.submit_sync(&glean, Some("triggered")));
+    assert_eq!(2, get_queued_pings(glean.get_data_path()).unwrap().len());
+
+    glean.set_upload_enabled(false);
+    assert_eq!(1, get_queued_pings(glean.get_data_path()).unwrap().len());
 }
