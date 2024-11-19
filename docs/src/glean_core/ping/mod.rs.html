@@ -867,16 +867,16 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, _t) = new_glean(<span class="prelude-val">None</span>);
         <span class="kw">let </span>ping_maker = PingMaker::new();
 
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
 
         glean.set_upload_enabled(<span class="bool-val">false</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
 
         glean.set_upload_enabled(<span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"custom"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">0</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, ping_maker.get_ping_seq(<span class="kw-2">&amp;</span>glean, <span class="string">"store1"</span>));
     }
 }
 </code></pre></div></section></main></body></html>
