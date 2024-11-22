@@ -256,6 +256,27 @@ pings.search.submit(pings.searchReasonCodes.Performed);
 </div>
 </div>
 <h2 id="testing-api"><a class="header" href="#testing-api">Testing API</a></h2>
+<h3 id="getregisteredpingnames"><a class="header" href="#getregisteredpingnames"><code>getRegisteredPingNames</code></a></h3>
+<p>Gets a set of the currently registered ping names.</p>
+<p>Useful when debugging to know which pings are able to be sent.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-kotlin">val knownPings = Glean.getRegisteredPingNames()
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">let knownPings = Glean.shared.getRegisteredPingNames()
+</code></pre>
+</div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">let known_pings = glean.get_registered_ping_names();
+</code></pre>
+</div>
+</div>
+</div>
 <h3 id="testbeforenextsubmit"><a class="header" href="#testbeforenextsubmit"><code>testBeforeNextSubmit</code></a></h3>
 <p>Runs a validation function before the ping is collected.</p>
 <div class="tabs">

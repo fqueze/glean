@@ -1027,6 +1027,15 @@
 <a href="#1026" id="1026">1026</a>
 <a href="#1027" id="1027">1027</a>
 <a href="#1028" id="1028">1028</a>
+<a href="#1029" id="1029">1029</a>
+<a href="#1030" id="1030">1030</a>
+<a href="#1031" id="1031">1031</a>
+<a href="#1032" id="1032">1032</a>
+<a href="#1033" id="1033">1033</a>
+<a href="#1034" id="1034">1034</a>
+<a href="#1035" id="1035">1035</a>
+<a href="#1036" id="1036">1036</a>
+<a href="#1037" id="1037">1037</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1753,6 +1762,15 @@
             .insert(ping.name().to_string(), ping.clone());
     }
 
+    <span class="doccomment">/// Gets a list of currently registered ping names.
+    ///
+    /// # Returns
+    ///
+    /// The list of ping names that are currently registered.
+    </span><span class="kw">pub fn </span>get_registered_ping_names(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.ping_registry.keys().map(String::as_str).collect()
+    }
+
     <span class="doccomment">/// Get create time of the Glean object.
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>start_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; DateTime&lt;FixedOffset&gt; {
         <span class="self">self</span>.start_time
@@ -1889,8 +1907,8 @@
     <span class="doccomment">/// Return the value for the debug view tag or [`None`] if it hasn't been set.
     ///
     /// The `debug_view_tag` may be set from an environment variable
-    /// (`GLEAN_DEBUG_VIEW_TAG`) or through the [`set_debug_view_tag`] function.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>debug_view_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt; {
+    /// (`GLEAN_DEBUG_VIEW_TAG`) or through the `set_debug_view_tag` function.
+    </span><span class="kw">pub fn </span>debug_view_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt; {
         <span class="self">self</span>.debug.debug_view_tag.get()
     }
 
@@ -1931,11 +1949,11 @@
         <span class="self">self</span>.debug.log_pings.set(value)
     }
 
-    <span class="doccomment">/// Return the value for the log pings debug option or [`None`] if it hasn't been set.
+    <span class="doccomment">/// Return the value for the log pings debug option or `false` if it hasn't been set.
     ///
     /// The `log_pings` option may be set from an environment variable (`GLEAN_LOG_PINGS`)
-    /// or through the [`set_log_pings`] function.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>log_pings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    /// or through the `set_log_pings` function.
+    </span><span class="kw">pub fn </span>log_pings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.debug.log_pings.get().copied().unwrap_or(<span class="bool-val">false</span>)
     }
 

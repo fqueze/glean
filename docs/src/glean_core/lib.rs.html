@@ -1273,6 +1273,42 @@
 <a href="#1272" id="1272">1272</a>
 <a href="#1273" id="1273">1273</a>
 <a href="#1274" id="1274">1274</a>
+<a href="#1275" id="1275">1275</a>
+<a href="#1276" id="1276">1276</a>
+<a href="#1277" id="1277">1277</a>
+<a href="#1278" id="1278">1278</a>
+<a href="#1279" id="1279">1279</a>
+<a href="#1280" id="1280">1280</a>
+<a href="#1281" id="1281">1281</a>
+<a href="#1282" id="1282">1282</a>
+<a href="#1283" id="1283">1283</a>
+<a href="#1284" id="1284">1284</a>
+<a href="#1285" id="1285">1285</a>
+<a href="#1286" id="1286">1286</a>
+<a href="#1287" id="1287">1287</a>
+<a href="#1288" id="1288">1288</a>
+<a href="#1289" id="1289">1289</a>
+<a href="#1290" id="1290">1290</a>
+<a href="#1291" id="1291">1291</a>
+<a href="#1292" id="1292">1292</a>
+<a href="#1293" id="1293">1293</a>
+<a href="#1294" id="1294">1294</a>
+<a href="#1295" id="1295">1295</a>
+<a href="#1296" id="1296">1296</a>
+<a href="#1297" id="1297">1297</a>
+<a href="#1298" id="1298">1298</a>
+<a href="#1299" id="1299">1299</a>
+<a href="#1300" id="1300">1300</a>
+<a href="#1301" id="1301">1301</a>
+<a href="#1302" id="1302">1302</a>
+<a href="#1303" id="1303">1303</a>
+<a href="#1304" id="1304">1304</a>
+<a href="#1305" id="1305">1305</a>
+<a href="#1306" id="1306">1306</a>
+<a href="#1307" id="1307">1307</a>
+<a href="#1308" id="1308">1308</a>
+<a href="#1309" id="1309">1309</a>
+<a href="#1310" id="1310">1310</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -2149,6 +2185,22 @@
     }
 }
 
+<span class="doccomment">/// Gets a list of currently registered ping names.
+///
+/// # Returns
+///
+/// The list of ping names that are currently registered.
+</span><span class="kw">pub fn </span>glean_get_registered_ping_names() -&gt; Vec&lt;String&gt; {
+    block_on_dispatcher();
+    core::with_glean(|glean| {
+        glean
+            .get_registered_ping_names()
+            .iter()
+            .map(|ping| ping.to_string())
+            .collect()
+    })
+}
+
 <span class="doccomment">/// Indicate that an experiment is running.  Glean will then add an
 /// experiment annotation to the environment which is sent with pings. This
 /// infomration is not persisted between runs.
@@ -2247,6 +2299,16 @@
     </span>}
 }
 
+<span class="doccomment">/// Gets the currently set debug view tag.
+///
+/// # Returns
+///
+/// Return the value for the debug view tag or [`None`] if it hasn't been set.
+</span><span class="kw">pub fn </span>glean_get_debug_view_tag() -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+    block_on_dispatcher();
+    core::with_glean(|glean| glean.debug_view_tag().map(|tag| tag.to_string()))
+}
+
 <span class="doccomment">/// Sets source tags.
 ///
 /// Overrides any existing source tags.
@@ -2291,6 +2353,16 @@
     } <span class="kw">else </span>{
         PRE_INIT_LOG_PINGS.store(value, Ordering::SeqCst);
     }
+}
+
+<span class="doccomment">/// Gets the current log pings value.
+///
+/// # Returns
+///
+/// Return the value for the log pings debug option.
+</span><span class="kw">pub fn </span>glean_get_log_pings() -&gt; bool {
+    block_on_dispatcher();
+    core::with_glean(|glean| glean.log_pings())
 }
 
 <span class="doccomment">/// Performs the collection/cleanup operations required by becoming active.

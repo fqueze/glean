@@ -5138,6 +5138,29 @@ Glean.setLogPings(true);
 <div data-lang="Firefox Desktop" class="tab"></div>
 </div>
 </div>
+<h3 id="getlogpings"><a class="header" href="#getlogpings"><code>getLogPings</code></a></h3>
+<p>Gets the current state of ping logging.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-kotlin">val loggingEnabled = Glean.getLogPings()
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">let loggingEnabled = Glean.shared.getLogPings()
+</code></pre>
+</div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">use glean;
+
+let logging_enabled = glean.get_log_pings();
+</code></pre>
+</div>
+<div data-lang="Firefox Desktop" class="tab"></div>
+</div>
+</div>
 <h2 id="environment-variable"><a class="header" href="#environment-variable">Environment variable</a></h2>
 <h3 id="glean_log_pings"><a class="header" href="#glean_log_pings"><code>GLEAN_LOG_PINGS</code></a></h3>
 <p>It is also possible to enable ping logging through
@@ -5189,7 +5212,10 @@ The tag will be applied upon initialization in this case.</p>
 <div class="tabs">
 <div class="tabbar"></div>
 <div class="tabcontents">
-<div data-lang="Kotlin" class="tab"></div>
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-kotlin">Glean.setDebugViewTag(&quot;my-tag&quot;)
+</code></pre>
+</div>
 <div data-lang="Java" class="tab"></div>
 <div data-lang="Swift" class="tab">
 <pre><code class="language-Swift">import Glean
@@ -5210,6 +5236,33 @@ glean.set_debug_view_tag(&quot;my-tag&quot;);
 Glean.setDebugViewTag(&quot;my-tag&quot;);
 </code></pre>
 </div>
+<div data-lang="Firefox Desktop" class="tab"></div>
+</div>
+</div>
+<h3 id="getdebugviewtag"><a class="header" href="#getdebugviewtag"><code>getDebugViewTag</code></a></h3>
+<p>Gets the Debug View Tag if set, otherwise returns a language-specific empty/null value.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-kotlin">val tag = Glean.getDebugViewTag() ?: &quot;none&quot;
+</code></pre>
+</div>
+<div data-lang="Java" class="tab"></div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">import Glean
+
+if let tag = Glean.shared.getDebugViewTag() { ... }
+</code></pre>
+</div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">use glean;
+
+if let Some(tag) = glean.get_debug_view_tag() { ... };
+</code></pre>
+</div>
+<div data-lang="JavaScript" class="tab"></div>
 <div data-lang="Firefox Desktop" class="tab"></div>
 </div>
 </div>
@@ -12570,6 +12623,27 @@ pings.search.submit(pings.searchReasonCodes.Performed);
 </div>
 </div>
 <h2 id="testing-api-25"><a class="header" href="#testing-api-25">Testing API</a></h2>
+<h3 id="getregisteredpingnames"><a class="header" href="#getregisteredpingnames"><code>getRegisteredPingNames</code></a></h3>
+<p>Gets a set of the currently registered ping names.</p>
+<p>Useful when debugging to know which pings are able to be sent.</p>
+<div class="tabs">
+<div class="tabbar"></div>
+<div class="tabcontents">
+<div data-lang="Kotlin" class="tab">
+<pre><code class="language-kotlin">val knownPings = Glean.getRegisteredPingNames()
+</code></pre>
+</div>
+<div data-lang="Swift" class="tab">
+<pre><code class="language-Swift">let knownPings = Glean.shared.getRegisteredPingNames()
+</code></pre>
+</div>
+<div data-lang="Python" class="tab"></div>
+<div data-lang="Rust" class="tab">
+<pre><code class="language-Rust">let known_pings = glean.get_registered_ping_names();
+</code></pre>
+</div>
+</div>
+</div>
 <h3 id="testbeforenextsubmit"><a class="header" href="#testbeforenextsubmit"><code>testBeforeNextSubmit</code></a></h3>
 <p>Runs a validation function before the ping is collected.</p>
 <div class="tabs">
@@ -13308,6 +13382,11 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/user/appendix/changelog/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="unreleased-changes"><a class="header" href="#unreleased-changes">Unreleased changes</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v62.0.0...main">Full changelog</a></p>
 <ul>
+<li>General
+<ul>
+<li>Add methods to access current Glean debugging settings and the list of currently registered pings(<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1921976">Bug 1921976</a>).</li>
+</ul>
+</li>
 <li>Rust
 <ul>
 <li>Permit Glean shutdown to interrupt UploadManager Wait tasks (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1928288">bug 1928288</a>)</li>
