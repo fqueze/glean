@@ -695,7 +695,7 @@
     // 3. The ping was NOT collected on the current calendar day BUT we still have
     //    some time to the due time; schedule for submitting the current calendar day.
 
-    </span><span class="kw">let </span>already_sent_today = last_sent_time.map_or(<span class="bool-val">false</span>, |d| d.date() == now.date());
+    </span><span class="kw">let </span>already_sent_today = last_sent_time.is_some_and(|d| d.date() == now.date());
     <span class="kw">if </span>already_sent_today {
         <span class="comment">// Case #1
         </span><span class="macro">log::info!</span>(<span class="string">"The 'metrics' ping was already sent today, {}"</span>, now);

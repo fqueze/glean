@@ -1760,7 +1760,7 @@
                     .event
                     .extra
                     .as_ref()
-                    .map_or(<span class="bool-val">false</span>, |extra| extra.is_empty())
+                    .is_some_and(|extra| extra.is_empty())
                 {
                     <span class="comment">// Small optimization to save us sending empty dicts.
                     </span>event.event.extra = <span class="prelude-val">None</span>;
