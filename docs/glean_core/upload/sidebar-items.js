@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["PingUploadTask","UploadResult","UploadTaskAction"],"fn":["chunked_log_info"],"struct":["PingMetadata","PingPayload","PingRequest","PingUploadManager"],"type":["HeaderMap"]};
+window.SIDEBAR_ITEMS = {"enum":["PingUploadTask","UploadResult","UploadTaskAction"],"fn":["chunked_log_info","process_metadata"],"struct":["PingMetadata","PingPayload","PingRequest","PingUploadManager"],"type":["HeaderMap"]};

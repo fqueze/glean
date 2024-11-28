@@ -79,6 +79,10 @@
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
 <a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -115,6 +119,7 @@
                     <span class="string">"dirty_startup"</span>.to_string(),
                     <span class="string">"inactive"</span>.to_string(),
                 ],
+                <span class="bool-val">true</span>,
             ),
             metrics: PingType::new(
                 <span class="string">"metrics"</span>,
@@ -131,6 +136,7 @@
                     <span class="string">"tomorrow"</span>.to_string(),
                     <span class="string">"upgrade"</span>.to_string(),
                 ],
+                <span class="bool-val">true</span>,
             ),
             events: PingType::new(
                 <span class="string">"events"</span>,
@@ -145,6 +151,7 @@
                     <span class="string">"inactive"</span>.to_string(),
                     <span class="string">"max_capacity"</span>.to_string(),
                 ],
+                <span class="bool-val">true</span>,
             ),
             deletion_request: PingType::new(
                 <span class="string">"deletion-request"</span>,
@@ -155,6 +162,7 @@
                 <span class="bool-val">true</span>, <span class="comment">// The deletion-request should not be disabled
                 </span><span class="macro">vec!</span>[],
                 <span class="macro">vec!</span>[<span class="string">"at_init"</span>.to_string(), <span class="string">"set_upload_enabled"</span>.to_string()],
+                <span class="bool-val">true</span>,
             ),
         }
     }

@@ -1934,6 +1934,19 @@
 <a href="#1933" id="1933">1933</a>
 <a href="#1934" id="1934">1934</a>
 <a href="#1935" id="1935">1935</a>
+<a href="#1936" id="1936">1936</a>
+<a href="#1937" id="1937">1937</a>
+<a href="#1938" id="1938">1938</a>
+<a href="#1939" id="1939">1939</a>
+<a href="#1940" id="1940">1940</a>
+<a href="#1941" id="1941">1941</a>
+<a href="#1942" id="1942">1942</a>
+<a href="#1943" id="1943">1943</a>
+<a href="#1944" id="1944">1944</a>
+<a href="#1945" id="1945">1945</a>
+<a href="#1946" id="1946">1946</a>
+<a href="#1947" id="1947">1947</a>
+<a href="#1948" id="1948">1948</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1961,6 +1974,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::error::ErrorKind;
 <span class="kw">use </span><span class="kw">crate</span>::TimerId;
 <span class="kw">use crate</span>::{internal_metrics::UploadMetrics, Glean};
+<span class="kw">pub use </span>directory::process_metadata;
 <span class="kw">use </span>directory::{PingDirectoryManager, PingPayloadsByDirectory};
 <span class="kw">use </span>policy::Policy;
 <span class="kw">use </span>request::create_date_header_value;
@@ -2970,6 +2984,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3011,6 +3026,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3050,6 +3066,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3089,6 +3106,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3128,6 +3146,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3169,6 +3188,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3286,6 +3306,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3361,6 +3382,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3420,6 +3442,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3500,6 +3523,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3581,6 +3605,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
@@ -3664,6 +3689,7 @@
             <span class="bool-val">true</span>,
             <span class="macro">vec!</span>[],
             <span class="macro">vec!</span>[],
+            <span class="bool-val">true</span>,
         );
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 

@@ -553,7 +553,7 @@
 /// currently it contains only additonal headers to be added to each ping request.
 /// Therefore, we will process the contents of this line
 /// and return a HeaderMap of the persisted headers.
-</span><span class="kw">fn </span>process_metadata(path: <span class="kw-2">&amp;</span>str, metadata: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;PingMetadata&gt; {
+</span><span class="kw">pub fn </span>process_metadata(path: <span class="kw-2">&amp;</span>str, metadata: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;PingMetadata&gt; {
     <span class="kw">if let </span><span class="prelude-val">Ok</span>(metadata) = serde_json::from_str::&lt;PingMetadata&gt;(metadata) {
         <span class="kw">return </span><span class="prelude-val">Some</span>(metadata);
     } <span class="kw">else </span>{
@@ -796,7 +796,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[], <span class="bool-val">true</span>);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory
@@ -823,7 +823,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[], <span class="bool-val">true</span>);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory
@@ -859,7 +859,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>glean, dir) = new_glean(<span class="prelude-val">None</span>);
 
         <span class="comment">// Register a ping for testing
-        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[]);
+        </span><span class="kw">let </span>ping_type = PingType::new(<span class="string">"test"</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="macro">vec!</span>[], <span class="macro">vec!</span>[], <span class="bool-val">true</span>);
         glean.register_ping_type(<span class="kw-2">&amp;</span>ping_type);
 
         <span class="comment">// Submit the ping to populate the pending_pings directory

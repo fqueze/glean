@@ -439,14 +439,53 @@
 <a href="#438" id="438">438</a>
 <a href="#439" id="439">439</a>
 <a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 </span><span class="doccomment">//! Ping collection, assembly &amp; submission.
 
-</span><span class="kw">use </span>std::fs::{create_dir_all, File};
-<span class="kw">use </span>std::io::Write;
+</span><span class="kw">use </span>std::fs::{<span class="self">self</span>, create_dir_all, File};
+<span class="kw">use </span>std::io::{BufRead, BufReader, Write};
 <span class="kw">use </span>std::path::{Path, PathBuf};
 
 <span class="kw">use </span>log::info;
@@ -507,6 +546,11 @@
 
     <span class="doccomment">/// Gets, and then increments, the sequence number for a given ping.
     </span><span class="kw">fn </span>get_ping_seq(<span class="kw-2">&amp;</span><span class="self">self</span>, glean: <span class="kw-2">&amp;</span>Glean, storage_name: <span class="kw-2">&amp;</span>str) -&gt; usize {
+        <span class="comment">// Don't attempt to increase sequence number for disabled ping
+        </span><span class="kw">if </span>!glean.is_ping_enabled(storage_name) {
+            <span class="kw">return </span><span class="number">0</span>;
+        }
+
         <span class="comment">// Sequence numbers are stored as a counter under a name that includes the storage name
         </span><span class="kw">let </span>seq = CounterMetric::new(CommonMetricData {
             name: <span class="macro">format!</span>(<span class="string">"{}#sequence"</span>, storage_name),
@@ -845,11 +889,45 @@
     }
 
     <span class="doccomment">/// Clears any pending pings in the queue.
-    </span><span class="kw">pub fn </span>clear_pending_pings(<span class="kw-2">&amp;</span><span class="self">self</span>, data_path: <span class="kw-2">&amp;</span>Path) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    </span><span class="kw">pub fn </span>clear_pending_pings(<span class="kw-2">&amp;</span><span class="self">self</span>, data_path: <span class="kw-2">&amp;</span>Path, ping_names: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">let </span>pings_dir = <span class="self">self</span>.get_pings_dir(data_path, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
 
-        std::fs::remove_dir_all(<span class="kw-2">&amp;</span>pings_dir)<span class="question-mark">?</span>;
-        create_dir_all(<span class="kw-2">&amp;</span>pings_dir)<span class="question-mark">?</span>;
+        <span class="comment">// TODO(bug 1932909): Refactor this into its own function
+        // and share it with `upload::directory`.
+        </span><span class="kw">let </span>entries = pings_dir.read_dir()<span class="question-mark">?</span>;
+        <span class="kw">for </span>entry <span class="kw">in </span>entries.filter_map(|entry| entry.ok()) {
+            <span class="kw">if let </span><span class="prelude-val">Ok</span>(file_type) = entry.file_type() {
+                <span class="kw">if </span>!file_type.is_file() {
+                    <span class="kw">continue</span>;
+                }
+            } <span class="kw">else </span>{
+                <span class="kw">continue</span>;
+            }
+
+            <span class="kw">let </span>file = <span class="kw">match </span>File::open(entry.path()) {
+                <span class="prelude-val">Ok</span>(file) =&gt; file,
+                <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">continue</span>;
+                }
+            };
+
+            <span class="kw">let </span><span class="kw-2">mut </span>lines = BufReader::new(file).lines();
+            <span class="kw">if let </span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(path)), <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(_body)), <span class="prelude-val">Ok</span>(metadata)) =
+                (lines.next(), lines.next(), lines.next().transpose())
+            {
+                <span class="kw">let </span>PingMetadata { ping_name, .. } = metadata
+                    .and_then(|m| <span class="kw">crate</span>::upload::process_metadata(<span class="kw-2">&amp;</span>path, <span class="kw-2">&amp;</span>m))
+                    .unwrap_or_default();
+                <span class="kw">let </span>ping_name =
+                    ping_name.unwrap_or_else(|| path.split(<span class="string">'/'</span>).nth(<span class="number">3</span>).unwrap_or(<span class="string">""</span>).into());
+
+                <span class="kw">if </span>ping_names.contains(&amp;&amp;ping_name[..]) {
+                    <span class="kw">_ </span>= fs::remove_file(entry.path());
+                }
+            } <span class="kw">else </span>{
+                <span class="kw">continue</span>;
+            }
+        }
 
         <span class="macro">log::debug!</span>(<span class="string">"All pending pings deleted"</span>);
 

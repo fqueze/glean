@@ -59,7 +59,7 @@ __author__ = &#34;The Glean Team&#34;
 __email__ = &#34;glean-team@mozilla.com&#34;
 
 
-GLEAN_PARSER_VERSION = &#34;15.2.0&#34;
+GLEAN_PARSER_VERSION = &#34;16.1.0&#34;
 parser_version = VersionInfo.parse(GLEAN_PARSER_VERSION)
 parser_version_next_major = parser_version.bump_major()
 
@@ -761,7 +761,7 @@ initialized from the application.</p>
     @classmethod
     def set_upload_enabled(cls, enabled: bool) -&gt; None:
         &#34;&#34;&#34;
-        Enable or disable Glean collection and upload.
+        **DEPRECATED** Enable or disable Glean collection and upload.
 
         Metric collection is enabled by default.
 
@@ -771,6 +771,9 @@ initialized from the application.</p>
         When disabling, all pending metrics, events and queued pings are cleared.
 
         When enabling, the core Glean metrics are recreated.
+
+        **DEPRECATION NOTICE**:
+        This API is deprecated. Use `set_collection_enabled` instead.
 
         Args:
             enabled (bool): When True, enable metric collection.
@@ -782,6 +785,27 @@ initialized from the application.</p>
         # Because the dispatch queue is halted until Glean is fully initialized
         # we can safely enqueue here and it will execute after initialization.
         _uniffi.glean_set_upload_enabled(enabled)
+
+    @classmethod
+    def set_collection_enabled(cls, enabled: bool) -&gt; None:
+        &#34;&#34;&#34;
+        Enable or disable Glean collection and upload.
+
+        Metric collection is enabled by default.
+
+        When collection is disabled, metrics aren&#39;t recorded at all and no data
+        is uploaded.
+        **Note**: Individual pings can be enabled if they don&#39;t follow this setting.
+        See `PingType.set_enabled`.
+
+        When disabling, all pending metrics, events and queued pings are cleared.
+
+        When enabling, the core Glean metrics are recreated.
+
+        Args:
+            enabled (bool): When True, enable metric collection.
+        &#34;&#34;&#34;
+        cls.set_upload_enabled(enabled)
 
     @classmethod
     def set_experiment_active(
@@ -1143,6 +1167,49 @@ def is_initialized(cls) -&gt; bool:
     return cls._initialized</code></pre>
 </details>
 </dd>
+<dt id="glean.Glean.set_collection_enabled"><code class="name flex">
+<span>def <span class="ident">set_collection_enabled</span></span>(<span>enabled: bool) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enable or disable Glean collection and upload.</p>
+<p>Metric collection is enabled by default.</p>
+<p>When collection is disabled, metrics aren't recorded at all and no data
+is uploaded.
+<strong>Note</strong>: Individual pings can be enabled if they don't follow this setting.
+See <code>PingType.set_enabled</code>.</p>
+<p>When disabling, all pending metrics, events and queued pings are cleared.</p>
+<p>When enabling, the core Glean metrics are recreated.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
+<dd>When True, enable metric collection.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def set_collection_enabled(cls, enabled: bool) -&gt; None:
+    &#34;&#34;&#34;
+    Enable or disable Glean collection and upload.
+
+    Metric collection is enabled by default.
+
+    When collection is disabled, metrics aren&#39;t recorded at all and no data
+    is uploaded.
+    **Note**: Individual pings can be enabled if they don&#39;t follow this setting.
+    See `PingType.set_enabled`.
+
+    When disabling, all pending metrics, events and queued pings are cleared.
+
+    When enabling, the core Glean metrics are recreated.
+
+    Args:
+        enabled (bool): When True, enable metric collection.
+    &#34;&#34;&#34;
+    cls.set_upload_enabled(enabled)</code></pre>
+</details>
+</dd>
 <dt id="glean.Glean.set_experiment_active"><code class="name flex">
 <span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None) ‑> None</span>
 </code></dt>
@@ -1240,12 +1307,14 @@ def set_experimentation_id(cls, experimentation_id: str):
 <span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled: bool) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Enable or disable Glean collection and upload.</p>
+<div class="desc"><p><strong>DEPRECATED</strong> Enable or disable Glean collection and upload.</p>
 <p>Metric collection is enabled by default.</p>
 <p>When uploading is disabled, metrics aren't recorded at all and no data
 is uploaded.</p>
 <p>When disabling, all pending metrics, events and queued pings are cleared.</p>
 <p>When enabling, the core Glean metrics are recreated.</p>
+<p><strong>DEPRECATION NOTICE</strong>:
+This API is deprecated. Use <code>set_collection_enabled</code> instead.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
@@ -1258,7 +1327,7 @@ is uploaded.</p>
 <pre><code class="python">@classmethod
 def set_upload_enabled(cls, enabled: bool) -&gt; None:
     &#34;&#34;&#34;
-    Enable or disable Glean collection and upload.
+    **DEPRECATED** Enable or disable Glean collection and upload.
 
     Metric collection is enabled by default.
 
@@ -1268,6 +1337,9 @@ def set_upload_enabled(cls, enabled: bool) -&gt; None:
     When disabling, all pending metrics, events and queued pings are cleared.
 
     When enabling, the core Glean metrics are recreated.
+
+    **DEPRECATION NOTICE**:
+    This API is deprecated. Use `set_collection_enabled` instead.
 
     Args:
         enabled (bool): When True, enable metric collection.
@@ -1458,6 +1530,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <li><code><a title="glean.Glean.handle_client_inactive" href="#glean.Glean.handle_client_inactive">handle_client_inactive</a></code></li>
 <li><code><a title="glean.Glean.initialize" href="#glean.Glean.initialize">initialize</a></code></li>
 <li><code><a title="glean.Glean.is_initialized" href="#glean.Glean.is_initialized">is_initialized</a></code></li>
+<li><code><a title="glean.Glean.set_collection_enabled" href="#glean.Glean.set_collection_enabled">set_collection_enabled</a></code></li>
 <li><code><a title="glean.Glean.set_experiment_active" href="#glean.Glean.set_experiment_active">set_experiment_active</a></code></li>
 <li><code><a title="glean.Glean.set_experiment_inactive" href="#glean.Glean.set_experiment_inactive">set_experiment_inactive</a></code></li>
 <li><code><a title="glean.Glean.set_experimentation_id" href="#glean.Glean.set_experimentation_id">set_experimentation_id</a></code></li>

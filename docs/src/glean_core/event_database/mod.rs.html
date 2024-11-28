@@ -1303,6 +1303,10 @@
 <a href="#1302" id="1302">1302</a>
 <a href="#1303" id="1303">1303</a>
 <a href="#1304" id="1304">1304</a>
+<a href="#1305" id="1305">1305</a>
+<a href="#1306" id="1306">1306</a>
+<a href="#1307" id="1307">1307</a>
+<a href="#1308" id="1308">1308</a>
 </pre></div><pre class="rust"><code><span class="comment">// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -1589,6 +1593,10 @@
         {
             <span class="kw">let </span><span class="kw-2">mut </span>db = <span class="self">self</span>.event_stores.write().unwrap(); <span class="comment">// safe unwrap, only error case is poisoning
             </span><span class="kw">for </span>store_name <span class="kw">in </span>meta.inner.send_in_pings.iter() {
+                <span class="kw">if </span>!glean.is_ping_enabled(store_name) {
+                    <span class="kw">continue</span>;
+                }
+
                 <span class="kw">let </span>store = db.entry(store_name.to_string()).or_default();
                 <span class="kw">let </span>execution_counter = CounterMetric::new(CommonMetricData {
                     name: <span class="string">"execution_counter"</span>.into(),

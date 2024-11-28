@@ -45,9 +45,10 @@ class PingType:
         send_if_empty: bool,
         precise_timestamps: bool,
         include_info_sections: bool,
-        # enabled: bool,  -- Not currently enabled for python bindings
         schedules_pings: List[str],
         reason_codes: List[str],
+        enabled: bool = True,
+        follows_collection_enabled: bool = True,
     ):
         &#34;&#34;&#34;
         This implements the developer facing API for custom pings.
@@ -62,9 +63,10 @@ class PingType:
             send_if_empty,
             precise_timestamps,
             include_info_sections,
-            True,
+            enabled,
             schedules_pings,
             reason_codes,
+            follows_collection_enabled,
         )
         self._test_callback = None  # type: Optional[Callable[[Optional[str]], None]]
 
@@ -100,7 +102,16 @@ class PingType:
             self._test_callback(reason_string)
             self._test_callback = None
 
-        self._inner.submit(reason_string)</code></pre>
+        self._inner.submit(reason_string)
+
+    def set_enabled(self, enabled: bool) -&gt; None:
+        &#34;&#34;&#34;
+        Enable or disable a ping.
+
+        Disabling a ping causes all data for that ping to be removed from storage
+        and all pending pings of that type to be deleted.
+        &#34;&#34;&#34;
+        self._inner.set_enabled(enabled)</code></pre>
 </details>
 </section>
 <section>
@@ -114,7 +125,7 @@ class PingType:
 <dl>
 <dt id="glean.metrics.ping.PingType"><code class="flex name class">
 <span>class <span class="ident">PingType</span></span>
-<span>(</span><span>name: str, include_client_id: bool, send_if_empty: bool, precise_timestamps: bool, include_info_sections: bool, schedules_pings: List[str], reason_codes: List[str])</span>
+<span>(</span><span>name: str, include_client_id: bool, send_if_empty: bool, precise_timestamps: bool, include_info_sections: bool, schedules_pings: List[str], reason_codes: List[str], enabled: bool = True, follows_collection_enabled: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This implements the developer facing API for custom pings.</p>
@@ -132,9 +143,10 @@ ping for eventual uploading.</p></div>
         send_if_empty: bool,
         precise_timestamps: bool,
         include_info_sections: bool,
-        # enabled: bool,  -- Not currently enabled for python bindings
         schedules_pings: List[str],
         reason_codes: List[str],
+        enabled: bool = True,
+        follows_collection_enabled: bool = True,
     ):
         &#34;&#34;&#34;
         This implements the developer facing API for custom pings.
@@ -149,9 +161,10 @@ ping for eventual uploading.</p></div>
             send_if_empty,
             precise_timestamps,
             include_info_sections,
-            True,
+            enabled,
             schedules_pings,
             reason_codes,
+            follows_collection_enabled,
         )
         self._test_callback = None  # type: Optional[Callable[[Optional[str]], None]]
 
@@ -187,10 +200,40 @@ ping for eventual uploading.</p></div>
             self._test_callback(reason_string)
             self._test_callback = None
 
-        self._inner.submit(reason_string)</code></pre>
+        self._inner.submit(reason_string)
+
+    def set_enabled(self, enabled: bool) -&gt; None:
+        &#34;&#34;&#34;
+        Enable or disable a ping.
+
+        Disabling a ping causes all data for that ping to be removed from storage
+        and all pending pings of that type to be deleted.
+        &#34;&#34;&#34;
+        self._inner.set_enabled(enabled)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="glean.metrics.ping.PingType.set_enabled"><code class="name flex">
+<span>def <span class="ident">set_enabled</span></span>(<span>self, enabled: bool) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enable or disable a ping.</p>
+<p>Disabling a ping causes all data for that ping to be removed from storage
+and all pending pings of that type to be deleted.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_enabled(self, enabled: bool) -&gt; None:
+    &#34;&#34;&#34;
+    Enable or disable a ping.
+
+    Disabling a ping causes all data for that ping to be removed from storage
+    and all pending pings of that type to be deleted.
+    &#34;&#34;&#34;
+    self._inner.set_enabled(enabled)</code></pre>
+</details>
+</dd>
 <dt id="glean.metrics.ping.PingType.submit"><code class="name flex">
 <span>def <span class="ident">submit</span></span>(<span>self, reason: Optional[int] = None) ‑> None</span>
 </code></dt>
@@ -277,6 +320,7 @@ A ping might not be sent afterwards, e.g. if the ping is otherwise empty (and
 <li>
 <h4><code><a title="glean.metrics.ping.PingType" href="#glean.metrics.ping.PingType">PingType</a></code></h4>
 <ul class="">
+<li><code><a title="glean.metrics.ping.PingType.set_enabled" href="#glean.metrics.ping.PingType.set_enabled">set_enabled</a></code></li>
 <li><code><a title="glean.metrics.ping.PingType.submit" href="#glean.metrics.ping.PingType.submit">submit</a></code></li>
 <li><code><a title="glean.metrics.ping.PingType.test_before_next_submit" href="#glean.metrics.ping.PingType.test_before_next_submit">test_before_next_submit</a></code></li>
 </ul>
