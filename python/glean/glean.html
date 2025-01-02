@@ -2,18 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>glean.glean API documentation</title>
-<meta name="description" content="The main Glean general API." />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="The main Glean general API.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 </head>
 <body>
 <main>
@@ -23,507 +37,6 @@
 </header>
 <section id="section-intro">
 <p>The main Glean general API.</p>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-&#34;&#34;&#34;
-The main Glean general API.
-&#34;&#34;&#34;
-
-import atexit
-import logging
-from pathlib import Path
-import shutil
-import tempfile
-import threading
-from typing import Dict, Optional, Set, TYPE_CHECKING
-
-
-from .config import Configuration
-from . import _uniffi
-from . import _ffi
-from .net import PingUploadWorker
-from ._process_dispatcher import ProcessDispatcher
-from . import _util
-
-
-# To avoid cyclical imports, but still make mypy type-checking work.
-# See https://mypy.readthedocs.io/en/latest/common_issues.html#import-cycles
-if TYPE_CHECKING:
-    from .metrics import PingType, RecordedExperiment
-
-
-log = logging.getLogger(&#34;glean&#34;)
-
-
-_ffi.setup_logging()
-
-
-def _rmtree(path) -&gt; bool:
-    &#34;&#34;&#34;
-    A small wrapper around shutil.rmtree to make it runnable on the
-    ProcessDispatcher.
-    &#34;&#34;&#34;
-    shutil.rmtree(path)
-    return True
-
-
-class OnGleanEventsImpl(_uniffi.OnGleanEvents):
-    def __init__(self, glean):
-        self.glean = glean
-
-    def initialize_finished(self):
-        self.glean._init_finished = True
-
-    def trigger_upload(self):
-        PingUploadWorker.process(Glean._testing_mode)
-
-    def start_metrics_ping_scheduler(self):
-        pass
-
-    def cancel_uploads(self):
-        pass
-
-    def shutdown(self):
-        pass
-
-
-class Glean:
-    &#34;&#34;&#34;
-    The main Glean API.
-
-    Before any data collection can take place, the Glean SDK **must** be
-    initialized from the application.
-
-    &gt;&gt;&gt; Glean.initialize(
-    ...     application_id=&#34;my-app&#34;,
-    ...     application_version=&#34;0.0.0&#34;,
-    ...     upload_enabled=True,
-    ...     data_dir=Path.home() / &#34;.glean&#34;,
-    ... )
-    &#34;&#34;&#34;
-
-    # Whether Glean was initialized
-    _initialized: bool = False
-    # Set when `initialize()` returns.
-    # This allows to detect calls that happen before `Glean.initialize()` was called.
-    # Note: The initialization might still be in progress, as it runs in a separate thread.
-    _init_finished: bool = False
-
-    # Are we in testing mode?
-    _testing_mode: bool = False
-
-    # The Configuration that was passed to `initialize`
-    _configuration: Configuration
-
-    # The directory that Glean stores data in
-    _data_dir: Path = Path()
-
-    # Whether Glean &#34;owns&#34; the data directory and should destroy it upon reset.
-    _destroy_data_dir: bool = False
-
-    # Keep track of this setting before Glean is initialized
-    _upload_enabled: bool = True
-
-    # The ping types, so they can be registered prior to Glean initialization,
-    # and saved between test runs.
-    _ping_type_queue: Set[&#34;PingType&#34;] = set()
-
-    # The application id to send in the ping.
-    _application_id: str
-
-    # The version of the application sending Glean data.
-    _application_version: str
-
-    # The build identifier generated by the CI system.
-    _application_build_id: str
-
-    # A thread lock for Glean operations that need to be synchronized
-    _thread_lock = threading.RLock()
-
-    # Simple logging API log level
-    _simple_log_level: Optional[int] = None
-
-    @classmethod
-    def initialize(
-        cls,
-        application_id: str,
-        application_version: str,
-        upload_enabled: bool,
-        configuration: Optional[Configuration] = None,
-        data_dir: Optional[Path] = None,
-        application_build_id: Optional[str] = None,
-        log_level: Optional[int] = None,
-    ) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Glean SDK.
-
-        This should only be initialized once by the application, and not by
-        libraries using the Glean SDK. A message is logged to error and no
-        changes are made to the state if initialize is called a more than
-        once.
-
-        Args:
-            application_id (str): The application id to use when sending pings.
-            application_version (str): The version of the application sending
-                Glean data. The meaning of this field is application-specific,
-                but it is highly recommended to set this to something
-                meaningful.
-            upload_enabled (bool): Controls whether telemetry is enabled. If
-                disabled, all persisted metrics, events and queued pings
-                (except first_run_date) are cleared.
-            configuration (glean.config.Configuration): (optional) An object with
-                global settings.
-            data_dir (pathlib.Path): The path to the Glean data directory.
-            application_build_id (str): (optional) The build identifier generated
-                by the CI system (e.g. &#34;1234/A&#34;).
-            log_level (int): (optional) The level of log messages that Glean
-                will emit. One of the constants in the Python `logging` module:
-                `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. If you need a
-                specialized logging configuration, such as to redirecting,
-                filtering or reformatting, you should use the Python `logging`
-                module&#39;s API directly, but that will not affect logging any of
-                Glean&#39;s networking operations which happen in a subprocess.
-                Details in the &#34;Debugging Python applications with the Glean
-                SDK&#34; chapter in the docs.
-        &#34;&#34;&#34;
-        if log_level is not None:
-            cls._simple_log_level = log_level
-            logging.basicConfig(level=log_level)
-
-        with cls._thread_lock:
-            if cls.is_initialized():
-                return
-
-            atexit.register(Glean._reset)
-
-            if configuration is None:
-                configuration = Configuration()
-
-            if data_dir is None:
-                raise TypeError(&#34;data_dir must be provided&#34;)
-            cls._data_dir = data_dir
-            cls._destroy_data_dir = False
-
-            cls._configuration = configuration
-            cls._application_id = application_id
-
-            if application_version is None:
-                cls._application_version = &#34;Unknown&#34;
-            else:
-                cls._application_version = application_version
-
-            if application_build_id is None:
-                cls._application_build_id = &#34;Unknown&#34;
-            else:
-                cls._application_build_id = application_build_id
-
-        # FIXME: Require user to pass in build-date
-        dt = _uniffi.Datetime(
-            year=1970,
-            month=1,
-            day=1,
-            hour=0,
-            minute=0,
-            second=0,
-            nanosecond=0,
-            offset_seconds=0,
-        )
-        client_info = _uniffi.ClientInfoMetrics(
-            app_build=cls._application_build_id,
-            app_display_version=cls._application_version,
-            app_build_date=dt,
-            channel=configuration.channel,
-            architecture=&#34;Unknown&#34;,
-            os_version=&#34;Unknown&#34;,
-            locale=None,
-            device_manufacturer=None,
-            device_model=None,
-            android_sdk_version=None,
-            windows_build_number=None,
-        )
-        callbacks = OnGleanEventsImpl(cls)
-        cfg = _uniffi.InternalConfiguration(
-            data_path=str(cls._data_dir),
-            application_id=application_id,
-            language_binding_name=&#34;Python&#34;,
-            upload_enabled=upload_enabled,
-            max_events=configuration.max_events,
-            delay_ping_lifetime_io=False,
-            use_core_mps=False,
-            app_build=cls._application_build_id,
-            trim_data_to_registered_pings=False,
-            log_level=None,
-            rate_limit=None,
-            enable_event_timestamps=configuration.enable_event_timestamps,
-            experimentation_id=configuration.experimentation_id,
-            enable_internal_pings=configuration.enable_internal_pings,
-            ping_schedule={},
-            ping_lifetime_threshold=0,
-            ping_lifetime_max_time=0,
-        )
-
-        _uniffi.glean_initialize(cfg, client_info, callbacks)
-        cls._initialized = True
-
-    @classmethod
-    def _initialize_with_tempdir_for_testing(
-        cls,
-        application_id: str,
-        application_version: str,
-        upload_enabled: bool,
-        configuration: Optional[Configuration] = None,
-        application_build_id: Optional[str] = None,
-    ) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize Glean to use a temporary data directory. Use for internal
-        unit testing only.
-
-        The temporary directory will be destroyed when Glean is initialized
-        again or at process shutdown.
-        &#34;&#34;&#34;
-
-        actual_data_dir = Path(tempfile.TemporaryDirectory().name)
-        cls.initialize(
-            application_id,
-            application_version,
-            upload_enabled,
-            configuration=configuration,
-            data_dir=actual_data_dir,
-            application_build_id=application_build_id,
-        )
-        cls._destroy_data_dir = True
-
-    @_util.classproperty
-    def configuration(cls) -&gt; Configuration:
-        &#34;&#34;&#34;
-        Access the configuration object to change dynamic parameters.
-        &#34;&#34;&#34;
-        return cls._configuration
-
-    @classmethod
-    def _reset(cls) -&gt; None:
-        &#34;&#34;&#34;
-        Resets the Glean singleton.
-        &#34;&#34;&#34;
-        # TODO: 1594184 Send the metrics ping
-        log.debug(&#34;Resetting Glean&#34;)
-
-        # Wait for the subprocess to complete.  We only need to do this if
-        # we know we are going to be deleting the data directory.
-        if cls._destroy_data_dir and cls._data_dir.exists():
-            ProcessDispatcher._wait_for_last_process()
-
-        # Destroy the Glean object.
-        # Importantly on Windows, this closes the handle to the database so
-        # that the data directory can be deleted without a multiple access
-        # violation.
-        _uniffi.glean_test_destroy_glean(False)
-
-        _uniffi.glean_set_test_mode(False)
-        cls._init_finished = False
-        cls._initialized = False
-        cls._testing_mode = False
-
-        # Remove the atexit handler or it will get called multiple times at
-        # exit.
-        atexit.unregister(cls._reset)
-
-        if cls._destroy_data_dir and cls._data_dir.exists():
-            # This needs to be run in the same one-at-a-time process as the
-            # PingUploadWorker to avoid a race condition. This will block the
-            # main thread waiting for all pending uploads to complete, but this
-            # only happens during testing when the data directory is a
-            # temporary directory, so there is no concern about delaying
-            # application shutdown here.
-            p = ProcessDispatcher.dispatch(_rmtree, (str(cls._data_dir),))
-            p.wait()
-
-    @classmethod
-    def is_initialized(cls) -&gt; bool:
-        &#34;&#34;&#34;
-        Returns True if the Glean SDK has been initialized.
-        &#34;&#34;&#34;
-        return cls._initialized
-
-    @classmethod
-    def set_upload_enabled(cls, enabled: bool) -&gt; None:
-        &#34;&#34;&#34;
-        **DEPRECATED** Enable or disable Glean collection and upload.
-
-        Metric collection is enabled by default.
-
-        When uploading is disabled, metrics aren&#39;t recorded at all and no data
-        is uploaded.
-
-        When disabling, all pending metrics, events and queued pings are cleared.
-
-        When enabling, the core Glean metrics are recreated.
-
-        **DEPRECATION NOTICE**:
-        This API is deprecated. Use `set_collection_enabled` instead.
-
-        Args:
-            enabled (bool): When True, enable metric collection.
-        &#34;&#34;&#34;
-        # Changing upload enabled always happens asynchronous.
-        # That way it follows what a user expect when calling it inbetween other calls:
-        # It executes in the right order.
-        #
-        # Because the dispatch queue is halted until Glean is fully initialized
-        # we can safely enqueue here and it will execute after initialization.
-        _uniffi.glean_set_upload_enabled(enabled)
-
-    @classmethod
-    def set_collection_enabled(cls, enabled: bool) -&gt; None:
-        &#34;&#34;&#34;
-        Enable or disable Glean collection and upload.
-
-        Metric collection is enabled by default.
-
-        When collection is disabled, metrics aren&#39;t recorded at all and no data
-        is uploaded.
-        **Note**: Individual pings can be enabled if they don&#39;t follow this setting.
-        See `PingType.set_enabled`.
-
-        When disabling, all pending metrics, events and queued pings are cleared.
-
-        When enabling, the core Glean metrics are recreated.
-
-        Args:
-            enabled (bool): When True, enable metric collection.
-        &#34;&#34;&#34;
-        cls.set_upload_enabled(enabled)
-
-    @classmethod
-    def set_experiment_active(
-        cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
-    ) -&gt; None:
-        &#34;&#34;&#34;
-        Indicate that an experiment is running. Glean will then add an
-        experiment annotation to the environment which is sent with pings. This
-        information is not persisted between runs.
-
-        Args:
-            experiment_id (str): The id of the active experiment (maximum 100
-                bytes)
-            branch (str): The experiment branch (maximum 100 bytes)
-            extra (dict of str -&gt; str): Optional metadata to output with the
-                ping
-        &#34;&#34;&#34;
-        map = {} if extra is None else extra
-        _uniffi.glean_set_experiment_active(experiment_id, branch, map)
-
-    @classmethod
-    def set_experiment_inactive(cls, experiment_id: str) -&gt; None:
-        &#34;&#34;&#34;
-        Indicate that the experiment is no longer running.
-
-        Args:
-            experiment_id (str): The id of the experiment to deactivate.
-        &#34;&#34;&#34;
-        _uniffi.glean_set_experiment_inactive(experiment_id)
-
-    @classmethod
-    def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
-        &#34;&#34;&#34;
-        Tests whether an experiment is active, for testing purposes only.
-
-        Args:
-            experiment_id (str): The id of the experiment to look for.
-
-        Returns:
-            is_active (bool): If the experiement is active and reported in
-                pings.
-        &#34;&#34;&#34;
-        return _uniffi.glean_test_get_experiment_data(experiment_id) is not None
-
-    @classmethod
-    def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperiment&#34;:
-        &#34;&#34;&#34;
-        Returns the stored data for the requested active experiment, for testing purposes only.
-
-        Args:
-            experiment_id (str): The id of the experiment to look for.
-
-        Returns:
-            experiment_data (RecordedExperiment): The data associated with
-                the experiment.
-        &#34;&#34;&#34;
-        data = _uniffi.glean_test_get_experiment_data(experiment_id)
-        if data is not None:
-            return data
-        else:
-            raise RuntimeError(&#34;Experiment data is not set&#34;)
-
-    @classmethod
-    def set_experimentation_id(cls, experimentation_id: str):
-        &#34;&#34;&#34;
-        Dynamically set the experimentation identifier, as opposed to setting it through
-        the configuration during initialization.
-
-        Args:
-            experimentation_id (str): The string experimentation identifier to set
-        &#34;&#34;&#34;
-        _uniffi.glean_set_experimentation_id(experimentation_id)
-
-    @classmethod
-    def test_get_experimentation_id(cls) -&gt; str:
-        &#34;&#34;&#34;
-        Returns the stored experimentation id, for testing purposes only.
-
-        Returns:
-            experimentation_id (str): The experimentation id set by the client.
-        &#34;&#34;&#34;
-        experimentation_id = _uniffi.glean_test_get_experimentation_id()
-        if experimentation_id is not None:
-            return experimentation_id
-        else:
-            raise RuntimeError(&#34;Experimentation id is not set&#34;)
-
-    @classmethod
-    def handle_client_active(cls):
-        &#34;&#34;&#34;
-        Performs the collection/cleanup operations required by becoming active.
-
-        This functions generates a baseline ping with reason `active`
-        and then sets the dirty bit.
-        This should be called whenever the consuming product becomes active (e.g.
-        getting to foreground).
-        &#34;&#34;&#34;
-        _uniffi.glean_handle_client_active()
-
-    @classmethod
-    def handle_client_inactive(cls):
-        &#34;&#34;&#34;
-        Performs the collection/cleanup operations required by becoming inactive.
-
-        This functions generates a baseline and an events ping with reason
-        `inactive` and then clears the dirty bit.
-        This should be called whenever the consuming product becomes inactive (e.g.
-        getting to background).
-        &#34;&#34;&#34;
-        _uniffi.glean_handle_client_inactive()
-
-    @classmethod
-    def shutdown(cls):
-        &#34;&#34;&#34;
-        Shuts down Glean in an orderly fashion.
-        &#34;&#34;&#34;
-        _uniffi.glean_shutdown()
-
-        # On top of the Glean shutdown
-        # we also wait for the process dispatcher to finish.
-        ProcessDispatcher._wait_for_last_process()
-
-
-__all__ = [&#34;Glean&#34;]</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -538,16 +51,6 @@ __all__ = [&#34;Glean&#34;]</code></pre>
 <span>class <span class="ident">Glean</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>The main Glean API.</p>
-<p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
-initialized from the application.</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; Glean.initialize(
-...     application_id=&quot;my-app&quot;,
-...     application_version=&quot;0.0.0&quot;,
-...     upload_enabled=True,
-...     data_dir=Path.home() / &quot;.glean&quot;,
-... )
-</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -980,6 +483,16 @@ initialized from the application.</p>
         # we also wait for the process dispatcher to finish.
         ProcessDispatcher._wait_for_last_process()</code></pre>
 </details>
+<div class="desc"><p>The main Glean API.</p>
+<p>Before any data collection can take place, the Glean SDK <strong>must</strong> be
+initialized from the application.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; Glean.initialize(
+...     application_id=&quot;my-app&quot;,
+...     application_version=&quot;0.0.0&quot;,
+...     upload_enabled=True,
+...     data_dir=Path.home() / &quot;.glean&quot;,
+... )
+</code></pre></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="glean.glean.Glean.handle_client_active"><code class="name flex">
@@ -991,22 +504,6 @@ initialized from the application.</p>
 and then sets the dirty bit.
 This should be called whenever the consuming product becomes active (e.g.
 getting to foreground).</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def handle_client_active(cls):
-    &#34;&#34;&#34;
-    Performs the collection/cleanup operations required by becoming active.
-
-    This functions generates a baseline ping with reason `active`
-    and then sets the dirty bit.
-    This should be called whenever the consuming product becomes active (e.g.
-    getting to foreground).
-    &#34;&#34;&#34;
-    _uniffi.glean_handle_client_active()</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.handle_client_inactive"><code class="name flex">
 <span>def <span class="ident">handle_client_inactive</span></span>(<span>)</span>
@@ -1017,25 +514,9 @@ def handle_client_active(cls):
 <code>inactive</code> and then clears the dirty bit.
 This should be called whenever the consuming product becomes inactive (e.g.
 getting to background).</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def handle_client_inactive(cls):
-    &#34;&#34;&#34;
-    Performs the collection/cleanup operations required by becoming inactive.
-
-    This functions generates a baseline and an events ping with reason
-    `inactive` and then clears the dirty bit.
-    This should be called whenever the consuming product becomes inactive (e.g.
-    getting to background).
-    &#34;&#34;&#34;
-    _uniffi.glean_handle_client_inactive()</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.initialize"><code class="name flex">
-<span>def <span class="ident">initialize</span></span>(<span>application_id: str, application_version: str, upload_enabled: bool, configuration: Optional[<a title="glean.config.Configuration" href="config.html#glean.config.Configuration">Configuration</a>] = None, data_dir: Optional[pathlib.Path] = None, application_build_id: Optional[str] = None, log_level: Optional[int] = None) ‑> None</span>
+<span>def <span class="ident">initialize</span></span>(<span>application_id: str,<br>application_version: str,<br>upload_enabled: bool,<br>configuration: <a title="glean.config.Configuration" href="config.html#glean.config.Configuration">Configuration</a> | None = None,<br>data_dir: pathlib.Path | None = None,<br>application_build_id: str | None = None,<br>log_level: int | None = None) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Initialize the Glean SDK.</p>
@@ -1075,149 +556,12 @@ Glean's networking operations which happen in a subprocess.
 Details in the "Debugging Python applications with the Glean
 SDK" chapter in the docs.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def initialize(
-    cls,
-    application_id: str,
-    application_version: str,
-    upload_enabled: bool,
-    configuration: Optional[Configuration] = None,
-    data_dir: Optional[Path] = None,
-    application_build_id: Optional[str] = None,
-    log_level: Optional[int] = None,
-) -&gt; None:
-    &#34;&#34;&#34;
-    Initialize the Glean SDK.
-
-    This should only be initialized once by the application, and not by
-    libraries using the Glean SDK. A message is logged to error and no
-    changes are made to the state if initialize is called a more than
-    once.
-
-    Args:
-        application_id (str): The application id to use when sending pings.
-        application_version (str): The version of the application sending
-            Glean data. The meaning of this field is application-specific,
-            but it is highly recommended to set this to something
-            meaningful.
-        upload_enabled (bool): Controls whether telemetry is enabled. If
-            disabled, all persisted metrics, events and queued pings
-            (except first_run_date) are cleared.
-        configuration (glean.config.Configuration): (optional) An object with
-            global settings.
-        data_dir (pathlib.Path): The path to the Glean data directory.
-        application_build_id (str): (optional) The build identifier generated
-            by the CI system (e.g. &#34;1234/A&#34;).
-        log_level (int): (optional) The level of log messages that Glean
-            will emit. One of the constants in the Python `logging` module:
-            `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. If you need a
-            specialized logging configuration, such as to redirecting,
-            filtering or reformatting, you should use the Python `logging`
-            module&#39;s API directly, but that will not affect logging any of
-            Glean&#39;s networking operations which happen in a subprocess.
-            Details in the &#34;Debugging Python applications with the Glean
-            SDK&#34; chapter in the docs.
-    &#34;&#34;&#34;
-    if log_level is not None:
-        cls._simple_log_level = log_level
-        logging.basicConfig(level=log_level)
-
-    with cls._thread_lock:
-        if cls.is_initialized():
-            return
-
-        atexit.register(Glean._reset)
-
-        if configuration is None:
-            configuration = Configuration()
-
-        if data_dir is None:
-            raise TypeError(&#34;data_dir must be provided&#34;)
-        cls._data_dir = data_dir
-        cls._destroy_data_dir = False
-
-        cls._configuration = configuration
-        cls._application_id = application_id
-
-        if application_version is None:
-            cls._application_version = &#34;Unknown&#34;
-        else:
-            cls._application_version = application_version
-
-        if application_build_id is None:
-            cls._application_build_id = &#34;Unknown&#34;
-        else:
-            cls._application_build_id = application_build_id
-
-    # FIXME: Require user to pass in build-date
-    dt = _uniffi.Datetime(
-        year=1970,
-        month=1,
-        day=1,
-        hour=0,
-        minute=0,
-        second=0,
-        nanosecond=0,
-        offset_seconds=0,
-    )
-    client_info = _uniffi.ClientInfoMetrics(
-        app_build=cls._application_build_id,
-        app_display_version=cls._application_version,
-        app_build_date=dt,
-        channel=configuration.channel,
-        architecture=&#34;Unknown&#34;,
-        os_version=&#34;Unknown&#34;,
-        locale=None,
-        device_manufacturer=None,
-        device_model=None,
-        android_sdk_version=None,
-        windows_build_number=None,
-    )
-    callbacks = OnGleanEventsImpl(cls)
-    cfg = _uniffi.InternalConfiguration(
-        data_path=str(cls._data_dir),
-        application_id=application_id,
-        language_binding_name=&#34;Python&#34;,
-        upload_enabled=upload_enabled,
-        max_events=configuration.max_events,
-        delay_ping_lifetime_io=False,
-        use_core_mps=False,
-        app_build=cls._application_build_id,
-        trim_data_to_registered_pings=False,
-        log_level=None,
-        rate_limit=None,
-        enable_event_timestamps=configuration.enable_event_timestamps,
-        experimentation_id=configuration.experimentation_id,
-        enable_internal_pings=configuration.enable_internal_pings,
-        ping_schedule={},
-        ping_lifetime_threshold=0,
-        ping_lifetime_max_time=0,
-    )
-
-    _uniffi.glean_initialize(cfg, client_info, callbacks)
-    cls._initialized = True</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.is_initialized"><code class="name flex">
 <span>def <span class="ident">is_initialized</span></span>(<span>) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns True if the Glean SDK has been initialized.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def is_initialized(cls) -&gt; bool:
-    &#34;&#34;&#34;
-    Returns True if the Glean SDK has been initialized.
-    &#34;&#34;&#34;
-    return cls._initialized</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.set_collection_enabled"><code class="name flex">
 <span>def <span class="ident">set_collection_enabled</span></span>(<span>enabled: bool) ‑> None</span>
@@ -1236,34 +580,9 @@ See <code>PingType.set_enabled</code>.</p>
 <dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
 <dd>When True, enable metric collection.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def set_collection_enabled(cls, enabled: bool) -&gt; None:
-    &#34;&#34;&#34;
-    Enable or disable Glean collection and upload.
-
-    Metric collection is enabled by default.
-
-    When collection is disabled, metrics aren&#39;t recorded at all and no data
-    is uploaded.
-    **Note**: Individual pings can be enabled if they don&#39;t follow this setting.
-    See `PingType.set_enabled`.
-
-    When disabling, all pending metrics, events and queued pings are cleared.
-
-    When enabling, the core Glean metrics are recreated.
-
-    Args:
-        enabled (bool): When True, enable metric collection.
-    &#34;&#34;&#34;
-    cls.set_upload_enabled(enabled)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.set_experiment_active"><code class="name flex">
-<span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None) ‑> None</span>
+<span>def <span class="ident">set_experiment_active</span></span>(<span>experiment_id: str, branch: str, extra: Dict[str, str] | None = None) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Indicate that an experiment is running. Glean will then add an
@@ -1279,29 +598,6 @@ bytes)</dd>
 </dl>
 <p>extra (dict of str -&gt; str): Optional metadata to output with the
 ping</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def set_experiment_active(
-    cls, experiment_id: str, branch: str, extra: Optional[Dict[str, str]] = None
-) -&gt; None:
-    &#34;&#34;&#34;
-    Indicate that an experiment is running. Glean will then add an
-    experiment annotation to the environment which is sent with pings. This
-    information is not persisted between runs.
-
-    Args:
-        experiment_id (str): The id of the active experiment (maximum 100
-            bytes)
-        branch (str): The experiment branch (maximum 100 bytes)
-        extra (dict of str -&gt; str): Optional metadata to output with the
-            ping
-    &#34;&#34;&#34;
-    map = {} if extra is None else extra
-    _uniffi.glean_set_experiment_active(experiment_id, branch, map)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.set_experiment_inactive"><code class="name flex">
 <span>def <span class="ident">set_experiment_inactive</span></span>(<span>experiment_id: str) ‑> None</span>
@@ -1313,20 +609,6 @@ def set_experiment_active(
 <dt><strong><code>experiment_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The id of the experiment to deactivate.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def set_experiment_inactive(cls, experiment_id: str) -&gt; None:
-    &#34;&#34;&#34;
-    Indicate that the experiment is no longer running.
-
-    Args:
-        experiment_id (str): The id of the experiment to deactivate.
-    &#34;&#34;&#34;
-    _uniffi.glean_set_experiment_inactive(experiment_id)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.set_experimentation_id"><code class="name flex">
 <span>def <span class="ident">set_experimentation_id</span></span>(<span>experimentation_id: str)</span>
@@ -1339,21 +621,6 @@ the configuration during initialization.</p>
 <dt><strong><code>experimentation_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>The string experimentation identifier to set</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def set_experimentation_id(cls, experimentation_id: str):
-    &#34;&#34;&#34;
-    Dynamically set the experimentation identifier, as opposed to setting it through
-    the configuration during initialization.
-
-    Args:
-        experimentation_id (str): The string experimentation identifier to set
-    &#34;&#34;&#34;
-    _uniffi.glean_set_experimentation_id(experimentation_id)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.set_upload_enabled"><code class="name flex">
 <span>def <span class="ident">set_upload_enabled</span></span>(<span>enabled: bool) ‑> None</span>
@@ -1372,62 +639,15 @@ This API is deprecated. Use <code>set_collection_enabled</code> instead.</p>
 <dt><strong><code>enabled</code></strong> :&ensp;<code>bool</code></dt>
 <dd>When True, enable metric collection.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def set_upload_enabled(cls, enabled: bool) -&gt; None:
-    &#34;&#34;&#34;
-    **DEPRECATED** Enable or disable Glean collection and upload.
-
-    Metric collection is enabled by default.
-
-    When uploading is disabled, metrics aren&#39;t recorded at all and no data
-    is uploaded.
-
-    When disabling, all pending metrics, events and queued pings are cleared.
-
-    When enabling, the core Glean metrics are recreated.
-
-    **DEPRECATION NOTICE**:
-    This API is deprecated. Use `set_collection_enabled` instead.
-
-    Args:
-        enabled (bool): When True, enable metric collection.
-    &#34;&#34;&#34;
-    # Changing upload enabled always happens asynchronous.
-    # That way it follows what a user expect when calling it inbetween other calls:
-    # It executes in the right order.
-    #
-    # Because the dispatch queue is halted until Glean is fully initialized
-    # we can safely enqueue here and it will execute after initialization.
-    _uniffi.glean_set_upload_enabled(enabled)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.shutdown"><code class="name flex">
 <span>def <span class="ident">shutdown</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Shuts down Glean in an orderly fashion.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def shutdown(cls):
-    &#34;&#34;&#34;
-    Shuts down Glean in an orderly fashion.
-    &#34;&#34;&#34;
-    _uniffi.glean_shutdown()
-
-    # On top of the Glean shutdown
-    # we also wait for the process dispatcher to finish.
-    ProcessDispatcher._wait_for_last_process()</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.test_get_experiment_data"><code class="name flex">
-<span>def <span class="ident">test_get_experiment_data</span></span>(<span>experiment_id: str) ‑> RecordedExperiment</span>
+<span>def <span class="ident">test_get_experiment_data</span></span>(<span>experiment_id: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the stored data for the requested active experiment, for testing purposes only.</p>
@@ -1439,28 +659,6 @@ def shutdown(cls):
 <h2 id="returns">Returns</h2>
 <p>experiment_data (RecordedExperiment): The data associated with
 the experiment.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperiment&#34;:
-    &#34;&#34;&#34;
-    Returns the stored data for the requested active experiment, for testing purposes only.
-
-    Args:
-        experiment_id (str): The id of the experiment to look for.
-
-    Returns:
-        experiment_data (RecordedExperiment): The data associated with
-            the experiment.
-    &#34;&#34;&#34;
-    data = _uniffi.glean_test_get_experiment_data(experiment_id)
-    if data is not None:
-        return data
-    else:
-        raise RuntimeError(&#34;Experiment data is not set&#34;)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.test_get_experimentation_id"><code class="name flex">
 <span>def <span class="ident">test_get_experimentation_id</span></span>(<span>) ‑> str</span>
@@ -1469,24 +667,6 @@ def test_get_experiment_data(cls, experiment_id: str) -&gt; &#34;RecordedExperim
 <div class="desc"><p>Returns the stored experimentation id, for testing purposes only.</p>
 <h2 id="returns">Returns</h2>
 <p>experimentation_id (str): The experimentation id set by the client.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def test_get_experimentation_id(cls) -&gt; str:
-    &#34;&#34;&#34;
-    Returns the stored experimentation id, for testing purposes only.
-
-    Returns:
-        experimentation_id (str): The experimentation id set by the client.
-    &#34;&#34;&#34;
-    experimentation_id = _uniffi.glean_test_get_experimentation_id()
-    if experimentation_id is not None:
-        return experimentation_id
-    else:
-        raise RuntimeError(&#34;Experimentation id is not set&#34;)</code></pre>
-</details>
 </dd>
 <dt id="glean.glean.Glean.test_is_experiment_active"><code class="name flex">
 <span>def <span class="ident">test_is_experiment_active</span></span>(<span>experiment_id: str) ‑> bool</span>
@@ -1501,31 +681,12 @@ def test_get_experimentation_id(cls) -&gt; str:
 <h2 id="returns">Returns</h2>
 <p>is_active (bool): If the experiement is active and reported in
 pings.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
-    &#34;&#34;&#34;
-    Tests whether an experiment is active, for testing purposes only.
-
-    Args:
-        experiment_id (str): The id of the experiment to look for.
-
-    Returns:
-        is_active (bool): If the experiement is active and reported in
-            pings.
-    &#34;&#34;&#34;
-    return _uniffi.glean_test_get_experiment_data(experiment_id) is not None</code></pre>
-</details>
 </dd>
 </dl>
 <h3>Instance variables</h3>
 <dl>
 <dt id="glean.glean.Glean.configuration"><code class="name">var <span class="ident">configuration</span></code></dt>
 <dd>
-<div class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1533,6 +694,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 <pre><code class="python">def __get__(self, obj, owner):
     return self.f(owner)</code></pre>
 </details>
+<div class="desc"><p>Decorator for creating a property on a class (rather than an instance).</p></div>
 </dd>
 </dl>
 </dd>
@@ -1540,7 +702,6 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 </section>
 </article>
 <nav id="sidebar">
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -1577,7 +738,7 @@ def test_is_experiment_active(cls, experiment_id: str) -&gt; bool:
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>
