@@ -591,6 +591,59 @@ git push upstream support/v24.0
 <h2 id="upgrading-android-components-to-a-new-version-of-glean"><a class="header" href="#upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></h2>
 <p>On Android, Mozilla products consume the Glean SDK through its wrapper in <a href="https://github.com/mozilla-mobile/firefox-android/tree/main/android-components/"><code>android-components</code></a>.
 The process of vendoring a new version of Glean in to Mozilla Central now handles the upgrade process for android-components and no manual updating is needed here.</p>
+<h2 id="recovering-from-a-failed-automated-release"><a class="header" href="#recovering-from-a-failed-automated-release">Recovering from a failed automated release</a></h2>
+<p>In rare circumstances the automated release on CI can fail to publish updated packages.
+This usually can be fixed with some manual steps.</p>
+<h3 id="ci-re-run"><a class="header" href="#ci-re-run">CI re-run</a></h3>
+<p>In some circumstances it's possible to re-run the CI tasks.
+This should be done if any of the tasks fail with an intermittent issues (e.g. broken network connectivity, package repository APIs unreachable, ...).</p>
+<p>Find the release task on <a href="https://app.circleci.com/pipelines/github/mozilla/glean/">https://app.circleci.com/pipelines/github/mozilla/glean/</a> and select &quot;Rerun workflow from failed&quot; from the &quot;Rerun&quot; drop-down.
+Monitor the tasks for successful completion.</p>
+<h3 id="manual-release"><a class="header" href="#manual-release">Manual release</a></h3>
+<p>If any of the package releases fail for some other reason it might be possible to manually publish the package, using the same commands being run on CI.</p>
+<h4 id="manual-release-rust-crates"><a class="header" href="#manual-release-rust-crates">Manual release: Rust crates</a></h4>
+<p>Make sure you're logged in to <code>crates.io</code>:</p>
+<pre><code>cargo login
+</code></pre>
+<p>Check out the newly created git tag in your Glean repository:</p>
+<pre><code>git checkout v63.0.0
+</code></pre>
+<p>Then execute the following commands:</p>
+<pre><code>pushd glean-core
+cargo publish --verbose
+
+pushd rlb
+cargo publish --verbose
+</code></pre>
+<h4 id="manual-release-python-package"><a class="header" href="#manual-release-python-package">Manual release: Python package</a></h4>
+<p>The release process for Python packages is more involved and requires publishing pre-compiled packages for every platform.</p>
+<p>CI already generates those packages, so if only the upload step fails try re-running the particular task or rerun the job with SSH enabled.
+Grab the generated files from <code>target/wheels/</code> in the project directory.</p>
+<p>Use <code>twine</code> locally to publish the file:</p>
+<pre><code>.venv/bin/python3 -m twine upload target/wheels/*
+</code></pre>
+<h4 id="manual-release-swift-package"><a class="header" href="#manual-release-swift-package">Manual release: Swift package</a></h4>
+<p>The Swift XCFramework is attached as an artifact to the <a href="https://github.com/mozilla/glean/releases">GitHub release</a>.
+The Swift package is in an external repository: <a href="https://github.com/mozilla/glean-swift">https://github.com/mozilla/glean-swift</a></p>
+<p>If the step to create a new release tag on <code>glean-swift</code> fails, the step can be done manually:</p>
+<ol>
+<li>
+<p>Clone the <code>glean-swift</code> repository:</p>
+<pre><code>git clone https://github.com/mozilla/glean-swift
+cd glean-swift
+</code></pre>
+</li>
+<li>
+<p>Run the publish step:</p>
+<pre><code>./bin/update.sh v63.0.0
+git push origin main
+git push origin v63.0.0
+</code></pre>
+</li>
+<li>
+<p>Verify the new tag is listed on <a href="https://github.com/mozilla/glean-swift/tags">https://github.com/mozilla/glean-swift/tags</a>.</p>
+</li>
+</ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/cut-a-new-release.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="contributing-to-the-glean-sdk"><a class="header" href="#contributing-to-the-glean-sdk">Contributing to the Glean SDK</a></h1>
 <p>Anyone is welcome to help with the Glean SDK project. Feel free to get in touch with other community members on <code>chat.mozilla.org</code>
 or through issues on GitHub or Bugzilla.</p>
