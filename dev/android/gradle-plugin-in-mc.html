@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Locally-published components in Fenix - Glean - Cross-platform Telemetry library</title>
+        <title>Replacing the Glean Gradle plugin in mozilla-central - Glean - Cross-platform Telemetry library</title>
 
 
         <!-- Custom HTML head -->
@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Developing the Glean SDK</a></li><li class="chapter-item expanded "><a href="../testing.html"><strong aria-hidden="true">1.</strong> Testing</a></li><li class="chapter-item expanded "><a href="../ci.html"><strong aria-hidden="true">2.</strong> Continuous Integration</a></li><li class="chapter-item expanded "><a href="../cut-a-new-release.html"><strong aria-hidden="true">3.</strong> Release process</a></li><li class="chapter-item expanded "><a href="../contributing.html"><strong aria-hidden="true">4.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../code_coverage.html"><strong aria-hidden="true">4.1.</strong> Code coverage</a></li></ol></li><li class="chapter-item expanded "><a href="../docs.html"><strong aria-hidden="true">5.</strong> Developing documentation</a></li><li class="chapter-item expanded "><a href="../upgrading-glean-parser.html"><strong aria-hidden="true">6.</strong> Upgrading glean_parser</a></li><li class="chapter-item expanded "><a href="../android/index.html"><strong aria-hidden="true">7.</strong> Android bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../android/setup-android-build-environment.html"><strong aria-hidden="true">7.1.</strong> Setup Build Environment</a></li><li class="chapter-item expanded "><a href="../android/sdk-ndk-versions.html"><strong aria-hidden="true">7.2.</strong> Android SDK/NDK versions</a></li><li class="chapter-item expanded "><a href="../android/logging.html"><strong aria-hidden="true">7.3.</strong> Logging</a></li><li class="chapter-item expanded "><a href="../android/development-with-android-components.html"><strong aria-hidden="true">7.4.</strong> Development with android-components</a></li><li class="chapter-item expanded "><a href="../android/locally-published-components-in-fenix.html" class="active"><strong aria-hidden="true">7.5.</strong> Locally-published components in Fenix</a></li><li class="chapter-item expanded "><a href="../android/glean-parser-substitution.html"><strong aria-hidden="true">7.6.</strong> Substituting glean_parser</a></li></ol></li><li class="chapter-item expanded "><a href="../ios/index.html"><strong aria-hidden="true">8.</strong> iOS bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ios/setup-ios-build-environment.html"><strong aria-hidden="true">8.1.</strong> Setup Build Environment</a></li><li class="chapter-item expanded "><a href="../ios/debug-glean-on-ios.html"><strong aria-hidden="true">8.2.</strong> Debugging different versions of Glean</a></li><li class="chapter-item expanded "><a href="../ios/upgrading-supported-ios-platform.html"><strong aria-hidden="true">8.3.</strong> Upgrading the supported Xcode version</a></li></ol></li><li class="chapter-item expanded "><a href="../python/index.html"><strong aria-hidden="true">9.</strong> Python bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../python/setting-up-python-build-environment.html"><strong aria-hidden="true">9.1.</strong> Setup Build Environment</a></li></ol></li><li class="chapter-item expanded "><a href="../core/index.html"><strong aria-hidden="true">10.</strong> Rust Component</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/documentation-guidelines.html"><strong aria-hidden="true">10.1.</strong> Documentation guidelines</a></li><li class="chapter-item expanded "><a href="../core/dependency-management.html"><strong aria-hidden="true">10.2.</strong> Dependency Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/dependency-vetting.html"><strong aria-hidden="true">10.2.1.</strong> Dependency Vetting</a></li></ol></li><li class="chapter-item expanded "><a href="../core/new-metric-type.html"><strong aria-hidden="true">10.3.</strong> Adding a new metric type</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/new-metric-type/kotlin.html"><strong aria-hidden="true">10.3.1.</strong> Kotlin</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/swift.html"><strong aria-hidden="true">10.3.2.</strong> Swift</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/python.html"><strong aria-hidden="true">10.3.3.</strong> Python</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/rust.html"><strong aria-hidden="true">10.3.4.</strong> Rust</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/platform.html"><strong aria-hidden="true">10.3.5.</strong> Platform</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../core/internal/index.html"><strong aria-hidden="true">11.</strong> Internal implementation details</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/internal/reserved-ping-names.html"><strong aria-hidden="true">11.1.</strong> Reserved ping names</a></li><li class="chapter-item expanded "><a href="../core/internal/clearing.html"><strong aria-hidden="true">11.2.</strong> Clearing metrics when disabling/enabling Glean</a></li><li class="chapter-item expanded "><a href="../core/internal/database.html"><strong aria-hidden="true">11.3.</strong> Database format</a></li><li class="chapter-item expanded "><a href="../core/internal/payload.html"><strong aria-hidden="true">11.4.</strong> Payload format</a></li><li class="chapter-item expanded "><a href="../core/internal/directory-structure.html"><strong aria-hidden="true">11.5.</strong> Directory & file structure</a></li><li class="chapter-item expanded "><a href="../core/internal/debug-pings.html"><strong aria-hidden="true">11.6.</strong> Debug Pings</a></li><li class="chapter-item expanded "><a href="../core/internal/upload.html"><strong aria-hidden="true">11.7.</strong> Upload mechanism</a></li><li class="chapter-item expanded "><a href="../core/internal/implementations.html"><strong aria-hidden="true">11.8.</strong> Implementations</a></li></ol></li><li class="chapter-item expanded "><a href="../api/index.html"><strong aria-hidden="true">12.</strong> API Documentation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Developing the Glean SDK</a></li><li class="chapter-item expanded "><a href="../testing.html"><strong aria-hidden="true">1.</strong> Testing</a></li><li class="chapter-item expanded "><a href="../ci.html"><strong aria-hidden="true">2.</strong> Continuous Integration</a></li><li class="chapter-item expanded "><a href="../cut-a-new-release.html"><strong aria-hidden="true">3.</strong> Release process</a></li><li class="chapter-item expanded "><a href="../contributing.html"><strong aria-hidden="true">4.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../code_coverage.html"><strong aria-hidden="true">4.1.</strong> Code coverage</a></li></ol></li><li class="chapter-item expanded "><a href="../docs.html"><strong aria-hidden="true">5.</strong> Developing documentation</a></li><li class="chapter-item expanded "><a href="../upgrading-glean-parser.html"><strong aria-hidden="true">6.</strong> Upgrading glean_parser</a></li><li class="chapter-item expanded "><a href="../android/index.html"><strong aria-hidden="true">7.</strong> Android bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../android/setup-android-build-environment.html"><strong aria-hidden="true">7.1.</strong> Setup Build Environment</a></li><li class="chapter-item expanded "><a href="../android/sdk-ndk-versions.html"><strong aria-hidden="true">7.2.</strong> Android SDK/NDK versions</a></li><li class="chapter-item expanded "><a href="../android/logging.html"><strong aria-hidden="true">7.3.</strong> Logging</a></li><li class="chapter-item expanded "><a href="../android/development-with-mozilla-central.html"><strong aria-hidden="true">7.4.</strong> Development with mozilla-central</a></li><li class="chapter-item expanded "><a href="../android/gradle-plugin-in-mc.html" class="active"><strong aria-hidden="true">7.5.</strong> Replacing the Glean Gradle plugin in mozilla-central</a></li><li class="chapter-item expanded "><a href="../android/glean-parser-substitution.html"><strong aria-hidden="true">7.6.</strong> Substituting glean_parser</a></li></ol></li><li class="chapter-item expanded "><a href="../ios/index.html"><strong aria-hidden="true">8.</strong> iOS bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ios/setup-ios-build-environment.html"><strong aria-hidden="true">8.1.</strong> Setup Build Environment</a></li><li class="chapter-item expanded "><a href="../ios/debug-glean-on-ios.html"><strong aria-hidden="true">8.2.</strong> Debugging different versions of Glean</a></li><li class="chapter-item expanded "><a href="../ios/upgrading-supported-ios-platform.html"><strong aria-hidden="true">8.3.</strong> Upgrading the supported Xcode version</a></li></ol></li><li class="chapter-item expanded "><a href="../python/index.html"><strong aria-hidden="true">9.</strong> Python bindings</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../python/setting-up-python-build-environment.html"><strong aria-hidden="true">9.1.</strong> Setup Build Environment</a></li></ol></li><li class="chapter-item expanded "><a href="../core/index.html"><strong aria-hidden="true">10.</strong> Rust Component</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/documentation-guidelines.html"><strong aria-hidden="true">10.1.</strong> Documentation guidelines</a></li><li class="chapter-item expanded "><a href="../core/dependency-management.html"><strong aria-hidden="true">10.2.</strong> Dependency Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/dependency-vetting.html"><strong aria-hidden="true">10.2.1.</strong> Dependency Vetting</a></li></ol></li><li class="chapter-item expanded "><a href="../core/new-metric-type.html"><strong aria-hidden="true">10.3.</strong> Adding a new metric type</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/new-metric-type/kotlin.html"><strong aria-hidden="true">10.3.1.</strong> Kotlin</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/swift.html"><strong aria-hidden="true">10.3.2.</strong> Swift</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/python.html"><strong aria-hidden="true">10.3.3.</strong> Python</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/rust.html"><strong aria-hidden="true">10.3.4.</strong> Rust</a></li><li class="chapter-item expanded "><a href="../core/new-metric-type/platform.html"><strong aria-hidden="true">10.3.5.</strong> Platform</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../core/internal/index.html"><strong aria-hidden="true">11.</strong> Internal implementation details</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../core/internal/reserved-ping-names.html"><strong aria-hidden="true">11.1.</strong> Reserved ping names</a></li><li class="chapter-item expanded "><a href="../core/internal/clearing.html"><strong aria-hidden="true">11.2.</strong> Clearing metrics when disabling/enabling Glean</a></li><li class="chapter-item expanded "><a href="../core/internal/database.html"><strong aria-hidden="true">11.3.</strong> Database format</a></li><li class="chapter-item expanded "><a href="../core/internal/payload.html"><strong aria-hidden="true">11.4.</strong> Payload format</a></li><li class="chapter-item expanded "><a href="../core/internal/directory-structure.html"><strong aria-hidden="true">11.5.</strong> Directory & file structure</a></li><li class="chapter-item expanded "><a href="../core/internal/debug-pings.html"><strong aria-hidden="true">11.6.</strong> Debug Pings</a></li><li class="chapter-item expanded "><a href="../core/internal/upload.html"><strong aria-hidden="true">11.7.</strong> Upload mechanism</a></li><li class="chapter-item expanded "><a href="../core/internal/implementations.html"><strong aria-hidden="true">11.8.</strong> Implementations</a></li></ol></li><li class="chapter-item expanded "><a href="../api/index.html"><strong aria-hidden="true">12.</strong> API Documentation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -154,7 +154,7 @@
                         <a href="https://github.com/mozilla/glean" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/mozilla/glean/edit/main/docs/dev/./android/locally-published-components-in-fenix.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/mozilla/glean/edit/main/docs/dev/./android/gradle-plugin-in-mc.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -183,39 +183,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="using-locally-published-glean-in-fenix"><a class="header" href="#using-locally-published-glean-in-fenix">Using locally-published Glean in Fenix</a></h1>
+                        <h1 id="replacing-the-glean-gradle-plugin-in-mozilla-central"><a class="header" href="#replacing-the-glean-gradle-plugin-in-mozilla-central">Replacing the Glean Gradle plugin in mozilla-central</a></h1>
 <blockquote>
-<p><strong>Note</strong>: this substitution-based approach will not work for testing updates to <code>glean_parser</code> as shipped in the Glean Gradle Plugin.
-For replacing <code>glean_parser</code> in a local build, see <a href="glean-parser-substitution.html">Substituting <code>glean_parser</code></a>.</p>
+<p><strong>Note</strong>: If you only need to replace the <code>glean_parser</code> Python parts used in the build see <a href="glean-parser-substitution.html">Substituting <code>glean_parser</code></a>.
+The approached documented in this chapter is only necessary if you changed <code>GleanGradlePlugin.groovy</code>.</p>
 </blockquote>
-<h2 id="preparation"><a class="header" href="#preparation">Preparation</a></h2>
-<p>Clone the Glean SDK, android-components and Fenix repositories:</p>
-<pre><code class="language-sh">git clone https://github.com/mozilla/glean
-git clone https://github.com/mozilla-mobile/fenix
-</code></pre>
-<h2 id="substituting-projects"><a class="header" href="#substituting-projects">Substituting projects</a></h2>
-<p>android-components has custom build logic for dealing with composite builds,
-so you should be able to configure it by simply adding the path to the Glean repository in the correct <code>local.properties</code> file:</p>
-<p>In <code>fenix/local.properties</code>:</p>
-<pre><code class="language-groovy">autoPublish.glean.dir=../glean
-</code></pre>
-<p>This will auto-publish Glean SDK changes to a local repository and consume them in Fenix.
-You should now be able to build and run Fenix (assuming you could before all this).</p>
-<h2 id="caveats"><a class="header" href="#caveats">Caveats</a></h2>
+<p>If you need to replace the Glean Gradle Plugin used by any component in mozilla-central, follow these steps:</p>
 <ol>
-<li>This assumes you have followed the <a href="setup-android-build-environment.html">Android/Rust build setup</a></li>
-<li>Make sure you're fully up to date in all repositories, unless you know you need to not be.</li>
-<li>This omits the steps if changes needed because, e.g. Glean made a breaking change to an API used in android-components.
-These should be understandable to fix, you usually should be able to find a PR with the fixes somewhere in the android-component's list of pending PRs
-(or, failing that, a description of what to do in the Glean changelog).</li>
-<li>Ask in the <a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean channel on chat.mozilla.org</a>.</li>
+<li>
+<p>In your Glean repository increment the version number in <code>.buildconfig.yml</code> to something unused:</p>
+<pre><code class="language-yaml">libraryVersion: 70.0.0
+</code></pre>
+</li>
+<li>
+<p>Build the Glean Gradle plugin and publish the plugin locally:</p>
+<pre><code>./gradlew glean-gradle-plugin:publishToMavenLocal
+</code></pre>
+</li>
+<li>
+<p>In your <code>mozilla-central</code> checkout, add the following line in <code>mobile/android/fenix/settings.gradle</code> file in the <code>pluginManagement</code> block:</p>
+<pre><code class="language-gradle">mavenLocal()
+</code></pre>
+</li>
+<li>
+<p>Use the new version number where the plugin is imported in <code>mobile/android/fenix/build.gradle</code>:</p>
+<pre><code>classpath &quot;org.mozilla.telemetry:glean-gradle-plugin:70.0.0&quot;
+</code></pre>
+<p>This might need to be applied to the top-level <code>build.gradle</code> and other <code>build.gradle</code> files under <code>mobile/android</code> to apply to all components.</p>
+</li>
 </ol>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/android/locally-published-components-in-fenix.md">Edit this page on GitHub.</a></footer>
+<p>Building Fenix will now use your locally published Glean Gradle Plugin.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/glean/edit/main/docs/dev/android/gradle-plugin-in-mc.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../android/development-with-android-components.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../android/development-with-mozilla-central.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -229,7 +232,7 @@ These should be understandable to fix, you usually should be able to find a PR w
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../android/development-with-android-components.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../android/development-with-mozilla-central.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
