@@ -336,18 +336,16 @@ in the <code>allprojects</code> block (see e.g. <a href="https://github.com/mozi
 </code></pre>
 <p>Each module that uses the Glean Kotlin SDK needs to specify it in its build file, in the <code>dependencies</code> block.
 Add this to your Gradle configuration:</p>
-<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:{latest-version}&quot;
+<pre><code class="language-Groovy">implementation &quot;org.mozilla.telemetry:glean:{latest-version}&quot;
 </code></pre>
 <div class="special-quote special-quote-warning fa fa-exclamation-triangle"></div>
 <h5 id="pick-the-correct-version"><a class="header" href="#pick-the-correct-version">Pick the correct version</a></h5>
 <blockquote>
-<p>The <code>{latest-version}</code> placeholder in the above link should be replaced with the version of Android Components used by the project.</p>
-</blockquote>
-<p>The Glean Kotlin SDK is released as part of <a href="https://github.com/mozilla-mobile/firefox-android/tree/main/android-components/">android-components</a>. Therefore, it follows android-components' versions.
-The <a href="https://github.com/mozilla-mobile/android-components/releases/">android-components release page</a> can be used to determine the latest version.</p>
-<p>For example, if version <em>33.0.0</em> is used, then the include directive becomes:</p>
-<pre><code class="language-Groovy">implementation &quot;org.mozilla.components:service-glean:33.0.0&quot;
+<p>The <code>{latest-version}</code> placeholder in the above link should be replaced with the <a href="https://github.com/mozilla/glean/releases">latest version of the Glean SDK</a>.</p>
+<p>For example, if version <em>63.0.0</em> is the latest version, then the include directive becomes:</p>
+<pre><code class="language-Groovy">implementation &quot;org.mozilla.telemetry:glean:63.0.0&quot;
 </code></pre>
+</blockquote>
 <div class="special-quote special-quote-info fa fa-info-circle"></div>
 <h5 id="size-impact-on-the-application-apk"><a class="header" href="#size-impact-on-the-application-apk">Size impact on the application APK</a></h5>
 <blockquote>
@@ -374,18 +372,14 @@ This package is standalone and its version will be exported from the main Glean 
 <li>JetBrains' <a href="https://github.com/JetBrains/gradle-python-envs/">Python envs plugin</a></li>
 </ul>
 <p>The Glean Gradle plugin is distributed through Mozilla's Maven, so we need to tell your build where to look for it by adding the following to the top of your <code>build.gradle</code>:</p>
-<pre><code>buildscript {
+<pre><code class="language-Groovy">buildscript {
     repositories {
-        // Include the next clause if you are tracking snapshots of android components
-        maven {
-            url &quot;https://snapshots.maven.mozilla.org/maven2&quot;
-        }
         maven {
             url &quot;https://maven.mozilla.org/maven2&quot;
         }
 
         dependencies {
-            classpath &quot;org.mozilla.components:tooling-glean-gradle:{android-components-version}&quot;
+            classpath &quot;org.mozilla.telemetry:glean-gradle-plugin:{latest-version}&quot;
         }
     }
 }
@@ -393,7 +387,7 @@ This package is standalone and its version will be exported from the main Glean 
 <div class="special-quote special-quote-warning fa fa-exclamation-triangle"></div>
 <h5 id="important"><a class="header" href="#important">Important</a></h5>
 <blockquote>
-<p>As above, the <code>{android-components-version}</code> placeholder in the above link should be replaced with the version number of android components used in your project.</p>
+<p>As above, the <code>{latest-components-version}</code> placeholder in the above link should be replaced with the version number of the Glean SDK used in your project.</p>
 </blockquote>
 <p>The JetBrains Python plugin is distributed in the Gradle plugin repository, so it can be included with:</p>
 <pre><code class="language-Groovy">plugins {
@@ -12866,9 +12860,7 @@ It does not assume an interaction model and the integrating application is respo
 <p>The Glean Kotlin SDK is primarily used for integration with Android applications.
 It assumes a common interaction model for mobile applications.
 It sends builtin pings at startup of the integrating application.</p>
-<p>It is available standalone as <code>org.mozilla.telemetry:glean</code>
-or via <a href="https://github.com/mozilla-mobile/firefox-android/tree/main/android-components/">Android Components</a> as <code>org.mozilla.components:service-glean</code>
-from the <a href="https://maven.mozilla.org/?prefix=maven2">Mozilla Maven instance</a>.</p>
+<p>It is available standalone as <code>org.mozilla.telemetry:glean</code> from the <a href="https://maven.mozilla.org/?prefix=maven2">Mozilla Maven instance</a>.</p>
 <p>The Kotlin SDK can also be used from Java.</p>
 <p>See <a href="language-bindings/android/">Android</a> for more on integrating Glean on Android.</p>
 <h3 id="swift"><a class="header" href="#swift">Swift</a></h3>
@@ -13026,7 +13018,7 @@ basic strategy for instrumenting an Android application with crash telemetry usi
 <p><strong>Note:</strong>  This is a <em>very</em> simple example of instrumenting crashes using the Glean SDK.  There will be challenges to
 using this approach in a production application that should be considered.  For instance, when an app crashes it can be in an
 unknown state and may not be able to do things like upload data to a server.  The recommended way of instrumenting crashes with
-Android Components is called <a href="https://github.com/mozilla-mobile/firefox-android/tree/main/android-components/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
+Android Components is called <a href="https://searchfox.org/mozilla-central/source/mobile/android/android-components/components/lib/crash">lib-crash</a>, which takes into consideration things like multiple processes and persistence.</p>
 <h2 id="before-you-start"><a class="header" href="#before-you-start">Before You Start</a></h2>
 <p>There are a few things that need to be installed in order to proceed, mainly <a href="https://developer.android.com/studio/">Android Studio</a>.  If you include the Android SDK,
 Android Studio can take a little while to download and get installed.  This walk-through assumes some knowledge of Android

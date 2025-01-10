@@ -351,7 +351,8 @@ For some developer workflows, <code>upstream</code> can be the same as <code>ori
 <li><a href="cut-a-new-release.html#standard-release">Standard release</a></li>
 <li><a href="cut-a-new-release.html#hotfix-release-for-latest-version">Hotfix release for latest version</a></li>
 <li><a href="cut-a-new-release.html#hotfix-release-for-previous-version">Hotfix release for previous version</a></li>
-<li><a href="cut-a-new-release.html#upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></li>
+<li><a href="cut-a-new-release.html#upgrading-mozilla-central-to-a-new-version-of-glean">Upgrading mozilla-central to a new version of Glean</a></li>
+<li><a href="cut-a-new-release.html#recovering-from-a-failed-automated-release">Recovering from a failed automated release</a></li>
 </ul>
 <h2 id="published-artifacts"><a class="header" href="#published-artifacts">Published artifacts</a></h2>
 <ul>
@@ -588,9 +589,9 @@ git push upstream support/v24.0
 </li>
 <li>Once the above pull request lands, delete the support branch.</li>
 </ol>
-<h2 id="upgrading-android-components-to-a-new-version-of-glean"><a class="header" href="#upgrading-android-components-to-a-new-version-of-glean">Upgrading android-components to a new version of Glean</a></h2>
-<p>On Android, Mozilla products consume the Glean SDK through its wrapper in <a href="https://github.com/mozilla-mobile/firefox-android/tree/main/android-components/"><code>android-components</code></a>.
-The process of vendoring a new version of Glean in to Mozilla Central now handles the upgrade process for android-components and no manual updating is needed here.</p>
+<h2 id="upgrading-mozilla-central-to-a-new-version-of-glean"><a class="header" href="#upgrading-mozilla-central-to-a-new-version-of-glean">Upgrading mozilla-central to a new version of Glean</a></h2>
+<p>Glean is integrated into Mozilla products in mozilla-central (Firefox Desktop, Firefox for Android, Focus for Android).
+See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/glean/dev/updating_sdk.html">Updating the Glean SDK</a> on how to update the Glean SDK in mozilla-central.</p>
 <h2 id="recovering-from-a-failed-automated-release"><a class="header" href="#recovering-from-a-failed-automated-release">Recovering from a failed automated release</a></h2>
 <p>In rare circumstances the automated release on CI can fail to publish updated packages.
 This usually can be fixed with some manual steps.</p>
