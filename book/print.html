@@ -10871,7 +10871,6 @@ mozilla::glean::graphics::checkerboard_peak.AccumulateSingleSample(23);
 </div>
 <h4 id="limits-20"><a class="header" href="#limits-20">Limits</a></h4>
 <ul>
-<li>The maximum value of <code>bucket_count</code> is 100.</li>
 <li>Only non-negative values may be recorded (<code>&gt;= 0</code>).</li>
 </ul>
 <h4 id="recorded-errors-25"><a class="header" href="#recorded-errors-25">Recorded errors</a></h4>
@@ -13380,7 +13379,8 @@ Each ping has its own schedule to gather all its locally saved metrics and creat
 <h1 id="v6300-2024-11-28"><a class="header" href="#v6300-2024-11-28">v63.0.0 (2024-11-28)</a></h1>
 <p><a href="https://github.com/mozilla/glean/compare/v62.0.0...v63.0.0">Full changelog</a></p>
 <ul>
-<li>General
+<li>
+<p>General</p>
 <ul>
 <li>Add methods to access current Glean debugging settings and the list of currently registered pings(<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1921976">Bug 1921976</a>).</li>
 <li>Require <code>glean_parser</code> v16.1.0 (<a href="https://github.com/mozilla/glean/pull/3006">#3006</a>)</li>
@@ -13389,9 +13389,16 @@ This allows to control a subset of pings independently from the Glean-wide <code
 This deprecates the <code>setUploadEnabled</code> API in favor of <code>setCollectionEnabled</code>. (<a href="https://github.com/mozilla/glean/pull/3006">#3006</a>)</li>
 </ul>
 </li>
-<li>Rust
+<li>
+<p>Rust</p>
 <ul>
 <li>Permit Glean shutdown to interrupt UploadManager Wait tasks (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1928288">bug 1928288</a>)</li>
+</ul>
+</li>
+<li>
+<p>General</p>
+<ul>
+<li>The <code>glean.validation.pings_submitted</code> metric will now only record counts for built-in pings (<a href="https://github.com/mozilla/glean/pull/3010">#3010</a>)</li>
 </ul>
 </li>
 </ul>
